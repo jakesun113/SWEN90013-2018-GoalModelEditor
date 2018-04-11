@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Graph Editor Help</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../styles/help.css">
+</head>
+<body>
+	<h1>Graph Editor Help</h1>
+	<p>In the text box on the top left hand side, input text a line per goal in the format:
+    
+    Please ensure that the root node only had three elements. No [parent ID] specified. 
+    </p>
+	<blockquote>[goal type] [goal ID] [goal name] [parent ID] [visibility*]</blockquote>
+	<DL>
+		<DT>Code for goal type
+		<DD> f - functional goal
+		<DD> e - emotional goal
+		<DD> q - quality goal
+		<DD> s - stakeholder
+		<DD> n - negative goal
+        <DD> sg - sub goal
+	</DL>
+    <DL>
+        <DD> goal ID - ID to reference the goal as a parent
+        <DD> goal name - Value to assign to the goal
+        <DD> parent ID - The parent reference ID
+        <DD> visibility - Optional variable to hide goal
+    </DL>
+	<p> For example, this input</p>
+	<blockquote> f 0 "functional goal"sg 1 "sub goal" 0
+                <div>
+                s 2 stakeholder 0
+                <div>
+                e 3 "emotional goal" 0
+                <div>
+                q 4 "quality goal" 0
+                <div>
+                n 5 "negative goal" 0
+    </blockquote>
+	<p>will create the following goal model</p>
+
+	<img src="../images/helpgoal.png" alt="Goal Model">
+
+</body>
+</html>
