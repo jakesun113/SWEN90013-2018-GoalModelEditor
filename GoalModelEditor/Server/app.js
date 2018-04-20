@@ -12,6 +12,7 @@ var app = express();
 // view engine setup
 app.set('views', path.resolve(__dirname, '../Client'));
 app.use(express.static(path.resolve(__dirname, '../Client')));
+app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
 app.use(logger('dev'));
