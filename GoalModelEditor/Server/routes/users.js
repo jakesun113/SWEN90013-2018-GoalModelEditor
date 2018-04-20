@@ -3,8 +3,7 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.render("project/filesystem.html");
-  res.send('respond with a resource');
+  res.render("./project/filesystem");
 });
 
 module.exports = router;
