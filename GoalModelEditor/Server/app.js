@@ -10,7 +10,8 @@ var usersRouter = require('./routes/users');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, '../Client'));
+app.set('views', path.resolve(__dirname, '../Client'));
+app.use(express.static(path.resolve(__dirname, '../Client')));
 app.set('view engine', 'html');
 
 app.use(logger('dev'));
