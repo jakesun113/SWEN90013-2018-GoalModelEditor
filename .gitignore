@@ -53,4 +53,5 @@ fabric.properties
 # workspace info
 .idea/workspace.xml
 
+# mac file
 .DS_Stroe
