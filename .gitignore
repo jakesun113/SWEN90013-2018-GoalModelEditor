@@ -56,4 +56,6 @@ fabric.properties
 # mac file
 .DS_Stroe
 
-
+# WebStorm stuff
+.idea
+*/.idea
