@@ -1,0 +1,6 @@
+﻿f ih "Improve Hearing" none
+e ih1 "Trusted, Respected" ih
+s ih2 "Company, Brand" ih
+q ih3 "Professional" ih
+f aho "Assess Hearing Online" ih
+e aho1 "Private, In Control" aho
