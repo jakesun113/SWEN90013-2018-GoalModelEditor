@@ -10,127 +10,6 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
 
-    <script type="text/javascript">
-        function Show_Hidden(obj)
-        {
-            if(obj.style.display==="block")
-            {
-                obj.style.display='none';
-            }
-            else
-            {
-                obj.style.display='block';
-            }
-        }
-
-        function Show_Cancel(obj)
-        {
-            if(obj.style.visibility==='hidden')
-            {
-                obj.style.visibility='visible';
-            }
-            else
-            {
-                obj.style.visibility='hidden';
-            }
-        }
-
-        function Change_Title(obj)
-        {
-            if(obj.innerHTML==="Personal info")
-            {
-                obj.innerHTML="Edit personal info";
-            }
-            else
-            {
-                obj.innerHTML="Personal info";
-            }
-        }
-
-        function Change_Readonly(obj)
-        {
-            if(obj.getAttribute("readOnly")==='true')
-            {
-                obj.removeAttribute("readOnly");
-            }
-            else
-            {
-                obj.setAttribute("readOnly",'true');
-            }
-        }
-
-        window.onload=function()
-        {
-            var button=document.getElementById("edit");
-            var ccl=document.getElementById("cancel");
-
-            var title=document.getElementById("title");
-
-            var username=document.getElementById("username");
-            var orpwd=document.getElementById("orpwd");
-            var newpwd=document.getElementById("newpwd");
-            var cfpwd=document.getElementById("cfpwd");
-
-            var fname=document.getElementById("firstname");
-            var lname=document.getElementById("lastname");
-            var company=document.getElementById("company");
-            var email=document.getElementById("email");
-
-            ccl.style.visibility = 'hidden';
-
-            fname.setAttribute("readOnly",'true');
-            lname.setAttribute("readOnly",'true');
-            company.setAttribute("readOnly",'true');
-            email.setAttribute("readOnly",'true');
-
-            button.onclick=function()
-            {
-                Show_Hidden(username);
-                Show_Hidden(orpwd);
-                Show_Hidden(newpwd);
-                Show_Hidden(cfpwd);
-
-                Show_Cancel(ccl);
-
-                Change_Title(title);
-
-                if (button.value=="Edit")
-                    button.value = "Confirm";
-                else button.value = "Edit";
-
-                Change_Readonly(fname);
-                Change_Readonly(lname);
-                Change_Readonly(company);
-                Change_Readonly(email);
-
-                return false;
-            }
-
-            ccl.onclick=function()
-            {
-                Show_Hidden(username);
-                Show_Hidden(orpwd);
-                Show_Hidden(newpwd);
-                Show_Hidden(cfpwd);
-
-                Show_Cancel(ccl);
-
-                Change_Title(title);
-
-                if (button.value=="Edit")
-                    button.value = "Confirm";
-                else button.value = "Edit";
-
-                Change_Readonly(fname);
-                Change_Readonly(lname);
-                Change_Readonly(company);
-                Change_Readonly(email);
-
-                return false;
-            }
-        }
-    </script>
-
     <title>Edit User Profile</title>
 </head>
 <body>
@@ -141,13 +20,13 @@
         <div class="col-md-9 personal-info">
 
             <!--<div class="alert alert-warning" role="alert">-->
-                <!--<a class="panel-close close" data-dismiss="alert">×</a>-->
-                <!--<i class="fa fa-coffee"></i>-->
-                <!--This is an <strong>.alert</strong>. Use this to show important messages to the user.-->
+            <!--<a class="panel-close close" data-dismiss="alert">×</a>-->
+            <!--<i class="fa fa-coffee"></i>-->
+            <!--This is an <strong>.alert</strong>. Use this to show important messages to the user.-->
             <!--</div>-->
             <h3 id="title">Personal info</h3>
 
-            <form class="form-horizontal" role="form">
+            <form class="form-horizontal" role="form" action="/user/profile" method="post">
                 <div class="form-group" id="username" style="display:block">
                     <label class="col-md-3 control-label">Username:</label>
                     <div class="col-md-8">
@@ -163,7 +42,7 @@
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Last name:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="text" id="lastname" value="Sun" >
+                        <input class="form-control" type="text" id="lastname" value="Sun">
                     </div>
                 </div>
                 <div class="form-group">
@@ -181,27 +60,25 @@
                 <div class="form-group" id="orpwd" style="display:none">
                     <label class="col-md-3 control-label">Original password:</label>
                     <div class="col-md-8">
-                        <input class="form-control" type="text" value="">
+                        <input class="form-control" type="password" value="">
                     </div>
                 </div>
                 <div class="form-group" id="newpwd" style="display:none">
-                    <label class="col-md-3 control-label" >New password:</label>
+                    <label class="col-md-3 control-label">New password:</label>
                     <div class="col-md-8">
                         <input class="form-control" type="password" value="">
                     </div>
                 </div>
-                <div class="form-group"  id="cfpwd" style="display:none">
+                <div class="form-group" id="cfpwd" style="display:none">
                     <label class="col-md-3 control-label">Confirm new password:</label>
                     <div class="col-md-8">
                         <input class="form-control" type="password" value="">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-md-3 control-label"></label>
-                    <div class="col-md-8" >
-                        <input class="btn btn-primary" type="button" id="edit" value="Edit">
-                        <input class="btn btn-default" type="reset" id="cancel" value="Cancel">
-                    </div>
+                <label class="col-md-3 control-label"></label>
+                <div class="col-md-8">
+                    <input class="btn btn-primary" type="button" id="edit" value="Edit">
+                    <input class="btn btn-default" type="reset" id="cancel" value="Cancel">
                 </div>
             </form>
         </div>
@@ -209,6 +86,8 @@
 </div>
 
 </body>
+
+<script src="/js/userProfile.js"></script>
 
 <footer class="mastfoot mt-auto">
     <div class="inner">
