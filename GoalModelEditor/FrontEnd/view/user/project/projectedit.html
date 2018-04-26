@@ -20,8 +20,14 @@
         border-style: solid;
         border-width: 1px;
         }
+        #height_fullscreen > .row {
+            min-height: 90vh;
+        }
+        .scrollbar {
+            height: 90vh;
+            overflow-y: scroll;
+        }
     </style>
-
 
 </head>
 
@@ -75,10 +81,10 @@
 </nav>
 
 <!--the main section-->
-<div class="container-fluid">
+<div id="height_fullscreen" class="container-fluid">
     <div class="row">
         <!--import pictures section-->
-        <div class="col-sm showborder">
+        <div class="col-sm showborder scrollbar">
             <fieldset class="form-group">
                 <a href="javascript:void(0)" onclick="$('#pro-image').click()">Upload Image</a>
                 <input type="file" id="pro-image" name="pro-image" style="display: none;" class="form-control" multiple>
@@ -92,8 +98,30 @@
 
         <!--to do list goal section-->
         <div class="col-sm showborder">
-            <!--four icons here-->
-            One of three columns
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs nav-justified indigo" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#panel5" role="tab"><i class="fa fa-user"></i> Functional</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#panel6" role="tab"><i class="fa fa-heart"></i> Quality</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#panel7" role="tab"><i class="fa fa-envelope"></i> Emotional</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#panel8" role="tab"><i class="fa fa-envelope"></i> Negative</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#panel9" role="tab"><i class="fa fa-envelope"></i> Stakeholder</a>
+                </li>
+            </ul>
+
+
         </div>
 
     </div>
@@ -105,6 +133,9 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+<footer>
+    <p class="text-center">&copy;<em>&nbsp;2018 The University of Melbourne</em></p>
+</footer>
 </body>
 
 </html>

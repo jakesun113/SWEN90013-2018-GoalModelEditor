@@ -1,3 +1,4 @@
+/*import photos start*/
 $(document).ready(function() {
     document.getElementById('pro-image').addEventListener('change', readImage, false);
 
@@ -42,4 +43,4 @@ function readImage() {
         console.log('Browser not support');
     }
 }
-
+/*import photos end*/
