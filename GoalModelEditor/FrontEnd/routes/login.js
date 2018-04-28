@@ -15,9 +15,7 @@ router.post('/', function(req, res, next) {
         return res.redirect('/user/login');
     } else {
         // send req to the back-end server
-
         // receive res (confirmation/rejection) and user info(identical for each user)
-
         // if successful, rediret the user to file system page and send a message to the user
         res.json("Hi, " + req.body.username + "!");
         res.redirect('/user/myfile');
