@@ -38,18 +38,44 @@
                                     <a id="username">username</a>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user-dropdown">
-                                    <a class="dropdown-item" href="#">Profile</a>
-                                    <a class="dropdown-item" href="#">Sign out</a>
+                                    <a class="dropdown-item" href="/user/profile" method="get">Profile</a>
+                                    <a class="dropdown-item" href="/user/signoff" method="post">Sign out</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-primary mb-2 ml-5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New
+            <button type="button" class="btn btn-primary mb-2 ml-5"
+                    data-toggle="modal" data-target="#addFile" id="newFileButton">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
         </header>
 
+        <!-- Modal starts-->
+        <div class="modal fade" id="addFile" tabindex="-1" role="dialog" aria-labelledby="newFile" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="newFile">New Project</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="/user/myfile" method="post">
+                        <div class="modal-body">
+                            <input name="fileName" type="text" class="form-control"
+                                   value="Untitled folder">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn" style="background-color: transparent"
+                                    data-dismiss="modal">CANCEL</button>
+                            <button type="submit" class="btn btn-primary">CREATE</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Modal ends -->
 
         <!-- Main part of the page -->
         <main role="main" class="bg-secondary">
