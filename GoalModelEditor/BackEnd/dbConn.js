@@ -23,10 +23,11 @@ dbConn.insertUser = function (username, password, Email, FirstName, LastName) {
     var connection = mysql.createConnection(dbconf);
     connection.query(
         SQL_USER_REGISTER,
-        [username, password, Email, FirstName, LastNames], function (err, result) {
+        [username, password, Email, FirstName, LastName], function (err, result) {
             if (err) throw err;
-            return result;
             connection.end();
+            console.log("connection ended\n");
+            return result;
         });
 }
 
