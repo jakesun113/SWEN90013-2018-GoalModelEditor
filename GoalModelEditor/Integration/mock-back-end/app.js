@@ -18,8 +18,8 @@ const app = express();
 const userRoutes = require("./routes/users");
 const projectRoutes = require("./routes/projects");
 
-app.use("/users");
-app.use("/projects");
+app.use("/users", userRoutes);
+app.use("/projects", projectRoutes);
 
 // export for user in server
 module.exports = app;
