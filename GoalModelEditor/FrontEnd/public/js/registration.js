@@ -1,4 +1,4 @@
-function formValidation() {
+function validation() {
     var passid = document.registration.passid;
     var uname = document.registration.username;
     var uemail = document.registration.email;
@@ -10,9 +10,11 @@ function formValidation() {
             if (allLetter(ulastname)) {
                 if (ValidateEmail(uemail)) {
                     if (passid_validation(passid, 6, 18)) {
-                        alert('Form Succesfully Submitted');
-                        window.location = "login.html"
-                        return true;
+                        if (validatePassword()){
+                            alert('Form Succesfully Submitted');
+                            window.location = "login.html"
+                            return true;
+                        }
                     }
                 }
             }
@@ -26,8 +28,8 @@ function formValidation() {
 
 function passid_validation(passid,mx,my)
 {
-    var passid_len = passid.value.length;
-    if (passid_len == 0 ||passid_len >= my || passid_len < mx)
+    var passwid_len = passid.value.length;
+    if (passwid_len == 0 ||passid_len >= my || passid_len < mx)
     {
         alert("Password should not be empty / length be between "+mx+" to "+my);
         passid.focus();
@@ -45,37 +47,7 @@ function allLetter(uname)
     }
     else
     {
-        alert('Username must have alphabet characters only');
-        uname.focus();
-        return false;
-    }
-}
-
-function allLetter(ufirstname)
-{
-    var letters = /^[A-Za-z]+$/;
-    if(ufirstname.value.match(letters))
-    {
-        return true;
-    }
-    else
-    {
-        alert('First name must have alphabet characters only');
-        uname.focus();
-        return false;
-    }
-}
-
-function allLetter(ulastname)
-{
-    var letters = /^[A-Za-z]+$/;
-    if(ulastname.value.match(letters))
-    {
-        return true;
-    }
-    else
-    {
-        alert('Last name must have alphabet characters only');
+        alert('Name must have alphabet characters only');
         uname.focus();
         return false;
     }
@@ -95,4 +67,17 @@ function ValidateEmail(uemail)
         return false;
     }
 }
+
+function validatePassword(){
+    var password = document.getElementById("password");
+    var confirm_password = document.getElementById("confirm_password");
+    if(password.value != confirm_password.value) {
+        confirm_password.setCustomValidity("Passwords Don't Match");
+        return false;
+    } else {
+        confirm_password.setCustomValidity('');
+        return true;
+    }
+}
+
 
