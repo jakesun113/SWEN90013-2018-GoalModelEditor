@@ -14,10 +14,10 @@ function validate(){
         if (password == null || password == "") {
             alert("Please enter the password.");
             return false;
+        }
         else{
             alert("Error Password or Username")/*displays error message*/
 
             }
-        }
     }
 }
