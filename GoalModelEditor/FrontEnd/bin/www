@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+'use strict'
 /**
  * Module dependencies.
  */
@@ -8,20 +8,21 @@ var app = require('../app');
 var debug = require('debug')('2018-goal-model-project:server');
 var https = require('https');
 var fs = require('fs');
+var config = require('../config');
 
 /**
  * HTTPS credentials
  */
 
-var privateKey = fs.readFileSync(__dirname + '/certificate/private.pem');
-var certificate = fs.readFileSync(__dirname + '/certificate/file.crt');
+var privateKey = fs.readFileSync(config.cert.privateKey);
+var certificate = fs.readFileSync(config.cert.certificate);
 var credentials = {key: privateKey, cert: certificate};
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || config.server.listenPort);
 app.set('port', port);
 
 /**
