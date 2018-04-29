@@ -4,19 +4,22 @@
  * - Collates and returns HTTPS responses
  */
 
+// launch application
 const express = require("express");
 const router = express.Router(); // currently does nothing
 const app = express();
 
-/* Mock implementation of:
- *      (1) The routing schema;
- *      (2) Back-end responses to all possible front-end requests.
- * 
+/* Routes to mock resources.
  * Assumes the following routing schema.
  *      routes
  *      |-- users
  *      |-- projects
  */
+const userRoutes = require("./routes/users");
+const projectRoutes = require("./routes/projects");
 
+app.use("/users");
+app.use("/projects");
 
+// export for user in server
 module.exports = app;
