@@ -1,5 +1,6 @@
 var express = require('express');
 var routers = express.Router();
+var integration = require('../../../api');
 
 routers.use('/edit', require('./edit'));
 
@@ -105,7 +106,15 @@ routers.get('/files', function (req, res, next) {
 });
 
 /* POST a new file to the server */
-routers.post('/', function(req, res, next) {
+routers.post('/', integration.createProject, function(req, res, next) {
+    console.log("100");
+    console.log(req.specialData);
+    res.json(req.specialData);
+});
+
+/* Mock back-end post function - integration test */
+routers.post('/createfile', function(req, res, next) {
+    console.log(req.body);
     var mockup = [{
         "id":"abcdefg",
         "fileName": req.body.fileName,
