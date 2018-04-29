@@ -2,9 +2,9 @@ var mysql = require('mysql');
 var http = require('http');
 
 var dbconf = {
-    host: 'localhost',
+    host: 'ec2-52-65-15-37.ap-southeast-2.compute.amazonaws.com',
     user: 'root',
-    password: '123456root',
+    password: 'SWEN90013Goal!',
     database: 'GoalModel_A'
 };
 
