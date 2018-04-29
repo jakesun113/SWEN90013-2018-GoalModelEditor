@@ -8,10 +8,13 @@ router.post('/', (req, res, next) => {
     let username = req.body.username;
     let password = req.body.password;
 
-    let hashUsername = crypto.createHash('sha256').update(username).digest('hex');
     let hashPassword = crypto.createHash('sha256').update(password).digest('hex');
 
-    saveToDB(hashUsername, hashPassword);
+    saveToDB(username, hashPassword);
+
+    res.statusCode = 200;
+    res.contentType("application/json");
+    res.send();
 });
 
 function saveToDB(username, password) {
