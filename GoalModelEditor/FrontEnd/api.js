@@ -1,4 +1,6 @@
 'use strict'
+
+const fs = require('fs');
 /* integration Layer
  *
  * Provides an interface between the front-end and back-end Node.js servers.
@@ -89,7 +91,45 @@ function register(username, password) {
  * Output:
  * - token: String
  */
-function login(username, password) {
+function login(req, res, next) {
+    console.log("aaaaaaaaa");
+
+    var options = {
+        host: '10.12.167.74',
+        port: 8080,
+        path: '/user_login',
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        //secureProtocol: 'SSLv3_method',
+        cert: fs.readFileSync(__dirname + "/bin/certificate/file.crt"),
+        rejectUnauthorized: false // TODO: Remove when deploy
+    };
+    options.agent = new https.Agent(options);
+    var body = JSON.stringify(req.body);
+    var fileinfo;
+
+    console.log("312");
+    var request = https.request(options, function(res) {
+        console.log('STATUS: ' + res.statusCode);
+        res.setEncoding('utf8');
+        res.on('data', function (chunk) {
+            console.log(chunk);
+            fileinfo = chunk;
+            req.specialData = chunk;
+            next();
+        });
+    });
+    console.log("aaaaaa4324");
+
+    request.on('error', function(e) {
+        console.log('problem with request: ' + e.message);
+    });
+
+    request.write(body);
+    request.end();
+    console.log("fdsfadsfasdf");
 
     // form and send to back-end
 
@@ -118,7 +158,6 @@ function editUserProfile(token, password, firstname, lastname, email) {}
 function fetchFileSystem(token) {}
 
 function createProject(req, res, next) {
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
     var options = {
         host: 'localhost',
         port: 3030,
@@ -128,16 +167,15 @@ function createProject(req, res, next) {
             "Content-Type": "application/json"
         }
     };
-    console.log(req.body);
+    var body = JSON.stringify(req.body);
     var fileinfo;
     var request = https.request(options, function(res) {
         console.log('STATUS: ' + res.statusCode);
         res.setEncoding('utf8');
         res.on('data', function (chunk) {
-            console.log('2');
+            console.log(chunk);
             fileinfo = chunk;
-            req.specialData = fileinfo;
-            console.log(req.specialData);
+            req.specialData = chunk;
             next();
         });
     });
@@ -145,7 +183,7 @@ function createProject(req, res, next) {
         console.log('problem with request: ' + e.message);
     });
 
-    request.write(req.body);
+    request.write(body);
     request.end();
 }
 function editProject(token, name) {} // change project name
@@ -160,3 +198,4 @@ function shareGoalModel(token, name, users, type) {}
 
 
 module.exports.createProject = createProject;
+module.exports.login = login;
