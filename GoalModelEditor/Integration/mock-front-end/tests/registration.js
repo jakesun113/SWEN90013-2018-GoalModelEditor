@@ -5,7 +5,7 @@
 const request = require("request");
 
 const BACKEND_SERVER_URL = "http://localhost:3000"
-const PROJECT_ROUTE = "/projects"
+const USER_ROUTE = "/users"
 
 // (1) register new user
 request.post(
