@@ -20,6 +20,7 @@
     "fs": "~0.0.1-security",
     "ws": "^5.1.1",
     "net": "1.0.2",
-    "iconv-lite": "0.4.21"
+    "iconv-lite": "0.4.21",
+    "express-ws": "^3.0.0"
   }
 }

@@ -1,10 +1,9 @@
-function getValue() {
-    var temp = "aaa";
+function getValue(sendmessage) {
     var WebSocket = require('ws');
-      let ws = new WebSocket('ws://localhost:3001/ws');//创建一个连接
+    let ws = new WebSocket('ws://localhost:3001/ws');//创建一个连接
 
     ws.onopen=function() {
-        ws.send('nihao');//发送消息给服务端
+        ws.send(sendmessage);//发送消息给服务端
     };
 
     ws.onmessage = function (message) {
@@ -14,8 +13,7 @@ function getValue() {
         ws.close();
 
     }
-    return temp;
 
 }
-module.exports.getValue = getValue();
+module.exports.getValue = getValue;
 
