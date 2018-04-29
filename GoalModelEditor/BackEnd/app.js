@@ -10,6 +10,7 @@ var db = require('./dbConn.js');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
+let registerRouter = require('./routes/register');
 
 
 var app = express();
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use("/user_login", loginRouter);
+app.use("/user_register", registerRouter);
 
 app.use(bodyParser.json()); // for parsing application/json
 

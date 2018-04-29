@@ -17,8 +17,8 @@
 
     <style type="text/css">
         .showborder{
-        border-style: solid;
-        border-width: 1px;
+            border-style: solid;
+            border-width: 1px;
         }
         #height_fullscreen > .row {
             min-height: 90vh;
@@ -28,6 +28,31 @@
             overflow-y: scroll;
         }
     </style>
+
+    <script>
+        function hideandshow() {
+            var p = document.getElementById("photo");
+            var c = document.getElementById("cluster");
+            var h = document.getElementById("hierarchy");
+            var g = document.getElementById("generator");
+            var b = document.getElementById("nextbtn");
+
+            if (p.style.display === "none") {
+                p.style.display = "block";
+                c.style.display = "none";
+                h.style.display = "none";
+                g.style.display = "none";
+                b.innerHTML = "Next";
+            } else {
+                p.style.display = "none";
+                c.style.display = "block";
+                h.style.display = "block";
+                g.style.display = "block";
+                b.innerHTML = "Back";
+            }
+        }
+
+    </script>
 
 </head>
 
@@ -84,7 +109,7 @@
 <div id="height_fullscreen" class="container-fluid">
     <div class="row">
         <!--import pictures section-->
-        <div class="col-sm showborder scrollbar">
+        <div id="photo" class="col-sm showborder scrollbar">
             <fieldset class="form-group">
                 <a href="javascript:void(0)" onclick="$('#pro-image').click()">Upload Image</a>
                 <input type="file" id="pro-image" name="pro-image" style="display: none;" class="form-control" multiple>
@@ -97,7 +122,7 @@
         </div>
 
         <!--to do list goal section-->
-        <div class="col-sm showborder" style="margin-top: 0px">
+        <div id="todolist" class="col-sm showborder scrollbar" style="margin-top: 0px">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs nav-justified indigo" role="tablist">
                 <li class="nav-item">
@@ -153,16 +178,36 @@
                 <!--/.Panel 5-->
             </div>
 
+            <button id="nextbtn" class="btn-primary" onclick="hideandshow()">Next</button>
         </div>
+
+        <div id="cluster" class="col-sm showborder scrollbar" style="display: none">
+          <div>
+              <h1>Cluster</h1>
+          </div>
+        </div>
+
+        <div id="hierarchy" class="col-sm showborder scrollbar" style="display: none">
+            <div>
+                <h1>Hierarchy</h1>
+            </div>
+        </div>
+
+        <div id="generator" class="col-sm showborder scrollbar" style="display: none">
+            <div>
+                <h1>Generate goal model</h1>
+            </div>
+        </div>
+
     </div>
 </div>
 
 
-    <!-- Loads and initializes the Bootstrap javascript -->
+<!-- Loads and initializes the Bootstrap javascript -->
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 <footer>
     <p class="text-center">&copy;<em>&nbsp;2018 The University of Melbourne</em></p>
 </footer>
