@@ -13,9 +13,19 @@ HTTPS GET and POST request that the front-end might send to the back-end to:
 
 ## Instructions for Use
 
-### to the Front-End Team:
+The mock implementation of the FRONT-END should guide:
+    1. The BACK-END team for the format of JSON requests received from the
+       front-end by the back-end RESTful API;
+    2. The FRONT-END (/INTEGRATION) team for the format of JSON requests
+       that should be sent to the back-end.
 
-### to the Back-End Team:
+The mock implementation of the BACK-END should guide:
+    1. The BACK-END team for the format of JSON responses sent back to the
+       front-end;
+    2. The BACK-END team for the structure of the routing system used by
+       the RESTful API; and
+    3. The FRONT-END (/INTEGRATION) team for the format of JSON responses
+       received from the back-end.
 
 ## Secondary Purpose: Isolated Testing
 
