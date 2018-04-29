@@ -3,14 +3,13 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var config = require('./config');
 
 var routers = require('./routes/index');
 
 var app = express();
 
 // view engine setup
-app.set('views', config.server.distFolder);
+app.set('views', path.resolve(__dirname, 'view'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
@@ -18,7 +17,20 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(config.server.srcFolder));
+app.use(express.static(path.resolve(__dirname, 'public')));
+
+var expressWs = require('express-ws')(app);
+var util = require('util');
+app.use(express.static('./static'));
+app.ws('/ws', function(ws, req) {
+    util.inspect(ws);
+    ws.on('message', function(msg) {
+        console.log('_message');
+        console.log(msg);
+        ws.send('echo:' + msg);
+    });
+})
+
 
 app.use('/', routers);
 
