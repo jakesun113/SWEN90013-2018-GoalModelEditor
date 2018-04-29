@@ -1,6 +1,7 @@
 'use strict'
 
 const fs = require('fs');
+var querystring = require("querystring");
 /* integration Layer
  *
  * Provides an interface between the front-end and back-end Node.js servers.
@@ -41,9 +42,13 @@ const CODE_FAILURE_409 = 409;
 // back-end URL
 const BACK_END_URL = "https://localhost:3000";
 
+//back-end Info for test
+const BACK_END_TEST_IP = "192.168.1.1";
+const BACK_END_TEST_PORT = "8080";
 // back-end routes
 const USER_ROUTE = "/users";
 const PROJECT_ROUTE = "/projects";
+const FETCH_USER_PROFILE = ""
 
 /* Register a new user.
  *
@@ -53,34 +58,53 @@ const PROJECT_ROUTE = "/projects";
  * Output:
  * - registered: Boolean
  */
-function register(username, password) {
+function register(username, password, email, firstname, lastname) {
 
-    // form and send to back-end
-    request(
-        { method: "POST"
-            , timeout: ERR_TIMEOUT
-            , url: BACK_END_URI+USER_ROUTE
-            , body: "username="+username+"&password="+password
-        },
+    //define headers
+    var options = {
+        host: BACK_END_TEST_IP,
+        port: BACK_END_TEST_PORT,
+        path: '/user_register',
+        method: 'POST',
+        timeout: TIMEOUT,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    };
+    //define request message body
+    var body = querystring.stringify({
+        username:username,
+        password:password,
+        email:email,
+        firstname:firstname,
+        lastname:lastname
+    });
 
-        function(error, response, body) {
-
-            // if back-end error occurs, return error
-            if (err == ERR_TIMEOUT) {
-                console.log(err);
-                return CODE_FAILURE_504;
-            }
-
-            // if user exists, return error
-            if (response.statusCode == CODE_FAILURE_409) {
-                return CODE_FAILURE_409;
-            }
-
-            // if user registration successful, return success
-            if (response.statusCode == CODE_SUCCESS_201) {
-                return CODE_SUCCESS_201;
-            }
+    var request = https.request(options, function(res) {
+        console.log('STATUS: ' + res.statusCode);
+        res.setEncoding('utf8');
+        res.on('data', function (chunk) {
+            console.log(chunk);
+            next();
         });
+        res.on('end', function(){
+            console.log("response received")
+        })
+    });
+    request.on('error', function(e) {
+        //special return message for timeout
+        if(e.message == ERR_TIMEOUT) {
+            console.log(e.message);
+            return CODE_FAILURE_504;
+        }
+        else{
+            return e.message;
+        }
+        console.log('problem with request: ' + e.message);
+    });
+    request.write(body);
+    request.end();
+
 }
 
 /* Login.
@@ -95,10 +119,11 @@ function login(req, res, next) {
     console.log("aaaaaaaaa");
 
     var options = {
-        host: '10.12.167.74',
-        port: 8080,
+        host: BACK_END_TEST_IP,
+        port: BACK_END_TEST_IP,
         path: '/user_login',
         method: 'POST',
+        timeout: TIMEOUT,
         headers: {
             "Content-Type": "application/json"
         },
@@ -129,7 +154,6 @@ function login(req, res, next) {
 
     request.write(body);
     request.end();
-    console.log("fdsfadsfasdf");
 
     // form and send to back-end
 
@@ -148,10 +172,39 @@ function login(req, res, next) {
  * Output:
  * - filesystem: JSON
  */
-function fetchUserProfile(token) {}
+function fetchUserProfile(token) {
+    //headers including token
+    var options={
+        hostname:BACK_END_TEST_IP,
+        port:BACK_END_TEST_IP,
+        path:'/',
+        method:'GET',
+        token:token,
+        timeout:TIMEOUT,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
+    var req = http.request(options,function(res){
+        console.log('STATUS:'+res.statusCode);
+        console.log('HEADERS:'+JSON.stringify(res.headers));
+        res.setEncoding('utf-8');
+        res.on('data',function(chunk){
+            //some handling on data according to data structure
+        });
+        res.on('end',function(){
+            console.log("user_profile received successfully");
+        });
+    });
+    req.on('error',function(err){
+        console.error(err.message);
+    });
+    req.end();
 
 
-/* SCAFFOLD FUNCTIONS - to be implementaed as required*/
+}
+
+
 
 function editUserProfile(token, password, firstname, lastname, email) {}
 
@@ -163,6 +216,7 @@ function createProject(req, res, next) {
         port: 3030,
         path: '/user/myfile/createfile',
         method: 'POST',
+        timeout: TIMEOUT,
         headers: {
             "Content-Type": "application/json"
         }
