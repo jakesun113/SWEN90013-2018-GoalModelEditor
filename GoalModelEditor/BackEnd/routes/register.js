@@ -9,15 +9,21 @@ router.post('/', (req, res, next) => {
     let username = req.body.username;
     let password = req.body.password;
     let email = req.body.email;
-    let firsname = req.body.firsname;
+    let firstname = req.body.firstname;
     let lastname = req.body.lastname;
-
     let hashPassword = crypto.createHash('sha256').update(password).digest('hex');
 
-    //saveToDB(username, hashPassword);
+    // console.log(username + '\n');
+    // console.log(password + '\n');
+    // console.log(email + '\n');
+    // console.log(firstname + '\n');
+    // console.log(lastname + '\n');
+    // console.log(hashPassword + '\n');
+
+    //saveToDB(username, hashPassword, email, firstname, lastname);
     DB.insertUser(username, password, email, firstname, lastname);
 
-    console.log('user inserted\n');
+    console.log('User inserted\n');
 
     res.statusCode = 200;
     res.contentType("application/json");
