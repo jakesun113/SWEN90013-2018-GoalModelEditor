@@ -29,6 +29,7 @@ dbConn.insertUser = function (username, password, Email, FirstName, LastName) {
                 if (err) {
                     console.log(JSON.stringify(err));
                     if(err.errno == 1062){
+                        // Username already exists.
                         resolve(0);
                     }else{
                         reject(err.errno);
@@ -49,9 +50,9 @@ dbConn.login = function (username, password) {
                 connection.end();
                 if (err) return reject(err);
                 if (result.affectedRows == 1) {
-                    resolve(1);
+                    resolve(1); // Success
                 } else {
-                    resolve(0);
+                    resolve(0); // Invalid username or password
                 }
             })
     });
