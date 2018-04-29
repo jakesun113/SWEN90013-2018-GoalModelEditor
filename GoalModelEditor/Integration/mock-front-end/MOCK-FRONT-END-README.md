@@ -8,3 +8,4 @@ stored within the /tests directory (e.g. /tests/registration.js,
 
 1. Change URL of back-end server
 2. `npm run test`
+3. Check that back-end requests match the format prescribed here.m
