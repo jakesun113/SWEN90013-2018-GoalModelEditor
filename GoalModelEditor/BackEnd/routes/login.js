@@ -1,34 +1,29 @@
 var express = require('express');
+var auth = require("./authen");
 var router = express.Router();
+var db = require("../dbConn");
 const crypto = require('crypto');
-// var passport = require('passport');
-// var LocalStrategy = require('passport-local').Strategy;
 
+// User login route
 router.post('/', function(req, res, next) {
     const hash = crypto.createHash('sha256');
     console.log("in login func");
-    console.log("request body");
-    console.log(req.body.username);
     hash.update(req.body.password);
-    console.log(req.body.password)
-    console.log("in login func 2");
-    if (hash.digest("hex") == "30c952fab122c3f9759f02a6d95c3758b246b4fee239957b2d4fee46e26170c4") {
-        var token = crypto.randomBytes(64).toString('hex');
-        console.log(token);
-        saveSession(req.body.username, token);
+    let promise = db.login(req.body.username, hash.digest("hex"));
+    promise.then(function(user_id){
+        console.log("result is " + user_id);
+        if (user_id == db.LOGIN_INVALID){
+            res.statusCode = 401;
+            res.json({user_id: "", message: "User login authentication failed"});
+            res.end();
+        }
+        let token = auth.genToken(user_id);
+        //let token = auth.genToken(1);
         res.statusCode = 200;
         res.contentType("application/json");
-        res.json({token: token});
-    } else {
-        res.statusCode = 401;
-    }
-    res.end();
+        res.json({user_id : user_id, token: token});
+        res.end();
+    })
 });
 
-function saveSession(username, token){
-    console.log("placeholder of session handling\ntoken generated: " + token);
-}
-
 module.exports = router;
-//
-// passport.use(new LocalStrategy())

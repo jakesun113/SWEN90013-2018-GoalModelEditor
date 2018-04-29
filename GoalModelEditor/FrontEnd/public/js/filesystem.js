@@ -36,12 +36,14 @@ $('#createFile').submit(function(evt){
         type: "POST",
         success: function(file){
             console.log(file);
+            var fileItem = JSON.parse(file);
+            console.log(fileItem[0]);
             var filelistHTML = '<div class="row border-bottom py-3 file-item" id="'
-                + file[0].id + '">' + '<div class="col-3 text-center">'
-                + file[0].fileName + '</div>' + '<div class="col-3 text-center text-color">'
-                + file[0].owner + '</div>' + '<div class="col-3 text-center text-color">'
-                + file[0].lastModified + '</div>' + '<div class="col-3 text-center text-color">'
-                + file[0].fileSize + '</div>' + '</div>';
+                + fileItem[0].id + '">' + '<div class="col-3 text-center">'
+                + fileItem[0].fileName + '</div>' + '<div class="col-3 text-center text-color">'
+                + fileItem[0].owner + '</div>' + '<div class="col-3 text-center text-color">'
+                + fileItem[0].lastModified + '</div>' + '<div class="col-3 text-center text-color">'
+                + fileItem[0].fileSize + '</div>' + '</div>';
             $('#fileList').append(filelistHTML);
             $('#addFile').modal('toggle');
         }
