@@ -1,10 +1,12 @@
 'use strict'
 
 var express = require('express');
+var getValue = require('../middleware/getValue');
 var router = express.Router();
 
 /* GET login page */
 router.get('/', function(req, res, next) {
+    getValue.getValue;
     res.render("login");
 });
 
