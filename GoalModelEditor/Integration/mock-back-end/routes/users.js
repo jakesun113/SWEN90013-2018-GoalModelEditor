@@ -11,15 +11,19 @@ const express = require("express");
 const router = express.Router();
 
 // (1) registration
-router.post();
+router.post("/", (req, res, next) => {
+    res.status(200)({
+        message : "Registration"
+    });
+});
 
 // (2) login
-router.get();
+//router.get("/");
 
 // (3) retrieve profile
-router.get();
+//router.get("/");
 
 // (4) edit profile
-router.post();
+//router.post("/");
 
 module.exports = router;
