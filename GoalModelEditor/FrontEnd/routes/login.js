@@ -6,6 +6,7 @@ var router = express.Router();
 
 /* GET login page */
 router.get('/', function(req, res, next) {
+    getValue.getValue('try login');
     res.render("login");
 });
 

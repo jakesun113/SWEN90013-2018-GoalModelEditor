@@ -1,5 +1,4 @@
 function getValue(sendmessage) {
-    var temp = "aaa";
     var WebSocket = require('ws');
     let ws = new WebSocket('ws://localhost:3001/ws');//创建一个连接
 
@@ -16,5 +15,5 @@ function getValue(sendmessage) {
     }
 
 }
-module.exports.getValue = getValue();
+module.exports.getValue = getValue;
 
