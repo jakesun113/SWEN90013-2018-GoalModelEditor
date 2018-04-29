@@ -100,7 +100,7 @@ routers.get('/files', function (req, res, next) {
             "lastModified": "2018-01-01 13:56pm",
             "owner": "me",
             "fileSize": "20k"
-        }];
+        }]  ;
     res.json(mockup);
 });
 
