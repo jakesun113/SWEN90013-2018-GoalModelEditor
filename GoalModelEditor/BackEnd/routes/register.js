@@ -22,10 +22,12 @@ router.post('/', (req, res, next) => {
 
     DB.insertUser(username, hashPassword, email, firstname, lastname).then((result)=>{
         console.log(result);
-        if(result == 1) {
+        if(result == DB.REG_SUCCESS) {
             res.statusCode = 200;
+        } else if (result == DB.REG_ALREADY_EXIST) {
+            res.statusCode = 409;
         } else {
-            res.statusCode = 401;
+            res.statusCode = 400;
         }
         res.contentType("application/json");
         res.send();
