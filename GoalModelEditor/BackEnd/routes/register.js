@@ -20,18 +20,16 @@ router.post('/', (req, res, next) => {
     // console.log(lastname + '\n');
     // console.log(hashPassword + '\n');
 
-    //saveToDB(username, hashPassword, email, firstname, lastname);
-    DB.insertUser(username, password, email, firstname, lastname);
-
-    console.log('User inserted\n');
-
-    res.statusCode = 200;
-    res.contentType("application/json");
-    res.send();
+    DB.insertUser(username, password, email, firstname, lastname).then((result)=>{
+        console.log(result);
+        if(result == 1) {
+            res.statusCode = 200;
+        } else {
+            res.statusCode = 401;
+        }
+        res.contentType("application/json");
+        res.send();
+    });
 });
-
-function saveToDB(username, password) {
-    console.log("TODO: connect to DB, save data.\n");
-}
 
 module.exports = router;
