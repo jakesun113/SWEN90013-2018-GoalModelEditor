@@ -6,12 +6,18 @@ function validate(){
         window.location = "filesystem.html";
         return false;
     }
-    if (username == null || username == "") {
-        alert("Please enter the username.");
-        return false;
-    }
-    if (password == null || password == "") {
-        alert("Please enter the password.");
-        return false;
+    else {
+        if (username == null || username == "") {
+            alert("Please enter the username.");
+            return false;
+        }
+        if (password == null || password == "") {
+            alert("Please enter the password.");
+            return false;
+        else{
+            alert("Error Password or Username")/*displays error message*/
+
+            }
+        }
     }
 }
