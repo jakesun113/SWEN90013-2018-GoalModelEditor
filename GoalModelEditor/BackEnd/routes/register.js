@@ -20,7 +20,7 @@ router.post('/', (req, res, next) => {
     // console.log(lastname + '\n');
     // console.log(hashPassword + '\n');
 
-    DB.insertUser(username, password, email, firstname, lastname).then((result)=>{
+    DB.insertUser(username, hashPassword, email, firstname, lastname).then((result)=>{
         console.log(result);
         if(result == 1) {
             res.statusCode = 200;
