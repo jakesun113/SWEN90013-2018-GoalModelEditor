@@ -2,19 +2,26 @@ function formValidation() {
     var passid = document.registration.passid;
     var uname = document.registration.username;
     var uemail = document.registration.email;
+    var ufirstname = document.registration.firstname;
+    var ulastname = document.registration.lastname;
 
-    if(allLetter(uname)){
-        if(ValidateEmail(uemail)){
-            if(passid_validation(passid,7,12)){
-                alert('Form Succesfully Submitted');
-                window.location = "login.html"
-                return true;
+    if (allLetter(uname)) {
+        if (allLetter(ufirstname)) {
+            if (allLetter(ulastname)) {
+                if (ValidateEmail(uemail)) {
+                    if (passid_validation(passid, 6, 18)) {
+                        alert('Form Succesfully Submitted');
+                        window.location = "login.html"
+                        return true;
+                    }
+                }
             }
-            }
+        }
     }
-    else{
+    else {
         return false;
     }
+
 }
 
 function passid_validation(passid,mx,my)
@@ -39,6 +46,36 @@ function allLetter(uname)
     else
     {
         alert('Username must have alphabet characters only');
+        uname.focus();
+        return false;
+    }
+}
+
+function allLetter(ufirstname)
+{
+    var letters = /^[A-Za-z]+$/;
+    if(ufirstname.value.match(letters))
+    {
+        return true;
+    }
+    else
+    {
+        alert('First name must have alphabet characters only');
+        uname.focus();
+        return false;
+    }
+}
+
+function allLetter(ulastname)
+{
+    var letters = /^[A-Za-z]+$/;
+    if(ulastname.value.match(letters))
+    {
+        return true;
+    }
+    else
+    {
+        alert('Last name must have alphabet characters only');
         uname.focus();
         return false;
     }
