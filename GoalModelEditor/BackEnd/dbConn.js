@@ -19,7 +19,7 @@ var SQL_USER_LOGIN = "UPDATE User SET LastLogin = NOW()" +
 
 
 var dbConn = {};
-dbConn.insertUser = function (username, password, Email, FirstName, LastName, callback) {
+dbConn.insertUser = function (username, password, Email, FirstName, LastName) {
     var connection = mysql.createConnection(dbconf);
     return new Promise(function (resolve, reject) {
         connection.query(
