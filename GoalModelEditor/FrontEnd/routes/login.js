@@ -6,7 +6,6 @@ var router = express.Router();
 
 /* GET login page */
 router.get('/', function(req, res, next) {
-    getValue.getValue;
     res.render("login");
 });
 
