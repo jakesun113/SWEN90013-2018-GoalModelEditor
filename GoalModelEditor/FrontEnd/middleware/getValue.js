@@ -1,19 +1,25 @@
-function getValue(sendmessage) {
-    var WebSocket = require('ws');
-    let ws = new WebSocket('ws://192.168.43.113:3000/ws');//创建一个连接
-
-    ws.onopen=function() {
-        ws.send(sendmessage);//发送消息给服务端
+function getValue() {
+    const https = require('https');
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+    const options = {
+        hostname: 'localhost',
+        port: 3001,
+        path: '/',
+        method: 'GET'
     };
 
-    ws.onmessage = function (message) {
-        //返回来自服务端的消息
-        temp = message.data;
-        console.log(temp);
-        ws.close();
+    const req = https.request(options, (res) => {
+        console.log('statusCode:', res.statusCode);
+        console.log('headers:', res.headers);
+        res.on('data', (d) => {
+            console.log(d);
+        });
+    });
 
-    }
-
+    req.on('error', (e) => {
+        console.error(e);
+    });
+    req.end();
 }
 module.exports.getValue = getValue;
 

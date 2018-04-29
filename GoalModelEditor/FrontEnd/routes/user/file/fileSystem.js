@@ -105,24 +105,24 @@ routers.get('/files', function (req, res, next) {
     res.json(mockup);
 });
 
-/* POST a new file to the server */
-routers.post('/', integration.createProject, function(req, res, next) {
-    console.log("100");
-    console.log(req.specialData);
-    res.json(req.specialData);
-});
-
-/* Mock back-end post function - integration test */
-routers.post('/createfile', function(req, res, next) {
-    console.log(req.body);
-    var mockup = [{
-        "id":"abcdefg",
-        "fileName": req.body.fileName,
-        "lastModified": "2018-01-01 13:56pm",
-        "owner": "me",
-        "fileSize": "20k"
-    }];
-    res.json(mockup);
-});
+// /* POST a new file to the server */
+// // routers.post('/', integration.createProject, function(req, res, next) {
+// //     console.log("100");
+// //     console.log(req.specialData);
+// //     res.json(req.specialData);
+// // });
+//
+// /* Mock back-end post function - integration test */
+// routers.post('/createfile', function(req, res, next) {
+//     console.log(req.body);
+//     var mockup = [{
+//         "id":"abcdefg",
+//         "fileName": req.body.fileName,
+//         "lastModified": "2018-01-01 13:56pm",
+//         "owner": "me",
+//         "fileSize": "20k"
+//     }];
+//     res.json(mockup);
+// });
 
 module.exports = routers;
