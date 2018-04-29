@@ -11,8 +11,11 @@ HTTPS GET and POST request that the front-end might send to the back-end to:
     * Creating and updating goal models (e.g. loading goal model files,
       saving changes made to goal model files).
 
-## Method
+## Instructions for Use
 
+### to the Front-End Team:
+
+### to the Back-End Team:
 
 ## Secondary Purpose: Isolated Testing
 
