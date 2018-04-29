@@ -75,7 +75,7 @@ dbConn.login = function (username, password) {
 }
 
 
-// module.exports = dbConn;
-dbConn.login('qweqwe','123456').then((res)=>{
-    console.log(res);
-});
+module.exports = dbConn;
+// dbConn.login('qweqwe','123456').then((res)=>{
+//     console.log(res);
+// });
