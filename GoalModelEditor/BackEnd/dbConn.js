@@ -19,17 +19,25 @@ var SQL_USER_LOGIN = "UPDATE User SET LastLogin = NOW()" +
 
 
 var dbConn = {};
-dbConn.insertUser = function (username, password, Email, FirstName, LastName, callback) {
+dbConn.insertUser = function (username, password, Email, FirstName, LastName) {
     var connection = mysql.createConnection(dbconf);
     return new Promise(function (resolve, reject) {
         connection.query(
             SQL_USER_REGISTER,
             [username, password, Email, FirstName, LastName], function (err, result) {
                 connection.end();
-                if (err) return reject(err);
-                resolve(result);
+                if (err) {
+                    console.log(JSON.stringify(err));
+                    if(err.errno == 1062){
+                        // Username already exists.
+                        resolve(0);
+                    }else{
+                        reject(err.errno);
+                    }
+                };
+                // success
+                resolve(1);
             });
-
     });
 }
 
@@ -41,11 +49,10 @@ dbConn.login = function (username, password) {
             [username, password], function (err, result) {
                 connection.end();
                 if (err) return reject(err);
-                console.log(result);
                 if (result.affectedRows == 1) {
-                    resolve('success');
+                    resolve(1); // Success
                 } else {
-                    reject('nosuchuser');
+                    resolve(0); // Invalid username or password
                 }
             })
     });
@@ -53,7 +60,7 @@ dbConn.login = function (username, password) {
 
 
 // console.log('before/after?');
-// dbConn.insertUser('qweqwe2', '123456', 'asd', 'aa', 'bb').then(function (result) {
+// dbConn.insertUser('qwe2', '123456', 'asd', 'aa', 'bb').then(function (result) {
 //     console.log(result);
 // });
 
