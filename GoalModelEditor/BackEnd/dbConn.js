@@ -54,6 +54,5 @@ dbConn.login = function (username, password) {
 
 // dbConn.login('qwe','123456');
 // dbConn.login('qwe','123456asd');
-// module.exports = dbConn;
-
-dbConn.insertUser('qweqwe','123456','asd','aa','bb');
+// dbConn.insertUser('qweqwe','123456','asd','aa','bb');
+ module.exports = dbConn;
