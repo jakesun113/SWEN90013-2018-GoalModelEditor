@@ -1,8 +1,12 @@
 var express = require('express');
 var auth = require("./authen");
 var router = express.Router();
+var db = require("../dbConn");
 const crypto = require('crypto');
 
+
+// hardcoding the information at the moment
+// to be integrated with the db
 router.post('/', function(req, res, next) {
     const hash = crypto.createHash('sha256');
     console.log("in login func");
