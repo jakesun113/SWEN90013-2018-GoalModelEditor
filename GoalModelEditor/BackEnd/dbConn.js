@@ -26,10 +26,17 @@ dbConn.insertUser = function (username, password, Email, FirstName, LastName) {
             SQL_USER_REGISTER,
             [username, password, Email, FirstName, LastName], function (err, result) {
                 connection.end();
-                if (err) return reject(err);
-                resolve(result);
+                if (err) {
+                    console.log(JSON.stringify(err));
+                    if(err.errno == 1062){
+                        resolve(0);
+                    }else{
+                        reject(err.errno);
+                    }
+                };
+                // success
+                resolve(1);
             });
-
     });
 }
 
@@ -41,11 +48,10 @@ dbConn.login = function (username, password) {
             [username, password], function (err, result) {
                 connection.end();
                 if (err) return reject(err);
-                console.log(result);
                 if (result.affectedRows == 1) {
-                    resolve('success');
+                    resolve(1);
                 } else {
-                    reject('nosuchuser');
+                    resolve(0);
                 }
             })
     });
@@ -53,7 +59,7 @@ dbConn.login = function (username, password) {
 
 
 // console.log('before/after?');
-// dbConn.insertUser('qweqwe2', '123456', 'asd', 'aa', 'bb').then(function (result) {
+// dbConn.insertUser('qwe2', '123456', 'asd', 'aa', 'bb').then(function (result) {
 //     console.log(result);
 // });
 
