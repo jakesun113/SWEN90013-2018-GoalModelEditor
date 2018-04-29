@@ -11,7 +11,7 @@ function validation() {
                 if (ValidateEmail(uemail)) {
                     if (passid_validation(passid, 6, 18)) {
                         if (validatePassword()){
-                            alert('Form Succesfully Submitted');
+                            alert('Form Successfully Submitted');
                             window.location = "login.html"
                             return true;
                         }
@@ -25,6 +25,8 @@ function validation() {
     }
 
 }
+
+
 
 function passid_validation(passid,mx,my)
 {
