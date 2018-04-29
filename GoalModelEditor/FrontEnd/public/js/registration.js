@@ -7,7 +7,7 @@ function formValidation() {
         if(ValidateEmail(uemail)){
             if(passid_validation(passid,7,12)){
                 alert('Form Succesfully Submitted');
-                window.location.reload()
+                window.location = "login.html"
                 return true;
             }
             }
