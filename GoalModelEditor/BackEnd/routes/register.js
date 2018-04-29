@@ -3,19 +3,33 @@
 const crypto = require('crypto');
 const express = require('express');
 let router = express.Router();
+const DB = require('../dbConn');
 
 router.post('/', (req, res, next) => {
     let username = req.body.username;
     let password = req.body.password;
-
-    let hashUsername = crypto.createHash('sha256').update(username).digest('hex');
+    let email = req.body.email;
+    let firstname = req.body.firstname;
+    let lastname = req.body.lastname;
     let hashPassword = crypto.createHash('sha256').update(password).digest('hex');
 
-    saveToDB(hashUsername, hashPassword);
-});
+    // console.log(username + '\n');
+    // console.log(password + '\n');
+    // console.log(email + '\n');
+    // console.log(firstname + '\n');
+    // console.log(lastname + '\n');
+    // console.log(hashPassword + '\n');
 
-function saveToDB(username, password) {
-    console.log("TODO: connect to DB, save data.\n");
-}
+    DB.insertUser(username, password, email, firstname, lastname).then((result)=>{
+        console.log(result);
+        if(result == 1) {
+            res.statusCode = 200;
+        } else {
+            res.statusCode = 401;
+        }
+        res.contentType("application/json");
+        res.send();
+    });
+});
 
 module.exports = router;
