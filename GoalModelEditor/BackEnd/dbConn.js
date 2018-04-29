@@ -4,13 +4,13 @@ var http = require('http');
 var dbconf = {
     host: 'ec2-52-65-15-37.ap-southeast-2.compute.amazonaws.com',
     user: 'test',
-    password: 'SWEN90013Goal!',
+    password: 'SWEN90013goal!',
     database: 'GoalModel_A'
 };
 
 
 var SQL_USER_REGISTER = "INSERT INTO " +
-    "user (UserId, Username, Password, Email, FirstName, LastName, SignupTime, LastLogin) " +
+    "User (UserId, Username, Password, Email, FirstName, LastName, SignupTime, LastLogin) " +
     "VALUES (UUID(), ?, ?, ?, ?, ?, NOW(), NOW())";
 // var SQL_USER_LOGIN = "SELECT Username, Password FROM user where Username = ? AND Password = ?";
 
@@ -54,4 +54,6 @@ dbConn.login = function (username, password) {
 
 // dbConn.login('qwe','123456');
 // dbConn.login('qwe','123456asd');
-module.exports = dbConn;
+// module.exports = dbConn;
+
+dbConn.insertUser('qweqwe','123456','asd','aa','bb');
