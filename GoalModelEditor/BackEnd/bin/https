@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 //module.paths.push('C:/Users/w441/AppData/Roaming/npm/node_modules');
 var express = require('express');
 var app = express();
@@ -24,9 +26,9 @@ httpsServer.listen(SSLPORT, function() {
 // Welcome
 app.get('/', function(req, res) {
     if(req.protocol === 'https') {
-        //res.status(200).send('Welcome!');
+        res.status(200).send('Welcome! https');
     }
     else {
-        //res.status(200).send('Welcome!');
+        res.status(200).send('Welcome! http');
     }
 });

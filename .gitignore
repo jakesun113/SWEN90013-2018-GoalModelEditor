@@ -54,7 +54,7 @@ fabric.properties
 .idea/workspace.xml
 
 # mac file
-.DS_Stroe
+.DS_Store
 
 # WebStorm stuff
 .idea
