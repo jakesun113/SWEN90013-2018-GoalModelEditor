@@ -1,6 +1,8 @@
-// load user's file after loading the page content - handled by the frontend server GET ('/user/myfile/files')
+// load user's file after loading the page content - handled by the front-end server
+// GET ('/user/:userid/myfile')
 $(document).ready(function () {
-    $.ajax('/user/myfile/files', {
+    var url = '/user/' + Cookies.get('AUTH') + '/myfile';
+    $.ajax(url, {
         type: "GET",
         success: function(files) {
             var filelistHTML = '';
@@ -27,9 +29,10 @@ $(document).ready(function () {
 
 // reload user's file list after the user has created a new file
 // i.e. handle the "CREATE" button
+// POST ('/user/:userid/myfile')
 $('#createFile').submit(function(evt){
    evt.preventDefault();
-   var url = $(this).attr("action");
+   var url = '/user/' + Cookies.get('AUTH') + '/myfile';
    var formData = $(this).serialize();
     $.ajax(url, {
         data: formData,
@@ -52,23 +55,50 @@ $('#createFile').submit(function(evt){
     });// end ajax
 });// end submit
 
-// handle click on the file item
+
 // handle double click on the file item
+// send get request
+// GET ('/user/:userid/myfile/:fileid')
 $('#fileList').dblclick(function(event){
-    alert( "Handler for .dblclick() called." + event.target);
+    // act on the clicked file-time only
+    // front-end server create the cookie and redirect to the edit page
+    if($(event.target).hasClass("file-item")) {
+        var url = '/user/' + Cookies.get('AUTH') + '/myfile/' + $(event.target).id;
+        $.ajax(url, {
+            type: "GET",
+            success: function (file) {
+            }// no need to handle success callback - user will be routed to another page
+        }).fail(function(jqXHR){
+            alert(jqXHR.statusText);
+        });// end ajax
+    } else if($(event.target.parentNode).hasClass("file-item")){
+        var url = '/user/' + Cookies.get('AUTH') + '/myfile/' + $(event.target.parentNode).id;
+        $.ajax(url, {
+            type: "GET",
+            success: function (file) {
+            }// no need to handle success callback - user will be routed to another page
+        }).fail(function(jqXHR){
+            alert(jqXHR.statusText);
+        });// end ajax
+    }
 });
 
-$('#fileList').click( function(event) {
+
+// handle click on the window
+// only when the clicked item is a file item, the background color will change
+$(window).click(function(event) {
     // change all files background color back
     const files = $('.file-item');
     $.each(files, function(index, file){
         file.style.backgroundColor = "white";
     });// end each
-    var fileItem = event.target.parentNode;
-    if(fileItem.id === "fileList") {
+
+    // change the background-color if the click item is a file-item
+    if($(event.target).hasClass("file-item")) {
         event.target.style.backgroundColor = "#4285f4";
-    } else {
-        fileItem.style.backgroundColor = "#4285f4";
+    } else if($(event.target.parentNode).hasClass("file-item")){
+        event.target.parentNode.style.backgroundColor = "#4285f4";
     }
 });
+
 
