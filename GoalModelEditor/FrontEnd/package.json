@@ -8,20 +8,21 @@
   "dependencies": {
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
-    "express": "~4.16.0",
-    "http-errors": "~1.6.2",
-    "jade": "~1.11.0",
-    "morgan": "~1.9.0",
-    "passport-local": "~1.0.0",
     "ejs": "~2.5.9",
-    "mxgraph": "~3.9.3",
+    "express": "~4.16.0",
+    "express-ws": "^3.0.0",
+    "fs": "~0.0.1-security",
+    "http-errors": "~1.6.2",
     "https": "~1.0.0",
     "https-error": "~1.0.2",
-    "fs": "~0.0.1-security",
-    "ws": "^5.1.1",
-    "net": "1.0.2",
     "iconv-lite": "0.4.21",
-    "express-ws": "^3.0.0",
-    "querystring": "0.2.0"
+    "jade": "~1.11.0",
+    "morgan": "~1.9.0",
+    "mxgraph": "~3.9.3",
+    "net": "1.0.2",
+    "passport-local": "~1.0.0",
+    "querystring": "0.2.0",
+    "request": "^2.85.0",
+    "ws": "^5.1.1"
   }
 }

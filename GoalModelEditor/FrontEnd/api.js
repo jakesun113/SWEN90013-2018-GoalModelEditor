@@ -26,6 +26,7 @@ var querystring = require("querystring");
 
 // import request module: https://github.com/request/request
 const https = require("https");
+const request = require("request");
 
 // other parameters
 const TIMEOUT = 5000; // milliseconds for timeout
@@ -115,12 +116,37 @@ function register(username, password, email, firstname, lastname) {
  * Output:
  * - token: String
  */
+
+function login(req, res, next) {
+
+    // parse the body from req
+    var payload = JSON.parse(JSON.stringify(req.body));
+
+    // formulate and send request
+    request.post(
+        { url: "https://10.13.189.98:8080/user_login"
+        , json: true
+        , body: payload
+        , cert: fs.readFileSync(__dirname + "/bin/certificate/file.crt")
+        , securityOptions: "SSL_OP_NO_SSLv3"
+        , rejectUnauthorized: false
+        }
+
+    // callback to front end server
+        , function(err, res, body) {
+            req.specialData = body;
+            next();
+        }
+    );
+} 
+
+/*
 function login(req, res, next) {
     console.log("aaaaaaaaa");
 
     var options = {
-        host: BACK_END_TEST_IP,
-        port: BACK_END_TEST_IP,
+        host: "10.13.189.98",
+        port: "8080",
         path: '/user_login',
         method: 'POST',
         timeout: TIMEOUT,
@@ -164,6 +190,8 @@ function login(req, res, next) {
     // if login successful, return token
 
 }
+*/
+
 
 /* Retrieve User Profile.
  *
