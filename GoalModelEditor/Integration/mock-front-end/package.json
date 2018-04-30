@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node tests/registration.js"
+    "test": "node sample-requests/user-requests.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.2",
+    "json-stringify": "^1.0.0",
     "request": "^2.85.0"
   }
 }
