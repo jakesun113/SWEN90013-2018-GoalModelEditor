@@ -1,134 +1,82 @@
-function Show_Hidden(obj) {
-    if (obj.style.display === "block") {
-        obj.style.display = 'none';
-    }
-    else {
-        obj.style.display = 'block';
-    }
-}
 
-function Show_Cancel(obj) {
-    if (obj.style.visibility === 'hidden') {
-        obj.style.visibility = 'visible';
-    }
-    else {
-        obj.style.visibility = 'hidden';
-    }
-}
+//at first, hide "cancel" button
+$("#cancel").hide();
 
-function Change_Title(obj) {
-    if (obj.innerHTML === "Personal info") {
-        obj.innerHTML = "Edit personal info";
-    }
-    else {
-        obj.innerHTML = "Personal info";
-    }
-}
+//set these fields as "read only"
+$('#usernametext').attr("readonly","readonly");
+$('#firstname').attr("readonly","readonly");
+$('#lastname').attr("readonly","readonly");
+$('#email').attr("readonly","readonly");
 
-function Change_Readonly(obj) {
-    if (obj.getAttribute("readOnly") === 'true') {
-        obj.removeAttribute("readOnly");
-    }
-    else {
-        obj.setAttribute("readOnly", 'true');
-    }
-}
+//define actions when click "edit"
+$("#edit").click(function(){
 
-var button = document.getElementById('edit');
-var ccl = document.getElementById("cancel");
+    $("#username").hide();
+    $("#orpwd").show();
+    $("#newpwd").show();
+    $("#cfpwd").show();
 
-var title = document.getElementById("title");
+    $("#cancel").show();
 
-var username = document.getElementById("username");
-var orpwd = document.getElementById("orpwd");
-var newpwd = document.getElementById("newpwd");
-var cfpwd = document.getElementById("cfpwd");
+    $("#title").html("Edit personal info");
+    //clear the value of password field
+    $("#orpwdtxt").val("");
+    $("#newpwdtxt").val("");
+    $("#cfpwdtxt").val("");
 
-var nametext = document.getElementById("usernametext");
-var newpwdtxt = document.getElementById("newpwdtxt");
-var cfpwdtxt = document.getElementById("cfpwdtxt");
+    $('#firstname').removeAttr("readonly");
+    $('#lastname').removeAttr("readonly");
+    $('#email').removeAttr("readonly");
 
-var errmsg = document.getElementById("errmsg");
+    $("#edit").hide();
+    $("#confirm").show();
+    $("#cancel").show();
 
-var fname = document.getElementById("firstname");
-var lname = document.getElementById("lastname");
-var email = document.getElementById("email");
+});
 
-ccl.style.visibility = 'hidden';
+//define actions when click "cancel", opposite to the "edit"
+$("#cancel").click(function(){
 
-nametext.setAttribute("readOnly", 'true');
-fname.setAttribute("readOnly", 'true');
-lname.setAttribute("readOnly", 'true');
-email.setAttribute("readOnly", 'true');
+    $("#username").show();
+    $("#orpwd").hide();
+    $("#newpwd").hide();
+    $("#cfpwd").hide();
 
-button.onclick = function () {
+    $("#cancel").hide();
 
-    if (newpwdtxt.value != cfpwdtxt.value) {
-        errmsg.style.display = 'block';
-        cfpwdtxt.focus();
-        return false;
-    }
-    else {
-        errmsg.style.display = 'none';
+    $("#title").html("Personal info");
 
-        Show_Hidden(username);
-        Show_Hidden(orpwd);
-        Show_Hidden(newpwd);
-        Show_Hidden(cfpwd);
+    $("#errmsg").hide();
 
-        Show_Cancel(ccl);
+    $("#orpwdtxt").val("");
+    $("#newpwdtxt").val("");
+    $("#cfpwdtxt").val("");
 
-        Change_Title(title);
+    $('#firstname').attr("readonly","readonly");
+    $('#lastname').attr("readonly","readonly");
+    $('#email').attr("readonly","readonly");
 
-        if (button.value == "Edit") {
-            orpwd.value = "";
-            newpwdtxt.value = "";
-            cfpwdtxt.value = "";
-            button.value = "Confirm";
-            button.type = "button";
-        }
-        else {
-            button.value = "Edit";
-            button.type = "submit";
-        }
-        Change_Readonly(fname);
-        Change_Readonly(lname);
-        Change_Readonly(email);
-    }
-}
+    $("#edit").show();
+    $("#confirm").hide();
+    $("#cancel").hide();
 
-ccl.onclick = function () {
-    Show_Hidden(username);
-    Show_Hidden(orpwd);
-    Show_Hidden(newpwd);
-    Show_Hidden(cfpwd);
 
-    Show_Cancel(ccl);
+});
 
-    Change_Title(title);
+//define actions when click "confirm", same as "cancel"
+// $("#confirm").click(function(){
+//
+// });
 
-    errmsg.style.display = 'none';
-    newpwdtxt.value = "";
-    cfpwdtxt.value = "";
-
-    if (button.value == "Edit")
-        button.value = "Confirm";
-    else button.value = "Edit";
-
-    Change_Readonly(fname);
-    Change_Readonly(lname);
-    Change_Readonly(email);
-
-}
-
+//at first, load data from server using ajax
 $(document).ready(function () {
     $.ajax('/user/profile/profile', {
         type: "GET",
         success: function (profile) {
-            nametext.value = profile[0].Username;
-            fname.value = profile[0].FirstName;
-            lname.value = profile[0].LastName;
-            email.value = profile[0].Email;
+            $('#usernametext').val(profile[0].Username);
+            $('#firstname').val(profile[0].FirstName);
+            $('#lastname').val(profile[0].LastName);
+            $('#email').val(profile[0].Email);
         }
     }).fail(function (jqXHR) {
         alert(jqXHR.statusText + ". Please contact us.");
@@ -136,26 +84,87 @@ $(document).ready(function () {
 
 }); // end ready
 
-$("#profile").submit(function (evt) {
-    evt.preventDefault();
-    var formData = $(this).serialize();
-    $.ajax('/user/profile', {
-        data: formData,
-        type: "POST",
-        success: function (result) {
-            console.log(result);
-            fname.value = result[0].FirstName;
-            lname.value = result[0].LastName;
-            email.value = result[0].Email;
-            $("#notice").slideDown().delay(3000).slideUp();
-        }
-    }).fail(function (jqXHR) {
-        alert(jqXHR.statusText + ". Please contact us.");
-    });// end ajax
-});
+//send modified data to server when submitting the form using ajax
+// $("#profile").submit(function () {
+//         $("#username").show();
+//         $("#orpwd").hide();
+//         $("#newpwd").hide();
+//         $("#cfpwd").hide();
+//
+//         $("#cancel").hide();
+//
+//         $("#title").html("Personal info");
+//
+//         $("#errmsg").hide();
+//
+//         $("#orpwdtxt").val("");
+//         $("#newpwdtxt").val("");
+//         $("#cfpwdtxt").val("");
+//
+//         $('#firstname').attr("readonly","readonly");
+//         $('#lastname').attr("readonly","readonly");
+//         $('#email').attr("readonly","readonly");
+//
+//         $("#edit").show();
+//         $("#confirm").hide();
+//         $("#cancel").hide();
+//
+//         var formData = $(this).serialize();
+//         $.ajax('/user/profile', {
+//             data: formData,
+//             type: "POST",
+//             success: function (result) {
+//                 $('#firstname').val(result[0].FirstName);
+//                 $('#lastname').val(result[0].LastName);
+//                 $('#email').val(result[0].Email);
+//                 $("#notice").slideDown().delay(3000).slideUp();
+//             }
+//         }).fail(function (jqXHR) {
+//             alert(jqXHR.statusText + ". Please contact us.");
+//         });// end ajax
+//
+// });
 
-$.validate({
-    form : '#profile',
-    validateOnBlur : false,
-    modules : 'html5'
-});
+$('#profile').validator().on('submit', function (e) {
+    if (e.isDefaultPrevented()) {
+        // handle the invalid form...
+    } else {
+        // everything looks good!
+        $("#username").show();
+        $("#orpwd").hide();
+        $("#newpwd").hide();
+        $("#cfpwd").hide();
+
+        $("#cancel").hide();
+
+        $("#title").html("Personal info");
+
+        $("#errmsg").hide();
+
+        $("#orpwdtxt").val("");
+        $("#newpwdtxt").val("");
+        $("#cfpwdtxt").val("");
+
+        $('#firstname').attr("readonly","readonly");
+        $('#lastname').attr("readonly","readonly");
+        $('#email').attr("readonly","readonly");
+
+        $("#edit").show();
+        $("#confirm").hide();
+        $("#cancel").hide();
+
+        var formData = $(this).serialize();
+        $.ajax('/user/profile', {
+            data: formData,
+            type: "POST",
+            success: function (result) {
+                $('#firstname').val(result[0].FirstName);
+                $('#lastname').val(result[0].LastName);
+                $('#email').val(result[0].Email);
+                $("#notice").slideDown().delay(3000).slideUp();
+            }
+        }).fail(function (jqXHR) {
+            alert(jqXHR.statusText + ". Please contact us.");
+        });// end ajax
+    }
+})

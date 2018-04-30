@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="/img/icon.ico">
+    <!--add bootstrap css at the top-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <title>Edit User Profile</title>
+    <title>User Profile</title>
 </head>
 <body>
 <div class="container mt-5">
@@ -16,13 +16,15 @@
         </div>
         <div class="col-md-9 personal-info">
 
+            <!--success alert-->
             <div class="alert alert-success" id="notice" role="alert" style="display:none">
             <i class="fa fa-coffee"></i>
             Successfully changed the password.
             </div>
             <h3 id="title">Personal info</h3>
 
-            <form class="form-horizontal" role="form" id="profile" action="/user/profile" method="post">
+            <!--profile form, add validation-->
+            <form class="form-horizontal" data-toggle="validator" role="form" id="profile" action="/user/profile" method="post">
                 <div class="form-group" id="username" style="display:block">
                     <label class="col-md-3 control-label">Username:</label>
                     <div class="col-md-8">
@@ -32,46 +34,59 @@
                 <div class="form-group">
                     <label class="col-lg-3 control-label">First name:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="text" id="firstname">
+                        <input class="form-control" type="text" id="firstname" required>
+                        <!--show error message-->
+                        <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Last name:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="text" id="lastname" data-validation="required">
+                        <input class="form-control" type="text" id="lastname" required>
+                        <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Email:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="email" id="email" data-validation="email">
+                        <input class="form-control" type="email" id="email" required>
+                        <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 <div class="form-group" id="orpwd" style="display:none">
                     <label class="col-md-3 control-label">Original password:</label>
                     <div class="col-md-8">
-                        <input class="form-control" type="password" data-validation="required">
+                        <input class="form-control" type="password" id="orpwdtxt"
+                               data-minlength="6" data-minlength-error="Your password must be at least 6 characters long"
+                               maxlength="20" required>
+                        <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 <div class="form-group" id="newpwd" style="display:none">
                     <label class="col-md-3 control-label">New password:</label>
                     <div class="col-md-8">
-                        <input class="form-control" type="password" id="newpwdtxt" data-validation="required" data-validation-length="6-20">
+                        <input class="form-control" type="password" id="newpwdtxt"
+                               data-minlength="6" data-minlength-error="Your password must be at least 6 characters long"
+                               maxlength="20" required>
+                        <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 <div class="form-group" id="cfpwd" style="display:none">
                     <label class="col-md-3 control-label">Confirm new password:</label>
                     <div class="col-md-8">
-                        <input class="form-control" type="password"  id="cfpwdtxt" data-validation="required" data-validation-length="6-20">
+                        <!--confirm password should be the same as the new password-->
+                        <input class="form-control" type="password"  id="cfpwdtxt"
+                               data-match="#newpwdtxt" data-match-error="Please enter the same password as above"
+                               data-minlength="6" data-minlength-error="Your password must be at least 6 characters long"
+                               maxlength="20" required>
+                        <div class="help-block with-errors"></div>
                     </div>
-                </div>
-                <div class="col-md-8 form-group" id="errmsg" role="alert" style="display:none">
-                    <p style="color:red;">Password not the same.</p>
                 </div>
                 <label class="col-md-3 control-label"></label>
                 <div class="col-md-8">
                     <input class="btn btn-primary" type="button" id="edit" value="Edit">
-                    <input class="btn btn-default" type="button" id="cancel" value="Cancel">
+                    <input class="btn btn-primary" type="submit" id="confirm" style="display:none" value="Confirm">
+                    <input class="btn btn-default" type="button" id="cancel" style="display:none" value="Cancel">
                 </div>
             </form>
         </div>
@@ -81,10 +96,12 @@
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+<!--add bootstrap validator library-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.js"></script>
+<!--load javascript file-->
 <script src="/js/userProfile.js"></script>
 
 <footer class="mastfoot mt-auto">
