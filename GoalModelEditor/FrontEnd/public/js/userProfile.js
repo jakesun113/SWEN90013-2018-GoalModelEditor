@@ -28,6 +28,7 @@ $("#edit").click(function () {
     $('#email').removeAttr("readonly");
 
     $("#edit").hide();
+    $("#return").hide();
     $("#confirm").show();
     $("#cancel").show();
 
@@ -56,6 +57,7 @@ $("#cancel").click(function () {
     $('#email').attr("readonly", "readonly");
 
     $("#edit").show();
+    $("#return").show();
     $("#confirm").hide();
     $("#cancel").hide();
 
@@ -108,6 +110,7 @@ $('#profile').validator().on('submit', function (evt) {
         $('#email').attr("readonly", "readonly");
 
         $("#edit").show();
+        $("#return").show();
         $("#confirm").hide();
         $("#cancel").hide();
 
