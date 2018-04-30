@@ -1,15 +1,14 @@
-
 //at first, hide "cancel" button
 $("#cancel").hide();
 
 //set these fields as "read only"
-$('#usernametext').attr("readonly","readonly");
-$('#firstname').attr("readonly","readonly");
-$('#lastname').attr("readonly","readonly");
-$('#email').attr("readonly","readonly");
+$('#usernametext').attr("readonly", "readonly");
+$('#firstname').attr("readonly", "readonly");
+$('#lastname').attr("readonly", "readonly");
+$('#email').attr("readonly", "readonly");
 
 //define actions when click "edit"
-$("#edit").click(function(){
+$("#edit").click(function () {
 
     $("#username").hide();
     $("#orpwd").show();
@@ -35,7 +34,7 @@ $("#edit").click(function(){
 });
 
 //define actions when click "cancel", opposite to the "edit"
-$("#cancel").click(function(){
+$("#cancel").click(function () {
 
     $("#username").show();
     $("#orpwd").hide();
@@ -52,9 +51,9 @@ $("#cancel").click(function(){
     $("#newpwdtxt").val("");
     $("#cfpwdtxt").val("");
 
-    $('#firstname').attr("readonly","readonly");
-    $('#lastname').attr("readonly","readonly");
-    $('#email').attr("readonly","readonly");
+    $('#firstname').attr("readonly", "readonly");
+    $('#lastname').attr("readonly", "readonly");
+    $('#email').attr("readonly", "readonly");
 
     $("#edit").show();
     $("#confirm").hide();
@@ -63,10 +62,6 @@ $("#cancel").click(function(){
 
 });
 
-//define actions when click "confirm", same as "cancel"
-// $("#confirm").click(function(){
-//
-// });
 
 //at first, load data from server using ajax
 $(document).ready(function () {
@@ -84,52 +79,15 @@ $(document).ready(function () {
 
 }); // end ready
 
-//send modified data to server when submitting the form using ajax
-// $("#profile").submit(function () {
-//         $("#username").show();
-//         $("#orpwd").hide();
-//         $("#newpwd").hide();
-//         $("#cfpwd").hide();
-//
-//         $("#cancel").hide();
-//
-//         $("#title").html("Personal info");
-//
-//         $("#errmsg").hide();
-//
-//         $("#orpwdtxt").val("");
-//         $("#newpwdtxt").val("");
-//         $("#cfpwdtxt").val("");
-//
-//         $('#firstname').attr("readonly","readonly");
-//         $('#lastname').attr("readonly","readonly");
-//         $('#email').attr("readonly","readonly");
-//
-//         $("#edit").show();
-//         $("#confirm").hide();
-//         $("#cancel").hide();
-//
-//         var formData = $(this).serialize();
-//         $.ajax('/user/profile', {
-//             data: formData,
-//             type: "POST",
-//             success: function (result) {
-//                 $('#firstname').val(result[0].FirstName);
-//                 $('#lastname').val(result[0].LastName);
-//                 $('#email').val(result[0].Email);
-//                 $("#notice").slideDown().delay(3000).slideUp();
-//             }
-//         }).fail(function (jqXHR) {
-//             alert(jqXHR.statusText + ". Please contact us.");
-//         });// end ajax
-//
-// });
 
-$('#profile').validator().on('submit', function (e) {
-    if (e.isDefaultPrevented()) {
-        // handle the invalid form...
-    } else {
-        // everything looks good!
+$('#profile').validator().on('submit', function (evt) {
+    //by default, when the form is invalid, .preventDefault() is called
+    //so when the form is valid
+    if (!evt.isDefaultPrevented()) {
+
+        // make the original submit invalid
+        evt.preventDefault();
+        //do the page transaction
         $("#username").show();
         $("#orpwd").hide();
         $("#newpwd").hide();
@@ -145,14 +103,15 @@ $('#profile').validator().on('submit', function (e) {
         $("#newpwdtxt").val("");
         $("#cfpwdtxt").val("");
 
-        $('#firstname').attr("readonly","readonly");
-        $('#lastname').attr("readonly","readonly");
-        $('#email').attr("readonly","readonly");
+        $('#firstname').attr("readonly", "readonly");
+        $('#lastname').attr("readonly", "readonly");
+        $('#email').attr("readonly", "readonly");
 
         $("#edit").show();
         $("#confirm").hide();
         $("#cancel").hide();
 
+        //send the updated data to server using ajax
         var formData = $(this).serialize();
         $.ajax('/user/profile', {
             data: formData,
