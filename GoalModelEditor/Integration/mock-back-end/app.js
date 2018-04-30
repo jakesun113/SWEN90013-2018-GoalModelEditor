@@ -9,6 +9,12 @@ const express = require("express");
 const router = express.Router(); // currently does nothing
 const app = express();
 
+const bodyParser = require("body-parser");
+
+// middleware - parse all requests
+app.use(bodyParser.urlencoded({extended : false}));
+app.use(bodyParser.json({type : "application/json"}));
+
 /* Routes to mock resources.
  * Assumes the following routing schema.
  *      routes

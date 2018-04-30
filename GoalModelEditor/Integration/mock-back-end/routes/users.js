@@ -13,7 +13,7 @@ const router = express.Router();
 // (1) registration
 router.post("/", (req, res, next) => {
     res.status(200).json({
-        message : "Registration"
+        message : "Confirming user " + req.body.username + " created."
     });
 });
 
