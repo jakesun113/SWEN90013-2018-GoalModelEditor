@@ -44,7 +44,7 @@ const CODE_FAILURE_409 = 409;
 const BACK_END_URL = "https://localhost:3000";
 
 //back-end Info for test
-const BACK_END_TEST_IP = "192.168.1.1";
+const BACK_END_TEST_IP = "https://10.13.4.16";
 const BACK_END_TEST_PORT = "8080";
 // back-end routes
 const USER_ROUTE = "/users";
@@ -59,52 +59,82 @@ const FETCH_USER_PROFILE = ""
  * Output:
  * - registered: Boolean
  */
-function register(username, password, email, firstname, lastname) {
+function register(req, res, next) {
 
-    //define headers
-    var options = {
-        host: BACK_END_TEST_IP,
-        port: BACK_END_TEST_PORT,
-        path: '/user_register',
-        method: 'POST',
-        timeout: TIMEOUT,
-        headers: {
-            "Content-Type": "application/json"
-        }
-    };
+    // //define headers
+    // var options = {
+    //     host: BACK_END_TEST_IP,
+    //     port: BACK_END_TEST_PORT,
+    //     path: '/user_register',
+    //     method: 'POST',
+    //     timeout: TIMEOUT,
+    //     headers: {
+    //         "Content-Type": "application/json"
+    //     }
+    // };
     //define request message body
-    var body = querystring.stringify({
-        username:username,
-        password:password,
-        email:email,
-        firstname:firstname,
-        lastname:lastname
-    });
+    var body = JSON.parse(JSON.stringify({
+            username:"1234",
+            password:"1234",
+            email:"1234",
+            firstname:"1234",
+            lastname:"1234"
 
-    var request = https.request(options, function(res) {
-        console.log('STATUS: ' + res.statusCode);
-        res.setEncoding('utf8');
-        res.on('data', function (chunk) {
-            console.log(chunk);
-            next();
-        });
-        res.on('end', function(){
-            console.log("response received")
-        })
-    });
-    request.on('error', function(e) {
-        //special return message for timeout
-        if(e.message == ERR_TIMEOUT) {
-            console.log(e.message);
-            return CODE_FAILURE_504;
+    }));
+    console.log(body);
+    //     {
+    //     username:username,
+    //     password:password,
+    //     email:email,
+    //     firstname:firstname,
+    //     lastname:lastname
+    // }
+
+    // options.agent = new https.Agent(options);
+
+    // var request = https.request(options, function(res) {
+    //     console.log('STATUS: ' + res.statusCode);
+    //     res.setEncoding('utf8');
+    //     res.on('data', function (chunk) {
+    //         console.log(chunk);
+    //         next();
+    //     });
+    //     res.on('end', function(){
+    //         console.log("response received")
+    //     })
+    // });
+    // request.on('error', function(e) {
+    //     //special return message for timeout
+    //     if(e.message == ERR_TIMEOUT) {
+    //         console.log(e.message);
+    //         return CODE_FAILURE_504;
+    //     }
+    //     else{
+    //         return e.message;
+    //     }
+    //     console.log('problem with request: ' + e.message);
+    // });
+    // console.log(body);
+    // request.write(body);
+    // console.log("in api register");
+    // request.end();
+
+    request.post(
+        {
+            url: BACK_END_TEST_IP+":8080/user_register"
+            , json: true
+            , body: body
+            , cert: fs.readFileSync(__dirname + "/bin/certificate/file.crt")
+            , securityOptions: "SSL_OP_NO_SSLv3"
+            , rejectUnauthorized: false
         }
-        else{
-            return e.message;
+
+        // callback to front end server
+        , function(err, res, body) {
+            req.specialData = body;
+            next;
         }
-        console.log('problem with request: ' + e.message);
-    });
-    request.write(body);
-    request.end();
+    );
 
 }
 
@@ -121,10 +151,10 @@ function login(req, res, next) {
 
     // parse the body from req
     var payload = JSON.parse(JSON.stringify(req.body));
-
+    console.log(payload);
     // formulate and send request
     request.post(
-        { url: "https://10.13.189.98:8080/user_login"
+        { url: BACK_END_TEST_IP+":8080/user_login"
         , json: true
         , body: payload
         , cert: fs.readFileSync(__dirname + "/bin/certificate/file.crt")
@@ -281,3 +311,4 @@ function shareGoalModel(token, name, users, type) {}
 
 module.exports.createProject = createProject;
 module.exports.login = login;
+module.exports.register = register;

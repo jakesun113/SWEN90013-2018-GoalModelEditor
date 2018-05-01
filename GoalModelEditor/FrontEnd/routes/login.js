@@ -24,7 +24,7 @@ router.post('/', integration.login, function(req, res, next) {
     //     // otherwise send a message to user
     //     res.json("Wrong username/password.");
     // }
-    console.log(req.specialData);
+    //console.log(req.specialData);
 });
 
 
