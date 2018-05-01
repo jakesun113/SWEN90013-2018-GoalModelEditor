@@ -37,6 +37,9 @@ $("#edit").click(function () {
 //define actions when click "cancel", opposite to the "edit"
 $("#cancel").click(function () {
 
+    //reload page
+    location.reload(true);
+
     $("#username").show();
     $("#orpwd").hide();
     $("#newpwd").hide();
