@@ -1,8 +1,20 @@
+/* End-point for project related HTTP requests in back-end REST API.
+ *
+ */
+
+
 var express = require('express');
 var router = express.Router();
 var auth = require("./authen");
 var db = require("../dbConn");
 
+
+/* GET Fetch File System */
+router.get("/fetch_file_system/:userId", (req, res, next) => {
+    // stub
+});
+
+/* POST Create Project */
 router.post("/create", function(req, res, next){
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
@@ -21,4 +33,18 @@ router.post("/create", function(req, res, next){
     res.end();
 });
 
+
+/* POST Edit Project */
+router.post("/edit_project/:userId-:projectId", (req, res, next) => {
+    // stub
+});
+
+
+/* DELETE Delete Project */
+router.delete("/delete_project/:userId-:projectId", (req, res, next) => {
+    // stub
+});
+
+
+// export for use in Express app
 module.exports = router;
