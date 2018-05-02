@@ -1,7 +1,7 @@
 // load user's file after loading the page content - handled by the front-end server
 // GET ('/project/fetch_file_system?userid=')
 $(document).ready(function () {
-    var url = '/project/fetch_file_system?userid='+ Cookies.get('UID');
+    var url = '/project/fetch_file_system?userid='+ Cookies.get('LOKIDIED');
     $.ajax(url, {
         type: "GET",
         success: function(files) {
@@ -32,14 +32,14 @@ $(document).ready(function () {
 // POST ('/project/create')
 $('#createFile').submit(function(evt){
    evt.preventDefault();
-   var url = '/project/create';
+   var url = '/project/create/'+ Cookies.get('LOKIDIED');
    var formData = $(this).serialize();
     $.ajax(url, {
         data: formData,
         type: "POST",
+        headers: {"Authorization": "Bearer " + Cookies.get('LOKIDIED')},
         success: function(file){
-            console.log(file);
-            var fileItem = JSON.parse(file);
+            var fileItem = JSON.parse(JSON.stringify(file));
             console.log(fileItem);
             var filelistHTML = '<div class="row border-bottom py-3 file-item" id="'
                 + fileItem.id + '">' + '<div class="col-3 text-center">'
