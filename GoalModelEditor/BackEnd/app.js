@@ -9,6 +9,7 @@ var db = require('./dbConn.js');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/user');
+var projectRouter = require('./routes/project');
 
 // const
 let config = require('./config');
@@ -29,6 +30,7 @@ app.use(express.static(config.server.srcFolder));
 
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
+app.use('/project', projectRouter);
 
 app.use(bodyParser.json()); // for parsing application/json
 
