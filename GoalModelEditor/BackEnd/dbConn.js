@@ -11,7 +11,6 @@ var dbconf = {
 var SQL_USER_REGISTER = "INSERT INTO " +
     "User (UserId, Username, Password, Email, FirstName, LastName, SignupTime, LastLogin) " +
     "VALUES (UUID(), ?, ?, ?, ?, ?, NOW(), NOW())";
-// var SQL_USER_LOGIN = "SELECT Username, Password FROM user where Username = ? AND Password = ?";
 
 var SQL_USER_LOGIN = "UPDATE User SET LastLogin = NOW()" +
     "WHERE Username = ? AND Password = ?";
@@ -20,11 +19,14 @@ var SQL_RET_USERID = "SELECT UserId from User WHERE Username = ? AND Password = 
 
 var SQL_RET_PROJECTID = "SELECT ProjectId from Project WHERE ProjectName = ? AND OwnerId = ?";
 
-var SQL_Project_Creation= "INSERT INTO " +
+var SQL_Project_Creation = "INSERT INTO " +
     "Project (ProjectId, ProjectName, ProjectDescription, LastModified, Size,OwnerId) " +
     "VALUES (UUID(), ?, ?, NOW(), ?,?)";
 
-
+var SQL_RET_GOALMODEL_OF_PROJ = "SELECT ModelName " +
+    "FROM Project LEFT JOIN GoalModel\n" +
+    "On Project.ProjectId = GoalModel.ProjectId\n" +
+    "WHERE Project.ProjectId = ?;";
 
 
 var dbConn = {};
@@ -35,9 +37,15 @@ dbConn.REG_ALREADY_EXIST = 0;
 // dbConn.LOGIN_SUCCESS = 1;
 dbConn.LOGIN_INVALID = "";
 
-dbConn.CreatProject_SUCCESS=1;
-
-dbConn.createProject = function ( ProjectName, ProjectDescription, Size, UserId) {
+dbConn.CreatProject_SUCCESS = 1;
+/**
+ * Store the information of a new project into the database
+ * @param ProjectName
+ * @param ProjectDescription
+ * @param Size
+ * @param UserId
+ */
+dbConn.createProject = function (ProjectName, ProjectDescription, Size, UserId) {
     var connection = mysql.createConnection(dbconf);
     return new Promise(function (resolve, reject) {
         connection.query(
@@ -62,7 +70,14 @@ dbConn.createProject = function ( ProjectName, ProjectDescription, Size, UserId)
 
     });
 }
-
+/**
+ * Register a user and store it into the database.
+ * @param username
+ * @param password
+ * @param Email
+ * @param FirstName
+ * @param LastName
+ */
 dbConn.insertUser = function (username, password, Email, FirstName, LastName) {
     var connection = mysql.createConnection(dbconf);
     return new Promise(function (resolve, reject) {
@@ -87,7 +102,11 @@ dbConn.insertUser = function (username, password, Email, FirstName, LastName) {
             });
     });
 }
-
+/**
+ * Verify the login info in database.
+ * @param username
+ * @param password
+ */
 dbConn.login = function (username, password) {
     var connection = mysql.createConnection(dbconf);
     return new Promise(function (resolve, reject) {
@@ -97,7 +116,7 @@ dbConn.login = function (username, password) {
                 if (err) return reject(err);
                 if (result.affectedRows == 1) {
                     // success
-                    connection.query(SQL_RET_USERID,[username, password],function(err,result){
+                    connection.query(SQL_RET_USERID, [username, password], function (err, result) {
                         if (err) return reject(err);
                         // if success: return userid
                         resolve(result[0].UserId);
@@ -111,13 +130,26 @@ dbConn.login = function (username, password) {
             })
     });
 }
+/**
+ * Load the goalmodel names under a given project.
+ * @param ProjectId
+ */
+dbConn.getGoalModelList = function(ProjectId) {
+    var connection = mysql.createConnection(dbconf);
+    return new Promise(function (resolve, reject) {
+        connection.query(
+            SQL_RET_GOALMODEL_OF_PROJ,
+            [ProjectId], function (err, result) {
+                connection.end();
+                if (err) return reject(err);
+                console.log(result);
+            })
+    });
+}
 
 
 module.exports = dbConn;
-// dbConn.login('qweqwe','123456').then((res)=>{
-//     console.log(res);
-// });
+dbConn.getGoalModelList('70edb3aa-4b83-11e8-8c21-02388973fed8').then((res)=>{
+    console.log(res);
+});
 
-//dbConn.createProject('ProjectName55', 'ProjectDescription2', '88', '0aa452d7-4b67-11e8-8c21-02388973fed8').then((res)=>{
-//     console.log(res);
-// });
