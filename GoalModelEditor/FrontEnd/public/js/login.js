@@ -33,9 +33,8 @@ $('#login').submit(function(evt){
         type: "POST",
         success: function(res){
             var tokenP = JSON.parse(JSON.stringify(res));
-            console.log(tokenP);
             Cookies.set('LOKIDIED', tokenP.token, { expires: 1, path: '/' });
-            window.location.href = '/project';
+            window.location.href = '/dashboard';
         }
     }).fail(function(jqXHR){
         alert(jqXHR.statusText);
