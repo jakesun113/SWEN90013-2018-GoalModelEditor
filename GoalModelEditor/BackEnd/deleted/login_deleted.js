@@ -1,5 +1,5 @@
 var express = require('express');
-var auth = require("./authen");
+var auth = require("../routes/authen");
 var router = express.Router();
 var db = require("../dbConn");
 const crypto = require('crypto');
