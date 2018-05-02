@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 var querystring = require("querystring");
-var socket_module = require("../FrontEnd/Socket_module/Socket_Module");
+var socket_module = require("./Socket_module/Socket_Module");
 /* integration Layer
  *
  * Provides an interface between the front-end and back-end Node.js servers.
