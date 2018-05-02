@@ -10,7 +10,7 @@ var fs = require('fs');
 var https = require('https');
 let config = require('../config');
 var privateKey  = fs.readFileSync(config.cert.privateKey, 'utf8');
-var certificate = fs.readFileSync(config.cert.certificate + '/certificate/file.crt', 'utf8');
+var certificate = fs.readFileSync(config.cert.certificate, 'utf8');
 var credentials = {key: privateKey, cert: certificate};
 
 /**
@@ -26,7 +26,13 @@ app.set('port', port);
 
 var server = https.createServer(credentials, app);
 
+/**
+ * Listen on provided port, on all network interfaces.
+ */
 
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
 
 /**
  * Normalize a port into a number, string, or false.
