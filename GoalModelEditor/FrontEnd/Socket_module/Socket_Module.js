@@ -3,11 +3,7 @@ var socket;
 
 
 function socket_init() {
-    console.log("hello");
-
-
     socket = clientio.connect("https://localhost:8080",{secure:true,rejectUnauthorized:false,reconnect:true});
-    console.log("hello");
     socket.on("connect",function () {
         console.log("back-end server is on");
         console.log("connection to server established");
