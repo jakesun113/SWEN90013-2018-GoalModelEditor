@@ -1,7 +1,7 @@
 'use strict'
 
 var express = require('express');
-var getValue = require('../middleware/getValue');
+var getValue = require('../Socket_module/Socket_Module');
 var router = express.Router();
 var integration = require('../api');
 

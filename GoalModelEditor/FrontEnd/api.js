@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 var querystring = require("querystring");
+var socket_module = require("../FrontEnd/Socket_module/Socket_Module");
 /* integration Layer
  *
  * Provides an interface between the front-end and back-end Node.js servers.
@@ -151,23 +152,27 @@ function login(req, res, next) {
 
     // parse the body from req
     var payload = JSON.parse(JSON.stringify(req.body));
-    console.log(payload);
-    // formulate and send request
-    request.post(
-        { url: BACK_END_TEST_IP+":8080/user_login"
-        , json: true
-        , body: payload
-        , cert: fs.readFileSync(__dirname + "/bin/certificate/file.crt")
-        , securityOptions: "SSL_OP_NO_SSLv3"
-        , rejectUnauthorized: false
-        }
+    console.log(req.body);
+    //TODO newly added sendmessage through socket
+    socket_module.socket_sendMessage(payload);
+    // console.log(payload);
+    // // formulate and send request
+    // request.post(
+    //     { url: BACK_END_TEST_IP+":8080/user_login"
+    //     , json: true
+    //     , body: payload
+    //     , cert: fs.readFileSync(__dirname + "/bin/certificate/file.crt")
+    //     , securityOptions: "SSL_OP_NO_SSLv3"
+    //     , rejectUnauthorized: false
+    //     }
+    //
+    // // callback to front end server
+    //     , function(err, res, body) {
+    //         req.specialData = body;
+    //         next();
+    //     }
+    // );
 
-    // callback to front end server
-        , function(err, res, body) {
-            req.specialData = body;
-            next();
-        }
-    );
 } 
 
 /*

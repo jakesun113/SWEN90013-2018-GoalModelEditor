@@ -8,7 +8,7 @@ var app = require('../app');
 var debug = require('debug')('2018-goal-model-project:server');
 var https = require('https');
 var fs = require('fs');
-
+var socket_module = require("../Socket_module/Socket_Module");
 
 /**
  * HTTPS credentials
@@ -50,13 +50,7 @@ var server = https.createServer(credentials, app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-console.log("hello");
-var clientio = require("socket.io-client");
-var socket = clientio.connect("https://localhost:8080",{secure:true,rejectUnauthorized:false,reconnect:true});
-console.log("hello");
-socket.on("connect",function () {
-   console.log("connection to server established");
-})
+socket_module.socket_init();
 
 
 /**
@@ -117,4 +111,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+  socket_module.checkdisconnection();
 }
