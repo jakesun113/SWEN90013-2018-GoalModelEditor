@@ -1,4 +1,4 @@
-'use strict'
+'se strict'
 
 const crypto = require('crypto');
 const express = require('express');
