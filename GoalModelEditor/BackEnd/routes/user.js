@@ -1,15 +1,21 @@
-var express = require('express');
-var router = express.Router();
-var auth = require("./authen");
-var db = require("../dbConn");
+/* End point for user-related HTTPS requests to the back-end REST API.
+ *
+ */
+
+
+// express application imports
+const express = require('express');
+const router = express.Router();
+
+// database connection
+const db = require("../dbConn");
+
+// security-related imports
+const auth = require("./authen");
 const crypto = require('crypto');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
 
-// User login route
+/* POST User Login */
 router.post('/login', function(req, res, next) {
     const hash = crypto.createHash('sha256');
     console.log("in login func");
