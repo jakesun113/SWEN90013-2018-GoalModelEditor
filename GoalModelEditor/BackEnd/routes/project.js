@@ -3,13 +3,16 @@
  */
 
 
+// express application
 var express = require('express');
 var router = express.Router();
+
+// security related imports
 var auth = require("./authen");
 var db = require("../dbConn");
 
 
-/* GET Fetch File System */
+/* GET List (a user's) File System */
 /* This should return a JSON (or some other equivalent data structure)
  * list of goal model project names AND the the names of goal models
  * with those projects. For example:
@@ -24,18 +27,23 @@ router.get("/list/:userId", (req, res, next) => {
     // stub
 });
 
+
 /* POST Create Project */
 router.post("/create", function(req, res, next){
+
+    // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
-        res.json({created: false, message: "Authentication failed"});
+        res.json( {created: false, message: "Authentication failed"} );
         res.end();
     }
+
+    // create new project
     db.createProject("a", "d", 1, "abc").then((result)=>{
         console.log(result);
-        if(result == DB.SUCCESS) {
+        if(result == db.SUCCESS) {
             res.statusCode = 201;
-            res.json({project_id: "asd"});
+            res.json( {project_id: "asd"} );
         } else {
             res.statusCode = 500;
         }
