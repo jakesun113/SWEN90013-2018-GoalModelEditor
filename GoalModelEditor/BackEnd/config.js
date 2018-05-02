@@ -1,6 +1,25 @@
-// Object to store server-wide configuration variables
-var path = require('path');
+/* Server Configuration File
+ */
 
+const path = require('path');
+
+module.exports = {
+
+    // default server listening port
+    LISTEN_PORT : "8080",
+
+    // certificate and key file
+    KEY_FILE : path.resolve(__dirname, "./certificate/private.pem"),
+    CERT_FILE : path.resolve(__dirname, "./certificate/file.crt"),
+
+    // paths to front-end files (views and source files)
+    FRONT_VIEW_DIR : path.resolve(__dirname, "../FrontEnd/view"),
+    FRONT_SRC_DIR : path.resolve(__dirname, "../FrontEnd/public"),
+
+    // the secret for encrypting the cookie?
+    COOKIE_SECRET : ""
+};
+/*
 module.exports = {
     // server configuration
     server: {
@@ -11,7 +30,8 @@ module.exports = {
     },
 
     cert: {
-        privateKey: path.resolve(__dirname + '/bin/certificate/private.pem'),
-        certificate: path.resolve(__dirname + '/bin/certificate/file.crt')
+        privateKey: path.resolve(__dirname + '/certificate/private.pem'),
+        certificate: path.resolve(__dirname + '/certificate/file.crt')
     }
 };
+*/

@@ -1,23 +1,22 @@
-#!/usr/bin/env node
-
-/**
+/*
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('backend:server');
-var fs = require('fs');
-var https = require('https');
-let config = require('../config');
-var privateKey  = fs.readFileSync(config.cert.privateKey, 'utf8');
-var certificate = fs.readFileSync(config.cert.certificate, 'utf8');
-var credentials = {key: privateKey, cert: certificate};
+const app = require('./app');
+const debug = require('debug')('backend:server');
+const fs = require('fs');
+const https = require('https');
+const config = require('./config');
+
+const privateKey  = fs.readFileSync(config.KEY_FILE, 'utf8');
+const certificate = fs.readFileSync(config.CERT_FILE, 'utf8');
+const credentials = {key: privateKey, cert: certificate};
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || config.server.listenPort);
+var port = normalizePort(process.env.PORT || config.LISTEN_PORT);
 app.set('port', port);
 
 /**

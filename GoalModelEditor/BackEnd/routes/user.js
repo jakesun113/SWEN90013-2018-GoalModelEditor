@@ -11,7 +11,7 @@ const router = express.Router();
 const db = require("../dbConn");
 
 // security-related imports
-const auth = require("./authen");
+const auth = require("../authen");
 const crypto = require('crypto');
 
 

@@ -1,24 +1,38 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var bodyParser = require('body-parser');
+/* Express App
+ *
+ * Runs REST API for back-end REST API: responsible for catching and
+ * routing incoming HTTP(S) requests from the front-end to their endpoints.
+ *
+ */
 
-var db = require('./dbConn.js');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/user');
-var projectRouter = require('./routes/project');
+// express application and middleware modules
+const express = require('express');
+const createError = require('http-errors');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
-// const
+// helper modules from stdlib
+const logger = require('morgan');
+const path = require('path');
+
+// database connection
+const database = require('./dbConn.js');
+
+// routes to endpoints
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/user');
+const projectRouter = require('./routes/project');
+const goalModelRouter = require("./routes/goal_model");
+
+// server config
 let config = require('./config');
 
 
 var app = express();
 
 // view engine setup
-app.set('views', config.server.distFolder);
+app.set('views', config.FRONT_VIEW_DIR);
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
@@ -26,7 +40,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(config.server.srcFolder));
+app.use(express.static(config.FRONT_SRC_DIR));
 
 app.use('/', indexRouter);
 app.use('/user', usersRouter);

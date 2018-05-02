@@ -1,0 +1,11 @@
+{
+    "error_codes" : {
+        "resource_retrieved" : 200,
+        "resource_created" : 201,
+        "unauthorized" : 401,
+        "resource_not_found" : 404,
+        "request_timeout" : 408
+    },
+
+    "default_error_message" : "ERROR"
+}

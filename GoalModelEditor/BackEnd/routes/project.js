@@ -8,7 +8,7 @@ var express = require('express');
 var router = express.Router();
 
 // security related imports
-var auth = require("./authen");
+var auth = require("../authen");
 var db = require("../dbConn");
 
 
