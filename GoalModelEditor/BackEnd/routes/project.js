@@ -10,7 +10,17 @@ var db = require("../dbConn");
 
 
 /* GET Fetch File System */
-router.get("/fetch_file_system/:userId", (req, res, next) => {
+/* This should return a JSON (or some other equivalent data structure)
+ * list of goal model project names AND the the names of goal models
+ * with those projects. For example:
+ *
+ *      {
+ *          "project1": ["goalmodel_a", "goalmodel_b"]
+ *          "project2": ["goalmodel_c", "goalmodel_d"]
+ *      }
+ *
+ */
+router.get("/list/:userId", (req, res, next) => {
     // stub
 });
 
@@ -35,13 +45,13 @@ router.post("/create", function(req, res, next){
 
 
 /* POST Edit Project */
-router.post("/edit_project/:userId-:projectId", (req, res, next) => {
+router.post("/edit/:userId-:projectId", (req, res, next) => {
     // stub
 });
 
 
 /* DELETE Delete Project */
-router.delete("/delete_project/:userId-:projectId", (req, res, next) => {
+router.delete("/delete/:userId-:projectId", (req, res, next) => {
     // stub
 });
 
