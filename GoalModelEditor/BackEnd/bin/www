@@ -39,7 +39,7 @@ server.on('listening', onListening);
 //********************* Socket module
 var io = socket(server);
 io.on('connection', function (socket) {
-    console.log("one client id+ " + socket.id+" is connected");
+    console.log("one client (id: " + socket.id+ ") is connected");
     socket.on('chat',function(data){
       console.log("received data: "+data.username);
     })
