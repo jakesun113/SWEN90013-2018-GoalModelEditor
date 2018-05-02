@@ -29,7 +29,7 @@ router.get("/list/:userId", (req, res, next) => {
 
 
 /* POST Create Project */
-router.post("/create", function(req, res, next){
+router.post("/create/:userId", function(req, res, next){
 
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
