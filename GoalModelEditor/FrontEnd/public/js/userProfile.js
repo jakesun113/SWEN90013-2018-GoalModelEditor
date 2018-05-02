@@ -132,4 +132,4 @@ $('#profile').validator().on('submit', function (evt) {
             alert(jqXHR.statusText + ". Please contact us.");
         });// end ajax
     }
-})
+});

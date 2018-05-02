@@ -1,7 +1,7 @@
 // load user's file after loading the page content - handled by the front-end server
 // GET ('/user/:userid/myfile')
 $(document).ready(function () {
-    var url = '/user/' + Cookies.get('AUTH') + '/myfile';
+    var url = '/project/fetch_file_system?userid='+ Cookies.get('UID');
     $.ajax(url, {
         type: "GET",
         success: function(files) {
@@ -32,7 +32,7 @@ $(document).ready(function () {
 // POST ('/user/:userid/myfile')
 $('#createFile').submit(function(evt){
    evt.preventDefault();
-   var url = '/user/' + Cookies.get('AUTH') + '/myfile';
+   var url = '/project/create';
    var formData = $(this).serialize();
     $.ajax(url, {
         data: formData,
@@ -40,13 +40,13 @@ $('#createFile').submit(function(evt){
         success: function(file){
             console.log(file);
             var fileItem = JSON.parse(file);
-            console.log(fileItem[0]);
+            console.log(fileItem);
             var filelistHTML = '<div class="row border-bottom py-3 file-item" id="'
-                + fileItem[0].id + '">' + '<div class="col-3 text-center">'
-                + fileItem[0].fileName + '</div>' + '<div class="col-3 text-center text-color">'
-                + fileItem[0].owner + '</div>' + '<div class="col-3 text-center text-color">'
-                + fileItem[0].lastModified + '</div>' + '<div class="col-3 text-center text-color">'
-                + fileItem[0].fileSize + '</div>' + '</div>';
+                + fileItem.id + '">' + '<div class="col-3 text-center">'
+                + fileItem.project_name + '</div>' + '<div class="col-3 text-center text-color">'
+                + fileItem.owner + '</div>' + '<div class="col-3 text-center text-color">'
+                + fileItem.lastModified + '</div>' + '<div class="col-3 text-center text-color">'
+                + fileItem.fileSize + '</div>' + '</div>';
             $('#fileList').append(filelistHTML);
             $('#addFile').modal('toggle');
         }

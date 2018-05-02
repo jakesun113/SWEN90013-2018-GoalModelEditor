@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET user profile page */
 router.get('/', function(req, res, next) {
-    res.render("./user/userprofile", );
+    res.render("./user/userprofile");
 });
 
 router.get('/profile', function(req, res, next) {

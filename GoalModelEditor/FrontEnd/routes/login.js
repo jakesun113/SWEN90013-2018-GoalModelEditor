@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 });
 
 /* Log in the current user */
-router.post('/', integration.login, function(req, res, next) {
+router.post('/', function(req, res, next) {
     // check if both fields are filled
     // if(!req.body.username || !req.body.password) {
     //     return res.redirect('/user/login');

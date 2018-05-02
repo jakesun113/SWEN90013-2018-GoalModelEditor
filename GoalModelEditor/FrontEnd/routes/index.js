@@ -10,4 +10,21 @@ routers.get('/', function(req, res, next) {
     res.render('index');
 });
 
+/* TODO for testing, to be deleted */
+routers.post('/user/login', function(req, res, next){
+    var id = {"id": "dsada"};
+    res.json(id);
+    res.redirect('/');
+});
+
+// get the project page //
+/* TODO : this needs to stay */
+routers.get('/project', function(req, res, next){
+    if(!req.cookies.UID) {
+        res.redirect('/');
+    } else {
+        res.render('./user/project/filesystem');
+    }
+});
+
 module.exports = routers;

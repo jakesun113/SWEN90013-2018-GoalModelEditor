@@ -3,7 +3,7 @@ var router = express.Router();
 var integration = require('../api');
 
 /* GET registration page */
-router.get('/',integration.register, function(req, res, next) {
+router.get('/', function(req, res, next) {
     res.render("registration");
     console.log("here");
 });
