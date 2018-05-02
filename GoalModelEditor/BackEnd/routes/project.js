@@ -4,12 +4,15 @@
 
 
 // express application
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 // security related imports
-var auth = require("../authen");
-var db = require("../dbConn");
+const auth = require("../authen");
+const db = require("../dbConn");
+
+// response codes
+const response_codes = require("./response_codes");
 
 
 /* GET List (a user's) File System */
@@ -24,7 +27,15 @@ var db = require("../dbConn");
  *
  */
 router.get("/list/:userId", (req, res, next) => {
-    // stub
+
+    // (1) authenticate request
+    if (!auth.authenticate(req.headers)) {
+        res.statusCode = response_codes.ERROR.UNAUTHORIZED_REQUEST;
+        res.end();
+    }
+
+    // (2) fetch project list
+
 });
 
 

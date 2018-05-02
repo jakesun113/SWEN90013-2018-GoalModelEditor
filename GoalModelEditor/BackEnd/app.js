@@ -36,16 +36,20 @@ app.set('views', config.FRONT_VIEW_DIR);
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
+// middleware
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(config.FRONT_SRC_DIR));
 
+// route to endpoints
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
 app.use('/project', projectRouter);
+app.use("/goal_model", goalModelRouter);
 
+// QUESTION: should this occur before the routing to endpoints?
 app.use(bodyParser.json()); // for parsing application/json
 
 // catch 404 and forward to error handler
