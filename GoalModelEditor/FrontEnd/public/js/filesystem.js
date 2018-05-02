@@ -1,5 +1,5 @@
 // load user's file after loading the page content - handled by the front-end server
-// GET ('/user/:userid/myfile')
+// GET ('/project/fetch_file_system?userid=')
 $(document).ready(function () {
     var url = '/project/fetch_file_system?userid='+ Cookies.get('UID');
     $.ajax(url, {
@@ -29,7 +29,7 @@ $(document).ready(function () {
 
 // reload user's file list after the user has created a new file
 // i.e. handle the "CREATE" button
-// POST ('/user/:userid/myfile')
+// POST ('/project/create')
 $('#createFile').submit(function(evt){
    evt.preventDefault();
    var url = '/project/create';
@@ -55,7 +55,7 @@ $('#createFile').submit(function(evt){
     });// end ajax
 });// end submit
 
-
+// TODO: not working, need upgrade on the route
 // handle double click on the file item
 // send get request
 // GET ('/user/:userid/myfile/:fileid')
