@@ -6,12 +6,19 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/login',function(req, res){
+router.get('/login',function(req, res) {
   res.render('login');
 });
 
-router.get('/register', function(req, res){
+router.get('/register', function(req, res) {
   res.render('register');
+});
+
+router.get('/dashboard', function(req, res) {
+  if(req.cookies.LOKIDIED){
+    res.render('user/project/dashboard');
+  }
+  res.redirect('/login');
 });
 
 module.exports = router;
