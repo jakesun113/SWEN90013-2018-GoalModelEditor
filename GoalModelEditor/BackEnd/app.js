@@ -8,9 +8,7 @@ var bodyParser = require('body-parser');
 var db = require('./dbConn.js');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var loginRouter = require('./routes/login');
-let registerRouter = require('./routes/register');
+var usersRouter = require('./routes/user');
 
 
 var app = express();
@@ -26,9 +24,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use("/user_login", loginRouter);
-app.use("/user_register", registerRouter);
+app.use('/user', usersRouter);
 
 app.use(bodyParser.json()); // for parsing application/json
 
