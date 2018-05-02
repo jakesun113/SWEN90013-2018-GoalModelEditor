@@ -8,12 +8,13 @@ function genToken(user_id){
 }
 
 function authenticate(headers) {
-    var token = headers['x-access-token'];
-    if (!token){
+    var authString = headers["Authorization"];
+    if (!authString){
         return false
     }
+    var token = authString.split(" ")[1];
     try {
-        var decoded = jwt.verify(token, secret);
+        var decoded = jwt.verify(token, SECRETE);
     } catch(err) {
         return false
     }
