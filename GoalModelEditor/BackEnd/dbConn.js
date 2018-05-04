@@ -21,17 +21,26 @@ var SQL_USER_REGISTER = "INSERT INTO " +
 var SQL_USER_LOGIN = "UPDATE User SET LastLogin = NOW()" +
     "WHERE Username = ? AND Password = ?";
 /**
- *
+ * The SQL sentence to retrieve userid
  * @type {string}
  */
 var SQL_RET_USERID = "SELECT UserId from User WHERE Username = ? AND Password = ?";
-
+/**
+ * The SQL sentence to retrieve projectid
+ * @type {string}
+ */
 var SQL_RET_PROJECTID = "SELECT ProjectId from Project WHERE ProjectName = ? AND OwnerId = ?";
-
+/**
+ * The SQL sentence to create a project
+ * @type {string}
+ */
 var SQL_Project_Creation = "INSERT INTO " +
     "Project (ProjectId, ProjectName, ProjectDescription, LastModified, Size,OwnerId) " +
     "VALUES (UUID(), ?, ?, NOW(), ?,?)";
-
+/**
+ * retrieve goalmodel name list of a given project
+ * @type {string}
+ */
 var SQL_RET_GOALMODEL_OF_PROJ = "SELECT ModelName " +
     "FROM Project LEFT JOIN GoalModel\n" +
     "On Project.ProjectId = GoalModel.ProjectId\n" +
