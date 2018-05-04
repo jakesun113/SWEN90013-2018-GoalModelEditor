@@ -31,7 +31,7 @@ router.get("/list/:userId", (req, res, next) => {
     // (1) authenticate request
     if (!auth.authenticate(req.headers)) {
         res.statusCode = response_codes.ERROR.UNAUTHORIZED_REQUEST;
-        res.end();
+        return res.end();
     }
 
     // (2) fetch project list
@@ -46,7 +46,7 @@ router.post("/create/:userId", function(req, res, next){
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
         res.json( {created: false, message: "Authentication failed"} );
-        res.end();
+        return res.end();
     }
 
     // create new project
@@ -59,7 +59,7 @@ router.post("/create/:userId", function(req, res, next){
             res.statusCode = 500;
         }
     });
-    res.end();
+    return res.end();
 });
 
 
