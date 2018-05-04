@@ -7,14 +7,23 @@ var dbconf = {
     password: 'SWEN90013goal!',
     database: 'GoalModel_A'
 };
-
+/**
+ * The SQL sentence to insert a user with fields escaped;
+ * @type {string}
+ */
 var SQL_USER_REGISTER = "INSERT INTO " +
     "User (UserId, Username, Password, Email, FirstName, LastName, SignupTime, LastLogin) " +
     "VALUES (UUID(), ?, ?, ?, ?, ?, NOW(), NOW())";
-
+/**
+ * The SQL sentence to check user name and password and update the LastLogin field;
+ * @type {string}
+ */
 var SQL_USER_LOGIN = "UPDATE User SET LastLogin = NOW()" +
     "WHERE Username = ? AND Password = ?";
-
+/**
+ *
+ * @type {string}
+ */
 var SQL_RET_USERID = "SELECT UserId from User WHERE Username = ? AND Password = ?";
 
 var SQL_RET_PROJECTID = "SELECT ProjectId from Project WHERE ProjectName = ? AND OwnerId = ?";
