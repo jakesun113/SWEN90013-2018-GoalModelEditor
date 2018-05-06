@@ -38,8 +38,8 @@ const SQL_RET_PROJECTID = "SELECT * from Project WHERE ProjectName = ? AND Owner
  * @type {string}
  */
 const SQL_Project_Creation = "INSERT INTO " +
-    "Project (ProjectId, ProjectName, ProjectDescription, LastModified, Size,OwnerId) " +
-    "VALUES (UUID(), ?, ?, NOW(), ?,?)";
+    "Project (ProjectId, ProjectName, ProjectDescription, Size, OwnerId) " +
+    "VALUES (UUID(), ?, ?, ?, ?)";
 /**
  * retrieve goalmodel name list of a given project
  * @type {string}
@@ -58,7 +58,7 @@ const SQL_CREATE_GOALMODEL = "INSERT INTO GoalModel (ModelId,ModelName, ModelDes
  * get all project and its corresponding goalmodels
  * @type {string}
  */
-const SQL_GET_PROJ_GOALMODEL = "SELECT UP.ProjectId, ModelId, ModelName, ProjectName " +
+const SQL_GET_PROJ_GOALMODEL = "SELECT * " +
     "FROM GoalModel AS GM INNER JOIN User_Project AS UP INNER JOIN Project " +
     "ON UP.ProjectId = GM.ProjectId AND UP.ProjectId = Project.ProjectId " +
     "WHERE UserId = ?";
@@ -95,7 +95,7 @@ dbConn.createProject = function (ProjectName, ProjectDescription, Size, UserId) 
                             console.log(JSON.stringify(err));
                             if (err.errno == 1062) {// MYSQL error number for duplicate entry
                                 // Username already exists.
-                                resolve(dbConn.ALREADY_EXIST);
+                                reject(dbConn.ALREADY_EXIST);
                             } else {
                                 reject(dbConn.UNKNOWN_ERROR);// unknown error
                             }
@@ -103,7 +103,6 @@ dbConn.createProject = function (ProjectName, ProjectDescription, Size, UserId) 
                             // success
                             resolve(result[0]);
                         }
-                        if (err) return reject(err);
                         // if success: return userid
                         //console.log(result);
                         //resolve(result.ProjectId);
@@ -131,7 +130,7 @@ dbConn.insertUser = function (username, password, Email, FirstName, LastName) {
                     console.log(JSON.stringify(err));
                     if (err.errno == 1062) {// MYSQL error number for duplicate entry
                         // Username already exists.
-                        resolve(dbConn.ALREADY_EXIST);
+                        reject(dbConn.ALREADY_EXIST);
                     } else {
                         reject(dbConn.UNKNOWN_ERROR);// unknown error
                     }
@@ -164,7 +163,7 @@ dbConn.login = function (username, password) {
                     });
                 } else {
                     // Invalid username or password
-                    resolve(dbConn.LOGIN_INVALID);
+                    reject(dbConn.LOGIN_INVALID);
                 }
             })
     });
@@ -193,8 +192,17 @@ dbConn.getGoalModelList = function (ProjectId) {
 dbConn.createGoalModel = function (modelName, modelDescription, url, ProjectId) {
     return new Promise(function (resolve, reject) {
         pool.query(SQL_CREATE_GOALMODEL, [modelName, modelDescription, url, ProjectId], function (err, result) {
-            if (err) return reject(err);
-            resolve(result);
+            if (err) {
+                console.log(JSON.stringify(err));
+                if (err.errno == 1062) {// MYSQL error number for duplicate entry
+                    // Username already exists.
+                    reject(dbConn.ALREADY_EXIST);
+                } else {
+                    reject(dbConn.UNKNOWN_ERROR);// unknown error
+                }
+            }else{
+                resolve(dbConn.SUCCESS);
+            }
         });
     });
 };
@@ -206,18 +214,7 @@ dbConn.getProjectGoalModelList = function (userid) {
     return new Promise((resolve, reject) => {
         pool.query(SQL_GET_PROJ_GOALMODEL, [userid], (err, result) => {
             if (err) return reject(err);
-            const ret = {};
-            for (const x of result) {
-                const proj = x.ProjectName;
-                const projId = x.ProjectId;
-                if (!ret[proj]) {
-                    ret[proj] = {ProjectId: projId, Models: []};
-                }
-                delete x['ProjectName'];
-                delete x['ProjectId'];
-                ret[proj]['Models'].push(x);
-            }
-            resolve(ret);
+            resolve(result);
         });
     });
 };
@@ -230,7 +227,7 @@ module.exports = dbConn;
 //     pool.end();
 // });
 // dbConn.getProjectGoalModelList('0aa452d7-4b67-11e8-8c21-02388973fed8').then(res => {
-//     console.log(JSON.stringify(res));
+//     console.log(res);
 //     pool.end();
 // });
 
