@@ -6,15 +6,15 @@
 /*show border end*/
 
 /*Set frame and scroll start*/
-#height_fullscreen > .row {
+#height-full-screen > .row {
     min-height: 90vh;
 }
 .scrollbar {
     height: 90vh;
     overflow-y: scroll;
 }
-.goalscrollbar{
-    height: 27vh;
+.inside-scrollbar{
+    height: 28vh;
     overflow-y: scroll;
 }
 /*Set frame and scroll end*/

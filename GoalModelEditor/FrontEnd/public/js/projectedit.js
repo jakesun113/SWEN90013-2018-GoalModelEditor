@@ -324,7 +324,7 @@ function addCluster(){
     var cluster = $("#cluster");
     clusterNumber++;
 
-    cluster.append('<div class="cluster showborder" id=cluster_'+clusterNumber.toString()+'>'+'</div>');
+    cluster.append('<div class="cluster showborder inside-scrollbar" id=cluster_'+clusterNumber.toString()+'>'+'</div>');
 }
 /*Add new cluster end*/
 

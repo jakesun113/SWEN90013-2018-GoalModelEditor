@@ -8,7 +8,7 @@
     <!-- Loads and initializes the Bootstrap style -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!--Load the edit page style-->
-    <link rel="stylesheet" href="/stylesheet/importphotos.css">
+    <link rel="stylesheet" href="/stylesheet/projectedit.css">
 
 </head>
 
@@ -53,7 +53,7 @@
 </nav>
 
 <!--the main section-->
-<div id="height_fullscreen" class="container-fluid">
+<div id="height-full-screen" class="container-fluid">
     <div class="row">
         <!--import pictures section start-->
         <div id="photo" class="col-7 showborder scrollbar">
@@ -97,7 +97,7 @@
 
             <!-- Tab panels -->
             <div>
-                <div id="goals" class="tab-content showborder goalscrollbar">
+                <div id="goals" class="tab-content showborder inside-scrollbar">
                     <!--Panel 1-->
                     <div class="tab-pane fade in show active" id="panel1" role="tabpanel">
                         <h6>Functional Goals</h6>
@@ -135,13 +135,13 @@
                 </div>
 
                 <!--used goals-->
-                <div id="usedgoal" class="showborder goalscrollbar" style="display: none">
+                <div id="usedgoal" class="showborder inside-scrollbar" style="display: none">
                     <h6>Used Goals</h6>
                     <div id="usedgoaldata"></div>
                 </div>
 
                 <!--deleted goals-->
-                <div id="deletedgoal" class="showborder goalscrollbar" style="display: none">
+                <div id="deletedgoal" class="showborder inside-scrollbar" style="display: none">
                     <h6>Deleted Goals</h6>
                     <div id="deletedgoaldata"></div>
                 </div>
@@ -158,9 +158,9 @@
                 <button class="btn-primary" onclick="addCluster()">Add</button>
             </div>
             <!--show cluster data from JSON-->
-            <div class="cluster showborder" id="cluster_1"></div>
-            <div class="cluster showborder" id="cluster_2"></div>
-            <div class="cluster showborder" id="cluster_3"></div>
+            <div class="cluster showborder inside-scrollbar" id="cluster_1"></div>
+            <div class="cluster showborder inside-scrollbar" id="cluster_2"></div>
+            <div class="cluster showborder inside-scrollbar" id="cluster_3"></div>
         </div>
         <!--cluster section end-->
 
@@ -198,7 +198,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 <!--<script type="text/javascript" src="/js/mxClient.js"></script>-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script type="text/javascript" src="/js/importphotos.js"></script>
+<script type="text/javascript" src="/js/projectedit.js"></script>
 <footer>
     <p class="text-center">&copy;<em>&nbsp;2018 The University of Melbourne</em></p>
 </footer>
