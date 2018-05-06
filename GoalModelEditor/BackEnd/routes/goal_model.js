@@ -6,11 +6,37 @@
 const express = require("express");
 const router = express.Router();
 
+// security related imports
+const auth = require("../authen");
+const db = require("../dbConn");
+
 
 /* POST Create Goal Model */
-router.post("/create/:userId-:projectId-:goalmodelId",
+router.post("/create/:userId-:projectId",
     (req, res, next) => {
-        // stub
+        // check token for authentication
+        if (!auth.authenticate(req.headers)) {
+            res.statusCode = 401;
+            res.json( {created: false, message: "Authentication failed"} );
+            return res.end();
+        }
+
+        // create new goal model
+        db.createGoalModel(req.body.model_name, req.body.description, "", req.params.projectId)
+            .then((result)=>{
+            res.statusCode = 201;
+            res.json({
+                model_name : result.ModelName,
+                model_id : result.ModelId,
+                project_id : result.ProjectId,
+                last_modified: result.LastModified
+            });
+            return res.end();
+        }).catch(err => {
+            res.statusCode = 500;
+            res.json({message: 'Failed to create new model'})
+            return res.end();
+        });
     }
 );
 
