@@ -10,7 +10,7 @@ const router = express.Router();
 /* POST Create Goal Model */
 router.post("/create/:userId-:projectId-:goalmodelId",
     (req, res, next) => {
-
+        // stub
     }
 );
 
@@ -18,7 +18,7 @@ router.post("/create/:userId-:projectId-:goalmodelId",
 /* PUT Edit Goal Model */
 router.post("/edit/:userId-:projectId-:goalmodelId",
     (req, res, next) => {
-
+        // stub
     }
 );
 
@@ -26,8 +26,8 @@ router.post("/edit/:userId-:projectId-:goalmodelId",
 /* DELETE Goal Model */
 router.delete("/delete/:userId-:projectId-:goalmodelId",
     (req, res, next) => {
-
+        // stub
     }
 );
 
-
+module.exports = router;
