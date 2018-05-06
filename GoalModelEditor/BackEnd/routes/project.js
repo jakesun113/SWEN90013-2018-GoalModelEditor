@@ -65,8 +65,27 @@ router.post("/create/:userId", function(req, res, next){
 
 
 /* POST Edit Project */
-router.post("/edit/:userId-:projectId", (req, res, next) => {
-    // stub
+router.put("/edit/:userId-:projectId", (req, res, next) => {
+
+    // check token for authentication
+    if (!auth.authenticate(req.headers)) {
+        res.statusCode = 401;
+        res.json( {created: false, message: "Authentication failed"} );
+        res.end();
+    }
+
+    // edit project
+    db.updateProject(req.body.project_name, req.body.description, req.body.size,
+        req.params.userId, req.params.projectId).then((result)=>{
+        console.log(result);
+        if(result != db.UNKNOWN_ERROR) {
+            res.statusCode = 200;
+            res.json(result);
+        } else {
+            res.statusCode = 500;
+            res.json({message: 'Failed to update new project'})
+        }
+    });
 });
 
 
