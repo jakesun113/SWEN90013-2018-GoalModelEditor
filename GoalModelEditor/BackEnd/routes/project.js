@@ -29,22 +29,31 @@ const response_codes = require("./response_codes");
 router.get("/list/:userId", (req, res, next) => {
 
     // (1) authenticate request
-    if (!auth.authenticate(req.headers)) {
-        res.statusCode = response_codes.ERROR.UNAUTHORIZED_REQUEST;
-        res.end();
-    }
+    // if (!auth.authenticate(req.headers)) {
+    //     res.statusCode = response_codes.ERROR.UNAUTHORIZED_REQUEST;
+    //     res.end();
+    // }
 
     // (2) fetch project list
     db.getProjectGoalModelList(req.params.userId).then((result)=>{
         console.log(result);
         res.statusCode = 200;
         // TODO: need parsing
-        res.json(result);
+        var projects = {};
+        var model;
+        console.log(result);
+        for (var i = 0; i < result.length; i++){
+            model = result[i];
+            console.log(model);
+            //if (obj.ProjectId in projects)
+        }
+        res.json({projects: projects});
+        res.end();
     }).catch(err => {
         res.statusCode = 500;
         res.json({message: 'Failed to create new project'})
+        res.end();
     });
-    res.end();
 
 });
 
