@@ -157,7 +157,7 @@ dbConn.login = function (username, password) {
                 if (err) return reject(err);
                 if (result.affectedRows == 1) {
                     // success
-                    connection.query(SQL_RET_USERID, [username, password], function (err, result) {
+                    pool.query(SQL_RET_USERID, [username, password], function (err, result) {
                         if (err) return reject(err);
                         // if success: return userid
                         resolve(result[0].UserId);
