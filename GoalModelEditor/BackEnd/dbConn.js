@@ -32,7 +32,7 @@ const SQL_RET_USERID = "SELECT UserId from User WHERE Username = ? AND Password 
  * The SQL sentence to retrieve projectid
  * @type {string}
  */
-const SQL_RET_PROJECTID = "SELECT ProjectId from Project WHERE ProjectName = ? AND OwnerId = ?";
+const SQL_RET_PROJECTID = "SELECT * from Project WHERE ProjectName = ? AND OwnerId = ?";
 /**
  * The SQL sentence to create a project
  * @type {string}
@@ -87,10 +87,10 @@ dbConn.createProject = function (ProjectName, ProjectDescription, Size, UserId) 
             [ProjectName, ProjectDescription, Size, UserId], function (err, result) {
                 if (err) {
                     console.log(JSON.stringify(err));
-                    reject(err);
+                    return reject(err);
                 } else {
                     // success
-                    connection.query(SQL_RET_PROJECTID, [ProjectName, UserId], function (err, result) {
+                    pool.query(SQL_RET_PROJECTID, [ProjectName, UserId], function (err, result) {
                         if (err) {
                             console.log(JSON.stringify(err));
                             if (err.errno == 1062) {// MYSQL error number for duplicate entry
@@ -101,7 +101,7 @@ dbConn.createProject = function (ProjectName, ProjectDescription, Size, UserId) 
                             }
                         } else {
                             // success
-                            resolve(result[0].ProjectId);
+                            resolve(result[0]);
                         }
                         if (err) return reject(err);
                         // if success: return userid
@@ -210,7 +210,7 @@ dbConn.getProjectGoalModelList = function (userid) {
             for (const x of result) {
                 const proj = x.ProjectName;
                 const projId = x.ProjectId;
-                if(!ret[proj]){
+                if (!ret[proj]) {
                     ret[proj] = {ProjectId: projId, Models: []};
                 }
                 delete x['ProjectName'];
@@ -225,7 +225,10 @@ dbConn.getProjectGoalModelList = function (userid) {
 module.exports = dbConn;
 
 
-
+// dbConn.createProject('tproj1', 'testetst', 100, '0aa452d7-4b67-11e8-8c21-02388973fed8').then(res => {
+//     console.log(res);
+//     pool.end();
+// });
 // dbConn.getProjectGoalModelList('0aa452d7-4b67-11e8-8c21-02388973fed8').then(res => {
 //     console.log(JSON.stringify(res));
 //     pool.end();
