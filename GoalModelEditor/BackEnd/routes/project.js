@@ -29,30 +29,39 @@ const response_codes = require("./response_codes");
 router.get("/list/:userId", (req, res, next) => {
 
     // (1) authenticate request
-    // if (!auth.authenticate(req.headers)) {
-    //     res.statusCode = response_codes.ERROR.UNAUTHORIZED_REQUEST;
-    //     res.end();
-    // }
+    if (!auth.authenticate(req.headers)) {
+        res.statusCode = 401;
+        res.json( {created: false, message: "Authentication failed"} );
+        return res.end();
+    }
 
     // (2) fetch project list
     db.getProjectGoalModelList(req.params.userId).then((result)=>{
-        console.log(result);
         res.statusCode = 200;
-        // TODO: need parsing
         var projects = {};
         var model;
-        console.log(result);
         for (var i = 0; i < result.length; i++){
             model = result[i];
-            console.log(model);
-            //if (obj.ProjectId in projects)
+            if (model.ProjectId in projects) {
+                projects[model.ProjectId].models.push({model_id: model.ModelId,
+                                         model_name: model.ModelName,
+                                         last_modified: model.LastModified});
+            } else {
+                projects[model.ProjectId] = {
+                    project_name : model.ProjectName,
+                    project_id : model.ProjectId,
+                    models :[{model_id: model.ModelId,
+                        model_name: model.ModelName,
+                        last_modified: model.LastModified}]
+                };
+            }
         }
         res.json({projects: projects});
-        res.end();
+        return res.end();
     }).catch(err => {
         res.statusCode = 500;
         res.json({message: 'Failed to create new project'})
-        res.end();
+        return res.end();
     });
 
 });
@@ -73,11 +82,12 @@ router.post("/create/:userId", function(req, res, next){
         console.log(result);
         res.statusCode = 201;
         res.json(result);
+        return res.end();
     }).catch(err => {
         res.statusCode = 500;
-        res.json({message: 'Failed to create new project'})
+        res.json({message: 'Failed to create new project'});
+        return res.end();
     });
-    return res.end();
 });
 
 
@@ -88,7 +98,7 @@ router.put("/edit/:userId-:projectId", (req, res, next) => {
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
         res.json( {created: false, message: "Authentication failed"} );
-        res.end();
+        return res.end();
     }
 
     // edit project
@@ -102,6 +112,7 @@ router.put("/edit/:userId-:projectId", (req, res, next) => {
             res.statusCode = 500;
             res.json({message: 'Failed to update project'})
         }
+        return res.end();
     });
 });
 
