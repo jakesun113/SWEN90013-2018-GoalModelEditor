@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Registeration_Test" time="10" tests="2" failures="0" errors="0">
+   <testsuite name="Registeration_Test" tests="2" failures="0" errors="0" time="10" timestamp="2018-05-04 21:19:12" hostname="edric.dang - 192.168.1.102" id="Test Suites/Registeration_Test">
+      <properties>
+         <property name="deviceName" value=""/>
+         <property name="devicePlatform" value=""/>
+         <property name="logFolder" value="/Users/edric.dang/Desktop/GoalModelEditor/Reports/Registeration_Test/20180504_211910"/>
+         <property name="logFiles" value="/Users/edric.dang/Desktop/GoalModelEditor/Reports/Registeration_Test/20180504_211910/execution0.log"/>
+         <property name="attachments" value=""/>
+         <property name="hostName" value="edric.dang - 192.168.1.102"/>
+         <property name="os" value="Mac OS X 64bit"/>
+         <property name="katalonVersion" value="5.4.1.1"/>
+         <property name="browser" value="Chrome 66.0.3359.139"/>
+         <property name="hostAddress" value="192.168.1.102"/>
+         <property name="sessionId" value="3e330168f6d9820da5fd7f89612f07ca"/>
+         <property name="seleniumVersion" value="3.7.1"/>
+         <property name="proxyInformation" value="ProxyInformation{proxyOption=NO_PROXY, proxyServerType=HTTP, password=, proxyServerAddress=, proxyServerPort=0}"/>
+         <property name="platform" value="Mac OS X"/>
+      </properties>
+      <testcase name="Test Cases/Register_Test_Normal" classname="Test Cases/Register_Test_Normal" status="PASSED">
+         <system-out><![CDATA[2018-05-04 21:19:12 - [TEST_CASE][PASSED] - Test Cases/Register_Test_Normal: Test Cases/Register_Test_Normal
+
+2018-05-04 21:19:13 - [TEST_STEP][PASSED] - openBrowser: Browser is opened with url: ''
+
+2018-05-04 21:19:15 - [MESSAGE][PASSED] - Browser is opened with url: ''
+
+2018-05-04 21:19:15 - [TEST_STEP][PASSED] - navigateToUrl: Navigate to 'https://localhost:8080/' successfully
+
+2018-05-04 21:19:15 - [MESSAGE][PASSED] - Navigate to 'https://localhost:8080/' successfully
+
+2018-05-04 21:19:15 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/RegisterSeries/Page_Goal Model Editor/a_Go to Goal Model Editor' is clicked on
+
+2018-05-04 21:19:15 - [MESSAGE][PASSED] - Object: 'Object Repository/RegisterSeries/Page_Goal Model Editor/a_Go to Goal Model Editor' is clicked on
+
+2018-05-04 21:19:15 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/RegisterSeries/Page_Sign in/a_Register' is clicked on
+
+2018-05-04 21:19:16 - [MESSAGE][PASSED] - Object: 'Object Repository/RegisterSeries/Page_Sign in/a_Register' is clicked on
+
+2018-05-04 21:19:16 - [TEST_STEP][PASSED] - setText: Text 'username4' is set on object 'Object Repository/RegisterSeries/Page_Registration/input_username'
+
+2018-05-04 21:19:16 - [MESSAGE][PASSED] - Text 'username4' is set on object 'Object Repository/RegisterSeries/Page_Registration/input_username'
+
+2018-05-04 21:19:16 - [TEST_STEP][PASSED] - setText: Text 'lastname4' is set on object 'Object Repository/RegisterSeries/Page_Registration/input_lastname'
+
+2018-05-04 21:19:16 - [MESSAGE][PASSED] - Text 'lastname4' is set on object 'Object Repository/RegisterSeries/Page_Registration/input_lastname'
+
+2018-05-04 21:19:16 - [TEST_STEP][PASSED] - setText: Text 'firstname4' is set on object 'Object Repository/RegisterSeries/Page_Registration/input_firstname'
+
+2018-05-04 21:19:17 - [MESSAGE][PASSED] - Text 'firstname4' is set on object 'Object Repository/RegisterSeries/Page_Registration/input_firstname'
+
+2018-05-04 21:19:17 - [TEST_STEP][PASSED] - setText: Text 'dsy502yc@gmail.com' is set on object 'Object Repository/RegisterSeries/Page_Registration/input_email'
+
+2018-05-04 21:19:17 - [MESSAGE][PASSED] - Text 'dsy502yc@gmail.com' is set on object 'Object Repository/RegisterSeries/Page_Registration/input_email'
+
+2018-05-04 21:19:17 - [TEST_STEP][PASSED] - setText: Text '1234' is set on object 'Object Repository/RegisterSeries/Page_Registration/input_password'
+
+2018-05-04 21:19:17 - [MESSAGE][PASSED] - Text '1234' is set on object 'Object Repository/RegisterSeries/Page_Registration/input_password'
+
+2018-05-04 21:19:17 - [TEST_STEP][PASSED] - setText: Text '1234' is set on object 'Object Repository/RegisterSeries/Page_Registration/input_confirmPassword'
+
+2018-05-04 21:19:17 - [MESSAGE][PASSED] - Text '1234' is set on object 'Object Repository/RegisterSeries/Page_Registration/input_confirmPassword'
+
+2018-05-04 21:19:17 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/RegisterSeries/Page_Registration/button_Submit' is clicked on
+
+2018-05-04 21:19:17 - [MESSAGE][PASSED] - Object: 'Object Repository/RegisterSeries/Page_Registration/button_Submit' is clicked on
+
+2018-05-04 21:19:17 - [TEST_STEP][PASSED] - closeBrowser: Browser is closed
+
+2018-05-04 21:19:17 - [MESSAGE][PASSED] - Browser is closed]]></system-out>
+         <system-err><![CDATA[]]></system-err>
+      </testcase>
+      <testcase name="Test Cases/Register_Test_Wrong_Password_Pair" classname="Test Cases/Register_Test_Wrong_Password_Pair" status="PASSED">
+         <system-out><![CDATA[2018-05-04 21:19:17 - [TEST_CASE][PASSED] - Test Cases/Register_Test_Wrong_Password_Pair: Test Cases/Register_Test_Wrong_Password_Pair
+
+2018-05-04 21:19:17 - [TEST_STEP][PASSED] - openBrowser: Browser is opened with url: ''
+
+2018-05-04 21:19:18 - [MESSAGE][PASSED] - Browser is opened with url: ''
+
+2018-05-04 21:19:18 - [TEST_STEP][PASSED] - navigateToUrl: Navigate to 'https://localhost:8080/' successfully
+
+2018-05-04 21:19:20 - [MESSAGE][PASSED] - Navigate to 'https://localhost:8080/' successfully
+
+2018-05-04 21:19:20 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/RegisterSeries/Page_Goal Model Editor/a_Go to Goal Model Editor' is clicked on
+
+2018-05-04 21:19:21 - [MESSAGE][PASSED] - Object: 'Object Repository/RegisterSeries/Page_Goal Model Editor/a_Go to Goal Model Editor' is clicked on
+
+2018-05-04 21:19:21 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/RegisterSeries/Page_Sign in/a_Register' is clicked on
+
+2018-05-04 21:19:22 - [MESSAGE][PASSED] - Object: 'Object Repository/RegisterSeries/Page_Sign in/a_Register' is clicked on
+
+2018-05-04 21:19:22 - [TEST_STEP][PASSED] - setText: Text 'username5' is set on object 'Object Repository/RegisterSeries/Page_Registration/input_username'
+
+2018-05-04 21:19:22 - [MESSAGE][PASSED] - Text 'username5' is set on object 'Object Repository/RegisterSeries/Page_Registration/input_username'
+
+2018-05-04 21:19:22 - [TEST_STEP][PASSED] - setText: Text 'lastname5' is set on object 'Object Repository/RegisterSeries/Page_Registration/input_lastname'
+
+2018-05-04 21:19:22 - [MESSAGE][PASSED] - Text 'lastname5' is set on object 'Object Repository/RegisterSeries/Page_Registration/input_lastname'
+
+2018-05-04 21:19:22 - [TEST_STEP][PASSED] - setText: Text 'dsy502yc@gmail.com' is set on object 'Object Repository/RegisterSeries/Page_Registration/input_email'
+
+2018-05-04 21:19:22 - [MESSAGE][PASSED] - Text 'dsy502yc@gmail.com' is set on object 'Object Repository/RegisterSeries/Page_Registration/input_email'
+
+2018-05-04 21:19:22 - [TEST_STEP][PASSED] - setText: Text 'firstname5' is set on object 'Object Repository/RegisterSeries/Page_Registration/input_firstname'
+
+2018-05-04 21:19:22 - [MESSAGE][PASSED] - Text 'firstname5' is set on object 'Object Repository/RegisterSeries/Page_Registration/input_firstname'
+
+2018-05-04 21:19:22 - [TEST_STEP][PASSED] - setText: Text '1234' is set on object 'Object Repository/RegisterSeries/Page_Registration/input_password'
+
+2018-05-04 21:19:22 - [MESSAGE][PASSED] - Text '1234' is set on object 'Object Repository/RegisterSeries/Page_Registration/input_password'
+
+2018-05-04 21:19:22 - [TEST_STEP][PASSED] - setText: Text '1233' is set on object 'Object Repository/RegisterSeries/Page_Registration/input_confirmPassword'
+
+2018-05-04 21:19:22 - [MESSAGE][PASSED] - Text '1233' is set on object 'Object Repository/RegisterSeries/Page_Registration/input_confirmPassword'
+
+2018-05-04 21:19:22 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/RegisterSeries/Page_Registration/button_Submit' is clicked on
+
+2018-05-04 21:19:22 - [MESSAGE][PASSED] - Object: 'Object Repository/RegisterSeries/Page_Registration/button_Submit' is clicked on
+
+2018-05-04 21:19:22 - [TEST_STEP][PASSED] - mouseOver: Object: 'Object Repository/RegisterSeries/Page_Registration/li_Password not the same pleas' is hovered
+
+2018-05-04 21:19:23 - [MESSAGE][PASSED] - Object: 'Object Repository/RegisterSeries/Page_Registration/li_Password not the same pleas' is hovered
+
+2018-05-04 21:19:23 - [TEST_STEP][PASSED] - closeBrowser: Browser is closed
+
+2018-05-04 21:19:23 - [MESSAGE][PASSED] - Browser is closed]]></system-out>
+         <system-err><![CDATA[]]></system-err>
+      </testcase>
+      <system-out><![CDATA[2018-05-04 21:19:12 - [TEST_SUITE][PASSED] - Registeration_Test: Test Cases/Register_Test_Wrong_Password_Pair]]></system-out>
+      <system-err><![CDATA[]]></system-err>
+   </testsuite>
+</testsuites>

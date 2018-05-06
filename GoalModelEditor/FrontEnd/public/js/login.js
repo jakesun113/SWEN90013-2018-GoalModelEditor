@@ -33,7 +33,11 @@ $('#login').submit(function(evt){
         type: "POST",
         success: function(res){
             var tokenP = JSON.parse(JSON.stringify(res));
-            Cookies.set('LOKIDIED', tokenP.token, { expires: 1, path: '/' });
+            console.log(tokenP);
+            var cookie = {"token": tokenP.token, "uid": tokenP.user_id};
+            Cookies.set('LOKIDIED', JSON.stringify(cookie), { expires: 1, path: '/' });
+            // TODO change it later, for username passing
+            Cookies.set('UIID', $('#username').val(), {expires: 1, path: '/'})
             window.location.href = '/dashboard';
         }
     }).fail(function(jqXHR){

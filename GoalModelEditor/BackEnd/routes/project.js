@@ -65,7 +65,7 @@ router.post("/create/:userId", function(req, res, next){
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
         res.json( {created: false, message: "Authentication failed"} );
-        res.end();
+        return res.end();
     }
 
     // create new project
@@ -77,7 +77,7 @@ router.post("/create/:userId", function(req, res, next){
         res.statusCode = 500;
         res.json({message: 'Failed to create new project'})
     });
-    res.end();
+    return res.end();
 });
 
 
