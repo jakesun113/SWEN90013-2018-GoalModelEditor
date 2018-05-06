@@ -39,9 +39,9 @@ main {
 /* project img */
 .project-icon {
     height: 15vh;
-    margin: 5px;
     width: auto;
     opacity: 1;
+    margin: 1.25rem;
 }
 
 /* project block */
