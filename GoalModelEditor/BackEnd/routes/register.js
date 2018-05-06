@@ -22,9 +22,9 @@ router.post('/', (req, res, next) => {
 
     DB.insertUser(username, hashPassword, email, firstname, lastname).then((result)=>{
         console.log(result);
-        if(result == DB.REG_SUCCESS) {
+        if(result == DB.SUCCESS) {
             res.statusCode = 200;
-        } else if (result == DB.REG_ALREADY_EXIST) {
+        } else if (result == DB.ALREADY_EXIST) {
             res.statusCode = 409;
         } else {
             res.statusCode = 400;

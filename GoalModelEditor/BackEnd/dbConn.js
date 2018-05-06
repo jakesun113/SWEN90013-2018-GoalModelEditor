@@ -68,11 +68,10 @@ const dbConn = {};
  * The Signal values for db transaction
  * @type {number}
  */
-dbConn.REG_SUCCESS = 1;
-dbConn.REG_ALREADY_EXIST = 0;
+dbConn.SUCCESS = 1;
+dbConn.ALREADY_EXIST = 0;
 dbConn.LOGIN_INVALID = "";
-dbConn.CreatProject_SUCCESS = 1;
-
+dbConn.UNKNOWN_ERROR = -1;
 
 /**
  * Store the information of a new project into the database
@@ -92,9 +91,20 @@ dbConn.createProject = function (ProjectName, ProjectDescription, Size, UserId) 
                 } else {
                     // success
                     connection.query(SQL_RET_PROJECTID, [ProjectName, UserId], function (err, result) {
+                        if (err) {
+                            console.log(JSON.stringify(err));
+                            if (err.errno == 1062) {// MYSQL error number for duplicate entry
+                                // Username already exists.
+                                resolve(dbConn.ALREADY_EXIST);
+                            } else {
+                                reject(dbConn.UNKNOWN_ERROR);// unknown error
+                            }
+                        } else {
+                            // success
+                            resolve(result[0].ProjectId);
+                        }
                         if (err) return reject(err);
                         // if success: return userid
-                        resolve(result[0].ProjectId);
                         //console.log(result);
                         //resolve(result.ProjectId);
                     });
@@ -121,13 +131,13 @@ dbConn.insertUser = function (username, password, Email, FirstName, LastName) {
                     console.log(JSON.stringify(err));
                     if (err.errno == 1062) {// MYSQL error number for duplicate entry
                         // Username already exists.
-                        resolve(dbConn.REG_ALREADY_EXIST);
+                        resolve(dbConn.ALREADY_EXIST);
                     } else {
-                        reject(err.errno);
+                        reject(dbConn.UNKNOWN_ERROR);// unknown error
                     }
                 } else {
                     // success
-                    resolve(dbConn.REG_SUCCESS);
+                    resolve(dbConn.SUCCESS);
 
                 }
 
