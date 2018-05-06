@@ -50,13 +50,14 @@ router.post("/create/:userId", function(req, res, next){
     }
 
     // create new project
-    db.createProject("a", "d", 1, "abc").then((result)=>{
+    db.createProject(req.body.project_name, req.body.description, req.body.size, req.params.userId).then((result)=>{
         console.log(result);
-        if(result == db.SUCCESS) {
+        if(result != db.UNKNOWN_ERROR) {
             res.statusCode = 201;
-            res.json( {project_id: "asd"} );
+            res.json(result);
         } else {
             res.statusCode = 500;
+            res.json({message: 'Failed to create new project'})
         }
     });
     res.end();
