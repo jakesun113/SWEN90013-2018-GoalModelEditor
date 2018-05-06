@@ -31,10 +31,14 @@ $('#login').submit(function(evt){
     $.ajax(url, {
         data: formData,
         type: "POST",
-        success: function(cookie){
-            console.log(cookie.id);
-            Cookies.set('UID', cookie.id, { expires: 1, path: '/' });
-            window.location.href = '/project';
+        success: function(res){
+            var tokenP = JSON.parse(JSON.stringify(res));
+            console.log(tokenP);
+            var cookie = {"token": tokenP.token, "uid": tokenP.user_id};
+            Cookies.set('LOKIDIED', JSON.stringify(cookie), { expires: 1, path: '/' });
+            // TODO change it later, for username passing
+            Cookies.set('UIID', $('#username').val(), {expires: 1, path: '/'})
+            window.location.href = '/dashboard';
         }
     }).fail(function(jqXHR){
         alert(jqXHR.statusText);

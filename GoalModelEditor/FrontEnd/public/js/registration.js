@@ -1,30 +1,30 @@
-// function validation() {
-//     var passid = document.registration.passid;
-//     var uname = document.registration.username;
-//     var uemail = document.registration.email;
-//     var ufirstname = document.registration.firstname;
-//     var ulastname = document.registration.lastname;
-//
-//     if (allLetter(uname)) {
-//         if (allLetter(ufirstname)) {
-//             if (allLetter(ulastname)) {
-//                 if (ValidateEmail(uemail)) {
-//                     if (passid_validation(passid, 6, 18)) {
-//                         if (validatePassword()){
-//                             alert('Form Successfully Submitted');
-//                             window.location = "login.html"
-//                             return true;
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-//     }
-//     else {
-//         return false;
-//     }
-//
-// }
+function validation() {
+    var passid = document.registration.passid;
+    var uname = document.registration.username;
+    var uemail = document.registration.email;
+    var ufirstname = document.registration.firstname;
+    var ulastname = document.registration.lastname;
+
+    if (allLetter(uname)) {
+        if (allLetter(ufirstname)) {
+            if (allLetter(ulastname)) {
+                if (ValidateEmail(uemail)) {
+                    if (passid_validation(passid, 6, 18)) {
+                        if (validatePassword()){
+                            alert('Form Successfully Submitted');
+                            window.location = "login.html"
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    else {
+        return false;
+    }
+
+}
 
 
 
@@ -81,5 +81,24 @@ function validatePassword(){
         return true;
     }
 }
+
+// Register submit
+// send the request to front-end server with {username, firstname, lastname, email, password}
+// if successful redirect the user to home page
+$('#register').submit(function(evt){
+    evt.preventDefault();
+    var url = '/user/register';
+    var formData = $(this).serialize();
+    $.ajax(url, {
+        data: formData,
+        type: "POST",
+        success: function(){
+            window.location.href = '/login';
+        }
+    }).fail(function(jqXHR){
+        alert(jqXHR.statusText);
+    });// end ajax
+});// end submit
+
 
 

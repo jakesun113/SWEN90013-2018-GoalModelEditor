@@ -11,7 +11,6 @@ $(document).ready(function() {
 });
 
 
-
 var num = 1;
 function readImage() {
     if (window.File && window.FileList && window.FileReader) {

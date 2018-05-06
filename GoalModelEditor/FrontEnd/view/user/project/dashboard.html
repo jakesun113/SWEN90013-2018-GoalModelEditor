@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/img/icon.ico">
+    <title>My Project - Goal Model Editor</title>
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheet/dashboard.css">
+    <link rel="stylesheet" href="../../../public/stylesheet/login.css">
+</head>
+<body>
+    <div> <!-- Start wrapper div -->
+        <!-- Header part of the page -->
+        <header class="bg-white mb-2 py-3">
+            <div class="pt-4 container-fluid">
+                <div class="row align-middle">
+                    <div class="col-2">
+                        <!-- Add new file button-->
+                        <button type="button" class="btn btn-primary mb-3 ml-5"
+                                data-toggle="modal" data-target="#add-project"
+                                id="new-project-button">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New Project
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                    </div>
+                    <!-- Search div -->
+                    <div class="col-8">
+                    </div>
+                    <!--<div class="col-8">-->
+                        <!--<div class="input-group mb-3">-->
+                            <!--<div class="input-group-prepend">-->
+                                    <!--<span class="input-group-text" id="basic-addon1"><img-->
+                                            <!--src="/img/search.svg"-->
+                                            <!--alt="search"></span>-->
+                            <!--</div>-->
+                            <!--<input class="form-control" type="search"-->
+                                   <!--placeholder="Search" aria-label="Search" aria-describedby="basic-addon1">-->
+                            <!--<button class="btn btn-dark my-2 my-sm-0" type="submit" >Search</button>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!-- User div -->
+                    <div class="col-2">
+                        <div class="row text-center">
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="user-dropdown"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a id="username">username</a>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user-dropdown">
+                                    <a class="dropdown-item" href="/user/profile" method="get">Profile</a>
+                                    <a class="dropdown-item" href="/user/signoff" method="post"
+                                       id="signout">Sign out</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Create project modal starts-->
+        <div class="modal fade" id="add-project" tabindex="-1" role="dialog"
+             aria-labelledby="new-project" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="new-project">New Project</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="/user/myfile" method="post" id="create-project">
+                        <div class="modal-body">
+                            <input name="project_name" type="text" class="form-control"
+                                   value="Untitled folder">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn" style="background-color: transparent"
+                                    data-dismiss="modal">CANCEL</button>
+                            <button type="submit" class="btn btn-primary">CREATE</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Modal ends -->
+
+        <!-- Main part of the page -->
+        <main role="main" class="border-bottom container-fluid pt-2">
+            <!-- first version of project system -->
+            <!--<div class="row">-->
+                <!--<div class="col-3 container-fluid">&lt;!&ndash; Instruction field: content needed &ndash;&gt;-->
+                    <!--<div class="container-fluid">-->
+                        <!--<div class="text-center my-3"><h5>Instruction</h5></div>-->
+                        <!--<img src="/img/instruction.jpg" class="img-fluid" alt="example-goal-model">-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-9 container-fluid">-->
+                    <!--<div class="container-fluid">-->
+                        <!--<div class="py-2 container-fluid"> &lt;!&ndash; Header div for the file list &ndash;&gt;-->
+                            <!--<div class="row">-->
+                                <!--<div class="col-3 text-center text-color">Name</div>-->
+                                <!--<div class="col-3 text-center text-color">Owner</div>-->
+                                <!--<div class="col-3 text-center text-color">Last modified</div>-->
+                                <!--<div class="col-3 text-center text-color">File size</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div id="fileList" class="container-fluid bg-white rounded">&lt;!&ndash; File lists &ndash;&gt;-->
+                            <!--&lt;!&ndash; Mock lists&ndash;&gt;-->
+                            <!--<div class="row border-bottom py-3 file-item" id="abcdefg">-->
+                                <!--<div class="col-3 text-center">My first goal model</div>-->
+                                <!--<div class="col-3 text-center text-color">Me</div>-->
+                                <!--<div class="col-3 text-center text-color">May 8, 2017</div>-->
+                                <!--<div class="col-3 text-center text-color">10 KB</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!-- second version of project system -->
+            <div class="container-fluid bg-white rounded my-3" id="projects-container">
+                <div class="project text-center">
+                    <img src="/img/folder.svg" alt="project-icon" class="project-icon">
+                    <p class="pt-2">Project</p>
+                    <div class="goal-list">
+                        <!-- title of goal list -->
+                        <div class="row goal-model my-2">
+                            <div class="col-6 text-center text-color">Version</div>
+                            <div class="col-6 text-center text-color">Last modified</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                    </div>
+                    <div class="text-center create-goal-model">
+                        <button class="btn btn-primary btn-sm mt-1"
+                                type="button" class="btn btn-primary mb-3 ml-5"
+                                data-toggle="modal" data-target="#add-model">
+                            Add New Goal Model
+                        </button>
+                    </div>
+                </div>
+                <div class="project text-center">
+                    <img src="/img/folder.svg" alt="project-icon" class="project-icon">
+                    <p class="pt-2">Project</p>
+                    <div class="goal-list">
+                        <!-- title of goal list -->
+                        <div class="row goal-model my-2">
+                            <div class="col-6 text-center text-color">Version</div>
+                            <div class="col-6 text-center text-color">Last modified</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                    </div>
+                    <div class="text-center create-goal-model">
+                        <button class="btn btn-primary btn-sm mt-1"
+                                type="button" class="btn btn-primary mb-3 ml-5"
+                                data-toggle="modal" data-target="#add-model">
+                            Add New Goal Model
+                        </button>
+                    </div>
+                </div>
+                <div class="project text-center">
+                    <img src="/img/folder.svg" alt="project-icon" class="project-icon">
+                    <p class="pt-2">Project</p>
+                    <div class="goal-list">
+                        <!-- title of goal list -->
+                        <div class="row goal-model my-2">
+                            <div class="col-6 text-center text-color">Version</div>
+                            <div class="col-6 text-center text-color">Last modified</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                    </div>
+                    <div class="text-center create-goal-model">
+                        <button class="btn btn-primary btn-sm mt-1"
+                                type="button" class="btn btn-primary mb-3 ml-5"
+                                data-toggle="modal" data-target="#add-model">
+                            Add New Goal Model
+                        </button>
+                    </div>
+                </div>
+                <div class="project text-center">
+                    <img src="/img/folder.svg" alt="project-icon" class="project-icon">
+                    <p class="pt-2">Project</p>
+                    <div class="goal-list">
+                        <!-- title of goal list -->
+                        <div class="row goal-model my-2">
+                            <div class="col-6 text-center text-color">Version</div>
+                            <div class="col-6 text-center text-color">Last modified</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                    </div>
+                    <div class="text-center create-goal-model">
+                        <button class="btn btn-primary btn-sm mt-1"
+                                type="button" class="btn btn-primary mb-3 ml-5"
+                                data-toggle="modal" data-target="#add-model">
+                            Add New Goal Model
+                        </button>
+                    </div>
+                </div>
+                <div class="project text-center">
+                    <img src="/img/folder.svg" alt="project-icon" class="project-icon">
+                    <p class="pt-2">Project</p>
+                    <div class="goal-list">
+                        <!-- title of goal list -->
+                        <div class="row goal-model my-2">
+                            <div class="col-6 text-center text-color">Version</div>
+                            <div class="col-6 text-center text-color">Last modified</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                    </div>
+                    <div class="text-center create-goal-model">
+                        <button class="btn btn-primary btn-sm mt-1"
+                                type="button" class="btn btn-primary mb-3 ml-5"
+                                data-toggle="modal" data-target="#add-model">
+                            Add New Goal Model
+                        </button>
+                    </div>
+                </div>
+                <div class="project text-center">
+                    <img src="/img/folder.svg" alt="project-icon" class="project-icon">
+                    <p class="pt-2">Project</p>
+                    <div class="goal-list">
+                        <!-- title of goal list -->
+                        <div class="row goal-model my-2">
+                            <div class="col-6 text-center text-color">Version</div>
+                            <div class="col-6 text-center text-color">Last modified</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                    </div>
+                    <div class="text-center create-goal-model">
+                        <button class="btn btn-primary btn-sm mt-1"
+                                type="button" class="btn btn-primary mb-3 ml-5"
+                                data-toggle="modal" data-target="#add-model">
+                            Add New Goal Model
+                        </button>
+                    </div>
+                </div>
+                <div class="project text-center">
+                    <img src="/img/folder.svg" alt="project-icon" class="project-icon">
+                    <p class="pt-2">Project</p>
+                    <div class="goal-list">
+                        <!-- title of goal list -->
+                        <div class="row goal-model my-2">
+                            <div class="col-6 text-center text-color">Version</div>
+                            <div class="col-6 text-center text-color">Last modified</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                    </div>
+                    <div class="text-center create-goal-model">
+                        <button class="btn btn-primary btn-sm mt-1"
+                                type="button" class="btn btn-primary mb-3 ml-5"
+                                data-toggle="modal" data-target="#add-model">
+                            Add New Goal Model
+                        </button>
+                    </div>
+                </div>
+                <div class="project text-center">
+                    <img src="/img/folder.svg" alt="project-icon" class="project-icon">
+                    <p class="pt-2">Project</p>
+                    <div class="goal-list">
+                        <!-- title of goal list -->
+                        <div class="row goal-model my-2">
+                            <div class="col-6 text-center text-color">Version</div>
+                            <div class="col-6 text-center text-color">Last modified</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                        <div class="row goal-model my-2" id="abcdefg">
+                            <div class="col-6 text-center">V1</div>
+                            <div class="col-6 text-center text-color">May 8, 2017</div>
+                        </div>
+                        <div class="text-center goal-model create-goal-model">
+                        <button class="btn btn-primary btn-sm mt-1"
+                                type="button" class="btn btn-primary mb-3 ml-5"
+                                data-toggle="modal" data-target="#add-model">
+                            Add New Goal Model
+                        </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+
+        <!-- Create goal model modal starts-->
+        <div class="modal fade" id="add-model" tabindex="-1" role="dialog"
+             aria-labelledby="new-model" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="new-model">New Model</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <!-- TODO Change url -->
+                    <form method="post" id="create-model">
+                        <div class="modal-body">
+                            <input name="project_name" type="text" class="form-control"
+                                   value="Untitled">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn" style="background-color: transparent"
+                                    data-dismiss="modal">CANCEL</button>
+                            <button type="submit" class="btn btn-primary">CREATE</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Modal ends -->
+        
+
+    </div> <!-- End wrapper div -->
+    <!-- Bootstrap JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+
+    <script src="/js/filesystem.js"></script>
+</body>
+
+</html>
