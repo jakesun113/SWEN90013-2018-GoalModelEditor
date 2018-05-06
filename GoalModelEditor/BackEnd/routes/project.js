@@ -59,6 +59,9 @@ router.post("/create/:userId", function(req, res, next){
             res.statusCode = 500;
             res.json({message: 'Failed to create new project'})
         }
+    }).catch(err => {
+        res.statusCode = 500;
+        res.json({message: 'Failed to create new project'})
     });
     res.end();
 });
