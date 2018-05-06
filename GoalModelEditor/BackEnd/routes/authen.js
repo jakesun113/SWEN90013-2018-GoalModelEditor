@@ -1,8 +1,9 @@
 var jwt = require("jsonwebtoken");
-const secret = "I'm a dummy secret";
+const SECRET = "I'm a dummy secret";
+const ONEDAY = 86400
 
 function genToken(user_id){
-    var token = jwt.sign({id: user_id}, secret, {expiresIn: 86400});
+    var token = jwt.sign({id: user_id}, SECRET, {expiresIn: ONEDAY});
     console.log("token generated: " + token);
     return token;
 }
@@ -10,15 +11,15 @@ function genToken(user_id){
 function authenticate(headers) {
     var authString = headers["Authorization"];
     if (!authString){
-        return false
+        return false;
     }
     var token = authString.split(" ")[1];
     try {
-        var decoded = jwt.verify(token, SECRETE);
+        var decoded = jwt.verify(token, SECRET);
     } catch(err) {
-        return false
+        return false;
     }
-    return true
+    return true;
 }
 
 module.exports.genToken = genToken;
