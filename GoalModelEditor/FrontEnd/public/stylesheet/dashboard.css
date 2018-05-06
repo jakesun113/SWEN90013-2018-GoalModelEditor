@@ -71,14 +71,18 @@ main {
 /* hover on project
    show goal list */
 .project:hover {
-    background-color: deepskyblue;
+    background-image:
+            -webkit-radial-gradient(80% 10%, circle, skyblue, transparent),
+            -webkit-radial-gradient(80% 50%, circle, blue, transparent),
+            -webkit-radial-gradient(20% 80%, 40em 40em, lightblue, transparent),
+            -webkit-radial-gradient(10% 10%, circle, darkblue, transparent);
     color: #fff;
     display: inline-block;
     border-radius: 20px;
     padding: 0;
 }
 
-.project:hover p {
+.project:hover h6 {
     margin: 0;
     padding: 0;
     display: none;

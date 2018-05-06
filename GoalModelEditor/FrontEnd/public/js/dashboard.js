@@ -1,62 +1,46 @@
-// <div class="project text-center">
-//     <div class="goal-list">
-//     <!-- title of goal list -->
-// <div class="row goal-model my-2">
-//     <div class="col-6 text-center text-color">Version</div>
-//     <div class="col-6 text-center text-color">Last modified</div>
-// </div>
-// <div class="row goal-model my-2" id="abcdefg">
-//     <div class="col-6 text-center">V1</div>
-//     <div class="col-6 text-center text-color">May 8, 2017</div>
-// </div>
-// <div class="row goal-model my-2" id="abcdefg">
-//     <div class="col-6 text-center">V1</div>
-//     <div class="col-6 text-center text-color">May 8, 2017</div>
-// </div>
-// <div class="row goal-model my-2" id="abcdefg">
-//     <div class="col-6 text-center">V1</div>
-//     <div class="col-6 text-center text-color">May 8, 2017</div>
-// </div>
-// <div class="row goal-model my-2" id="abcdefg">
-//     <div class="col-6 text-center">V1</div>
-//     <div class="col-6 text-center text-color">May 8, 2017</div>
-// </div>
-// </div>
-// <img src="/img/folder.svg" alt="project-icon" class="project-icon">
-//     <p class="pt-2">Project</p>
-//     <div class="text-center create-goal-model">
-//     <button class="btn btn-primary btn-sm mt-1"
-// type="button" class="btn btn-primary mb-3 ml-5"
-// data-toggle="modal" data-target="#add-model">
-//     Add New Goal Model
-// </button>
-// </div>
-
 // load user's file after loading the page content - handled by the front-end server
-// GET ('/project/fetch_file_system')
+// GET ('/project/list/:userid')
 $(document).ready(function () {
-
-    var url = '/project/list/:userid';
+    var secret = JSON.parse((Cookies.get('LOKIDIED')));
+    var token = secret.token;
+    var id = secret.uid;
+    var url = '/project/list/' + id;
     $.ajax(url, {
         type: "GET",
-        success: function(files) {
+        headers: {"Authorization": "Bearer " + token},
+        success: function(projects) {
             $('#username').val(Cookies.get('UIID'));
-            var filelistHTML = '';
-            $.each(files, function (index, file) {
-                filelistHTML += '<div class="row border-bottom py-3 file-item" id="'
-                    + file.id + '">';
-                filelistHTML = filelistHTML + '<div class="col-3 text-center">'
-                    + file.fileName + '</div>';
-                filelistHTML = filelistHTML + '<div class="col-3 text-center text-color">'
-                    + file.owner + '</div>';
-                filelistHTML = filelistHTML + '<div class="col-3 text-center text-color">'
-                    + file.lastModified + '</div>';
-                filelistHTML = filelistHTML + '<div class="col-3 text-center text-color">'
-                    + file.fileSize + '</div>';
-                filelistHTML += '</div>';
-            }); // end each
-            filelistHTML += '</div>';
-            $('#fileList').html(filelistHTML);
+            // start each
+            $.each(projects.list, function (index, project) {
+                var projectHTML = '';
+                projectHTML += '<div class="project text-center" id="' + project.project_id + '">';
+                projectHTML = projectHTML + '<div class="goal-list">';
+                // goal-list
+                projectHTML = projectHTML + '<div class="row goal-model my-2">' +
+                    '<div class="col-6 text-center text-color">Version</div>' +
+                    '<div class="col-6 text-center text-color">Last modified</div>' +
+                    '</div>';
+
+                // goal-list
+                // start each
+                $.each(project.models, function (index, model) {
+                    if(model.model_id) {
+                        projectHTML = projectHTML + '<div class="row goal-model my-2" id="' + model.model_id + '">';
+                        projectHTML = projectHTML + '<div class="col-6 text-center">' + model.model_name + '</div>';
+                        projectHTML = projectHTML + '<div class="col-6 text-center text-color">' + model.last_modified +
+                            '</div> </div>';
+                    }
+                });// end each
+                projectHTML = projectHTML + '</div>';
+                projectHTML = projectHTML + '<img src="/img/folder.svg" alt="project-icon" class="project-icon">';
+                projectHTML = projectHTML + '<h6 class="pt-2">' + project.project_name + '</h6>';
+                projectHTML = projectHTML + '<div class="text-center create-goal-model">';
+                projectHTML = projectHTML + '<button class="btn btn-primary btn-sm mb-2" ' +
+                    'type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-model">' +
+                    'Add New Goal Model</button>';
+                projectHTML = projectHTML + '</div>';
+                $('#projects-container').append(projectHTML);
+            });// end each
         }
     }).fail(function(jqXHR){
         alert(jqXHR.statusText + ". Please contact us.");
@@ -65,7 +49,7 @@ $(document).ready(function () {
 
 // reload user's file list after the user has created a new file
 // i.e. handle the "CREATE" button
-// POST ('/project/create')
+// POST ('/project/create/:userid')
 $('#create-project').submit(function(evt){
    evt.preventDefault();
    var secret = JSON.parse((Cookies.get('LOKIDIED')));
@@ -88,13 +72,14 @@ $('#create-project').submit(function(evt){
                 '</div>';
             projectHTML = projectHTML + '</div>';
             projectHTML = projectHTML + '<img src="/img/folder.svg" alt="project-icon" class="project-icon">';
-            projectHTML = projectHTML + '<p class="pt-2">' + project.project_name + '</p>';
+            projectHTML = projectHTML + '<h6 class="pt-2">' + project.project_name + '</h6>';
             projectHTML = projectHTML + '<div class="text-center create-goal-model">';
             projectHTML = projectHTML + '<button class="btn btn-primary btn-sm mb-2" ' +
                 'type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-model">' +
                 'Add New Goal Model</button>';
             projectHTML = projectHTML + '</div>';
             $('#projects-container').append(projectHTML);
+            $('#add-project').modal('toggle');
         }
     }).fail(function(jqXHR){
         alert(jqXHR.statusText);
@@ -129,4 +114,56 @@ $('#fileList').dblclick(function(event){
     }
 });
 
+/* Testing block */
+// var projects = {
+// "list":
+//     [
+//         { "project_id": "32131231",
+//             "project_name": "Goal model editor",
+//             "models":
+//                 [
+//                     {
+//                         "model_id" : "dksnfksda",
+//                         "model_name" : "version1",
+//                         "last_modified": "2018-1-1 15:00"
+//                     }
+//                 ]
+//          },
+//         {
+//             "project_id": "e312994391",
+//             "project_name": "Laundry service",
+//             "models": [{}]
+//         }
+//
+//     ]
+// };
 
+// $.each(projects.list, function (index, project) {
+//     var projectHTML = '';
+//     projectHTML += '<div class="project text-center" id="' + project.project_id + '">';
+//     projectHTML = projectHTML + '<div class="goal-list">';
+//     // goal-list
+//     projectHTML = projectHTML + '<div class="row goal-model my-2">' +
+//         '<div class="col-6 text-center text-color">Version</div>' +
+//         '<div class="col-6 text-center text-color">Last modified</div>' +
+//         '</div>';
+//
+//     // goal-list
+//     $.each(project.models, function (index, model) {
+//         if(model.model_id) {
+//             projectHTML = projectHTML + '<div class="row goal-model my-2" id="' + model.model_id + '">';
+//             projectHTML = projectHTML + '<div class="col-6 text-center">' + model.model_name + '</div>';
+//             projectHTML = projectHTML + '<div class="col-6 text-center text-color">' + model.last_modified +
+//                 '</div> </div>';
+//         }
+//     });
+//     projectHTML = projectHTML + '</div>';
+//     projectHTML = projectHTML + '<img src="/img/folder.svg" alt="project-icon" class="project-icon">';
+//     projectHTML = projectHTML + '<h6 class="pt-2">' + project.project_name + '</h6>';
+//     projectHTML = projectHTML + '<div class="text-center create-goal-model">';
+//     projectHTML = projectHTML + '<button class="btn btn-primary btn-sm mb-2" ' +
+//         'type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-model">' +
+//         'Add New Goal Model</button>';
+//     projectHTML = projectHTML + '</div>';
+//     $('#projects-container').append(projectHTML);
+// });
