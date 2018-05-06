@@ -5,6 +5,7 @@ $(document).ready(function () {
     $.ajax(url, {
         type: "GET",
         success: function(files) {
+            $('#username').val(Cookies.get('UIID'));
             var filelistHTML = '';
             $.each(files, function (index, file) {
                 filelistHTML += '<div class="row border-bottom py-3 file-item" id="'
@@ -30,25 +31,19 @@ $(document).ready(function () {
 // reload user's file list after the user has created a new file
 // i.e. handle the "CREATE" button
 // POST ('/project/create')
-$('#createFile').submit(function(evt){
+$('#create-project').submit(function(evt){
    evt.preventDefault();
-   var url = '/project/create/'+ Cookies.get('LOKIDIED');
+   var secret = JSON.parse((Cookies.get('LOKIDIED')));
+   var token = secret.token;
+   var id = secret.uid;
+   var url = '/project/create/'+ id;
    var formData = $(this).serialize();
     $.ajax(url, {
         data: formData,
         type: "POST",
-        headers: {"Authorization": "Bearer " + Cookies.get('LOKIDIED')},
+        headers: {"Authorization": "Bearer " + token},
         success: function(file){
-            var fileItem = JSON.parse(JSON.stringify(file));
-            console.log(fileItem);
-            var filelistHTML = '<div class="row border-bottom py-3 file-item" id="'
-                + fileItem.id + '">' + '<div class="col-3 text-center">'
-                + fileItem.project_name + '</div>' + '<div class="col-3 text-center text-color">'
-                + fileItem.owner + '</div>' + '<div class="col-3 text-center text-color">'
-                + fileItem.lastModified + '</div>' + '<div class="col-3 text-center text-color">'
-                + fileItem.fileSize + '</div>' + '</div>';
-            $('#fileList').append(filelistHTML);
-            $('#addFile').modal('toggle');
+
         }
     }).fail(function(jqXHR){
         alert(jqXHR.statusText);
@@ -84,21 +79,8 @@ $('#fileList').dblclick(function(event){
 });
 
 
-// handle click on the window
-// only when the clicked item is a file item, the background color will change
-$(window).click(function(event) {
-    // change all files background color back
-    const files = $('.file-item');
-    $.each(files, function(index, file){
-        file.style.backgroundColor = "white";
-    });// end each
+$(window).click(function (event) {
 
-    // change the background-color if the click item is a file-item
-    if($(event.target).hasClass("file-item")) {
-        event.target.style.backgroundColor = "#4285f4";
-    } else if($(event.target.parentNode).hasClass("file-item")){
-        event.target.parentNode.style.backgroundColor = "#4285f4";
-    }
 });
 
 
