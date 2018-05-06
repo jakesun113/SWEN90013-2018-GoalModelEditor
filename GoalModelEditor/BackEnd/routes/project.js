@@ -83,7 +83,7 @@ router.put("/edit/:userId-:projectId", (req, res, next) => {
             res.json(result);
         } else {
             res.statusCode = 500;
-            res.json({message: 'Failed to update new project'})
+            res.json({message: 'Failed to update project'})
         }
     });
 });
@@ -91,7 +91,23 @@ router.put("/edit/:userId-:projectId", (req, res, next) => {
 
 /* DELETE Delete Project */
 router.delete("/delete/:userId-:projectId", (req, res, next) => {
-    // stub
+    // check token for authentication
+    if (!auth.authenticate(req.headers)) {
+        res.statusCode = 401;
+        res.json( {created: false, message: "Authentication failed"} );
+        res.end();
+    }
+
+    // delete project
+    db.deleteProject(req.params.userId, req.params.projectId).then((result)=>{
+        console.log(result);
+        if(result != db.UNKNOWN_ERROR) {
+            res.statusCode = 204;
+        } else {
+            res.statusCode = 500;
+            res.json({message: 'Failed to delete project'})
+        }
+    });
 });
 
 
