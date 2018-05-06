@@ -76,6 +76,7 @@ main {
             -webkit-radial-gradient(80% 50%, circle, blue, transparent),
             -webkit-radial-gradient(20% 80%, 40em 40em, lightblue, transparent),
             -webkit-radial-gradient(10% 10%, circle, darkblue, transparent);
+    /*background: linear-gradient(to bottom, skyblue , white);*/
     color: #fff;
     display: inline-block;
     border-radius: 20px;
