@@ -92,11 +92,10 @@
 }
 /*import photos end*/
 
-/*cluster start*/
+/*cluster div start*/
 .cluster {
-
-    width: 80%;
-    height: 20vh;
+    width: 90%;
+    height: 30vh;
     margin: 10px auto;
 }
-/*cluster end*/
+/*cluster div end*/

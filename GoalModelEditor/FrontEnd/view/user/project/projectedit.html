@@ -7,29 +7,13 @@
 
     <!-- Loads and initializes the Bootstrap style -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!--Load the edit page style-->
     <link rel="stylesheet" href="/stylesheet/importphotos.css">
-
-    <!-- Loads and initializes the mxGraph -->
-    <!--<script type="text/javascript" src="/js/mxClient.js"></script>-->
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script type="text/javascript" src="/js/importphotos.js"></script>
-
-
-
-    <style type="text/css">
-
-    </style>
-
-    <script>
-
-    </script>
 
 </head>
 
 <body onload="loadData()">
-
-<!--the navigation bar-->
+<!--the top navigation bar-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Goal Model</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,7 +59,7 @@
         <div id="photo" class="col-7 showborder scrollbar">
             <fieldset class="form-group">
                 <br/>
-                <a href="javascript:void(0)" onclick="$('#pro-image').click()">Upload Image</a>
+                <button class="btn-primary" onclick="$('#pro-image').click()">Upload Image</button>
                 <input type="file" id="pro-image" name="pro-image" style="display: none;" class="form-control" multiple>
             </fieldset>
             <div class="preview-images-zone">
@@ -168,24 +152,26 @@
         <!--to do list section end-->
 
         <!--cluster section start-->
-        <div id="cluster" class="col-4 showborder scrollbar" style="display: none">
+        <div id="cluster" class="col-3 showborder scrollbar" style="display: none">
             <div>
                 <h1>Cluster</h1>
-                <div class="cluster showborder"></div>
-                <div class="cluster showborder"></div>
-                <div class="cluster showborder"></div>
                 <button class="btn-primary" onclick="addCluster()">Add</button>
             </div>
+            <!--show cluster data from JSON-->
+            <div class="cluster showborder" id="cluster_1"></div>
+            <div class="cluster showborder" id="cluster_2"></div>
+            <div class="cluster showborder" id="cluster_3"></div>
         </div>
         <!--cluster section end-->
 
         <!--hierachy section start-->
-        <div id="hierarchy" class="col-3 showborder scrollbar" style="display: none">
+        <div id="hierarchy" class="col-4 showborder scrollbar" style="display: none">
             <div>
                 <h1>Hierarchy</h1>
-                <div id="hierarchydata"></div>
                 <button id="hierachynextbtn" class="btn-primary" onclick="hierachynextbtn()">Generate</button>
             </div>
+            <!--show hierarchy data from JSON-->
+            <div id="hierarchydata"></div>
         </div>
         <!--hierachy section end-->
 
@@ -195,17 +181,24 @@
                 <h1>Generate goal model</h1>
                 <button id="hierachynextbtn" class="btn-primary" onclick="hierachynextbtn()">Back</button>
             </div>
+            <div>
+                <!--mxGraph part here-->
+            </div>
         </div>
         <!--generate section end-->
+
     </div>
 </div>
-</div>
+
 
 
 <!-- Loads and initializes the Bootstrap javascript -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+<!--<script type="text/javascript" src="/js/mxClient.js"></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src="/js/importphotos.js"></script>
 <footer>
     <p class="text-center">&copy;<em>&nbsp;2018 The University of Melbourne</em></p>
 </footer>
