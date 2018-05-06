@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Login_Test" time="6" tests="1" failures="1" errors="0">
+   <testsuite name="Login_Test" tests="1" failures="1" errors="0" time="6" timestamp="2018-05-04 21:19:28" hostname="edric.dang - 192.168.1.102" id="Test Suites/Login_Test">
+      <properties>
+         <property name="deviceName" value=""/>
+         <property name="devicePlatform" value=""/>
+         <property name="logFolder" value="/Users/edric.dang/Desktop/GoalModelEditor/Reports/Login_Test/20180504_211910"/>
+         <property name="logFiles" value="/Users/edric.dang/Desktop/GoalModelEditor/Reports/Login_Test/20180504_211910/execution0.log"/>
+         <property name="attachments" value=""/>
+         <property name="hostName" value="edric.dang - 192.168.1.102"/>
+         <property name="os" value="Mac OS X 64bit"/>
+         <property name="katalonVersion" value="5.4.1.1"/>
+         <property name="browser" value="Chrome 66.0.3359.139"/>
+         <property name="hostAddress" value="192.168.1.102"/>
+         <property name="sessionId" value="83248dd1592750e3b58ef6af51fdc722"/>
+         <property name="seleniumVersion" value="3.7.1"/>
+         <property name="proxyInformation" value="ProxyInformation{proxyOption=NO_PROXY, proxyServerType=HTTP, password=, proxyServerAddress=, proxyServerPort=0}"/>
+         <property name="platform" value="Mac OS X"/>
+      </properties>
+      <testcase name="Test Cases/Login_Test_Normal" classname="Test Cases/Login_Test_Normal" status="FAILED">
+         <failure type="FAILED" message="Unable to click on object 'Object Repository/LoginSeries/Page_My File - Goal Model Editor/button_New Project' (Root cause: org.openqa.selenium.UnhandledAlertException: unexpected alert open
+  (Session info: chrome=66.0.3359.139)
+  (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.13.4 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 0 milliseconds: null
+Build info: version: '3.7.1', revision: '8a0099a', time: '2017-11-06T21:07:36.161Z'
+System info: host: 'EdricDangdeMacBook-Pro.local', ip: 'fe80:0:0:0:cd8:c3eb:be5f:c358%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.13.4', java.version: '1.8.0_102'
+Driver info: com.kms.katalon.selenium.driver.CChromeDriver
+Capabilities {acceptInsecureCerts: false, acceptSslCerts: false, applicationCacheEnabled: false, browserConnectionEnabled: false, browserName: chrome, chrome: {chromedriverVersion: 2.35.528157 (4429ca2590d698..., userDataDir: /var/folders/7n/3b897nds79l...}, cssSelectorsEnabled: true, databaseEnabled: false, handlesAlerts: true, hasTouchScreen: false, javascriptEnabled: true, locationContextEnabled: true, mobileEmulationEnabled: false, nativeEvents: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, rotatable: false, setWindowRect: true, takesHeapSnapshot: true, takesScreenshot: true, unexpectedAlertBehaviour: , unhandledPromptBehavior: , version: 66.0.3359.139, webStorageEnabled: true}
+Session ID: 6db95630a331085b620cb941ed3ff363
+*** Element info: {Using=xpath, value=//button[@type = 'button' and @id = 'newFileButton' and (text() = '     New Project
+                                 ' or . = '     New Project
+                                 ')]})"/>
+         <system-out><![CDATA[2018-05-04 21:19:28 - [TEST_CASE][FAILED] - Test Cases/Login_Test_Normal: Test Cases/Login_Test_Normal FAILED because (of) Unable to click on object 'Object Repository/LoginSeries/Page_My File - Goal Model Editor/button_New Project' (Root cause: org.openqa.selenium.UnhandledAlertException: unexpected alert open
+  (Session info: chrome=66.0.3359.139)
+  (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.13.4 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 0 milliseconds: null
+Build info: version: '3.7.1', revision: '8a0099a', time: '2017-11-06T21:07:36.161Z'
+System info: host: 'EdricDangdeMacBook-Pro.local', ip: 'fe80:0:0:0:cd8:c3eb:be5f:c358%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.13.4', java.version: '1.8.0_102'
+Driver info: com.kms.katalon.selenium.driver.CChromeDriver
+Capabilities {acceptInsecureCerts: false, acceptSslCerts: false, applicationCacheEnabled: false, browserConnectionEnabled: false, browserName: chrome, chrome: {chromedriverVersion: 2.35.528157 (4429ca2590d698..., userDataDir: /var/folders/7n/3b897nds79l...}, cssSelectorsEnabled: true, databaseEnabled: false, handlesAlerts: true, hasTouchScreen: false, javascriptEnabled: true, locationContextEnabled: true, mobileEmulationEnabled: false, nativeEvents: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, rotatable: false, setWindowRect: true, takesHeapSnapshot: true, takesScreenshot: true, unexpectedAlertBehaviour: , unhandledPromptBehavior: , version: 66.0.3359.139, webStorageEnabled: true}
+Session ID: 6db95630a331085b620cb941ed3ff363
+*** Element info: {Using=xpath, value=//button[@type = 'button' and @id = 'newFileButton' and (text() = '     New Project
+                                 ' or . = '     New Project
+                                 ')]})
+
+2018-05-04 21:19:29 - [TEST_STEP][PASSED] - openBrowser: Browser is opened with url: ''
+
+2018-05-04 21:19:30 - [MESSAGE][PASSED] - Browser is opened with url: ''
+
+2018-05-04 21:19:30 - [TEST_STEP][PASSED] - navigateToUrl: Navigate to 'https://localhost:8080/' successfully
+
+2018-05-04 21:19:31 - [MESSAGE][PASSED] - Navigate to 'https://localhost:8080/' successfully
+
+2018-05-04 21:19:31 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/LoginSeries/Page_Goal Model Editor/a_Go to Goal Model Editor' is clicked on
+
+2018-05-04 21:19:31 - [MESSAGE][PASSED] - Object: 'Object Repository/LoginSeries/Page_Goal Model Editor/a_Go to Goal Model Editor' is clicked on
+
+2018-05-04 21:19:31 - [TEST_STEP][PASSED] - setText: Text 'username4' is set on object 'Object Repository/LoginSeries/Page_Sign in/input_username'
+
+2018-05-04 21:19:31 - [MESSAGE][PASSED] - Text 'username4' is set on object 'Object Repository/LoginSeries/Page_Sign in/input_username'
+
+2018-05-04 21:19:31 - [TEST_STEP][PASSED] - setText: Text '1234' is set on object 'Object Repository/LoginSeries/Page_Sign in/input_password'
+
+2018-05-04 21:19:31 - [MESSAGE][PASSED] - Text '1234' is set on object 'Object Repository/LoginSeries/Page_Sign in/input_password'
+
+2018-05-04 21:19:31 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/LoginSeries/Page_Sign in/button_Sign in' is clicked on
+
+2018-05-04 21:19:31 - [MESSAGE][PASSED] - Object: 'Object Repository/LoginSeries/Page_Sign in/button_Sign in' is clicked on
+
+2018-05-04 21:19:31 - [TEST_STEP][FAILED] - click: Unable to click on object 'Object Repository/LoginSeries/Page_My File - Goal Model Editor/button_New Project' (Root cause: org.openqa.selenium.UnhandledAlertException: unexpected alert open
+  (Session info: chrome=66.0.3359.139)
+  (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.13.4 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 0 milliseconds: null
+Build info: version: '3.7.1', revision: '8a0099a', time: '2017-11-06T21:07:36.161Z'
+System info: host: 'EdricDangdeMacBook-Pro.local', ip: 'fe80:0:0:0:cd8:c3eb:be5f:c358%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.13.4', java.version: '1.8.0_102'
+Driver info: com.kms.katalon.selenium.driver.CChromeDriver
+Capabilities {acceptInsecureCerts: false, acceptSslCerts: false, applicationCacheEnabled: false, browserConnectionEnabled: false, browserName: chrome, chrome: {chromedriverVersion: 2.35.528157 (4429ca2590d698..., userDataDir: /var/folders/7n/3b897nds79l...}, cssSelectorsEnabled: true, databaseEnabled: false, handlesAlerts: true, hasTouchScreen: false, javascriptEnabled: true, locationContextEnabled: true, mobileEmulationEnabled: false, nativeEvents: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, rotatable: false, setWindowRect: true, takesHeapSnapshot: true, takesScreenshot: true, unexpectedAlertBehaviour: , unhandledPromptBehavior: , version: 66.0.3359.139, webStorageEnabled: true}
+Session ID: 6db95630a331085b620cb941ed3ff363
+*** Element info: {Using=xpath, value=//button[@type = 'button' and @id = 'newFileButton' and (text() = '     New Project
+                                 ' or . = '     New Project
+                                 ')]})
+
+2018-05-04 21:19:32 - [MESSAGE][WARNING] - Cannot take screenshot
+
+2018-05-04 21:19:32 - [MESSAGE][FAILED] - Unable to click on object 'Object Repository/LoginSeries/Page_My File - Goal Model Editor/button_New Project' (Root cause: org.openqa.selenium.UnhandledAlertException: unexpected alert open
+  (Session info: chrome=66.0.3359.139)
+  (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.13.4 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 0 milliseconds: null
+Build info: version: '3.7.1', revision: '8a0099a', time: '2017-11-06T21:07:36.161Z'
+System info: host: 'EdricDangdeMacBook-Pro.local', ip: 'fe80:0:0:0:cd8:c3eb:be5f:c358%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.13.4', java.version: '1.8.0_102'
+Driver info: com.kms.katalon.selenium.driver.CChromeDriver
+Capabilities {acceptInsecureCerts: false, acceptSslCerts: false, applicationCacheEnabled: false, browserConnectionEnabled: false, browserName: chrome, chrome: {chromedriverVersion: 2.35.528157 (4429ca2590d698..., userDataDir: /var/folders/7n/3b897nds79l...}, cssSelectorsEnabled: true, databaseEnabled: false, handlesAlerts: true, hasTouchScreen: false, javascriptEnabled: true, locationContextEnabled: true, mobileEmulationEnabled: false, nativeEvents: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, rotatable: false, setWindowRect: true, takesHeapSnapshot: true, takesScreenshot: true, unexpectedAlertBehaviour: , unhandledPromptBehavior: , version: 66.0.3359.139, webStorageEnabled: true}
+Session ID: 6db95630a331085b620cb941ed3ff363
+*** Element info: {Using=xpath, value=//button[@type = 'button' and @id = 'newFileButton' and (text() = '     New Project
+                                 ' or . = '     New Project
+                                 ')]})]]></system-out>
+         <system-err><![CDATA[2018-05-04 21:19:28 - [TEST_CASE][FAILED] - Test Cases/Login_Test_Normal: Test Cases/Login_Test_Normal FAILED because (of) Unable to click on object 'Object Repository/LoginSeries/Page_My File - Goal Model Editor/button_New Project' (Root cause: org.openqa.selenium.UnhandledAlertException: unexpected alert open
+  (Session info: chrome=66.0.3359.139)
+  (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.13.4 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 0 milliseconds: null
+Build info: version: '3.7.1', revision: '8a0099a', time: '2017-11-06T21:07:36.161Z'
+System info: host: 'EdricDangdeMacBook-Pro.local', ip: 'fe80:0:0:0:cd8:c3eb:be5f:c358%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.13.4', java.version: '1.8.0_102'
+Driver info: com.kms.katalon.selenium.driver.CChromeDriver
+Capabilities {acceptInsecureCerts: false, acceptSslCerts: false, applicationCacheEnabled: false, browserConnectionEnabled: false, browserName: chrome, chrome: {chromedriverVersion: 2.35.528157 (4429ca2590d698..., userDataDir: /var/folders/7n/3b897nds79l...}, cssSelectorsEnabled: true, databaseEnabled: false, handlesAlerts: true, hasTouchScreen: false, javascriptEnabled: true, locationContextEnabled: true, mobileEmulationEnabled: false, nativeEvents: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, rotatable: false, setWindowRect: true, takesHeapSnapshot: true, takesScreenshot: true, unexpectedAlertBehaviour: , unhandledPromptBehavior: , version: 66.0.3359.139, webStorageEnabled: true}
+Session ID: 6db95630a331085b620cb941ed3ff363
+*** Element info: {Using=xpath, value=//button[@type = 'button' and @id = 'newFileButton' and (text() = '     New Project
+                                 ' or . = '     New Project
+                                 ')]})]]></system-err>
+      </testcase>
+      <testcase name="Test Cases/Login_Test_Wrong_Username_Password" classname="Test Cases/Login_Test_Wrong_Username_Password" status="PASSED">
+         <system-out><![CDATA[2018-05-04 21:19:32 - [TEST_CASE][PASSED] - Test Cases/Login_Test_Wrong_Username_Password: Test Cases/Login_Test_Wrong_Username_Password
+
+2018-05-04 21:19:32 - [TEST_STEP][PASSED] - openBrowser: Browser is opened with url: ''
+
+2018-05-04 21:19:32 - [MESSAGE][WARNING] - A browser is already opened. Closing browser and opening a new one
+
+2018-05-04 21:19:33 - [MESSAGE][PASSED] - Browser is opened with url: ''
+
+2018-05-04 21:19:33 - [TEST_STEP][PASSED] - navigateToUrl: Navigate to 'https://localhost:8080/' successfully
+
+2018-05-04 21:19:33 - [MESSAGE][PASSED] - Navigate to 'https://localhost:8080/' successfully
+
+2018-05-04 21:19:33 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/LoginSeries/Page_Goal Model Editor/a_Go to Goal Model Editor' is clicked on
+
+2018-05-04 21:19:34 - [MESSAGE][PASSED] - Object: 'Object Repository/LoginSeries/Page_Goal Model Editor/a_Go to Goal Model Editor' is clicked on
+
+2018-05-04 21:19:34 - [TEST_STEP][PASSED] - setText: Text 'username4' is set on object 'Object Repository/LoginSeries/Page_Sign in/input_username'
+
+2018-05-04 21:19:34 - [MESSAGE][PASSED] - Text 'username4' is set on object 'Object Repository/LoginSeries/Page_Sign in/input_username'
+
+2018-05-04 21:19:34 - [TEST_STEP][PASSED] - setText: Text '123' is set on object 'Object Repository/LoginSeries/Page_Sign in/input_password'
+
+2018-05-04 21:19:34 - [MESSAGE][PASSED] - Text '123' is set on object 'Object Repository/LoginSeries/Page_Sign in/input_password'
+
+2018-05-04 21:19:34 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/LoginSeries/Page_Sign in/button_Sign in' is clicked on
+
+2018-05-04 21:19:34 - [MESSAGE][PASSED] - Object: 'Object Repository/LoginSeries/Page_Sign in/button_Sign in' is clicked on
+
+2018-05-04 21:19:34 - [TEST_STEP][PASSED] - verifyAlertPresent: Alert is present after 30 second(s).
+
+2018-05-04 21:19:34 - [MESSAGE][WARNING] - Timeout '0' is invalid. Using default page load timeout: '30'
+
+2018-05-04 21:19:34 - [MESSAGE][PASSED] - Alert is present after 30 second(s).
+
+2018-05-04 21:19:34 - [TEST_STEP][PASSED] - closeBrowser: Browser is closed
+
+2018-05-04 21:19:35 - [MESSAGE][PASSED] - Browser is closed]]></system-out>
+         <system-err><![CDATA[]]></system-err>
+      </testcase>
+      <system-out><![CDATA[2018-05-04 21:19:28 - [TEST_SUITE][FAILED] - Login_Test: Test Cases/Login_Test_Normal FAILED because (of) Unable to click on object 'Object Repository/LoginSeries/Page_My File - Goal Model Editor/button_New Project' (Root cause: org.openqa.selenium.UnhandledAlertException: unexpected alert open
+  (Session info: chrome=66.0.3359.139)
+  (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.13.4 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 0 milliseconds: null
+Build info: version: '3.7.1', revision: '8a0099a', time: '2017-11-06T21:07:36.161Z'
+System info: host: 'EdricDangdeMacBook-Pro.local', ip: 'fe80:0:0:0:cd8:c3eb:be5f:c358%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.13.4', java.version: '1.8.0_102'
+Driver info: com.kms.katalon.selenium.driver.CChromeDriver
+Capabilities {acceptInsecureCerts: false, acceptSslCerts: false, applicationCacheEnabled: false, browserConnectionEnabled: false, browserName: chrome, chrome: {chromedriverVersion: 2.35.528157 (4429ca2590d698..., userDataDir: /var/folders/7n/3b897nds79l...}, cssSelectorsEnabled: true, databaseEnabled: false, handlesAlerts: true, hasTouchScreen: false, javascriptEnabled: true, locationContextEnabled: true, mobileEmulationEnabled: false, nativeEvents: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, rotatable: false, setWindowRect: true, takesHeapSnapshot: true, takesScreenshot: true, unexpectedAlertBehaviour: , unhandledPromptBehavior: , version: 66.0.3359.139, webStorageEnabled: true}
+Session ID: 6db95630a331085b620cb941ed3ff363
+*** Element info: {Using=xpath, value=//button[@type = 'button' and @id = 'newFileButton' and (text() = '     New Project
+                                 ' or . = '     New Project
+                                 ')]})]]></system-out>
+      <system-err><![CDATA[2018-05-04 21:19:28 - [TEST_SUITE][FAILED] - Login_Test: Test Cases/Login_Test_Normal FAILED because (of) Unable to click on object 'Object Repository/LoginSeries/Page_My File - Goal Model Editor/button_New Project' (Root cause: org.openqa.selenium.UnhandledAlertException: unexpected alert open
+  (Session info: chrome=66.0.3359.139)
+  (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.13.4 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 0 milliseconds: null
+Build info: version: '3.7.1', revision: '8a0099a', time: '2017-11-06T21:07:36.161Z'
+System info: host: 'EdricDangdeMacBook-Pro.local', ip: 'fe80:0:0:0:cd8:c3eb:be5f:c358%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.13.4', java.version: '1.8.0_102'
+Driver info: com.kms.katalon.selenium.driver.CChromeDriver
+Capabilities {acceptInsecureCerts: false, acceptSslCerts: false, applicationCacheEnabled: false, browserConnectionEnabled: false, browserName: chrome, chrome: {chromedriverVersion: 2.35.528157 (4429ca2590d698..., userDataDir: /var/folders/7n/3b897nds79l...}, cssSelectorsEnabled: true, databaseEnabled: false, handlesAlerts: true, hasTouchScreen: false, javascriptEnabled: true, locationContextEnabled: true, mobileEmulationEnabled: false, nativeEvents: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, rotatable: false, setWindowRect: true, takesHeapSnapshot: true, takesScreenshot: true, unexpectedAlertBehaviour: , unhandledPromptBehavior: , version: 66.0.3359.139, webStorageEnabled: true}
+Session ID: 6db95630a331085b620cb941ed3ff363
+*** Element info: {Using=xpath, value=//button[@type = 'button' and @id = 'newFileButton' and (text() = '     New Project
+                                 ' or . = '     New Project
+                                 ')]})]]></system-err>
+   </testsuite>
+</testsuites>
