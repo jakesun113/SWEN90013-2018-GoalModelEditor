@@ -35,6 +35,16 @@ router.get("/list/:userId", (req, res, next) => {
     }
 
     // (2) fetch project list
+    db.getProjectGoalModelList(req.params.userId).then((result)=>{
+        console.log(result);
+        res.statusCode = 200;
+        // TODO: need parsing
+        res.json(result);
+    }).catch(err => {
+        res.statusCode = 500;
+        res.json({message: 'Failed to create new project'})
+    });
+    res.end();
 
 });
 
@@ -50,15 +60,10 @@ router.post("/create/:userId", function(req, res, next){
     }
 
     // create new project
-    db.createProject(req.body.project_name, req.body.description, req.body.size, req.params.userId).then((result)=>{
+    db.createProject(req.body.project_name, req.body.description, 0, req.params.userId).then((result)=>{
         console.log(result);
-        if(result != db.UNKNOWN_ERROR) {
-            res.statusCode = 201;
-            res.json(result);
-        } else {
-            res.statusCode = 500;
-            res.json({message: 'Failed to create new project'})
-        }
+        res.statusCode = 201;
+        res.json(result);
     }).catch(err => {
         res.statusCode = 500;
         res.json({message: 'Failed to create new project'})
