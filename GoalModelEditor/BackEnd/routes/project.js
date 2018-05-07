@@ -81,7 +81,10 @@ router.post("/create/:userId", function(req, res, next){
     db.createProject(req.body.project_name, req.body.description, 0, req.params.userId).then((result)=>{
         console.log(result);
         res.statusCode = 201;
-        res.json(result);
+        res.json({
+            project_id : result.ProjectId,
+            project_name : result.ProjectName
+        });
         return res.end();
     }).catch(err => {
         res.statusCode = 500;
