@@ -95,7 +95,7 @@ router.post("/create/:userId", function(req, res, next){
 
 
 /* POST Edit Project */
-router.put("/edit/:userId-:projectId", (req, res, next) => {
+router.put("/edit/:userId/:projectId", (req, res, next) => {
 
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
@@ -121,7 +121,7 @@ router.put("/edit/:userId-:projectId", (req, res, next) => {
 
 
 /* DELETE Delete Project */
-router.delete("/delete/:userId-:projectId", (req, res, next) => {
+router.delete("/delete/:userId/:projectId", (req, res, next) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
