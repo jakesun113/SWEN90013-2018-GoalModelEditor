@@ -54,9 +54,9 @@ router.post('/register', (req, res, next) => {
 
     db.insertUser(username, hashPassword, email, firstname, lastname).then((result)=>{
         console.log(result);
-        if(result == db.REG_SUCCESS) {
+        if(result == db.SUCCESS) {
             res.statusCode = 200;
-        } else if (result == db.REG_ALREADY_EXIST) {
+        } else if (result == db.ALREADY_EXIST) {
             res.statusCode = 409;
         } else {
             res.statusCode = 400;
