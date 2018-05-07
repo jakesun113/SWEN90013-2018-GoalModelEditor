@@ -9,7 +9,6 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
           crossorigin="anonymous">
     <link rel="stylesheet" href="/stylesheet/dashboard.css">
-    <link rel="stylesheet" href="../../../public/stylesheet/login.css">
 </head>
 <body>
     <div> <!-- Start wrapper div -->
@@ -72,8 +71,12 @@
                     </div>
                     <form method="post" id="create-project">
                         <div class="modal-body">
+                            <label class="my-2">Project Name:</label>
                             <input name="project_name" type="text" class="form-control"
-                                   value="Untitled folder">
+                                   value="Untitled folder" placeholder="Project Name" required>
+                            <label class="my-2">First Goal Model Name:</label>
+                            <input name="model_name" type="text" class="form-control"
+                                   value="Untitled" placeholder="Goal Model Name" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn" style="background-color: transparent"
@@ -121,32 +124,32 @@
 
             <!-- second version of project system -->
             <div class="container-fluid bg-white rounded my-3" id="projects-container">
-                <div class="project text-center">
+                <div class="project text-center" id="wwwweuurdsds">
                     <div class="goal-list">
                         <!-- title of goal list -->
-                        <div class="row goal-model my-2">
+                        <div class="row goal-model-nav py-2">
                             <div class="col-6 text-center text-color">Version</div>
                             <div class="col-6 text-center text-color">Last modified</div>
                         </div>
-                        <div class="row goal-model my-2" id="abcdefg">
+                        <div class="row goal-model py-1" id="abcdefg">
                             <div class="col-6 text-center">V1</div>
                             <div class="col-6 text-center text-color">May 8, 2017</div>
                         </div>
-                        <div class="row goal-model my-2" id="abcdefg">
+                        <div class="row goal-model py-1" id="abcdefg">
                             <div class="col-6 text-center">V1</div>
                             <div class="col-6 text-center text-color">May 8, 2017</div>
                         </div>
-                        <div class="row goal-model my-2" id="abcdefg">
+                        <div class="row goal-model py-1" id="abcdefg">
                             <div class="col-6 text-center">V1</div>
                             <div class="col-6 text-center text-color">May 8, 2017</div>
                         </div>
-                        <div class="row goal-model my-2" id="abcdefg">
+                        <div class="row goal-model py-1" id="abcdefg">
                             <div class="col-6 text-center">V1</div>
                             <div class="col-6 text-center text-color">May 8, 2017</div>
                         </div>
                     </div>
                     <img src="/img/folder.svg" alt="project-icon" class="project-icon">
-                    <h6 class="pt-2">Project</h6>
+                    <h6>Project</h6>
                     <div class="text-center create-goal-model">
                         <button class="btn btn-primary btn-sm mb-2"
                                 type="button" class="btn btn-primary"
@@ -171,10 +174,9 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <!-- TODO Change url -->
                     <form method="post" id="create-model">
                         <div class="modal-body">
-                            <input name="project_name" type="text" class="form-control"
+                            <input name="goal_model_name" type="text" class="form-control"
                                    value="Untitled">
                         </div>
                         <div class="modal-footer">
