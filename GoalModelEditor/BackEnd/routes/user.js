@@ -2,7 +2,6 @@
  *
  */
 
-
 // express application imports
 const express = require('express');
 const router = express.Router();
@@ -27,14 +26,14 @@ router.post('/login', function(req, res, next) {
         if (user_id == db.LOGIN_INVALID){
             res.statusCode = 401;
             res.json({user_id: "", message: "User login authentication failed"});
-            res.end();
+            return res.end();
         }
         let token = auth.genToken(user_id);
         //let token = auth.genToken(1);
         res.statusCode = 200;
         res.contentType("application/json");
         res.json({user_id : user_id, token: token});
-        res.end();
+        return res.end();
     })
 });
 
@@ -55,15 +54,15 @@ router.post('/register', (req, res, next) => {
 
     db.insertUser(username, hashPassword, email, firstname, lastname).then((result)=>{
         console.log(result);
-        if(result == db.REG_SUCCESS) {
+        if(result == db.SUCCESS) {
             res.statusCode = 200;
-        } else if (result == db.REG_ALREADY_EXIST) {
+        } else if (result == db.ALREADY_EXIST) {
             res.statusCode = 409;
         } else {
             res.statusCode = 400;
         }
         res.contentType("application/json");
-        res.send();
+        return res.send();
     });
 });
 

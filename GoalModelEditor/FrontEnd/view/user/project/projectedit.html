@@ -2,63 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
+    <link rel="icon" href="/img/icon.ico">
     <title>Goal Model Edit Page</title>
 
     <!-- Loads and initializes the Bootstrap style -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-    <link rel="stylesheet" href="/stylesheet/importphotos.css">
-
-    <!-- Loads and initializes the mxGraph -->
-    <script type="text/javascript" src="/js/mxClient.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script type="text/javascript" src="/js/importphotos.js"></script>
-
-    <style type="text/css">
-        .showborder{
-            border-style: solid;
-            border-width: 1px;
-        }
-        #height_fullscreen > .row {
-            min-height: 90vh;
-        }
-        .scrollbar {
-            height: 90vh;
-            overflow-y: scroll;
-        }
-    </style>
-
-    <script>
-        function hideandshow() {
-            var p = document.getElementById("photo");
-            var c = document.getElementById("cluster");
-            var h = document.getElementById("hierarchy");
-            var g = document.getElementById("generator");
-            var b = document.getElementById("nextbtn");
-
-            if (p.style.display === "none") {
-                p.style.display = "block";
-                c.style.display = "none";
-                h.style.display = "none";
-                g.style.display = "none";
-                b.innerHTML = "Next";
-            } else {
-                p.style.display = "none";
-                c.style.display = "block";
-                h.style.display = "block";
-                g.style.display = "block";
-                b.innerHTML = "Back";
-            }
-        }
-
-    </script>
+    <!--Load the edit page style-->
+    <link rel="stylesheet" href="/stylesheet/projectedit.css">
 
 </head>
 
-<body>
-
-<!--the navigation bar-->
+<body onload="loadData()">
+<!--the top navigation bar-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Goal Model</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,28 +22,20 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Files <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown
+                    Files
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">New</a>
+                    <a class="dropdown-item" href="#">Open</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Something else here</a>
                 </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
+
         </ul>
-        <div class="col-2">
+        <div style="float: right; margin-right: 50px">
             <div class="row text-center">
                 <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="user-dropdown"
@@ -106,108 +53,152 @@
 </nav>
 
 <!--the main section-->
-<div id="height_fullscreen" class="container-fluid">
+<div id="height-full-screen" class="container-fluid">
     <div class="row">
-        <!--import pictures section-->
-        <div id="photo" class="col-sm showborder scrollbar">
+        <!--import pictures section start-->
+        <div id="photo" class="col-7 showborder scrollbar">
             <fieldset class="form-group">
-                <a href="javascript:void(0)" onclick="$('#pro-image').click()">Upload Image</a>
+                <br/>
+                <button class="btn-primary" onclick="$('#pro-image').click()">Upload Image</button>
                 <input type="file" id="pro-image" name="pro-image" style="display: none;" class="form-control" multiple>
             </fieldset>
             <div class="preview-images-zone">
                 <!--preview-images-zone-->
-
             </div>
-
         </div>
+        <!--import pictures section end-->
 
-        <!--to do list goal section-->
-        <div id="todolist" class="col-sm showborder scrollbar" style="margin-top: 0px">
+        <!--to do list goal section start-->
+        <div id="todolist" class="col-5 showborder scrollbar" style="margin-top: 0px">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs nav-justified indigo" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#panel5" role="tab"><i class="fa fa-user"></i> Functional</a>
+                    <a class="nav-link active" data-toggle="tab" href="#panel1" role="tab"><i class="fa fa-user"></i> Functional</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#panel6" role="tab"><i class="fa fa-heart"></i> Quality</a>
+                    <a class="nav-link" data-toggle="tab" href="#panel2" role="tab"><i class="fa fa-heart"></i> Quality</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#panel7" role="tab"><i class="fa fa-envelope"></i> Emotional</a>
+                    <a class="nav-link" data-toggle="tab" href="#panel3" role="tab"><i class="fa fa-envelope"></i> Emotional</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#panel8" role="tab"><i class="fa fa-envelope"></i> Negative</a>
+                    <a class="nav-link" data-toggle="tab" href="#panel4" role="tab"><i class="fa fa-envelope"></i> Negative</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#panel9" role="tab"><i class="fa fa-envelope"></i> Stakeholder</a>
+                    <a class="nav-link" data-toggle="tab" href="#panel5" role="tab"><i class="fa fa-envelope"></i> Stakeholder</a>
                 </li>
+
+                <button id="photonextbtn" class="btn-primary" onclick="photonextbtn()">Next</button>
             </ul>
+
             <!-- Tab panels -->
-            <div class="tab-content">
-                <!--Panel 1-->
-                <div class="tab-pane fade in show active" id="panel5" role="tabpanel">
-                    <br>
-                    <p>Functional Goal</p>
+            <div>
+                <div id="goals" class="tab-content showborder inside-scrollbar">
+                    <!--Panel 1-->
+                    <div class="tab-pane fade in show active" id="panel1" role="tabpanel">
+                        <h6>Functional Goals</h6>
+                        <!--show functional data from JSON-->
+                        <div id="functionaldata"></div>
+                    </div>
+                    <!--/.Panel 1-->
+                    <!--Panel 2-->
+                    <div class="tab-pane fade" id="panel2" role="tabpanel">
+                        <h6>Quality Goals</h6>
+                        <!--show quality data from JSON-->
+                        <div id="qualitydata"></div>
+                    </div>
+                    <!--/.Panel 2-->
+                    <!--Panel 3-->
+                    <div class="tab-pane fade" id="panel3" role="tabpanel">
+                        <h6>Emotional Goals</h6>
+                        <!--show emotional data from JSON-->
+                        <div id="emotionaldata"></div>
+                    </div>
+                    <!--/.Panel 3-->
+                    <!--Panel 4-->
+                    <div class="tab-pane fade" id="panel4" role="tabpanel">
+                        <h6>Negative Goals</h6>
+                        <!--show negative data from JSON-->
+                        <div id="negativedata"></div>
+                    </div>
+                    <!--/.Panel 5-->
+                    <div class="tab-pane fade" id="panel5" role="tabpanel">
+                        <h6>Stakeholder</h6>
+                        <!--show stakeholder data from JSON-->
+                        <div id="stakeholderdata"></div>
+                    </div>
+                    <!--/.Panel 5-->
                 </div>
-                <!--/.Panel 1-->
-                <!--Panel 2-->
-                <div class="tab-pane fade" id="panel6" role="tabpanel">
-                    <br>
-                    <p>Quality Goal</p>
+
+                <!--used goals-->
+                <div id="usedgoal" class="showborder inside-scrollbar" style="display: none">
+                    <h6>Used Goals</h6>
+                    <div id="usedgoaldata"></div>
                 </div>
-                <!--/.Panel 2-->
-                <!--Panel 3-->
-                <div class="tab-pane fade" id="panel7" role="tabpanel">
-                    <br>
-                    <p>Emotional Goal</p>
+
+                <!--deleted goals-->
+                <div id="deletedgoal" class="showborder inside-scrollbar" style="display: none">
+                    <h6>Deleted Goals</h6>
+                    <div id="deletedgoaldata"></div>
                 </div>
-                <!--/.Panel 3-->
-                <!--Panel 4-->
-                <div class="tab-pane fade" id="panel8" role="tabpanel">
-                    <br>
-                    <p>Negative Goal</p>
-                </div>
-                <!--/.Panel 5-->
-                <div class="tab-pane fade" id="panel9" role="tabpanel">
-                    <br>
-                    <p>Stakeholder</p>
-                </div>
-                <!--/.Panel 5-->
+
             </div>
 
-            <button id="nextbtn" class="btn-primary" onclick="hideandshow()">Next</button>
         </div>
+        <!--to do list section end-->
 
-        <div id="cluster" class="col-sm showborder scrollbar" style="display: none">
-          <div>
-              <h1>Cluster</h1>
-          </div>
+        <!--cluster section start-->
+        <div id="cluster" class="col-3 showborder scrollbar" style="display: none">
+            <div>
+                <h1>Cluster</h1>
+                <button class="btn-primary" onclick="addCluster()">Add</button>
+            </div>
+            <!--show cluster data from JSON-->
+            <div class="cluster showborder inside-scrollbar" id="cluster_1"></div>
+            <div class="cluster showborder inside-scrollbar" id="cluster_2"></div>
+            <div class="cluster showborder inside-scrollbar" id="cluster_3"></div>
         </div>
+        <!--cluster section end-->
 
-        <div id="hierarchy" class="col-sm showborder scrollbar" style="display: none">
+        <!--hierachy section start-->
+        <div id="hierarchy" class="col-4 showborder scrollbar" style="display: none">
             <div>
                 <h1>Hierarchy</h1>
+                <button id="hierachynextbtn" class="btn-primary" onclick="hierachynextbtn()">Generate</button>
             </div>
+            <!--show hierarchy data from JSON-->
+            <div id="hierarchydata"></div>
         </div>
+        <!--hierachy section end-->
 
+        <!--generate section start-->
         <div id="generator" class="col-sm showborder scrollbar" style="display: none">
             <div>
                 <h1>Generate goal model</h1>
+                <button id="hierachynextbtn" class="btn-primary" onclick="hierachynextbtn()">Back</button>
+            </div>
+            <div>
+                <!--mxGraph part here-->
             </div>
         </div>
+        <!--generate section end-->
 
     </div>
 </div>
 
 
-<!-- Loads and initializes the Bootstrap javascript -->
 
+<!-- Loads and initializes the Bootstrap javascript -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+<!--<script type="text/javascript" src="/js/mxClient.js"></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src="/js/projectedit.js"></script>
 <footer>
     <p class="text-center">&copy;<em>&nbsp;2018 The University of Melbourne</em></p>
 </footer>
