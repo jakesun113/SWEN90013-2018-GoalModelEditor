@@ -11,7 +11,8 @@ $(document).ready(function () {
         success: function(projects) {
             $('#username').eq(0).html(Cookies.get('UIID'));
             // start each
-            $.each(projects.list, function (index, project) {
+            for(var i in projects.projects) {
+                const project = projects.projects[i];
                 var projectHTML = '';
                 projectHTML += '<div class="project text-center" id="' + project.project_id + '">';
                 projectHTML = projectHTML + '<div class="goal-list">';
@@ -27,7 +28,7 @@ $(document).ready(function () {
                     if(model.model_id) {
                         projectHTML = projectHTML + '<div class="row goal-model py-1" id="' + model.model_id + '">';
                         projectHTML = projectHTML + '<div class="col-6 text-center">' + model.model_name + '</div>';
-                        projectHTML = projectHTML + '<div class="col-6 text-center text-color">' + model.last_modified +
+                        projectHTML = projectHTML + '<div class="col-6 text-center text-color small">' + model.last_modified +
                             '</div> </div>';
                     }
                 });// end each
@@ -35,12 +36,12 @@ $(document).ready(function () {
                 projectHTML = projectHTML + '<img src="/img/folder.svg" alt="project-icon" class="project-icon">';
                 projectHTML = projectHTML + '<h6>' + project.project_name + '</h6>';
                 projectHTML = projectHTML + '<div class="text-center create-goal-model">';
-                projectHTML = projectHTML + '<button class="btn btn-primary btn-sm mb-2" ' +
-                    'type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-model">' +
+                projectHTML = projectHTML + '<button class="btn btn-primary btn-sm mb-2 new-model" ' +
+                    'type="button" data-toggle="modal" data-target="#add-model">' +
                     'Add New Goal Model</button>';
                 projectHTML = projectHTML + '</div>';
                 $('#projects-container').append(projectHTML);
-            });// end each
+            };// end each
         }
     }).fail(function(jqXHR){
         alert(jqXHR.statusText + ". Please contact us.");
@@ -76,27 +77,26 @@ $('#create-project').submit(function(evt){
             projectHTML = projectHTML + '<img src="/img/folder.svg" alt="project-icon" class="project-icon">';
             projectHTML = projectHTML + '<h6>' + project.project_name + '</h6>';
             projectHTML = projectHTML + '<div class="text-center create-goal-model">';
-            projectHTML = projectHTML + '<button class="btn btn-primary btn-sm mb-2" ' +
-                'type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-model">' +
+            projectHTML = projectHTML + '<button class="btn btn-primary btn-sm mb-2 new-model" ' +
+                'type="button" data-toggle="modal" data-target="#add-model">' +
                 'Add New Goal Model</button>';
             projectHTML = projectHTML + '</div>';
             $('#projects-container').append(projectHTML);
             $('#add-project').modal('toggle');
             // send create goal model request
-            var create_model_url = '/goal_model/create/' + id + '-' + project.project_id;
+            var create_model_url = '/goal_model/create/' + id + '/' + project.project_id;
             // start ajax
             $.ajax(create_model_url, {
                 data: formData,
                 type: "POST",
                 headers: {"Authorization": "Bearer " + token},
                 success: function (model) {
-                    var pselector = '#' + project.project_id + ' .goal_list';
                     var modelHTML = '';
                     modelHTML = modelHTML + '<div class="row goal-model py-1" id="' + model.model_id + '">';
                     modelHTML = modelHTML + '<div class="col-6 text-center">' + model.model_name + '</div>';
-                    modelHTML = modelHTML + '<div class="col-6 text-center text-color">' + model.last_modified +
+                    modelHTML = modelHTML + '<div class="col-6 text-center text-color small">' + model.last_modified +
                         '</div> </div>';
-                    $(pselector).eq(0).append(modelHTML);
+                    $('#'+ project.project_id+ ' .goal-list').eq(0).append(modelHTML);;
                 }
             }).fail(function(jqXHR){
                 alert(jqXHR.statusText);
@@ -109,7 +109,7 @@ $('#create-project').submit(function(evt){
 
 
 // create goal model for a project
-// POST '/goal_model/create/:userid-:projectid'
+// POST '/goal_model/create/:userid/:projectid'
 $('#create-model').submit(function(evt) {
     evt.preventDefault();
     var secret = JSON.parse((Cookies.get('LOKIDIED')));
@@ -119,7 +119,7 @@ $('#create-model').submit(function(evt) {
     if(typeof pid === "undefined") {
         alert("Please choose a project");
     }
-    var url = '/goal_model/create/'+ uid + '-' + pid;
+    var url = '/goal_model/create/'+ uid + '/' + pid;
     var formData = $(this).serialize();
     // start ajax
     $.ajax(url, {
@@ -127,13 +127,12 @@ $('#create-model').submit(function(evt) {
         type: "POST",
         headers: {"Authorization": "Bearer " + token},
         success: function(model){
-            var pselector = '#' + pid + ' .goal_list';
             var modelHTML = '';
             modelHTML = modelHTML + '<div class="row goal-model py-1" id="' + model.model_id + '">';
             modelHTML = modelHTML + '<div class="col-6 text-center">' + model.model_name + '</div>';
-            modelHTML = modelHTML + '<div class="col-6 text-center text-color">' + model.last_modified +
+            modelHTML = modelHTML + '<div class="col-6 text-center text-color small">' + model.last_modified +
                 '</div> </div>';
-            $(pselector).eq(0).append(modelHTML);
+            $('#'+pid+ ' .goal-list').eq(0).append(modelHTML);
             $('#add-model').modal('toggle');
         }
     }).fail(function(jqXHR){
@@ -141,10 +140,10 @@ $('#create-model').submit(function(evt) {
     });// end ajax
 });
 
-
-// handle click on the goal model item
-// redirect the user to the edit page
-// set a session cookie for goal model
+/* handle click events */
+// handle click on the goal model item, redirect the user to the edit page, set a session cookie for goal model
+// handle click on the create goal model button, set a session cookie for project
+// handle click on the delete project button, set a session cookie for the project
 $('#projects-container').click(function(event){
     // act on the clicked goal model only
     // front-end server create the cookie and redirect to the edit page
@@ -157,8 +156,22 @@ $('#projects-container').click(function(event){
         Cookies.set('MID', event.target.parentNode.id);
         window.location.href = '/edit';
     }
+    // handle click on the create goal model button
+    else if($(event.target).hasClass("new-model")){
+        Cookies.set('PID', $(event.target.parentNode).parent()[0].id);
+    }
 });
 
+
+// handle sign off button
+$('#signout').click(function (event) {
+    event.preventDefault();
+    Cookies.remove('LOKIDIED');
+    Cookies.remove('UIID');
+    Cookies.remove('MID');
+    Cookies.remove('PID');
+    window.location.href = '/';
+});
 
 // /* Testing block */
 // var projects =
