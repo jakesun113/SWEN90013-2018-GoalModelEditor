@@ -54,6 +54,7 @@ const SQL_RET_GOALMODEL_OF_PROJ = "SELECT ModelName " +
  */
 const SQL_CREATE_GOALMODEL = "INSERT INTO GoalModel (ModelId,ModelName, ModelDescription, URL, ProjectId) " +
     "VALUES (UUID(), ?, ?, ?, ?)";
+const SQL_RET_GOALMODEL = "SELECT * FROM GoalModel WHERE ModelName = ? AND ProjectId = ?";
 /**
  * get all project and its corresponding goalmodels
  * @type {string}
@@ -87,18 +88,18 @@ dbConn.createProject = function (ProjectName, ProjectDescription, Size, UserId) 
             [ProjectName, ProjectDescription, Size, UserId], function (err, result) {
                 if (err) {
                     console.log(JSON.stringify(err));
-                    return reject(err);
+                    if (err.errno == 1062) {// MYSQL error number for duplicate entry
+                        // Username already exists.
+                        reject(dbConn.ALREADY_EXIST);
+                    } else {
+                        reject(dbConn.UNKNOWN_ERROR);// unknown error
+                    }
                 } else {
                     // success
                     pool.query(SQL_RET_PROJECTID, [ProjectName, UserId], function (err, result) {
                         if (err) {
-                            console.log(JSON.stringify(err));
-                            if (err.errno == 1062) {// MYSQL error number for duplicate entry
-                                // Username already exists.
-                                reject(dbConn.ALREADY_EXIST);
-                            } else {
-                                reject(dbConn.UNKNOWN_ERROR);// unknown error
-                            }
+                            console.log(err);
+                            reject(dbConn.UNKNOWN_ERROR);
                         } else {
                             // success
                             resolve(result[0]);
@@ -200,8 +201,19 @@ dbConn.createGoalModel = function (modelName, modelDescription, url, ProjectId) 
                 } else {
                     reject(dbConn.UNKNOWN_ERROR);// unknown error
                 }
-            }else{
-                resolve(dbConn.SUCCESS);
+            } else {
+                pool.query(SQL_RET_GOALMODEL, [modelName, ProjectId], function (err, result) {
+                    if (err) {
+                        console.log(err);
+                        reject(dbConn.UNKNOWN_ERROR);
+                    } else {
+                        // success
+                        resolve(result[0]);
+                    }
+                    // if success: return userid
+                    //console.log(result);
+                    //resolve(result.ProjectId);
+                });
             }
         });
     });
@@ -231,3 +243,7 @@ module.exports = dbConn;
 //     pool.end();
 // });
 
+// dbConn.createGoalModel('asdasd3','',' ','e104cd30-51fa-11e8-8c21-02388973fed8').then((res)=>{
+//     console.log(res);
+//     pool.end();
+// });
