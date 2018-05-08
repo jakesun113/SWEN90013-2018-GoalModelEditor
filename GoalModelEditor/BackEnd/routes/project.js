@@ -81,7 +81,10 @@ router.post("/create/:userId", function(req, res, next){
     db.createProject(req.body.project_name, req.body.description, 0, req.params.userId).then((result)=>{
         console.log(result);
         res.statusCode = 201;
-        res.json(result);
+        res.json({
+            project_id : result.ProjectId,
+            project_name : result.ProjectName
+        });
         return res.end();
     }).catch(err => {
         res.statusCode = 500;
@@ -92,7 +95,7 @@ router.post("/create/:userId", function(req, res, next){
 
 
 /* POST Edit Project */
-router.put("/edit/:userId-:projectId", (req, res, next) => {
+router.put("/edit/:userId/:projectId", (req, res, next) => {
 
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
@@ -118,7 +121,7 @@ router.put("/edit/:userId-:projectId", (req, res, next) => {
 
 
 /* DELETE Delete Project */
-router.delete("/delete/:userId-:projectId", (req, res, next) => {
+router.delete("/delete/:userId/:projectId", (req, res, next) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
