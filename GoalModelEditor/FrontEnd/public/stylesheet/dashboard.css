@@ -8,6 +8,7 @@ header {
 .text-color {
     color: rgba(0,0,0,.54);
 }
+
 /* for v1 */
 /*!* file list block *!*/
 /*#file-list {*/
@@ -61,28 +62,29 @@ main {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 70%;
+    height: 65%;
     width: 100%;
     opacity: 0;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     border-bottom: 1px solid white;
 }
 
 /* hover on project
    show goal list */
 .project:hover {
-    background-color: deepskyblue;
+    background-image:
+            -webkit-radial-gradient(80% 10%, circle, skyblue, transparent),
+            -webkit-radial-gradient(80% 50%, circle, blue, transparent),
+            -webkit-radial-gradient(20% 80%, 40em 40em, lightblue, transparent),
+            -webkit-radial-gradient(10% 10%, circle, darkblue, transparent);
+    /*background: linear-gradient(to bottom, skyblue , white);*/
     color: #fff;
     display: inline-block;
     border-radius: 20px;
     padding: 0;
 }
 
-.project:hover p {
-    margin: 0;
-    padding: 0;
-    display: none;
-}
 
 .project:hover .project-icon {
     opacity: 0;
@@ -92,8 +94,12 @@ main {
     opacity: 1;
 }
 
-.project .goal-model {
+.project .goal-model{
     border-bottom: 1px solid white;
+}
+
+.project .goal-model-nav {
+    border-bottom: 3px solid white;
 }
 
 .project .create-goal-model {
@@ -102,4 +108,8 @@ main {
 
 .project:hover .create-goal-model {
     display: block;
+}
+
+.goal-model:hover {
+    background: linear-gradient(to right, #69c, #069, #69c );
 }
