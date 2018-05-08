@@ -28,58 +28,77 @@
 
 
 
-function passid_validation(passid,mx,my)
-{
-    var passwid_len = passid.value.length;
-    if (passwid_len == 0 ||passid_len >= my || passid_len < mx)
-    {
-        alert("Password should not be empty / length be between "+mx+" to "+my);
-        passid.focus();
-        return false;
-    }
-    return true;
-}
+// function passid_validation(passid,mx,my)
+// {
+//     var passwid_len = passid.value.length;
+//     if (passwid_len == 0 ||passid_len >= my || passid_len < mx)
+//     {
+//         alert("Password should not be empty / length be between "+mx+" to "+my);
+//         passid.focus();
+//         return false;
+//     }
+//     return true;
+// }
+//
+// function allLetter(uname)
+// {
+//     var letters = /^[A-Za-z]+$/;
+//     if(uname.value.match(letters))
+//     {
+//         return true;
+//     }
+//     else
+//     {
+//         alert('Name must have alphabet characters only');
+//         uname.focus();
+//         return false;
+//     }
+// }
+//
+// function ValidateEmail(uemail)
+// {
+//     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+//     if(uemail.value.match(mailformat))
+//     {
+//         return true;
+//     }
+//     else
+//     {
+//         alert("You have entered an invalid email address!");
+//         uemail.focus();
+//         return false;
+//     }
+// }
+//
+// function validatePassword(){
+//     var password = document.getElementById("password");
+//     var confirm_password = document.getElementById("confirm_password");
+//     if(password.value != confirm_password.value) {
+//         confirm_password.setCustomValidity("Passwords Don't Match");
+//         return false;
+//     } else {
+//         confirm_password.setCustomValidity('');
+//         return true;
+//     }
+// }
 
-function allLetter(uname)
-{
-    var letters = /^[A-Za-z]+$/;
-    if(uname.value.match(letters))
-    {
-        return true;
-    }
-    else
-    {
-        alert('Name must have alphabet characters only');
-        uname.focus();
-        return false;
-    }
-}
+// Register submit
+// send the request to front-end server with {username, firstname, lastname, email, password}
+// if successful redirect the user to home page
+$('#register').submit(function(evt){
+    evt.preventDefault();
+    var url = '/user/register';
+    var formData = $(this).serialize();
+    $.ajax(url, {
+        data: formData,
+        type: "POST",
+        success: function(){
+            window.location.href = '/login';
+        }
+    }).fail(function(jqXHR){
+        alert(jqXHR.statusText);
+    });// end ajax
+});// end submit
 
-function ValidateEmail(uemail)
-{
-    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if(uemail.value.match(mailformat))
-    {
-        return true;
-    }
-    else
-    {
-        alert("You have entered an invalid email address!");
-        uemail.focus();
-        return false;
-    }
-}
-
-function validatePassword(){
-    var password = document.getElementById("password");
-    var confirm_password = document.getElementById("confirm_password");
-    if(password.value != confirm_password.value) {
-        confirm_password.setCustomValidity("Passwords Don't Match");
-        return false;
-    } else {
-        confirm_password.setCustomValidity('');
-        return true;
-    }
-}
 
 

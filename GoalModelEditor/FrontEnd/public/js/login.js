@@ -31,10 +31,10 @@ $('#login').submit(function(evt){
     $.ajax(url, {
         data: formData,
         type: "POST",
-        success: function(cookie){
-            console.log(cookie.id);
-            Cookies.set('UID', cookie.id, { expires: 1, path: '/' });
-            window.location.href = '/project';
+        success: function(res){
+            var tokenP = JSON.parse(JSON.stringify(res));
+            Cookies.set('LOKIDIED', tokenP.token, { expires: 1, path: '/' });
+            window.location.href = '/dashboard';
         }
     }).fail(function(jqXHR){
         alert(jqXHR.statusText);
