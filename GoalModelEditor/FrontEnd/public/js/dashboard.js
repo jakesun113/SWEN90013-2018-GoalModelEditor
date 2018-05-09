@@ -32,6 +32,7 @@ $(document).ready(function () {
                             '</div> </div>';
                     }
                 });// end each
+
                 projectHTML = projectHTML + '</div>';
                 projectHTML = projectHTML + '<img src="/img/folder.svg" alt="project-icon" class="project-icon">';
                 projectHTML = projectHTML + '<h6>' + project.project_name + '</h6>';
@@ -40,6 +41,7 @@ $(document).ready(function () {
                     'type="button" data-toggle="modal" data-target="#add-model">' +
                     'Add New Goal Model</button>';
                 projectHTML = projectHTML + '</div>';
+
                 $('#projects-container').append(projectHTML);
             };// end each
         }
@@ -72,7 +74,6 @@ $('#create-project').submit(function(evt){
                 '<div class="col-6 text-center text-color">Name</div>' +
                 '<div class="col-6 text-center text-color">Last modified</div>' +
                 '</div>';
-
             projectHTML = projectHTML + '</div>';
             projectHTML = projectHTML + '<img src="/img/folder.svg" alt="project-icon" class="project-icon">';
             projectHTML = projectHTML + '<h6>' + project.project_name + '</h6>';

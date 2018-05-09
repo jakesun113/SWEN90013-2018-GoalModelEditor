@@ -39,20 +39,25 @@ main {
 
 /* project img */
 .project-icon {
-    height: 15vh;
+    height: 100px;
+    max-height: 30vh;
     width: auto;
-    opacity: 1;
+    max-width: 25vw;
     margin: 1.25rem;
+    opacity: 1;
 }
 
 /* project block */
 .project {
-    padding: 2rem 5rem;
+    padding: 0 10px 0 0;
     display: inline-block;
+    height: 300px;
     max-height: 30vh;
     width: 33%;
-    overflow: scroll;
+    max-width: 30vw;
+    over-flow-y: hidden;
     position: relative;
+
 }
 
 /* hide goal list*/
@@ -64,10 +69,11 @@ main {
     right: 0;
     height: 65%;
     width: 100%;
-    opacity: 0;
+    display: none;
     overflow-y: scroll;
     overflow-x: hidden;
     border-bottom: 1px solid white;
+    padding: 0;
 }
 
 /* hover on project
@@ -92,6 +98,7 @@ main {
 
 .project:hover .goal-list {
     opacity: 1;
+    display: inline-block;
 }
 
 .project .goal-model{
@@ -103,11 +110,11 @@ main {
 }
 
 .project .create-goal-model {
-    display: none;
+    opacity: 0;
 }
 
 .project:hover .create-goal-model {
-    display: block;
+    opacity: 1;
 }
 
 .goal-model:hover {
