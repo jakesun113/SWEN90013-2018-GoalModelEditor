@@ -96,7 +96,11 @@ $('#register').submit(function(evt){
             window.location.href = '/login';
         }
     }).fail(function(jqXHR){
-        alert(jqXHR.statusText);
+        if(jqXHR.statusText === 'OK'){
+            window.location.href = '/login';
+        } else {
+            alert(jqXHR.statusText);
+        }
     });// end ajax
 });// end submit
 

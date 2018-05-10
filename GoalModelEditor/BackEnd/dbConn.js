@@ -3,12 +3,19 @@ const mysql = require('mysql');
 const Promise = require('bluebird');
 
 const dbconf = {
-    connectionLimit: 100,
-    host: 'ec2-52-65-15-37.ap-southeast-2.compute.amazonaws.com',
-    user: 'test',
-    password: 'SWEN90013goal!',
-    database: 'GoalModel_A'
+    host    : 'localhost',
+    user    : 'root',
+    password: 'Success68',
+    database: 'goalmodel'
 };
+
+//const dbconf = {
+  //  connectionLimit: 100,
+    //host: 'ec2-52-65-15-37.ap-southeast-2.compute.amazonaws.com',
+    //user: 'test',
+    //password: 'SWEN90013goal!',
+    //database: 'GoalModel_A'
+//};
 const pool = mysql.createPool(dbconf);
 /**
  * The SQL sentence to insert a user with fields escaped;
@@ -54,6 +61,7 @@ const SQL_RET_GOALMODEL_OF_PROJ = "SELECT ModelName " +
  */
 const SQL_CREATE_GOALMODEL = "INSERT INTO GoalModel (ModelId,ModelName, ModelDescription, URL, ProjectId) " +
     "VALUES (UUID(), ?, ?, ?, ?)";
+const SQL_RET_GOALMODEL = "SELECT * FROM GoalModel WHERE ModelName = ? AND ProjectId = ?";
 /**
  * get all project and its corresponding goalmodels
  * @type {string}
@@ -86,19 +94,19 @@ dbConn.createProject = function (ProjectName, ProjectDescription, Size, UserId) 
             SQL_Project_Creation,
             [ProjectName, ProjectDescription, Size, UserId], function (err, result) {
                 if (err) {
-                    console.log(JSON.stringify(err));
-                    return reject(err);
+                    //console.log(JSON.stringify(err));
+                    if (err.errno == 1062) {// MYSQL error number for duplicate entry
+                        // Username already exists.
+                        reject(dbConn.ALREADY_EXIST);
+                    } else {
+                        reject(dbConn.UNKNOWN_ERROR);// unknown error
+                    }
                 } else {
                     // success
                     pool.query(SQL_RET_PROJECTID, [ProjectName, UserId], function (err, result) {
                         if (err) {
-                            console.log(JSON.stringify(err));
-                            if (err.errno == 1062) {// MYSQL error number for duplicate entry
-                                // Username already exists.
-                                reject(dbConn.ALREADY_EXIST);
-                            } else {
-                                reject(dbConn.UNKNOWN_ERROR);// unknown error
-                            }
+                            console.log(err);
+                            reject(dbConn.UNKNOWN_ERROR);
                         } else {
                             // success
                             resolve(result[0]);
@@ -127,7 +135,7 @@ dbConn.insertUser = function (username, password, Email, FirstName, LastName) {
             SQL_USER_REGISTER,
             [username, password, Email, FirstName, LastName], function (err, result) {
                 if (err) {
-                    console.log(JSON.stringify(err));
+                    //console.log(JSON.stringify(err));
                     if (err.errno == 1062) {// MYSQL error number for duplicate entry
                         // Username already exists.
                         reject(dbConn.ALREADY_EXIST);
@@ -193,15 +201,26 @@ dbConn.createGoalModel = function (modelName, modelDescription, url, ProjectId) 
     return new Promise(function (resolve, reject) {
         pool.query(SQL_CREATE_GOALMODEL, [modelName, modelDescription, url, ProjectId], function (err, result) {
             if (err) {
-                console.log(JSON.stringify(err));
+                //console.log(JSON.stringify(err));
                 if (err.errno == 1062) {// MYSQL error number for duplicate entry
                     // Username already exists.
                     reject(dbConn.ALREADY_EXIST);
                 } else {
                     reject(dbConn.UNKNOWN_ERROR);// unknown error
                 }
-            }else{
-                resolve(dbConn.SUCCESS);
+            } else {
+                pool.query(SQL_RET_GOALMODEL, [modelName, ProjectId], function (err, result) {
+                    if (err) {
+                        //console.log(err);
+                        reject(dbConn.UNKNOWN_ERROR);
+                    } else {
+                        // success
+                        resolve(result[0]);
+                    }
+                    // if success: return userid
+                    //console.log(result);
+                    //resolve(result.ProjectId);
+                });
             }
         });
     });
@@ -231,3 +250,7 @@ module.exports = dbConn;
 //     pool.end();
 // });
 
+// dbConn.createGoalModel('asdasd3','',' ','e104cd30-51fa-11e8-8c21-02388973fed8').then((res)=>{
+//     console.log(res);
+//     pool.end();
+// });

@@ -10,9 +10,9 @@ let sql3 = `DELETE FROM User_Project`;
 let sql4 = `DELETE FROM Project`;
 
 // delete a row with id 1
-connection.query(sql2, (error, results, fields) => {
-    if (error)
-        return console.error(error.message);
-});
+//connection.query(sql2, (error, results, fields) => {
+//    if (error)
+//        return console.error(error.message);
+//});
 
 connection.end();
