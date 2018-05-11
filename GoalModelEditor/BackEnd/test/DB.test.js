@@ -24,10 +24,10 @@ describe('DBTesting', function () {
     // with information do exist
     it('should inform user already exist', function () {
         let username = 'testfz';
-        let password = 'dbtestfz';
-        let email = 'dbtestfz';
-        let firstname = 'dbtestfz';
-        let lastname = 'dbtestfz';
+        let password = 'newpassword';
+        let email = 'newemail';
+        let firstname = 'fname';
+        let lastname = 'lname';
         let promise = db.insertUser(username, password, email, firstname, lastname);
         return promise.then().should.be.rejectedWith(db.ALREADY_EXIST);
     });
@@ -82,10 +82,10 @@ describe('DBTesting', function () {
 
     // #8 test get_goalmodel_list function
     // with information do not exist
-    it('should not read goalmodel list successfully', function(){
+    it('should return an empty array', function(){
         let projectid = 'x';
         let promise = db.getGoalModelList(projectid);
-        return promise.then().should.be.rejected();
+        return promise.then().should.be.fulfilledWith([]);
     });
 
     // #9 test create_goalmodel function
@@ -120,10 +120,10 @@ describe('DBTesting', function () {
 
     // #12 test get_project_list function
     // with information do not exist
-    it('should not read project list successfully', function(){
+    it('should return an empty array', function(){
         let userid = 'x';
         let promise = db.getProjectGoalModelList(userid);
-        return promise.then().should.be.rejected();
+        return promise.then().should.be.fulfilledWith([]);
     });
 
     //process.exit();
