@@ -1,6 +1,7 @@
 /*show border start*/
 .showborder{
     border-style: solid;
+    border-color:grey;
     border-width: 1px;
 }
 /*show border end*/
@@ -98,4 +99,9 @@
     height: 30vh;
     margin: 10px auto;
 }
+
+/*.pad_menu {*/
+    /*padding: 100px;*/
+    /*background-color: #e4e4e1;*/
+/*}*/
 /*cluster div end*/
