@@ -1,16 +1,7 @@
 {
-  "dev": {
-    "connectionLimit": 100,
-    "host": "ec2-52-65-15-37.ap-southeast-2.compute.amazonaws.com",
-    "user": "test",
-    "password": "SWEN90013goal!",
-    "database": "GoalModel_A"
-  },
-  "prod": {
-    "connectionLimit": 100,
-    "host": "localhost",
-    "user": "root",
-    "password": "SWEN90013goal!",
-    "database": "GoalModel_A"
-  }
+  "connectionLimit": 100,
+  "host": "ec2-52-65-15-37.ap-southeast-2.compute.amazonaws.com",
+  "user": "test",
+  "password": "SWEN90013goal!",
+  "database": "GoalModel_A"
 }
