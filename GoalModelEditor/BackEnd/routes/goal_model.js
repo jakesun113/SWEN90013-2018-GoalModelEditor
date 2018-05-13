@@ -12,7 +12,7 @@ const db = require("../dbConn");
 
 
 /* POST Create Goal Model */
-router.post("/create/:userId/:projectId",
+router.post("/:userId/:projectId",
     (req, res, next) => {
         // check token for authentication
         if (!auth.authenticate(req.headers)) {
@@ -42,7 +42,7 @@ router.post("/create/:userId/:projectId",
 
 
 /* PUT Edit Goal Model */
-router.post("/edit/:userId/:projectId/:goalmodelId",
+router.put("/:userId/:goalmodelId",
     (req, res, next) => {
         // stub
     }
@@ -50,7 +50,7 @@ router.post("/edit/:userId/:projectId/:goalmodelId",
 
 
 /* DELETE Goal Model */
-router.delete("/delete/:userId/:projectId/:goalmodelId",
+router.delete("/:userId/:goalmodelId",
     (req, res, next) => {
         // stub
     }
