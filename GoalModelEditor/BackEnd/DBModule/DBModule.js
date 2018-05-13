@@ -52,7 +52,7 @@ const SQL_RET_GOALMODEL_OF_PROJ = "SELECT ModelName " +
  * The SQL sentence to create a goalmodel
  * @type {string}
  */
-const SQL_CREATE_GOALMODEL = "INSERT INTO GoalModel (ModelId,ModelName, ModelDescription, URL, ProjectId) " +
+const SQL_CREATE_GOALMODEL = "INSERT INTO GoalModel (ModelId,ModelName, ModelDescription, FilePath, ProjectId) " +
     "VALUES (UUID(), ?, ?, ?, ?)";
 const SQL_RET_GOALMODEL = "SELECT * FROM GoalModel WHERE BINARY ModelName = ? AND ProjectId = ?";
 /**
@@ -64,13 +64,15 @@ const SQL_GET_PROJ_GOALMODEL = "SELECT * " +
     "ON UP.ProjectId = GM.ProjectId AND UP.ProjectId = Project.ProjectId " +
     "WHERE UserId = ?";
 
+const SQL_GET_GOALMODEL_BY_ID = "SELECT * FROM GoalModel WHERE ModelId = ?";
+
 /**
  * DBModule
  * @param env should be one of 'dev' or 'prod'
  * @returns {{DBModule}}
  */
 const DBModule = function (env) {
-    var DBModule = {};
+    let DBModule = {};
     DBModule.env = env;
     DBModule.SUCCESS = 1;
     DBModule.ALREADY_EXIST = 0;
@@ -196,12 +198,12 @@ const DBModule = function (env) {
      * The function to create a goal model under a project.
      * @param modelName
      * @param modelDescription
-     * @param url
+     * @param filePath
      * @param ProjectId
      */
-    DBModule.createGoalModel = function (modelName, modelDescription, url, ProjectId) {
+    DBModule.createGoalModel = function (modelName, modelDescription, filePath, ProjectId) {
         return new Promise(function (resolve, reject) {
-            pool.query(SQL_CREATE_GOALMODEL, [modelName, modelDescription, url, ProjectId], function (err, result) {
+            pool.query(SQL_CREATE_GOALMODEL, [modelName, modelDescription, filePath, ProjectId], function (err, result) {
                 if (err) {
                     console.log(JSON.stringify(err));
                     if (err.errno == 1062) {// MYSQL error number for duplicate entry
@@ -239,9 +241,21 @@ const DBModule = function (env) {
                 [ProjectId], function (err, result) {
                     if (err) return reject(err);
                     resolve(result);
-                })
+                });
         });
     };
+
+    DBModule.getGoalModel = function (ModelId) {
+        return new Promise((result, reject) => {
+            pool.query(
+                SQL_GET_GOALMODEL_BY_ID, [ModelId], (err, result) => {
+                    if (err) return reject(err);
+                    resolve(result);
+                }
+            );
+        });
+    };
+
     return DBModule;
 };
 
