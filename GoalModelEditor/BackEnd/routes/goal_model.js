@@ -8,7 +8,7 @@ const router = express.Router();
 
 // security related imports
 const auth = require("../authen");
-const db = require("../dbConn");
+const db = require("../DBModule/DBModule.js");
 
 
 /* POST Create Goal Model */

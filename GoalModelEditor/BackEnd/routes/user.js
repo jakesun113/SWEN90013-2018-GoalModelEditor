@@ -7,7 +7,7 @@ const express = require('express');
 const router = express.Router();
 
 // database connection
-const db = require("../dbConn");
+const db = require("../DBModule/DBModule.js");
 
 // security-related imports
 const auth = require("../authen");

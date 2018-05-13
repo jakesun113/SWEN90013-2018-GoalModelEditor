@@ -9,7 +9,7 @@ const router = express.Router();
 
 // security related imports
 const auth = require("../authen");
-const db = require("../dbConn");
+const db = require("../DBModule/DBModule.js");
 
 // response codes
 const response_codes = require("./response_codes");
