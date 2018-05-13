@@ -259,20 +259,6 @@ const DBModule = function () {
                 });
         });
     };
-    /**
-     * Get a goal model by its id.
-     * @param ModelId
-     */
-    DBModule.getGoalModel = function (ModelId) {
-        return new Promise((resolve, reject) => {
-            pool.query(
-                SQL_GET_GOALMODEL_BY_ID, [ModelId], (err, result) => {
-                    if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
-                    resolve(result);
-                }
-            );
-        });
-    };
 
     /**
      * get a peoject by its id.
@@ -290,25 +276,21 @@ const DBModule = function () {
     };
 
     /**
-     * update a single goal model.
-     * @param modelId
-     * @param modelName
-     * @param modelDescription
-     * @param filePath
-     * @param ProjectId
+     * Get a goal model by its id.
+     * @param ModelId
      */
-    DBModule.updateGoalModel = function (modelId, modelName, modelDescription, filePath) {
+    DBModule.getGoalModel = function (ModelId) {
         return new Promise((resolve, reject) => {
-            pool.query(SQL_UPDATE_GOAL_MODEL, [modelName, modelDescription, filePath, modelId], (err, result) => {
-                if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
-                if (result.affectedRows == 1) {
-                    resolve(DBModule.SUCCESS);
-                } else {
+            pool.query(
+                SQL_GET_GOALMODEL_BY_ID, [ModelId], (err, result) => {
                     if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                    resolve(result);
                 }
-            });
+            );
         });
     };
+
+
     /**
      * update a single project.
      * @param projectId
@@ -319,6 +301,26 @@ const DBModule = function () {
     DBModule.updateProject = function (projectId, projectName, projectDescription, size) {
         return new Promise((resolve, reject) => {
             pool.query(SQL_UPDATE_GOAL_MODEL, [projectName, projectDescription, size, projectId], (err, result) => {
+                if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                if (result.affectedRows == 1) {
+                    resolve(DBModule.SUCCESS);
+                } else {
+                    if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                }
+            });
+        });
+    };
+    /**
+     * update a single goal model.
+     * @param modelId
+     * @param modelName
+     * @param modelDescription
+     * @param filePath
+     * @param ProjectId
+     */
+    DBModule.updateGoalModel = function (modelId, modelName, modelDescription, filePath) {
+        return new Promise((resolve, reject) => {
+            pool.query(SQL_UPDATE_GOAL_MODEL, [modelName, modelDescription, filePath, modelId], (err, result) => {
                 if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
                 if (result.affectedRows == 1) {
                     resolve(DBModule.SUCCESS);
