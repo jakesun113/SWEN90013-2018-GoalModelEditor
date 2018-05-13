@@ -23,16 +23,20 @@ router.post('/login', function(req, res, next) {
     let promise = db.login(req.body.username, hash.digest("hex"));
     promise.then(function(user_id){
         console.log("result is " + user_id);
-        if (user_id == db.INVALID) {
-            res.statusCode = 401;
-            res.json({user_id: "", message: "User login authentication failed"});
-            return res.end();
-        }
         let token = auth.genToken(user_id);
         //let token = auth.genToken(1);
         res.statusCode = 200;
         res.contentType("application/json");
         res.json({user_id : user_id, token: token});
+        return res.end();
+    }).catch(err => {
+        if (err.code == db.INVALID){
+            res.statusCode = 401;
+            res.json({user_id: "", message: "User login failed: " + err.message});
+            return res.end();
+        }
+        res.statusCode = 500;
+        res.json({message: 'User login failed: ' + err.message});
         return res.end();
     })
 });
@@ -45,24 +49,25 @@ router.post('/register', (req, res, next) => {
     let lastname = req.body.lastname;
     let hashPassword = crypto.createHash('sha256').update(password).digest('hex');
 
-    // console.log(username + '\n');
-    // console.log(password + '\n');
-    // console.log(email + '\n');
-    // console.log(firstname + '\n');
-    // console.log(lastname + '\n');
-    // console.log(hashPassword + '\n');
-
     db.insertUser(username, hashPassword, email, firstname, lastname).then((result)=>{
         console.log(result);
-        if(result == db.SUCCESS) {
-            res.statusCode = 200;
-        } else if (result == db.ALREADY_EXIST) {
-            res.statusCode = 409;
-        } else {
-            res.statusCode = 400;
-        }
+        res.statusCode = 200;
         res.contentType("application/json");
-        return res.send();
+        return res.send({
+            username : username,
+            email : email,
+            firstname : firstname,
+            lastname : lastname
+        });
+    }).catch(err => {
+        if (err.code == db.ALREADY_EXIST) {
+            res.statusCode = 409;
+            res.json({message: "User registration failed: " + err.message});
+            return res.end();
+        }
+        res.statusCode = 500;
+        res.json({message: "User registration failed: " + err.message});
+        return res.end();
     });
 });
 
