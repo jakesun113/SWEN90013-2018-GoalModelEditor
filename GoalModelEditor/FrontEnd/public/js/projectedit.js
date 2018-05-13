@@ -341,12 +341,38 @@ function parseNodes(nodes) {
 // takes a node object and turns it into a <li>
 function parseNode(node) {
     var li = document.createElement("LI");
-    li.innerHTML = '<div id="'+node.GoalID+'" class="'+node.GoalType+'">'+ node.GoalDescription + '</div>';
+    //li.innerHTML = '<div id="'+node.GoalID+'" contentEditable="true" class="'+node.GoalType+'">'+ node.GoalDescription + '</div>';
+    li.innerHTML = '<input id= "'+node.GoalID+'" class="'+node.GoalType+'" value = "'+node.GoalDescription+'" placeholder="new"' + '/>';
     if(node.SubGoals) li.appendChild(parseNodes(node.SubGoals));
     return li;
 }
-/*Show JSON data on edit page start*/
+/*Show JSON data on edit page end*/
 
+/*Add new goal by pressing "Enter" start*/
+document.onkeydown=function(event){
+    //when the user press the "enter" button
+    if(event.key == "Enter")
+    {
+        //make the default enter invalid
+        event.preventDefault();
+        var newlist = '<li><input placeholder="New goal"/></li>';
+
+        if($(event.target).parent().length>0)
+        {
+            var parent = $(event.target).parent();
+            var grandparent = parent.parent();
+            parent.after(newlist);
+            //$(grandparent).append(newlist);
+        }
+
+        else
+        {
+            $(event.target).parent().after(newlist);
+        }
+        // $('#as').focus();
+    }
+};
+/*Add new goal by pressing "Enter" end*/
 
 
 /*Hide and show section start*/
