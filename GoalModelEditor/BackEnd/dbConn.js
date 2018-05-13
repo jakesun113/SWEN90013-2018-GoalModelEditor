@@ -72,7 +72,7 @@ const dbConn = {};
  */
 dbConn.SUCCESS = 1;
 dbConn.ALREADY_EXIST = 0;
-dbConn.LOGIN_INVALID = "";
+dbConn.INVALID = "";
 dbConn.UNKNOWN_ERROR = -1;
 
 /**
@@ -165,7 +165,7 @@ dbConn.login = function (username, password) {
                     });
                 } else {
                     // Invalid username or password
-                    reject(dbConn.LOGIN_INVALID);
+                    reject(dbConn.INVALID);
                 }
             })
     });

@@ -23,7 +23,7 @@ router.post('/login', function(req, res, next) {
     let promise = db.login(req.body.username, hash.digest("hex"));
     promise.then(function(user_id){
         console.log("result is " + user_id);
-        if (user_id == db.LOGIN_INVALID){
+        if (user_id == db.INVALID) {
             res.statusCode = 401;
             res.json({user_id: "", message: "User login authentication failed"});
             return res.end();

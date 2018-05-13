@@ -18,17 +18,17 @@ const SQL_USER_REGISTER = "INSERT INTO " +
  * @type {string}
  */
 const SQL_USER_LOGIN = "UPDATE User SET LastLogin = NOW()" +
-    "WHERE Username = ? AND Password = ?";
+    "WHERE BINARY Username = ? AND Password = ?";
 /**
  * The SQL sentence to retrieve userid
  * @type {string}
  */
-const SQL_RET_USERID = "SELECT UserId from User WHERE Username = ? AND Password = ?";
+const SQL_RET_USERID = "SELECT UserId from User WHERE BINARY Username = ? AND Password = ?";
 /**
  * The SQL sentence to retrieve projectid
  * @type {string}
  */
-const SQL_RET_PROJECTID = "SELECT * from Project WHERE ProjectName = ? AND OwnerId = ?";
+const SQL_RET_PROJECTID = "SELECT * from Project WHERE BINARY ProjectName = ? AND OwnerId = ?";
 /**
  * The SQL sentence to create a project
  * @type {string}
@@ -54,7 +54,7 @@ const SQL_RET_GOALMODEL_OF_PROJ = "SELECT ModelName " +
  */
 const SQL_CREATE_GOALMODEL = "INSERT INTO GoalModel (ModelId,ModelName, ModelDescription, URL, ProjectId) " +
     "VALUES (UUID(), ?, ?, ?, ?)";
-const SQL_RET_GOALMODEL = "SELECT * FROM GoalModel WHERE ModelName = ? AND ProjectId = ?";
+const SQL_RET_GOALMODEL = "SELECT * FROM GoalModel WHERE BINARY ModelName = ? AND ProjectId = ?";
 /**
  * get all project and its corresponding goalmodels
  * @type {string}
@@ -74,12 +74,13 @@ const DBModule = function (env) {
     DBModule.env = env;
     DBModule.SUCCESS = 1;
     DBModule.ALREADY_EXIST = 0;
-    DBModule.LOGIN_INVALID = "";
+    DBModule.INVALID = "";
     DBModule.UNKNOWN_ERROR = -1;
     if (dbconfig[env]) {
         pool = mysql.createPool(dbconfig[env]);
     } else {
-        throw "The environment must be 'dev' or 'prod'.";
+        console.log("WARNING: The DBModule environment must be 'dev' or 'prod'. dev env is used for this run.");
+        pool = mysql.createPool(dbconfig['dev']);
     }
 
 
@@ -173,7 +174,7 @@ const DBModule = function (env) {
                         });
                     } else {
                         // Invalid username or password
-                        reject(DBModule.LOGIN_INVALID);
+                        reject(DBModule.INVALID);
                     }
                 })
         });
