@@ -269,7 +269,7 @@ const DBModule = function () {
             pool.query(
                 SQL_GET_PROJECT, [projectId], (err, result) => {
                     if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
-                    resolve(result);
+                    resolve(result[0]);
                 }
             );
         });
@@ -284,7 +284,7 @@ const DBModule = function () {
             pool.query(
                 SQL_GET_GOALMODEL_BY_ID, [ModelId], (err, result) => {
                     if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
-                    resolve(result);
+                    resolve(result[0]);
                 }
             );
         });

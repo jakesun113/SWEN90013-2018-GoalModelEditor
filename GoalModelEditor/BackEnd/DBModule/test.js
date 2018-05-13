@@ -9,7 +9,7 @@ var dbModule = require('./DBModule');
 //     console.log('['+err+']');
 // });
 
-dbModule.getProject('4c997a11-568b-11e8-8c21-02388973fed8').then(res => {
+dbModule.getGoalModel('43d5a0f1-51fb-11e8-8c21-02388973fed8').then(res => {
     console.log(res);
 });
 
