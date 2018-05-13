@@ -30,35 +30,63 @@
     </div>
     <h1 class="h3 mb-3 font-weight-normal text-center">Create your account</h1>
 
+    <!--<form data-toggle="validator" role="form">-->
     <div class="form-group">
         <label class="control-label">Username</label>
         <label for="username" class="sr-only">Username</label>
-        <input type="username" id="username" class="form-control"
-                   name="username" placeholder="Username" required>
-               <!--data-remote="/user/register/validname"-->
-               <!--data-match-error="The username already exists" -->
-        <!--<div class="help-block with-errors mt-2"></div>-->
+        <div class="input-group">
+            <input type="text" pattern="^[_A-z]{1,}$" id="username" class="form-control"
+                   name="username" placeholder="alphabet characters only"
+                   required>
+        </div>
+        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+        <div class="help-block with-errors"></div>
+                       <!--data-remote="/user/register/validname"-->
+                       <!--data-match-error="The username already exists" -->
+           <!--<div class="help-block with-errors mt-2"></div>-->
     </div>
 
-    <label class="control-label">First Name</label>
-    <label for="firstName" class="sr-only">First Name</label>
-    <input type="firstname" id="firstName" class="form-control"
-           name="firstname" placeholder="First Name" required>
+    <div class="form-group">
+        <label class="control-label">First Name</label>
+        <label for="firstName" class="sr-only">First Name</label>
+        <div class="input-group">
+            <input type="text" pattern="^[_A-z]{1,}$" id="firstName" class="form-control"
+                   name="firstname" placeholder="alphabet characters only"
+                   required>
+        </div>
+        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+        <div class="help-block with-errors"></div>
+    </div>
 
-    <label class="control-label">Last Name</label>
-    <label for="lastName" class="sr-only">Last Name</label>
-    <input type="lastname" id="lastName" class="form-control"
-           name="lastname" placeholder="Last Name" required>
+    <div class="form-group">
+        <label class="control-label">Last Name</label>
+        <label for="lastName" class="sr-only">Last Name</label>
+        <div class="input-group">
+            <input type="text" pattern="^[_A-z]{1,}$" id="lastName" class="form-control"
+                   name="lastname" placeholder="alphabet characters only"
+                   required>
+        </div>
+        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+        <div class="help-block with-errors"></div>
+    </div>
 
-    <label class="control-label">Email</label>
-    <label for="inputEmail" class="sr-only">Email address</label>
-    <input type="email" id="inputEmail" class="form-control"
-           name="email" placeholder="Email Address" required autofocus>
 
-    <label class="control-label">Password</label>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" id="inputPassword" class="form-control"
-           name="password" placeholder="Password" required>
+    <div class="form-group">
+        <label class="control-label">Email</label>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" id="inputEmail" class="form-control"
+               name="email" placeholder="Email Address" data-error="Opps, that email address is invalid" required>
+        <div class="help-block with-errors"></div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Password</label>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" data-minlength="6" class="form-control"
+               name="password" id="inputPassword" placeholder="Password" required>
+        <div class="help-block">Minimum of 6 characters</div>
+    </div>
+
 
     <div class="form-group">
         <label class="control-label">Confirm Password</label>
@@ -68,6 +96,8 @@
                placeholder="Confirm Password" required>
         <div class="help-block with-errors"></div>
     </div>
+
+
     <button class="btn btn-lg btn-primary btn-block mt-2" type="submit">Submit</button>
     <!--<a class="btn btn-lg btn-primary btn-block" href="/register">Register</a>-->
 
