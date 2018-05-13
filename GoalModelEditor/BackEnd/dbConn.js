@@ -2,20 +2,20 @@
 const mysql = require('mysql');
 const Promise = require('bluebird');
 
-const dbconf = {
+/*const dbconf = {
     host    : 'localhost',
     user    : 'root',
     password: 'Success68',
     database: 'goalmodel'
-};
+};*/
 
-//const dbconf = {
-  //  connectionLimit: 100,
-    //host: 'ec2-52-65-15-37.ap-southeast-2.compute.amazonaws.com',
-    //user: 'test',
-    //password: 'SWEN90013goal!',
-    //database: 'GoalModel_A'
-//};
+const dbconf = {
+    connectionLimit: 100,
+    host: 'ec2-52-65-15-37.ap-southeast-2.compute.amazonaws.com',
+    user: 'test',
+    password: 'SWEN90013goal!',
+    database: 'GoalModel_A'
+};
 const pool = mysql.createPool(dbconf);
 /**
  * The SQL sentence to insert a user with fields escaped;
