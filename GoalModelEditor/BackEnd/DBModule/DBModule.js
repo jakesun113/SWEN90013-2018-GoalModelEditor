@@ -252,34 +252,16 @@ const DBModule = function () {
         });
     };
 
-
+    /**
+     *
+     * @param modelId
+     * @param modelName
+     * @param modelDescription
+     * @param filePath
+     * @param ProjectId
+     */
     DBModule.updateGoalModel = function (modelId, modelName, modelDescription, filePath, ProjectId) {
-        // return new Promise(function (resolve, reject) {
-        //     pool.query(SQL_CREATE_GOALMODEL, [modelName, modelDescription, filePath, ProjectId], function (err, result) {
-        //         if (err) {
-        //             console.log(JSON.stringify(err));
-        //             if (err.errno == 1062) {// MYSQL error number for duplicate entry
-        //                 // Username already exists.
-        //                 reject(DBModule.ALREADY_EXIST);
-        //             } else {
-        //                 reject(DBModule.UNKNOWN_ERROR);// unknown error
-        //             }
-        //         } else {
-        //             pool.query(SQL_RET_GOALMODEL, [modelName, ProjectId], function (err, result) {
-        //                 if (err) {
-        //                     console.log(err);
-        //                     reject(DBModule.UNKNOWN_ERROR);
-        //                 } else {
-        //                     // success
-        //                     resolve(result[0]);
-        //                 }
-        //                 // if success: return userid
-        //                 //console.log(result);
-        //                 //resolve(result.ProjectId);
-        //             });
-        //         }
-        //     });
-        // });
+        throw 'not implemented';
     };
 
     return DBModule;
