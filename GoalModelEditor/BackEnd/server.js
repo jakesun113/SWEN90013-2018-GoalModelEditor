@@ -2,6 +2,8 @@
  * Module dependencies.
  */
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 const app = require('./app');
 const debug = require('debug')('backend:server');
 const fs = require('fs');
@@ -10,7 +12,7 @@ const config = require('./config');
 
 const privateKey  = fs.readFileSync(config.KEY_FILE, 'utf8');
 const certificate = fs.readFileSync(config.CERT_FILE, 'utf8');
-const credentials = {key: privateKey, cert: certificate};
+const credentials = {key: privateKey, cert: certificate, rejectUnauthorized: false};
 
 /**
  * Get port from environment and store in Express.
@@ -20,7 +22,7 @@ var port = normalizePort(process.env.PORT || config.LISTEN_PORT);
 app.set('port', port);
 
 /**
- * Create HTTP server.
+ * Create HTTPs server.
  */
 
 var server = https.createServer(credentials, app);

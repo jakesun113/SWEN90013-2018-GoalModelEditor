@@ -1,3 +1,24 @@
+/*show border start*/
+.showborder{
+    border-style: solid;
+    border-width: 1px;
+}
+/*show border end*/
+
+/*Set frame and scroll start*/
+#height-full-screen > .row {
+    min-height: 90vh;
+}
+.scrollbar {
+    height: 90vh;
+    overflow-y: scroll;
+}
+.inside-scrollbar{
+    height: 28vh;
+    overflow-y: scroll;
+}
+/*Set frame and scroll end*/
+
 /*import photos start*/
 .preview-images-zone {
     width: 100%;
@@ -70,3 +91,11 @@
     padding-top: 50px;
 }
 /*import photos end*/
+
+/*cluster div start*/
+.cluster {
+    width: 90%;
+    height: 30vh;
+    margin: 10px auto;
+}
+/*cluster div end*/

@@ -3,34 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="/img/icon.ico">
-    <title>My File - Goal Model Editor</title>
+    <title>My Project - Goal Model Editor</title>
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
           crossorigin="anonymous">
-    <style>
-        .text-color {
-            color: rgba(0,0,0,.54);
-        }
-        #fileList {
-            overflow: scroll;
-            display: block;
-            height: 75vh;
-        }
-    </style>
+    <link rel="stylesheet" href="/stylesheet/dashboard.css">
 </head>
 <body>
     <div> <!-- Start wrapper div -->
         <!-- Header part of the page -->
-        <header class="bg-white mb-2 py-3"
-                style="box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .5);
-                background-image: url('https://picsum.photos/3000/200?random')">
+        <header class="bg-white mb-2 py-3">
             <div class="pt-4 container-fluid">
                 <div class="row align-middle">
                     <div class="col-2">
                         <!-- Add new file button-->
                         <button type="button" class="btn btn-primary mb-3 ml-5"
-                                data-toggle="modal" data-target="#addFile" id="newFileButton">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New Project
+                                data-toggle="modal" data-target="#add-project"
+                                id="new-project-button">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New Project
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
                     </div>
                     <!-- Search div -->
@@ -57,8 +47,8 @@
                                     <a id="username">username</a>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user-dropdown">
-                                    <a class="dropdown-item" href="/user/profile" method="get">Profile</a>
-                                    <a class="dropdown-item" href="/user/signoff" method="post"
+                                    <a class="dropdown-item" href="/profile" method="get">Profile</a>
+                                    <a class="dropdown-item" method="post"
                                        id="signout">Sign out</a>
                                 </div>
                             </div>
@@ -68,20 +58,25 @@
             </div>
         </header>
 
-        <!-- Modal starts-->
-        <div class="modal fade" id="addFile" tabindex="-1" role="dialog" aria-labelledby="newFile" aria-hidden="true">
+        <!-- Create project modal starts-->
+        <div class="modal fade" id="add-project" tabindex="-1" role="dialog"
+             aria-labelledby="new-project" aria-hidden="true">
             <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="newFile">New Project</h5>
+                        <h5 class="modal-title" id="new-project">New Project</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="/user/myfile" method="post" id="createFile">
+                    <form method="post" id="create-project">
                         <div class="modal-body">
+                            <label class="my-2">Project Name:</label>
                             <input name="project_name" type="text" class="form-control"
-                                   value="Untitled folder">
+                                   value="Untitled folder" placeholder="Project Name" required>
+                            <label class="my-2">First Goal Model Name:</label>
+                            <input name="model_name" type="text" class="form-control"
+                                   value="Untitled" placeholder="Goal Model Name" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn" style="background-color: transparent"
@@ -95,37 +90,72 @@
         <!-- Modal ends -->
 
         <!-- Main part of the page -->
-        <main role="main" class="border-bottom container-fluid" style="background-color:#f5f5f5">
-            <div class="row">
-                <div class="col-3 container-fluid"><!-- Instruction field: content needed -->
-                    <div class="container-fluid">
-                        <div class="text-center my-3"><h5>Instruction</h5></div>
-                        <img src="/img/instruction.jpg" class="img-fluid" alt="example-goal-model">
+        <main role="main" class="border-bottom container-fluid pt-2">
+            <!-- first version of project system -->
+            <!--<div class="row">-->
+                <!--<div class="col-3 container-fluid">&lt;!&ndash; Instruction field: content needed &ndash;&gt;-->
+                    <!--<div class="container-fluid">-->
+                        <!--<div class="text-center my-3"><h5>Instruction</h5></div>-->
+                        <!--<img src="/img/instruction.jpg" class="img-fluid" alt="example-goal-model">-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-9 container-fluid">-->
+                    <!--<div class="container-fluid">-->
+                        <!--<div class="py-2 container-fluid"> &lt;!&ndash; Header div for the file list &ndash;&gt;-->
+                            <!--<div class="row">-->
+                                <!--<div class="col-3 text-center text-color">Name</div>-->
+                                <!--<div class="col-3 text-center text-color">Owner</div>-->
+                                <!--<div class="col-3 text-center text-color">Last modified</div>-->
+                                <!--<div class="col-3 text-center text-color">File size</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div id="fileList" class="container-fluid bg-white rounded">&lt;!&ndash; File lists &ndash;&gt;-->
+                            <!--&lt;!&ndash; Mock lists&ndash;&gt;-->
+                            <!--<div class="row border-bottom py-3 file-item" id="abcdefg">-->
+                                <!--<div class="col-3 text-center">My first goal model</div>-->
+                                <!--<div class="col-3 text-center text-color">Me</div>-->
+                                <!--<div class="col-3 text-center text-color">May 8, 2017</div>-->
+                                <!--<div class="col-3 text-center text-color">10 KB</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!-- second version of project system -->
+            <div class="container-fluid bg-white rounded my-3" id="projects-container">
+
+
+            </div>
+
+        </main>
+
+        <!-- Create goal model modal starts-->
+        <div class="modal fade" id="add-model" tabindex="-1" role="dialog"
+             aria-labelledby="new-model" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="new-model">New Model</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                </div>
-                <div class="col-9 container-fluid">
-                    <div class="container-fluid">
-                        <div class="py-2 container-fluid"> <!-- Header div for the file list -->
-                            <div class="row">
-                                <div class="col-3 text-center text-color">Name</div>
-                                <div class="col-3 text-center text-color">Owner</div>
-                                <div class="col-3 text-center text-color">Last modified</div>
-                                <div class="col-3 text-center text-color">File size</div>
-                            </div>
+                    <form method="post" id="create-model">
+                        <div class="modal-body">
+                            <input name="model_name" type="text" class="form-control"
+                                   value="Untitled">
                         </div>
-                        <div id="fileList" class="container-fluid bg-white rounded"><!-- File lists -->
-                            <!-- Mock lists-->
-                            <div class="row border-bottom py-3 file-item" id="abcdefg">
-                                <div class="col-3 text-center">My first goal model</div>
-                                <div class="col-3 text-center text-color">Me</div>
-                                <div class="col-3 text-center text-color">May 8, 2017</div>
-                                <div class="col-3 text-center text-color">10 KB</div>
-                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn" style="background-color: transparent"
+                                    data-dismiss="modal">CANCEL</button>
+                            <button type="submit" class="btn btn-primary">CREATE</button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
-        </main>
+        </div>
+        <!-- Modal ends -->
         
 
     </div> <!-- End wrapper div -->
@@ -139,7 +169,7 @@
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 
-    <script src="/js/filesystem.js"></script>
+    <script src="/js/dashboard.js"></script>
 </body>
 
 </html>
