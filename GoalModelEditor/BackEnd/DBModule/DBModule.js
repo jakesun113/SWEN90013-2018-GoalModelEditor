@@ -64,7 +64,19 @@ const SQL_GET_PROJ_GOALMODEL = "SELECT * " +
     "ON UP.ProjectId = GM.ProjectId AND UP.ProjectId = Project.ProjectId " +
     "WHERE UserId = ?";
 
-const SQL_GET_GOALMODEL_BY_ID = "SELECT * FROM GoalModel WHERE ModelId = ?";
+const SQL_GET_GOALMODEL_BY_ID = "SELECT GoalModel.*, Project.OwnerId " +
+    "FROM GoalModel INNER JOIN Project " +
+    "WHERE ModelId = ? AND GoalModel.ProjectId = Project.ProjectId";
+
+const SQL_UPDATE_PROJECT = "UPDATE Project " +
+    "SET ProjectName = ?, ProjectDescription = ?, size = ?" +
+    "WHERE ProjectId = ?";
+
+const SQL_UPDATE_GOAL_MODEL = "UPDATE GoalModel " +
+    "SET ModelName = ?, ModelDescription = ?, FilePath = ?" +
+    "WHERE ModelId = ?";
+
+const SQL_GET_PROJECT = "SELECT * FROM Project WHERE ProjectId = ?";
 
 /**
  * DBModule
@@ -95,16 +107,20 @@ const DBModule = function () {
                         console.log(JSON.stringify(err));
                         if (err.errno == 1062) {// MYSQL error number for duplicate entry
                             // Username already exists.
-                            reject(DBModule.ALREADY_EXIST);
+                            reject(
+                                {code: DBModule.ALREADY_EXIST, message: err.sqlMessage}
+                            );
                         } else {
-                            reject(DBModule.UNKNOWN_ERROR);// unknown error
+                            reject(
+                                {code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});// unknown error
                         }
                     } else {
                         // success
                         pool.query(SQL_RET_PROJECTID, [ProjectName, UserId], function (err, result) {
                             if (err) {
                                 console.log(err);
-                                reject(DBModule.UNKNOWN_ERROR);
+                                reject(
+                                    {code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});// unknown error
                             } else {
                                 // success
                                 resolve(result[0]);
@@ -136,9 +152,12 @@ const DBModule = function () {
                         console.log(JSON.stringify(err));
                         if (err.errno == 1062) {// MYSQL error number for duplicate entry
                             // Username already exists.
-                            reject(DBModule.ALREADY_EXIST);
+                            reject(
+                                {code: DBModule.ALREADY_EXIST, message: err.sqlMessage}
+                            );
                         } else {
-                            reject(DBModule.UNKNOWN_ERROR);// unknown error
+                            reject(
+                                {code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});// unknown error
                         }
                     } else {
                         // success
@@ -159,7 +178,7 @@ const DBModule = function () {
             pool.query(
                 SQL_USER_LOGIN,
                 [username, password], function (err, result) {
-                    if (err) return reject(err);
+                    if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
                     if (result.affectedRows == 1) {
                         // success
                         pool.query(SQL_RET_USERID, [username, password], function (err, result) {
@@ -201,15 +220,18 @@ const DBModule = function () {
                     console.log(JSON.stringify(err));
                     if (err.errno == 1062) {// MYSQL error number for duplicate entry
                         // Username already exists.
-                        reject(DBModule.ALREADY_EXIST);
+                        reject(
+                            {code: DBModule.ALREADY_EXIST, message: err.sqlMessage}
+                        );
                     } else {
-                        reject(DBModule.UNKNOWN_ERROR);// unknown error
+                        reject(
+                            {code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});// unknown error
                     }
                 } else {
                     pool.query(SQL_RET_GOALMODEL, [modelName, ProjectId], function (err, result) {
                         if (err) {
                             console.log(err);
-                            reject(DBModule.UNKNOWN_ERROR);
+                            reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
                         } else {
                             // success
                             resolve(result[0]);
@@ -232,7 +254,7 @@ const DBModule = function () {
             pool.query(
                 SQL_RET_GOALMODEL_OF_PROJ,
                 [ProjectId], function (err, result) {
-                    if (err) return reject(err);
+                    if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
                     resolve(result);
                 });
         });
@@ -242,10 +264,10 @@ const DBModule = function () {
      * @param ModelId
      */
     DBModule.getGoalModel = function (ModelId) {
-        return new Promise((result, reject) => {
+        return new Promise((resolve, reject) => {
             pool.query(
                 SQL_GET_GOALMODEL_BY_ID, [ModelId], (err, result) => {
-                    if (err) return reject(err);
+                    if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
                     resolve(result);
                 }
             );
@@ -253,15 +275,58 @@ const DBModule = function () {
     };
 
     /**
-     *
+     * get a peoject by its id.
+     * @param projectId
+     */
+    DBModule.getProject = function (projectId) {
+        return new Promise((resolve, reject) => {
+            pool.query(
+                SQL_GET_PROJECT, [projectId], (err, result) => {
+                    if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                    resolve(result);
+                }
+            );
+        });
+    };
+
+    /**
+     * update a single goal model.
      * @param modelId
      * @param modelName
      * @param modelDescription
      * @param filePath
      * @param ProjectId
      */
-    DBModule.updateGoalModel = function (modelId, modelName, modelDescription, filePath, ProjectId) {
-        throw 'not implemented';
+    DBModule.updateGoalModel = function (modelId, modelName, modelDescription, filePath) {
+        return new Promise((resolve, reject) => {
+            pool.query(SQL_UPDATE_GOAL_MODEL, [modelName, modelDescription, filePath, modelId], (err, result) => {
+                if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                if (result.affectedRows == 1) {
+                    resolve(DBModule.SUCCESS);
+                } else {
+                    if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                }
+            });
+        });
+    };
+    /**
+     * update a single project.
+     * @param projectId
+     * @param projectName
+     * @param projectDescription
+     * @param size
+     */
+    DBModule.updateProject = function (projectId, projectName, projectDescription, size) {
+        return new Promise((resolve, reject) => {
+            pool.query(SQL_UPDATE_GOAL_MODEL, [projectName, projectDescription, size, projectId], (err, result) => {
+                if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                if (result.affectedRows == 1) {
+                    resolve(DBModule.SUCCESS);
+                } else {
+                    if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                }
+            });
+        });
     };
 
     return DBModule;
