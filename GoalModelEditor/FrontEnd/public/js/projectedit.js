@@ -49,6 +49,11 @@ window.jsonData = {
 
             //Goal list: [five goal types][used goal][deleted goal]
             "GoalList":{
+                "FunctionalNum":3,
+                "EmotionalNum":3,
+                "QualityNum":3,
+                "NegativeNum":2,
+                "StakeholderNum":2,
                 "Functional":[
                     {
                         "GoalID":"F_1",
@@ -60,6 +65,12 @@ window.jsonData = {
                         "GoalID":"F_2",
                         "GoalType":"Functional",
                         "GoalDescription":"This is Functional Goal F_2",
+                        "SubGoals":[]
+                    },
+                    {
+                        "GoalID":"F_3",
+                        "GoalType":"Functional",
+                        "GoalDescription":"This is Functional Goal F_3",
                         "SubGoals":[]
                     }
                 ],
@@ -285,6 +296,13 @@ window.jsonData = {
 };
 /*JSON data end*/
 
+/*Count goals num*/
+var FunctionalNum = 0;
+var EmotionalNum = 0;
+var NegativeNum = 0;
+var QualityNum = 0;
+var StakeholderNum = 0;
+
 /*Three clusters at start*/
 var clusterNumber = 3;
 
@@ -298,8 +316,14 @@ function loadData() {
     document.getElementById("usedgoaldata").appendChild(parseNodes(jsonData.GoalModelProject.GoalList.UsedGoal));
     document.getElementById("deletedgoaldata").appendChild(parseNodes(jsonData.GoalModelProject.GoalList.DeletedGoal));
     document.getElementById("hierarchydata").appendChild(parseNodes(jsonData.GoalModelProject.Hierarchy.MainGoal));
+    FunctionalNum = jsonData.GoalModelProject.GoalList.FunctionalNum;
+    EmotionalNum = jsonData.GoalModelProject.GoalList.EmotionalNum;
+    QualityNum = jsonData.GoalModelProject.GoalList.QualityNum;
+    NegativeNum = jsonData.GoalModelProject.GoalList.NegativeNum;
+    StakeholderNum = jsonData.GoalModelProject.GoalList.StakeholderNum;
     loadCluster();
 }
+
 /*Load data end*/
 
 /*Add new cluster start*/
@@ -341,39 +365,56 @@ function parseNodes(nodes) {
 // takes a node object and turns it into a <li>
 function parseNode(node) {
     var li = document.createElement("LI");
-    //li.innerHTML = '<div id="'+node.GoalID+'" contentEditable="true" class="'+node.GoalType+'">'+ node.GoalDescription + '</div>';
-    li.innerHTML = '<input id= "'+node.GoalID+'" class="'+node.GoalType+'" value = "'+node.GoalDescription+'" placeholder="new"' + '/>';
+    li.setAttribute("class", node.GoalType);
+    li.innerHTML = '<input id= "'+node.GoalID+'" class="'+node.GoalType+'" value = "'+node.GoalDescription+'" placeholder="New goal"' + '/>';
+    //countID(node.GoalType);
     if(node.SubGoals) li.appendChild(parseNodes(node.SubGoals));
     return li;
 }
 /*Show JSON data on edit page end*/
 
 /*Add new goal by pressing "Enter" start*/
-document.onkeydown=function(event){
-    //when the user press the "enter" button
-    if(event.key == "Enter")
-    {
-        //make the default enter invalid
-        event.preventDefault();
-        var newlist = '<li><input placeholder="New goal"/></li>';
-
-        if($(event.target).parent().length>0)
-        {
-            var parent = $(event.target).parent();
-            var grandparent = parent.parent();
-            parent.after(newlist);
-            //$(grandparent).append(newlist);
+document.onkeydown=function(event) {
+        var goalID;
+        var goalType;
+        //when the user press the "enter" button
+        if (document.activeElement.tagName == 'INPUT' && event.key == "Enter") {
+            //make the default enter invalid
+            goalType = document.activeElement.attributes['class'].nodeValue;
+            goalID = getID(goalType);
+            event.preventDefault();
+            var newlist = '<li><input id="'+goalID+'" class="'+goalType+'" placeholder="New goal"/></li>';
+            if ($(event.target).parent().length > 0) {
+                var parent = $(event.target).parent();
+                parent.after(newlist);
+            }
+            else {
+                $(event.target).parent().after(newlist);
+            }
+            $('#'+goalID).focus();
         }
-
-        else
-        {
-            $(event.target).parent().after(newlist);
-        }
-        // $('#as').focus();
-    }
 };
-/*Add new goal by pressing "Enter" end*/
 
+function getID(type) {
+    switch (type){
+        case "Functional":
+            FunctionalNum++;
+            return "F_" + FunctionalNum;
+        case "Emotional":
+            EmotionalNum++;
+            return "E_" + EmotionalNum;
+        case "Quality":
+            QualityNum++;
+            return "Q_" + QualityNum;
+        case "Negative":
+            NegativeNum++;
+            return "N_" + NegativeNum;
+        case "Stakeholder":
+            StakeholderNum++;
+            return "S_" + StakeholderNum;
+    }
+}
+/*Add new goal by pressing "Enter" end*/
 
 /*Hide and show section start*/
 function photonextbtn() {
@@ -432,3 +473,7 @@ function hierachynextbtn() {
     }
 }
 /*Hide and show section end*/
+
+/*Get data from HTML to JSON start*/
+
+/*Get data from HTML to JSON end*/
