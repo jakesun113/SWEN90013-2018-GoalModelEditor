@@ -15,7 +15,7 @@ var dbModule = require('./DBModule');
 //     console.log(err);
 // });
 
-dbModule.updateGoalModel("07b26013-5266-11e8-8c21-02388973fed8", "SB", "mymodelDescription", "aaa").then(res => {
+dbModule.updateGoalModel("07b26013-5266-11e8-8c21-02388973fed8", "DDSB", "mymodelDescription", "aaa").then(res => {
     console.log(JSON.stringify(res));
 
 }).catch(err => {

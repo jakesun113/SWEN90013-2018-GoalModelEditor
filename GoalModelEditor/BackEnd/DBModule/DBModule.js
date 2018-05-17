@@ -54,7 +54,7 @@ const SQL_CREATE_GOALMODEL = "INSERT INTO GoalModel (ModelId,ModelName, ModelDes
 
 const SQL_RET_GOALMODEL = "SELECT * FROM GoalModel WHERE BINARY ModelName = ? AND ProjectId = ?";
 
-const SQL_RET_MODEL =" SELECT * FROM GoalModel WHERE ModelId = ? ";
+const SQL_RET_MODEL = " SELECT * FROM GoalModel WHERE ModelId = ? ";
 /**
  * get all project and its corresponding goalmodels
  * @type {string}
@@ -337,11 +337,18 @@ const DBModule = function () {
     DBModule.updateProject = function (projectId, projectName, projectDescription, size) {
         return new Promise((resolve, reject) => {
             pool.query(SQL_UPDATE_PROJECT, [projectName, projectDescription, size, projectId], (err, result) => {
-                if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                if (err) {
+                    console.log(err);
+                    if (err.errno = 1062) {
+                        console.log("dup");
+                        return reject({code: DBModule.ALREADY_EXIST, message: err.sqlMessage});
+                    } else {
+                        return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                    }
+                }
                 if (result.affectedRows == 1) {
                     resolve({project_name: projectName});
                 } else {
-                    if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
                     reject({code: DBModule.INVALID, message: result.message});
                 }
             });
@@ -359,7 +366,17 @@ const DBModule = function () {
     DBModule.updateGoalModel = function (modelId, modelName, modelDescription, filePath) {
         return new Promise((resolve, reject) => {
             pool.query(SQL_UPDATE_GOAL_MODEL, [modelName, modelDescription, filePath, modelId], (err, result) => {
-                if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                if (err) {
+                    console.log(err);
+                    if (err.errno = 1062) {
+                        console.log("dup");
+                        return reject({code: DBModule.ALREADY_EXIST, message: err.sqlMessage});
+                    } else {
+
+                        return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                    }
+                }
+
                 if (result.affectedRows == 1) {
                     // success
                     //resolve(result);
@@ -370,12 +387,11 @@ const DBModule = function () {
                                 {code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});// unknown error
                         } else {
                             // success
-                            resolve({model_name: result[0].ModelName,last_modified: result[0].LastModified});
+                            resolve({model_name: result[0].ModelName, last_modified: result[0].LastModified});
                         }
                     });
 
                 } else {
-                    if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
                     reject({code: DBModule.INVALID, message: result.message});
                 }
             });
