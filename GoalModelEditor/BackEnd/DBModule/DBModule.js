@@ -36,10 +36,7 @@ const SQL_RET_PROJECTID = "SELECT * from Project WHERE BINARY ProjectName = ? AN
 const SQL_CREATE_PROJ = "INSERT INTO " +
     "Project (ProjectId, ProjectName, ProjectDescription, Size, OwnerId) " +
     "VALUES (UUID(), ?, ?, ?, ?)";
-/**
- * retrieve goalmodel name list of a given project
- * @type {string}
- */
+
 /**
  * The sql query to retrieve all goalmodels under a project
  * @type {string}
@@ -63,20 +60,51 @@ const SQL_GET_PROJ_GOALMODEL = "SELECT * " +
     "FROM GoalModel AS GM INNER JOIN User_Project AS UP INNER JOIN Project " +
     "ON UP.ProjectId = GM.ProjectId AND UP.ProjectId = Project.ProjectId " +
     "WHERE UserId = ?";
-
+/**
+ * Get information of a goal model by its id
+ * @type {string}
+ */
 const SQL_GET_GOALMODEL_BY_ID = "SELECT GoalModel.*, Project.OwnerId " +
     "FROM GoalModel INNER JOIN Project " +
     "WHERE ModelId = ? AND GoalModel.ProjectId = Project.ProjectId";
-
+/**
+ * update a project's fields
+ * @type {string}
+ */
 const SQL_UPDATE_PROJECT = "UPDATE Project " +
     "SET ProjectName = ?, ProjectDescription = ?, size = ?" +
     "WHERE ProjectId = ?";
-
+/**
+ * Update a goal model
+ * @type {string}
+ */
 const SQL_UPDATE_GOAL_MODEL = "UPDATE GoalModel " +
     "SET ModelName = ?, ModelDescription = ?, FilePath = ?" +
     "WHERE ModelId = ?";
-
+/**
+ * Get the information of a project
+ * @type {string}
+ */
 const SQL_GET_PROJECT = "SELECT * FROM Project WHERE ProjectId = ?";
+/**
+ * Get a user's profile by his id.
+ * @type {string}
+ */
+const SQL_GET_USER_PROFILE = "SELECT UserName, FirstName, LastName, Email FROM User WHERE UserId = ?";
+/**
+ * Change a user's password using his id and current password
+ * @type {string}
+ */
+const SQL_CHANGE_USER_PASSWORD = "UPDATE User " +
+    "SET Password = ? " +
+    "WHERE UserId = ? AND Password = ?";
+/**
+ * update a user's profile
+ * @type {string}
+ */
+const SQL_UPDATE_USER_PROFILE = "UPDATE User " +
+    "SET FirstName = ?, LastName = ?, Email = ? " +
+    "WHERE UserId = ?";
 
 /**
  * DBModule
@@ -300,12 +328,13 @@ const DBModule = function () {
      */
     DBModule.updateProject = function (projectId, projectName, projectDescription, size) {
         return new Promise((resolve, reject) => {
-            pool.query(SQL_UPDATE_GOAL_MODEL, [projectName, projectDescription, size, projectId], (err, result) => {
+            pool.query(SQL_UPDATE_PROJECT, [projectName, projectDescription, size, projectId], (err, result) => {
                 if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
                 if (result.affectedRows == 1) {
                     resolve(DBModule.SUCCESS);
                 } else {
                     if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                    reject({code: DBModule.INVALID, message: result.message});
                 }
             });
         });
@@ -326,6 +355,58 @@ const DBModule = function () {
                     resolve(DBModule.SUCCESS);
                 } else {
                     if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                    reject({code: DBModule.INVALID, message: result.message});
+                }
+            });
+        });
+    };
+    /**
+     * Get the user profiles by id.
+     * @param UserId
+     */
+    DBModule.getUserProfile = function (UserId) {
+        return new Promise((resolve, reject) => {
+            pool.query(SQL_GET_USER_PROFILE, [UserId], (err, result) => {
+                if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                resolve(result[0]);
+            });
+        });
+    };
+    /**
+     * change the password of a user.
+     * @param UserId
+     * @param OldPassword
+     * @param NewPassword
+     */
+    DBModule.changePassword = function (UserId, OldPassword, NewPassword) {
+        return new Promise((resolve, reject) => {
+            pool.query(SQL_CHANGE_USER_PASSWORD, [NewPassword, UserId, OldPassword], (err, result) => {
+                if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                console.log(result);
+                if (result.affectedRows == 1) {
+                    resolve(DBModule.SUCCESS);
+                } else {
+                    reject({code: DBModule.INVALID, message: result.message});
+                }
+            });
+        });
+    };
+    /**
+     * update a user's profile
+     * @param UserId
+     * @param FirstName
+     * @param LastName
+     * @param Email
+     */
+    DBModule.updateUserProfile = function (UserId, FirstName, LastName, Email) {
+        return new Promise((resolve, reject) => {
+            pool.query(SQL_UPDATE_USER_PROFILE, [FirstName, LastName, Email, UserId], (err, result) => {
+                if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                if (result.affectedRows == 1) {
+                    resolve(DBModule.SUCCESS);
+                } else {
+                    if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                    reject({code: DBModule.INVALID, message: result.message});
                 }
             });
         });
