@@ -51,7 +51,10 @@ const SQL_RET_GOALMODEL_OF_PROJ = "SELECT ModelName " +
  */
 const SQL_CREATE_GOALMODEL = "INSERT INTO GoalModel (ModelId,ModelName, ModelDescription, FilePath, ProjectId) " +
     "VALUES (UUID(), ?, ?, ?, ?)";
+
 const SQL_RET_GOALMODEL = "SELECT * FROM GoalModel WHERE BINARY ModelName = ? AND ProjectId = ?";
+
+const SQL_RET_MODEL =" SELECT * FROM GoalModel WHERE ModelId = ? ";
 /**
  * get all project and its corresponding goalmodels
  * @type {string}
@@ -72,14 +75,14 @@ const SQL_GET_GOALMODEL_BY_ID = "SELECT GoalModel.*, Project.OwnerId " +
  * @type {string}
  */
 const SQL_UPDATE_PROJECT = "UPDATE Project " +
-    "SET ProjectName = ?, ProjectDescription = ?, size = ?" +
+    "SET ProjectName = ?, ProjectDescription = ?, size = ?, " +
     "WHERE ProjectId = ?";
 /**
  * Update a goal model
  * @type {string}
  */
 const SQL_UPDATE_GOAL_MODEL = "UPDATE GoalModel " +
-    "SET ModelName = ?, ModelDescription = ?, FilePath = ?" +
+    "SET ModelName = ?, ModelDescription = ?, FilePath = ?, LastModified = NOW() " +
     "WHERE ModelId = ?";
 /**
  * Get the information of a project
@@ -273,9 +276,6 @@ const DBModule = function () {
                             // success
                             resolve(result[0]);
                         }
-                        // if success: return userid
-                        //console.log(result);
-                        //resolve(result.ProjectId);
                     });
                 }
             });
@@ -361,7 +361,19 @@ const DBModule = function () {
             pool.query(SQL_UPDATE_GOAL_MODEL, [modelName, modelDescription, filePath, modelId], (err, result) => {
                 if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
                 if (result.affectedRows == 1) {
-                    resolve(DBModule.SUCCESS);
+                    // success
+                    //resolve(result);
+                    pool.query(SQL_RET_MODEL, [modelId], function (err, result) {
+                        if (err) {
+                            console.log(err);
+                            reject(
+                                {code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});// unknown error
+                        } else {
+                            // success
+                            resolve({model_name: result[0].ModelName,last_modified: result[0].LastModified});
+                        }
+                    });
+
                 } else {
                     if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
                     reject({code: DBModule.INVALID, message: result.message});
