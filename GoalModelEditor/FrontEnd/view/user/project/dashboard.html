@@ -156,6 +156,59 @@
             </div>
         </div>
         <!-- Modal ends -->
+
+        <!-- Rename project modal -->
+        <div class="modal fade" id="rename-project" tabindex="-1" role="dialog"
+             aria-labelledby="new-model" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Project Name</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="post" id="rename_project">
+                        <div class="modal-body">
+                            <input name="project_name" type="text" class="form-control">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn" style="background-color: transparent"
+                                    data-dismiss="modal">CANCEL</button>
+                            <button type="submit" class="btn btn-primary">Confirm</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- end modal -->
+
+        <!-- Rename goal model modal -->
+        <div class="modal fade" id="rename-goalmodel" tabindex="-1" role="dialog"
+             aria-labelledby="new-model" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="post" id="rename_goalmodel">
+                        <div class="modal-body">
+                            <input name="goalmodel_name" type="text" class="form-control">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn" style="background-color: transparent"
+                                    data-dismiss="modal">CANCEL</button>
+                            <button type="submit" class="btn btn-primary">Confirm</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- end model -->
+
         
 
     </div> <!-- End wrapper div -->

@@ -96,7 +96,7 @@ $('#create-project').submit(function(evt){
                     modelHTML = modelHTML + '<div class="col-6 text-center">' + model.model_name + '</div>';
                     modelHTML = modelHTML + '<div class="col-6 text-center text-color small">' + model.last_modified +
                         '</div> </div>';
-                    $('#'+ project.project_id+ ' .goal-list').eq(0).append(modelHTML);;
+                    $('#'+ project.project_id+ ' .goal-list').eq(0).append(modelHTML);
                 }
             }).fail(function(jqXHR){
                 alert(jqXHR.statusText);
@@ -129,9 +129,9 @@ $('#create-model').submit(function(evt) {
         success: function(model){
             var modelHTML = '';
             modelHTML = modelHTML + '<div class="row goal-model py-1" id="' + model.model_id + '">';
-            modelHTML = modelHTML + '<div class="col-6 text-center">' + model.model_name + '</div>';
-            modelHTML = modelHTML + '<div class="col-6 text-center text-color small">' + model.last_modified +
-                '</div> </div>';
+            modelHTML = modelHTML + '<div class="col-6 text-center model_name">' + model.model_name + '</div>';
+            modelHTML = modelHTML + '<div class="col-6 text-center text-color small model_time">' +
+                model.last_modified + '</div> </div>';
             $('#'+pid+ ' .goal-list').eq(0).append(modelHTML);
             $('#add-model').modal('toggle');
         }
@@ -164,8 +164,8 @@ $('#projects-container').click(function(event){
 
 
 // handle sign off button
-$('#signout').click(function (event) {
-    event.preventDefault();
+$('#signout').click(function (evt) {
+    evt.preventDefault();
     Cookies.remove('LOKIDIED');
     Cookies.remove('UIID');
     Cookies.remove('MID');
@@ -173,60 +173,63 @@ $('#signout').click(function (event) {
     window.location.href = '/';
 });
 
-// /* Testing block */
-// var projects =
-//     {
-//         "projects": {
-//             "PROJECT_ID_1": {
-//                 "project_name": "PROJECT_NAME",
-//                 "project_id": "PROJECT_ID_1",
-//                 "models": [{
-//                     "model_name": "MODEL_NAME",
-//                     "model_id": "MODEL_ID",
-//                     "last_modified": "LAST_MODIFIED"
-//                 },
-//                     {
-//                         "model_name": "MODEL_NAME",
-//                         "model_id": "MODEL_ID",
-//                         "last_modified": "LAST_MODIFIED"
-//                     }
-//                 ]
-//             },
-//             "PROJECT_ID_2": {
-//                 "project_name": "PROJECT_NAME",
-//                 "project_id": "PROJECT_ID_2",
-//                 "models": [{}]
-//             }
-//         }
-//     }
-//
-// for(var project in projects.projects){
-//     var projectHTML = '';
-//     projectHTML += '<div class="project text-center" id="' + projects.projects[project].project_id + '">';
-//     projectHTML = projectHTML + '<div class="goal-list">';
-//     // goal-list
-//     projectHTML = projectHTML + '<div class="row goal-model my-2">' +
-//         '<div class="col-6 text-center text-color">Version</div>' +
-//         '<div class="col-6 text-center text-color">Last modified</div>' +
-//         '</div>';
-//
-//     // goal-list
-//     $.each(projects.projects[project].models, function (index, model) {
-//         if(model.model_id) {
-//             projectHTML = projectHTML + '<div class="row goal-model my-2" id="' + model.model_id + '">';
-//             projectHTML = projectHTML + '<div class="col-6 text-center">' + model.model_name + '</div>';
-//             projectHTML = projectHTML + '<div class="col-6 text-center text-color">' + model.last_modified +
-//                 '</div> </div>';
-//         }
-//     });
-//     projectHTML = projectHTML + '</div>';
-//     projectHTML = projectHTML + '<img src="/img/folder.svg" alt="project-icon" class="project-icon">';
-//     projectHTML = projectHTML + '<h6 class="pt-2">' + projects.projects[project].project_name + '</h6>';
-//     projectHTML = projectHTML + '<div class="text-center create-goal-model">';
-//     projectHTML = projectHTML + '<button class="btn btn-primary btn-sm mb-2" ' +
-//         'type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-model">' +
-//         'Add New Goal Model</button>';
-//     projectHTML = projectHTML + '</div>';
-//     $('#projects-container').append(projectHTML);
-// };
+// rename project
+// PUT ('/project/edit/:userid/:projectid')
+$('#rename_project').submit(function(evt){
+   evt.preventDefault();
+   var secret = JSON.parse((Cookies.get('LOKIDIED')));
+   var token = secret.token;
+   var uid = secret.uid;
+   var pid = Cookies.get('PID');
+   if(typeof pid === "undefined") {
+       alert("Please choose a project");
+   }
+   var url = '/project/edit/' + uid + '/' + pid;
+   var formData = $(this).serialize();
+   // start ajax
+    $.ajax(url, {
+        data: formData,
+        type: "PUT",
+        headers: {"Authorization": "Bearer " + token},
+        success: function(project){
+            $('#' + pid + ' h4').eq(0).innerHTML(project.project_name);
+            $('#rename-project').modal('toggle');
+        }
+    }).fail(function(jqXHR){
+        alert(jqXHR.statusText);
+    });// end ajax
+});
+
+
+// rename goal model
+// PUT ('/goal_model/edit/:userid/:projectid/:goalmodelid')
+$('#rename_goalmodel').submit(function(evt){
+    evt.preventDefault();
+    var secret = JSON.parse((Cookies.get('LOKIDIED')));
+    var token = secret.token;
+    var uid = secret.uid;
+    var pid = Cookies.get('PID');
+    var mid = Cookies.get('MID');
+    if(typeof pid === "undefined") {
+        alert("Please choose a project");
+    }
+    if(typeof mid === "undefined") {
+        alert("Please choose a goal model");
+    }
+    var url = '/goal_model/edit/' + uid + '/' + pid + '/' + mid;
+    var formData = $(this).serialize();
+    // start ajax
+    $.ajax(url, {
+        data: formData,
+        type: "PUT",
+        headers: {"Authorization": "Bearer " + token},
+        success: function(res){
+            $('#' + mid + '.model_name').eq(0).innerHTML(res.model_name);
+            $('#' + mid + '.model_time').eq(0).innerHTML(res.last_modified);
+            $('#rename-goalmodel').modal('toggle');
+        }
+    }).fail(function(jqXHR){
+        alert(jqXHR.statusText);
+    });// end ajax
+});
 
