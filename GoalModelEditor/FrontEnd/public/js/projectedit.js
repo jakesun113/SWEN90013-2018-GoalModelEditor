@@ -344,11 +344,10 @@ function loadCluster(){
 
 /*Add new cluster start*/
 function addCluster(){
-    var clusterNum = jsonData.GoalModelProject.Cluster.length;
     var cluster = $("#cluster");
     clusterNumber++;
 
-    cluster.append('<div class="cluster showborder inside-scrollbar" id=cluster_'+clusterNumber.toString()+'>'+'</div>');
+    cluster.append('<div class="cluster showborder inside-scrollbar bgwhite" id=cluster_'+clusterNumber.toString()+'>'+'</div>');
 }
 /*Add new cluster end*/
 
@@ -366,6 +365,7 @@ function parseNodes(nodes) {
 function parseNode(node) {
     var li = document.createElement("LI");
     li.setAttribute("class", node.GoalType);
+    li.setAttribute("id", node.GoalID);
     li.innerHTML = '<input id= "'+node.GoalID+'" class="'+node.GoalType+'" value = "'+node.GoalDescription+'" placeholder="New goal"' + '/>';
     //countID(node.GoalType);
     if(node.SubGoals) li.appendChild(parseNodes(node.SubGoals));
@@ -378,12 +378,12 @@ document.onkeydown=function(event) {
         var goalID;
         var goalType;
         //when the user press the "enter" button
-        if (document.activeElement.tagName == 'INPUT' && event.key == "Enter") {
+        if (document.activeElement.tagName === 'INPUT' && event.key === "Enter") {
             //make the default enter invalid
             goalType = document.activeElement.attributes['class'].nodeValue;
             goalID = getID(goalType);
             event.preventDefault();
-            var newlist = '<li><input id="'+goalID+'" class="'+goalType+'" placeholder="New goal"/></li>';
+            var newlist = '<li id=L_"'+goalID+'"><input id="'+goalID+'" class="'+goalType+'" placeholder="New goal"/></li>';
             if ($(event.target).parent().length > 0) {
                 var parent = $(event.target).parent();
                 parent.after(newlist);
@@ -415,6 +415,20 @@ function getID(type) {
     }
 }
 /*Add new goal by pressing "Enter" end*/
+
+/*Delete goal by pressing "Backspace" when empty start*/
+document.onkeyup=function(event) {
+    var goalID;
+    //when the user press the "enter" button
+    if (document.activeElement.tagName === 'INPUT' && event.key === "Escape") {
+        //make the default enter invalid
+        var parent = document.activeElement.parentNode;
+        var grandparent = parent.parentNode;
+        grandparent.removeChild(parent);
+        event.preventDefault();
+    }
+};
+/*Delete goal by pressing "Backspace" when empty end*/
 
 /*Hide and show section start*/
 function photonextbtn() {
