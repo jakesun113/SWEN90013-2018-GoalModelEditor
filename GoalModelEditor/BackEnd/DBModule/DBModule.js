@@ -105,7 +105,16 @@ const SQL_CHANGE_USER_PASSWORD = "UPDATE User " +
 const SQL_UPDATE_USER_PROFILE = "UPDATE User " +
     "SET FirstName = ?, LastName = ?, Email = ? " +
     "WHERE UserId = ?";
-
+/**
+ * Delete a GoalModel
+ * @type {string}
+ */
+const SQL_DELETE_GOAL_MODEL = "DELETE FROM GoalModel WHERE ModelId = ?";
+/**
+ *  Delete a
+ * @type {string}
+ */
+const SQL_DELETE_PROJECT = "DELETE FROM Project WHERE ProjectId = ?";
 /**
  * DBModule
  * @returns {{DBModule}}
@@ -318,7 +327,6 @@ const DBModule = function () {
         });
     };
 
-
     /**
      * update a single project.
      * @param projectId
@@ -331,7 +339,7 @@ const DBModule = function () {
             pool.query(SQL_UPDATE_PROJECT, [projectName, projectDescription, size, projectId], (err, result) => {
                 if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
                 if (result.affectedRows == 1) {
-                    resolve(DBModule.SUCCESS);
+                    resolve({project_name: projectName});
                 } else {
                     if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
                     reject({code: DBModule.INVALID, message: result.message});
@@ -339,6 +347,7 @@ const DBModule = function () {
             });
         });
     };
+
     /**
      * update a single goal model.
      * @param modelId
@@ -360,6 +369,7 @@ const DBModule = function () {
             });
         });
     };
+
     /**
      * Get the user profiles by id.
      * @param UserId
@@ -372,6 +382,7 @@ const DBModule = function () {
             });
         });
     };
+
     /**
      * change the password of a user.
      * @param UserId
@@ -391,6 +402,7 @@ const DBModule = function () {
             });
         });
     };
+
     /**
      * update a user's profile
      * @param UserId
@@ -412,6 +424,41 @@ const DBModule = function () {
         });
     };
 
+    /**
+     * Delete a goalmodel
+     * @param Modelid
+     */
+    DBModule.deleteGoalModel = function (ModelId) {
+        return new Promise((resolve, reject) => {
+            pool.query(SQL_DELETE_GOAL_MODEL, [ModelId], (err, result) => {
+                if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                if (result.affectedRows == 1) {
+                    resolve(DBModule.SUCCESS);
+                } else {
+                    if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                    reject({code: DBModule.INVALID, message: result.message});
+                }
+            });
+        });
+    };
+
+    /**
+     * delete a project
+     * @param ProjectId
+     */
+    DBModule.deleteProject = function (ProjectId) {
+        return new Promise((resolve, reject) => {
+            pool.query(SQL_DELETE_PROJECT, [ProjectId], (err, result) => {
+                if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                if (result.affectedRows == 1) {
+                    resolve(DBModule.SUCCESS);
+                } else {
+                    if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                    reject({code: DBModule.INVALID, message: result.message});
+                }
+            });
+        });
+    };
     return DBModule;
 };
 
