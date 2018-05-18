@@ -55,7 +55,7 @@ main {
     max-height: 30vh;
     width: 33%;
     max-width: 30vw;
-    over-flow-y: hidden;
+    overflow-y: hidden;
     position: relative;
 
 }
@@ -115,6 +115,7 @@ main {
 
 .project:hover .create-goal-model {
     opacity: 1;
+    height: 10%;
 }
 
 .goal-model:hover {
