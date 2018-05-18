@@ -1,6 +1,7 @@
 /*show border start*/
 .showborder{
     border-style: solid;
+    border-color:lightgrey;
     border-width: 1px;
 }
 /*show border end*/
@@ -87,8 +88,23 @@
     height: 90px !important;
 }
 
-.container {
-    padding-top: 50px;
+.container-body {
+    padding-top: 30px;
+    padding-bottom: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+.container-heading1{
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+.container-heading2{
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 50px;
+    padding-right: 50px;
 }
 /*import photos end*/
 
@@ -99,3 +115,16 @@
     margin: 10px auto;
 }
 /*cluster div end*/
+.hierarchy {
+    width: 90%;
+    height: 30vh;
+    margin: 10px auto;
+}
+input{
+    border: 0px;
+    width: 100%;
+}
+
+.bgwhite{
+    background-color: white;
+}
