@@ -163,7 +163,7 @@
             <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Project Name</h5>
+                        <h5 class="modal-title">Project Rename</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -183,20 +183,21 @@
         </div>
         <!-- end modal -->
 
-        <!-- Rename goal model modal -->
-        <div class="modal fade" id="rename-goalmodel" tabindex="-1" role="dialog"
+        <!-- Delete project modal -->
+        <div class="modal fade" id="delete-project" tabindex="-1" role="dialog"
              aria-labelledby="new-model" aria-hidden="true">
             <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title"></h5>
+                        <h5 class="modal-title">Warning</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form method="post" id="rename_goalmodel">
+                    <form method="post" id="delete_project">
                         <div class="modal-body">
-                            <input name="goalmodel_name" type="text" class="form-control">
+                            <lable type="text">You would lose all goal models attached to the project.
+                                Are you sure?</lable>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn" style="background-color: transparent"

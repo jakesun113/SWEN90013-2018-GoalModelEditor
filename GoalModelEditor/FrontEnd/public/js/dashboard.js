@@ -33,12 +33,21 @@ $(document).ready(function () {
                     }
                 });// end each
                 projectHTML = projectHTML + '</div>';
-                projectHTML = projectHTML + '<img src="/img/folder.svg" alt="project-icon" class="project-icon">';
+                projectHTML = projectHTML + '<img src="/img/buffer.svg" alt="project-icon" class="project-icon">';
                 projectHTML = projectHTML + '<h6>' + project.project_name + '</h6>';
                 projectHTML = projectHTML + '<div class="text-center create-goal-model">';
-                projectHTML = projectHTML + '<button class="btn btn-primary btn-sm mb-2 new-model" ' +
-                    'type="button" data-toggle="modal" data-target="#add-model">' +
-                    'Add New Goal Model</button>';
+                projectHTML = projectHTML + '<button class="btn btn-sm mb-2 new-model" ' +
+                    'type="button" data-toggle="modal" data-target="#add-model" ' +
+                    'style="background-color: transparent">' +
+                    '<img src="/img/add-outline.svg" title="Add new goal model"></button>';
+                projectHTML = projectHTML + '<button class="btn btn-sm mb-2 rename-project" ' +
+                    'type="button" data-toggle="modal" data-target="#rename-project" ' +
+                    'style="background-color: transparent">' +
+                    '<img src="/img/compose.svg" title="Rename the project"></button>';
+                projectHTML = projectHTML + '<button class="btn btn-sm mb-2 delete-project" ' +
+                    'type="button" data-toggle="modal" data-target="#delete-project" ' +
+                    'style="background-color: transparent">' +
+                    '<img src="/img/close-outline.svg" title="Delete the project"></button>';
                 projectHTML = projectHTML + '</div>';
                 $('#projects-container').append(projectHTML);
             };// end each
@@ -72,14 +81,22 @@ $('#create-project').submit(function(evt){
                 '<div class="col-6 text-center text-color">Name</div>' +
                 '<div class="col-6 text-center text-color">Last modified</div>' +
                 '</div>';
-
             projectHTML = projectHTML + '</div>';
             projectHTML = projectHTML + '<img src="/img/folder.svg" alt="project-icon" class="project-icon">';
             projectHTML = projectHTML + '<h6>' + project.project_name + '</h6>';
             projectHTML = projectHTML + '<div class="text-center create-goal-model">';
-            projectHTML = projectHTML + '<button class="btn btn-primary btn-sm mb-2 new-model" ' +
-                'type="button" data-toggle="modal" data-target="#add-model">' +
-                'Add New Goal Model</button>';
+            projectHTML = projectHTML + '<button class="btn btn-sm mb-2 new-model" ' +
+                'type="button" data-toggle="modal" data-target="#add-model" ' +
+                'style="background-color: transparent">' +
+                '<img src="/img/add-outline.svg" title="Add new goal model"></button>';
+            projectHTML = projectHTML + '<button class="btn btn-sm mb-2 rename-project" ' +
+                'type="button" data-toggle="modal" data-target="#rename-project" ' +
+                'style="background-color: transparent">' +
+                '<img src="/img/compose.svg" title="Rename the project"></button>';
+            projectHTML = projectHTML + '<button class="btn btn-sm mb-2 delete-project" ' +
+                'type="button" data-toggle="modal" data-target="#delete-project" ' +
+                'style="background-color: transparent">' +
+                '<img src="/img/close-outline.svg" title="Delete the project"></button>';
             projectHTML = projectHTML + '</div>';
             $('#projects-container').append(projectHTML);
             $('#add-project').modal('toggle');
@@ -147,21 +164,44 @@ $('#create-model').submit(function(evt) {
 $('#projects-container').click(function(event){
     // act on the clicked goal model only
     // front-end server create the cookie and redirect to the edit page
+    // handle click on the goal model
     if($(event.target).hasClass("goal-model")) {
         console.log(event.target.id);
         Cookies.set('MID', event.target.id);
         window.location.href = '/edit';
-    } else if($(event.target.parentNode).hasClass("goal-model")){
+    }
+    // handle click on the goal model
+    else if($(event.target.parentNode).hasClass("goal-model")) {
         console.log(event.target.parentNode.id);
         Cookies.set('MID', event.target.parentNode.id);
         window.location.href = '/edit';
     }
-    // handle click on the create goal model button
-    else if($(event.target).hasClass("new-model")){
+    // handle click on the create goal model button & delete the project button
+    else if($(event.target).hasClass("new-model") || $(event.target).hasClass("delete-project")) {
         Cookies.set('PID', $(event.target.parentNode).parent()[0].id);
     }
-});
+    else if($(event.target.parentNode).hasClass("new-model") || $(event.target.parentNode).hasClass("delete-project")) {
+        Cookies.set('PID', $(event.target.parentNode.parentNode).parent()[0].id);
+    }
+    // handle click on the rename the project button
+    else if($(event.target).hasClass("rename-project")) {
+        Cookies.set('PID', $(event.target.parentNode).parent()[0].id);
+        $('#rename_project .modal-body input').val($('#' + Cookies.get('PID') + ' h6').html());
+    }
+    else if($(event.target.parentNode).hasClass("rename-project")) {
+        Cookies.set('PID', $(event.target.parentNode.parentNode).parent()[0].id);
+        $('#rename_project .modal-body input').val($('#' + Cookies.get('PID') + ' h6').html());
+        var $target = $('#rename-project');
+        $target.data('triggered',true);
+        setTimeout(function() {
+            if ($target.data('triggered')) {
+                $target.modal('show').data('triggered',false);
+            };
+        }, 300); // milliseconds
+        return false;
 
+    }
+});
 
 // handle sign off button
 $('#signout').click(function (evt) {
@@ -203,33 +243,59 @@ $('#rename_project').submit(function(evt){
 
 // rename goal model
 // PUT ('/goal_model/edit/:userid/:projectid/:goalmodelid')
-$('#rename_goalmodel').submit(function(evt){
+// $('#rename_goalmodel').submit(function(evt){
+//     evt.preventDefault();
+//     var secret = JSON.parse((Cookies.get('LOKIDIED')));
+//     var token = secret.token;
+//     var uid = secret.uid;
+//     var pid = Cookies.get('PID');
+//     var mid = Cookies.get('MID');
+//     if(typeof pid === "undefined") {
+//         alert("Please choose a project");
+//     }
+//     if(typeof mid === "undefined") {
+//         alert("Please choose a goal model");
+//     }
+//     var url = '/goal_model/edit/' + uid + '/' + pid + '/' + mid;
+//     var formData = $(this).serialize();
+//     // start ajax
+//     $.ajax(url, {
+//         data: formData,
+//         type: "PUT",
+//         headers: {"Authorization": "Bearer " + token},
+//         success: function(res){
+//             $('#' + mid + '.model_name').eq(0).innerHTML(res.model_name);
+//             $('#' + mid + '.model_time').eq(0).innerHTML(res.last_modified);
+//             $('#rename-goalmodel').modal('toggle');
+//         }
+//     }).fail(function(jqXHR){
+//         alert(jqXHR.statusText);
+//     });// end ajax
+// });
+
+// delete project
+// DELETE '/project/:userid/:projectid'
+$('#delete_project').submit(function(evt){
     evt.preventDefault();
     var secret = JSON.parse((Cookies.get('LOKIDIED')));
     var token = secret.token;
     var uid = secret.uid;
     var pid = Cookies.get('PID');
-    var mid = Cookies.get('MID');
     if(typeof pid === "undefined") {
         alert("Please choose a project");
     }
-    if(typeof mid === "undefined") {
-        alert("Please choose a goal model");
-    }
-    var url = '/goal_model/edit/' + uid + '/' + pid + '/' + mid;
+    var url = '/project/' + uid + '/' + pid;
     var formData = $(this).serialize();
     // start ajax
     $.ajax(url, {
         data: formData,
-        type: "PUT",
+        type: "DELETE",
         headers: {"Authorization": "Bearer " + token},
         success: function(res){
-            $('#' + mid + '.model_name').eq(0).innerHTML(res.model_name);
-            $('#' + mid + '.model_time').eq(0).innerHTML(res.last_modified);
-            $('#rename-goalmodel').modal('toggle');
+            $('#' + pid).hide();
+            $('#delete-project').modal('toggle');
         }
     }).fail(function(jqXHR){
         alert(jqXHR.statusText);
     });// end ajax
 });
-

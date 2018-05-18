@@ -51,7 +51,7 @@ main {
     display: inline-block;
     max-height: 30vh;
     width: 33%;
-    overflow: scroll;
+    overflow-y: hidden;
     position: relative;
 }
 
@@ -107,6 +107,7 @@ main {
 }
 
 .project:hover .create-goal-model {
+    height: 10%;
     display: block;
 }
 
