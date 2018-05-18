@@ -113,9 +113,15 @@ main {
     opacity: 0;
 }
 
-.project:hover .create-goal-model {
-    opacity: 1;
+.project:hover h6 {
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
     height: 10%;
+}
+
+.project:hover .create-goal-model {
+    height: 10%;
+    opacity: 1;
 }
 
 .goal-model:hover {
