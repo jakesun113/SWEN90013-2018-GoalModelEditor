@@ -36,10 +36,7 @@ const SQL_RET_PROJECTID = "SELECT * from Project WHERE BINARY ProjectName = ? AN
 const SQL_CREATE_PROJ = "INSERT INTO " +
     "Project (ProjectId, ProjectName, ProjectDescription, Size, OwnerId) " +
     "VALUES (UUID(), ?, ?, ?, ?)";
-/**
- * retrieve goalmodel name list of a given project
- * @type {string}
- */
+
 /**
  * The sql query to retrieve all goalmodels under a project
  * @type {string}
@@ -54,7 +51,10 @@ const SQL_RET_GOALMODEL_OF_PROJ = "SELECT ModelName " +
  */
 const SQL_CREATE_GOALMODEL = "INSERT INTO GoalModel (ModelId,ModelName, ModelDescription, FilePath, ProjectId) " +
     "VALUES (UUID(), ?, ?, ?, ?)";
+
 const SQL_RET_GOALMODEL = "SELECT * FROM GoalModel WHERE BINARY ModelName = ? AND ProjectId = ?";
+
+const SQL_RET_MODEL = " SELECT * FROM GoalModel WHERE ModelId = ? ";
 /**
  * get all project and its corresponding goalmodels
  * @type {string}
@@ -63,9 +63,61 @@ const SQL_GET_PROJ_GOALMODEL = "SELECT * " +
     "FROM GoalModel AS GM INNER JOIN User_Project AS UP INNER JOIN Project " +
     "ON UP.ProjectId = GM.ProjectId AND UP.ProjectId = Project.ProjectId " +
     "WHERE UserId = ?";
-
-const SQL_GET_GOALMODEL_BY_ID = "SELECT * FROM GoalModel WHERE ModelId = ?";
-
+/**
+ * Get information of a goal model by its id
+ * @type {string}
+ */
+const SQL_GET_GOALMODEL_BY_ID = "SELECT GoalModel.*, Project.OwnerId " +
+    "FROM GoalModel INNER JOIN Project " +
+    "WHERE ModelId = ? AND GoalModel.ProjectId = Project.ProjectId";
+/**
+ * update a project's fields
+ * @type {string}
+ */
+const SQL_UPDATE_PROJECT = "UPDATE Project " +
+    "SET ProjectName = ?, ProjectDescription = ?, size = ?, " +
+    "WHERE ProjectId = ?";
+/**
+ * Update a goal model
+ * @type {string}
+ */
+const SQL_UPDATE_GOAL_MODEL = "UPDATE GoalModel " +
+    "SET ModelName = ?, ModelDescription = ?, FilePath = ?, LastModified = NOW() " +
+    "WHERE ModelId = ?";
+/**
+ * Get the information of a project
+ * @type {string}
+ */
+const SQL_GET_PROJECT = "SELECT * FROM Project WHERE ProjectId = ?";
+/**
+ * Get a user's profile by his id.
+ * @type {string}
+ */
+const SQL_GET_USER_PROFILE = "SELECT UserName, FirstName, LastName, Email FROM User WHERE UserId = ?";
+/**
+ * Change a user's password using his id and current password
+ * @type {string}
+ */
+const SQL_CHANGE_USER_PASSWORD = "UPDATE User " +
+    "SET Password = ? " +
+    "WHERE UserId = ? AND Password = ?";
+/**
+ * update a user's profile
+ * @type {string}
+ */
+const SQL_UPDATE_USER_PROFILE = "UPDATE User " +
+    "SET FirstName = ?, LastName = ?, Email = ? " +
+    "WHERE UserId = ?";
+/**
+ * Delete a GoalModel
+ * @type {string}
+ */
+const SQL_DELETE_GOAL_MODEL = "DELETE FROM GoalModel WHERE ModelId = ?";
+/**
+ *  Delete a
+ * @type {string}
+ */
+const SQL_DELETE_PROJECT = "DELETE FROM Project WHERE ProjectId = ?";
 /**
  * DBModule
  * @returns {{DBModule}}
@@ -95,16 +147,20 @@ const DBModule = function () {
                         console.log(JSON.stringify(err));
                         if (err.errno == 1062) {// MYSQL error number for duplicate entry
                             // Username already exists.
-                            reject(DBModule.ALREADY_EXIST);
+                            reject(
+                                {code: DBModule.ALREADY_EXIST, message: err.sqlMessage}
+                            );
                         } else {
-                            reject(DBModule.UNKNOWN_ERROR);// unknown error
+                            reject(
+                                {code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});// unknown error
                         }
                     } else {
                         // success
                         pool.query(SQL_RET_PROJECTID, [ProjectName, UserId], function (err, result) {
                             if (err) {
                                 console.log(err);
-                                reject(DBModule.UNKNOWN_ERROR);
+                                reject(
+                                    {code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});// unknown error
                             } else {
                                 // success
                                 resolve(result[0]);
@@ -136,9 +192,12 @@ const DBModule = function () {
                         console.log(JSON.stringify(err));
                         if (err.errno == 1062) {// MYSQL error number for duplicate entry
                             // Username already exists.
-                            reject(DBModule.ALREADY_EXIST);
+                            reject(
+                                {code: DBModule.ALREADY_EXIST, message: err.sqlMessage}
+                            );
                         } else {
-                            reject(DBModule.UNKNOWN_ERROR);// unknown error
+                            reject(
+                                {code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});// unknown error
                         }
                     } else {
                         // success
@@ -159,7 +218,7 @@ const DBModule = function () {
             pool.query(
                 SQL_USER_LOGIN,
                 [username, password], function (err, result) {
-                    if (err) return reject(err);
+                    if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
                     if (result.affectedRows == 1) {
                         // success
                         pool.query(SQL_RET_USERID, [username, password], function (err, result) {
@@ -201,22 +260,22 @@ const DBModule = function () {
                     console.log(JSON.stringify(err));
                     if (err.errno == 1062) {// MYSQL error number for duplicate entry
                         // Username already exists.
-                        reject(DBModule.ALREADY_EXIST);
+                        reject(
+                            {code: DBModule.ALREADY_EXIST, message: err.sqlMessage}
+                        );
                     } else {
-                        reject(DBModule.UNKNOWN_ERROR);// unknown error
+                        reject(
+                            {code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});// unknown error
                     }
                 } else {
                     pool.query(SQL_RET_GOALMODEL, [modelName, ProjectId], function (err, result) {
                         if (err) {
                             console.log(err);
-                            reject(DBModule.UNKNOWN_ERROR);
+                            reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
                         } else {
                             // success
                             resolve(result[0]);
                         }
-                        // if success: return userid
-                        //console.log(result);
-                        //resolve(result.ProjectId);
                     });
                 }
             });
@@ -232,38 +291,202 @@ const DBModule = function () {
             pool.query(
                 SQL_RET_GOALMODEL_OF_PROJ,
                 [ProjectId], function (err, result) {
-                    if (err) return reject(err);
+                    if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
                     resolve(result);
                 });
         });
     };
+
     /**
-     * Get a goal model by its id.
-     * @param ModelId
+     * get a peoject by its id.
+     * @param projectId
      */
-    DBModule.getGoalModel = function (ModelId) {
-        return new Promise((result, reject) => {
+    DBModule.getProject = function (projectId) {
+        return new Promise((resolve, reject) => {
             pool.query(
-                SQL_GET_GOALMODEL_BY_ID, [ModelId], (err, result) => {
-                    if (err) return reject(err);
-                    resolve(result);
+                SQL_GET_PROJECT, [projectId], (err, result) => {
+                    if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                    resolve(result[0]);
                 }
             );
         });
     };
 
     /**
-     *
+     * Get a goal model by its id.
+     * @param ModelId
+     */
+    DBModule.getGoalModel = function (ModelId) {
+        return new Promise((resolve, reject) => {
+            pool.query(
+                SQL_GET_GOALMODEL_BY_ID, [ModelId], (err, result) => {
+                    if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                    resolve(result[0]);
+                }
+            );
+        });
+    };
+
+    /**
+     * update a single project.
+     * @param projectId
+     * @param projectName
+     * @param projectDescription
+     * @param size
+     */
+    DBModule.updateProject = function (projectId, projectName, projectDescription, size) {
+        return new Promise((resolve, reject) => {
+            pool.query(SQL_UPDATE_PROJECT, [projectName, projectDescription, size, projectId], (err, result) => {
+                if (err) {
+                    console.log(err);
+                    if (err.errno = 1062) {
+                        console.log("dup");
+                        return reject({code: DBModule.ALREADY_EXIST, message: err.sqlMessage});
+                    } else {
+                        return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                    }
+                }
+                if (result.affectedRows == 1) {
+                    resolve({project_name: projectName});
+                } else {
+                    reject({code: DBModule.INVALID, message: result.message});
+                }
+            });
+        });
+    };
+
+    /**
+     * update a single goal model.
      * @param modelId
      * @param modelName
      * @param modelDescription
      * @param filePath
      * @param ProjectId
      */
-    DBModule.updateGoalModel = function (modelId, modelName, modelDescription, filePath, ProjectId) {
-        throw 'not implemented';
+    DBModule.updateGoalModel = function (modelId, modelName, modelDescription, filePath) {
+        return new Promise((resolve, reject) => {
+            pool.query(SQL_UPDATE_GOAL_MODEL, [modelName, modelDescription, filePath, modelId], (err, result) => {
+                if (err) {
+                    console.log(err);
+                    if (err.errno = 1062) {
+                        console.log("dup");
+                        return reject({code: DBModule.ALREADY_EXIST, message: err.sqlMessage});
+                    } else {
+
+                        return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                    }
+                }
+
+                if (result.affectedRows == 1) {
+                    // success
+                    //resolve(result);
+                    pool.query(SQL_RET_MODEL, [modelId], function (err, result) {
+                        if (err) {
+                            console.log(err);
+                            reject(
+                                {code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});// unknown error
+                        } else {
+                            // success
+                            resolve({model_name: result[0].ModelName, last_modified: result[0].LastModified});
+                        }
+                    });
+
+                } else {
+                    reject({code: DBModule.INVALID, message: result.message});
+                }
+            });
+        });
     };
 
+    /**
+     * Get the user profiles by id.
+     * @param UserId
+     */
+    DBModule.getUserProfile = function (UserId) {
+        return new Promise((resolve, reject) => {
+            pool.query(SQL_GET_USER_PROFILE, [UserId], (err, result) => {
+                if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                resolve(result[0]);
+            });
+        });
+    };
+
+    /**
+     * change the password of a user.
+     * @param UserId
+     * @param OldPassword
+     * @param NewPassword
+     */
+    DBModule.changePassword = function (UserId, OldPassword, NewPassword) {
+        return new Promise((resolve, reject) => {
+            pool.query(SQL_CHANGE_USER_PASSWORD, [NewPassword, UserId, OldPassword], (err, result) => {
+                if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                console.log(result);
+                if (result.affectedRows == 1) {
+                    resolve(DBModule.SUCCESS);
+                } else {
+                    reject({code: DBModule.INVALID, message: result.message});
+                }
+            });
+        });
+    };
+
+    /**
+     * update a user's profile
+     * @param UserId
+     * @param FirstName
+     * @param LastName
+     * @param Email
+     */
+    DBModule.updateUserProfile = function (UserId, FirstName, LastName, Email) {
+        return new Promise((resolve, reject) => {
+            pool.query(SQL_UPDATE_USER_PROFILE, [FirstName, LastName, Email, UserId], (err, result) => {
+                if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                if (result.affectedRows == 1) {
+                    resolve(DBModule.SUCCESS);
+                } else {
+                    if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                    reject({code: DBModule.INVALID, message: result.message});
+                }
+            });
+        });
+    };
+
+    /**
+     * Delete a goalmodel
+     * @param Modelid
+     */
+    DBModule.deleteGoalModel = function (ModelId) {
+        return new Promise((resolve, reject) => {
+            pool.query(SQL_DELETE_GOAL_MODEL, [ModelId], (err, result) => {
+                if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                if (result.affectedRows == 1) {
+                    resolve(DBModule.SUCCESS);
+                } else {
+                    if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                    reject({code: DBModule.INVALID, message: result.message});
+                }
+            });
+        });
+    };
+
+    /**
+     * delete a project
+     * @param ProjectId
+     */
+    DBModule.deleteProject = function (ProjectId) {
+        return new Promise((resolve, reject) => {
+            pool.query(SQL_DELETE_PROJECT, [ProjectId], (err, result) => {
+                if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                if (result.affectedRows == 1) {
+                    resolve(DBModule.SUCCESS);
+                } else {
+                    if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                    reject({code: DBModule.INVALID, message: result.message});
+                }
+            });
+        });
+    };
     return DBModule;
 };
 
