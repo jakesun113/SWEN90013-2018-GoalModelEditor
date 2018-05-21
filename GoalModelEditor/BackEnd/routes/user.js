@@ -71,4 +71,105 @@ router.post('/register', (req, res, next) => {
     });
 });
 
+/* GET User Profile */
+router.get('/profile/:userId', function(req, res, next) {
+
+    // check token for authentication
+    if (!auth.authenticate(req.headers)) {
+        res.statusCode = 401;
+        res.json( {created: false, message: "Authentication failed"} );
+        return res.end();
+    }
+
+    // get user profile from db
+    db.getUserProfile(req.params.userId).then(result => {
+        res.statusCode = 200;
+        res.json({
+            username: result.UserName,
+            firstname: result.FirstName,
+            lastname: result.LastName,
+            email: result.Email
+        })
+        return res.end();
+    }).catch(err => {
+        if (err.code == db.INVALID) {
+            res.statusCode = 404;
+            res.json({message: "Failed to get user profile: " + err.message});
+            return res.end();
+        }
+        res.statusCode = 500;
+        res.json({message: "Failed to get user profile: " + err.message});
+        return res.end();
+    })
+});
+
+/* PUT Change User Profile */
+router.put('/profile/:userId', function(req, res, next) {
+
+    // check token for authentication
+    if (!auth.authenticate(req.headers)) {
+        res.statusCode = 401;
+        res.json( {created: false, message: "Authentication failed"} );
+        return res.end();
+    }
+
+    // get user profile from db
+    db.updateUserProfile(req.params.userId, req.body.firstname, req.body.lastname,
+        req.body.email).then(result => {
+        res.statusCode = 200;
+        res.json({
+            user_id: req.params.userId,
+            firstname: result.FirstName,
+            lastname: result.LastName,
+            email: result.Email
+        })
+        return res.end();
+    }).catch(err => {
+        if (err.code == db.INVALID) {
+            res.statusCode = 404;
+            res.json({message: "Failed to update user profile: " + err.message});
+            return res.end();
+        }
+        res.statusCode = 500;
+        res.json({message: "Failed to update user profile: " + err.message});
+        return res.end();
+    })
+});
+
+/* PUT Change User Password */
+router.put('/cred/:userId', function(req, res, next) {
+
+    // check token for authentication
+    if (!auth.authenticate(req.headers)) {
+        res.statusCode = 401;
+        res.json( {created: false, message: "Authentication failed"} );
+        return res.end();
+    }
+
+    // update password to db
+    const oldhash = crypto.createHash('sha256');
+    console.log("in login func");
+    oldhash.update(req.body.old_password);
+    oldpw = oldhash.digest("hex");
+
+    const newhash = crypto.createHash('sha256');
+    console.log("in login func");
+    newhash.update(req.body.new_password);
+    newpw = newhash.digest("hex");
+
+    db.changePassword(req.params.userId, oldpw, newpw).then(result => {
+        res.statusCode = 200;
+        return res.end();
+    }).catch(err => {
+        if (err.code == db.INVALID) {
+            res.statusCode = 404;
+            res.json({message: "Failed to change user password: Old password invalid"});
+            return res.end();
+        }
+        res.statusCode = 500;
+        res.json({message: "Failed to change user password: " + err.message});
+        return res.end();
+    })
+});
+
 module.exports = router;

@@ -106,18 +106,19 @@ router.put("/:userId/:projectId", (req, res, next) => {
 
     // get the old project info
     db.getProject(req.params.projectId).then((result)=>{
-        if (result.owner != req.params.userId) {
+        if (result.OwnerId != req.params.userId) {
             res.statusCode = 403;
             res.json({message: "Failed to edit the project: user does not have the authority"});
             return res.end();
         }
+
         // edit project
-        db.updateProject(req.body.project_name, req.body.description, req.body.size,
-            req.params.userId, req.params.projectId).then((result)=>{
+        db.updateProject(req.params.projectId, req.body.project_name, req.body.description,
+            req.body.size).then((result)=>{
             console.log(result);
             res.statusCode = 200;
             res.json({
-                owner: result.Owner,
+                owner: result.OwnerId,
                 project_id: result.ProjectId,
                 project_name: result.ProjectName,
                 description: result.Description
@@ -146,15 +147,28 @@ router.delete("/:userId/:projectId", (req, res, next) => {
         res.end();
     }
 
-    // delete project
-    db.deleteProject(req.params.userId, req.params.projectId).then((result)=>{
-        console.log(result);
-        if(result != db.UNKNOWN_ERROR) {
-            res.statusCode = 204;
-        } else {
-            res.statusCode = 500;
-            res.json({message: 'Failed to delete project'})
+    // get the old project info
+    db.getProject(req.params.projectId).then((result)=>{
+        if (result.OwnerId != req.params.userId) {
+            res.statusCode = 403;
+            res.json({message: "Failed to delete the project: user does not have the authority"});
+            return res.end();
         }
+
+        // delete project
+        db.deleteProject(req.params.projectId).then((result)=>{
+            console.log(result);
+            res.statusCode = 204;
+            return res.end();
+        }).catch(err => {
+            res.statusCode = 500;
+            res.json({message: 'Failed to delete project: ' + err.message});
+            return res.end();
+        });
+    }).catch(err => {
+        res.statusCode = 404;
+        res.json({message: "Failed to get the old project information: " + err.message});
+        return res.end();
     });
 });
 
