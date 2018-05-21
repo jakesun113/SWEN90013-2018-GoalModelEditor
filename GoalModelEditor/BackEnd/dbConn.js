@@ -16,6 +16,7 @@ const dbconf = {
     password: 'SWEN90013goal!',
     database: 'GoalModel_A'
 };
+
 const pool = mysql.createPool(dbconf);
 /**
  * The SQL sentence to insert a user with fields escaped;
@@ -78,7 +79,7 @@ const dbConn = {};
  */
 dbConn.SUCCESS = 1;
 dbConn.ALREADY_EXIST = 0;
-dbConn.LOGIN_INVALID = "";
+dbConn.INVALID = "";
 dbConn.UNKNOWN_ERROR = -1;
 
 /**
@@ -171,7 +172,7 @@ dbConn.login = function (username, password) {
                     });
                 } else {
                     // Invalid username or password
-                    reject(dbConn.LOGIN_INVALID);
+                    reject(dbConn.INVALID);
                 }
             })
     });
@@ -245,7 +246,7 @@ module.exports = dbConn;
 //     console.log(res);
 //     pool.end();
 // });
-// dbConn.getProjectGoalModelList('0aa452d7-4b67-11e8-8c21-02388973fed8').then(res => {
+// dbConn.getProjectGoalModelList('e06cd02b-4df4-11e8-8c21-02388973fed8').then(res => {
 //     console.log(res);
 //     pool.end();
 // });
