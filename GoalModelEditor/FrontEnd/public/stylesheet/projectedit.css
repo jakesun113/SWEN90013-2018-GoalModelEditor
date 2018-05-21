@@ -1,17 +1,23 @@
+.header {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .5);
+    background-image: url('/img/profile-background.jpg');
+}
+
 /*show border start*/
 .showborder{
     border-style: solid;
     border-color:lightgrey;
     border-width: 1px;
+    border-radius: 3px;
 }
 /*show border end*/
 
 /*Set frame and scroll start*/
 #height-full-screen > .row {
-    min-height: 90vh;
+    min-height: 76vh;
 }
 .scrollbar {
-    height: 90vh;
+    height: 76vh;
     overflow-y: scroll;
 }
 .inside-scrollbar{
@@ -91,20 +97,20 @@
 .container-body {
     padding-top: 30px;
     padding-bottom: 20px;
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 .container-heading1{
     padding-top: 0px;
     padding-bottom: 0px;
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 .container-heading2{
     padding-top: 0px;
     padding-bottom: 0px;
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 /*import photos end*/
 
@@ -124,7 +130,19 @@ input{
     border: 0px;
     width: 100%;
 }
-
-.bgwhite{
-    background-color: white;
+.icon1{
+    height: 20px;
+    width: 20px;
 }
+.icon{
+    height: 16px;
+    width: 16px;
+}
+
+.notopborder {
+    border-width: 1px;
+    border-top-width: 0px;
+    border-style: solid;
+    border-color:lightgrey;
+}
+
