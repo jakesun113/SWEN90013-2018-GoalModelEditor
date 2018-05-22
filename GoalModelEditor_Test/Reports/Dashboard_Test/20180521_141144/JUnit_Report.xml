@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Dashboard_Test" time="41" tests="0" failures="1" errors="0">
+   <testsuite name="Dashboard_Test" tests="0" failures="1" errors="0" time="41" timestamp="2018-05-21 14:14:28" hostname="edric.dang - 10.0.0.3" id="Test Suites/Dashboard_Test">
+      <properties>
+         <property name="deviceName" value=""/>
+         <property name="devicePlatform" value=""/>
+         <property name="logFolder" value="/Users/edric.dang/Desktop/swen90013-2018-go/GoalModelEditor_Test/Reports/Dashboard_Test/20180521_141144"/>
+         <property name="logFiles" value="/Users/edric.dang/Desktop/swen90013-2018-go/GoalModelEditor_Test/Reports/Dashboard_Test/20180521_141144/execution0.log"/>
+         <property name="attachments" value="/Users/edric.dang/Desktop/swen90013-2018-go/GoalModelEditor_Test/Reports/Dashboard_Test/20180521_141144/1526876108556.png, /Users/edric.dang/Desktop/swen90013-2018-go/GoalModelEditor_Test/Reports/Dashboard_Test/20180521_141144/1526876109082.png"/>
+         <property name="hostName" value="edric.dang - 10.0.0.3"/>
+         <property name="os" value="Mac OS X 64bit"/>
+         <property name="katalonVersion" value="5.4.1.1"/>
+         <property name="browser" value="Chrome 66.0.3359.181"/>
+         <property name="hostAddress" value="10.0.0.3"/>
+         <property name="sessionId" value="7defd86798b3c47983f0c3c62c130080"/>
+         <property name="seleniumVersion" value="3.7.1"/>
+         <property name="proxyInformation" value="ProxyInformation{proxyOption=NO_PROXY, proxyServerType=HTTP, password=, proxyServerAddress=, proxyServerPort=0}"/>
+         <property name="platform" value="Mac OS X"/>
+      </properties>
+      <testcase name="Test Cases/DashBoard_Test" classname="Test Cases/DashBoard_Test" status="FAILED">
+         <failure type="FAILED" message="Unable to verify object 'Object Repository/Modify_User_Profile_Series/Page_Goal Model Editor (1)/a_Go to Goal Model Editor' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Modify_User_Profile_Series/Page_Goal Model Editor (1)/a_Go to Goal Model Editor' located by 'By.xpath: //a[@href = '/login' and (text() = 'Go to Goal Model Editor' or . = 'Go to Goal Model Editor')]' not found)"/>
+         <system-out><![CDATA[2018-05-21 14:14:28 - [TEST_CASE][FAILED] - Test Cases/DashBoard_Test: Test Cases/DashBoard_Test FAILED because (of) Unable to verify object 'Object Repository/Modify_User_Profile_Series/Page_Goal Model Editor (1)/a_Go to Goal Model Editor' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Modify_User_Profile_Series/Page_Goal Model Editor (1)/a_Go to Goal Model Editor' located by 'By.xpath: //a[@href = '/login' and (text() = 'Go to Goal Model Editor' or . = 'Go to Goal Model Editor')]' not found)
+
+2018-05-21 14:14:28 - [TEST_STEP][PASSED] - openBrowser: Browser is opened with url: ''
+
+2018-05-21 14:14:30 - [MESSAGE][PASSED] - Browser is opened with url: ''
+
+2018-05-21 14:14:30 - [TEST_STEP][PASSED] - navigateToUrl: Navigate to 'https://localhost:8080/' successfully
+
+2018-05-21 14:14:30 - [MESSAGE][PASSED] - Navigate to 'https://localhost:8080/' successfully
+
+2018-05-21 14:14:30 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Dashboard_Series/Page_Goal Model Editor/a_Go to Goal Model Editor' is clicked on
+
+2018-05-21 14:14:31 - [MESSAGE][PASSED] - Object: 'Object Repository/Dashboard_Series/Page_Goal Model Editor/a_Go to Goal Model Editor' is clicked on
+
+2018-05-21 14:14:31 - [TEST_STEP][PASSED] - setText: Text 'username4' is set on object 'Object Repository/Dashboard_Series/Page_Sign in/input_username'
+
+2018-05-21 14:14:31 - [MESSAGE][PASSED] - Text 'username4' is set on object 'Object Repository/Dashboard_Series/Page_Sign in/input_username'
+
+2018-05-21 14:14:31 - [TEST_STEP][PASSED] - setText: Text '1234' is set on object 'Object Repository/Dashboard_Series/Page_Sign in/input_password'
+
+2018-05-21 14:14:31 - [MESSAGE][PASSED] - Text '1234' is set on object 'Object Repository/Dashboard_Series/Page_Sign in/input_password'
+
+2018-05-21 14:14:31 - [TEST_STEP][PASSED] - sendKeys: Keys 'ENTER + ' sent to object: 'Object Repository/Dashboard_Series/Page_Sign in/input_password'
+
+2018-05-21 14:14:31 - [MESSAGE][PASSED] - Keys 'ENTER + ' sent to object: 'Object Repository/Dashboard_Series/Page_Sign in/input_password'
+
+2018-05-21 14:14:31 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Dashboard_Series/Page_My Project - Goal Model Editor/div_Untitled' is clicked on
+
+2018-05-21 14:14:32 - [MESSAGE][PASSED] - Object: 'Object Repository/Dashboard_Series/Page_My Project - Goal Model Editor/div_Untitled' is clicked on
+
+2018-05-21 14:14:32 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Dashboard_Series/Page_Goal Model Edit Page/a_Return' is clicked on
+
+2018-05-21 14:14:32 - [MESSAGE][PASSED] - Object: 'Object Repository/Dashboard_Series/Page_Goal Model Edit Page/a_Return' is clicked on
+
+2018-05-21 14:14:32 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Dashboard_Series/Page_My Project - Goal Model Editor/div_Untitled' is clicked on
+
+2018-05-21 14:14:33 - [MESSAGE][PASSED] - Object: 'Object Repository/Dashboard_Series/Page_My Project - Goal Model Editor/div_Untitled' is clicked on
+
+2018-05-21 14:14:33 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Dashboard_Series/Page_Goal Model Edit Page/a_Functional' is clicked on
+
+2018-05-21 14:14:33 - [MESSAGE][PASSED] - Object: 'Object Repository/Dashboard_Series/Page_Goal Model Edit Page/a_Functional' is clicked on
+
+2018-05-21 14:14:33 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Dashboard_Series/Page_Goal Model Edit Page/a_Quality' is clicked on
+
+2018-05-21 14:14:33 - [MESSAGE][PASSED] - Object: 'Object Repository/Dashboard_Series/Page_Goal Model Edit Page/a_Quality' is clicked on
+
+2018-05-21 14:14:33 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Dashboard_Series/Page_Goal Model Edit Page/a_Feeling' is clicked on
+
+2018-05-21 14:14:33 - [MESSAGE][PASSED] - Object: 'Object Repository/Dashboard_Series/Page_Goal Model Edit Page/a_Feeling' is clicked on
+
+2018-05-21 14:14:33 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Dashboard_Series/Page_Goal Model Edit Page/a_Concern' is clicked on
+
+2018-05-21 14:14:33 - [MESSAGE][PASSED] - Object: 'Object Repository/Dashboard_Series/Page_Goal Model Edit Page/a_Concern' is clicked on
+
+2018-05-21 14:14:33 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Dashboard_Series/Page_Goal Model Edit Page/a_Actor' is clicked on
+
+2018-05-21 14:14:33 - [MESSAGE][PASSED] - Object: 'Object Repository/Dashboard_Series/Page_Goal Model Edit Page/a_Actor' is clicked on
+
+2018-05-21 14:14:33 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Dashboard_Series/Page_Goal Model Edit Page/button_Next' is clicked on
+
+2018-05-21 14:14:33 - [MESSAGE][PASSED] - Object: 'Object Repository/Dashboard_Series/Page_Goal Model Edit Page/button_Next' is clicked on
+
+2018-05-21 14:14:33 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Dashboard_Series/Page_Goal Model Edit Page/button_Add' is clicked on
+
+2018-05-21 14:14:33 - [MESSAGE][PASSED] - Object: 'Object Repository/Dashboard_Series/Page_Goal Model Edit Page/button_Add' is clicked on
+
+2018-05-21 14:14:33 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Dashboard_Series/Page_Goal Model Edit Page/button_Back' is clicked on
+
+2018-05-21 14:14:33 - [MESSAGE][PASSED] - Object: 'Object Repository/Dashboard_Series/Page_Goal Model Edit Page/button_Back' is clicked on
+
+2018-05-21 14:14:33 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Dashboard_Series/Page_Goal Model Edit Page/button_Upload Image' is clicked on
+
+2018-05-21 14:14:34 - [MESSAGE][PASSED] - Object: 'Object Repository/Dashboard_Series/Page_Goal Model Edit Page/button_Upload Image' is clicked on
+
+2018-05-21 14:14:34 - [TEST_STEP][PASSED] - uploadFile: File '/Users/edric.dang/Desktop/Screen Shot 2018-05-16 at 7.51.53 pm.png' sent to object: 'Object Repository/Dashboard_Series/Page_Goal Model Edit Page/button_Upload Image'
+
+2018-05-21 14:14:35 - [MESSAGE][PASSED] - File '/Users/edric.dang/Desktop/Screen Shot 2018-05-16 at 7.51.53 pm.png' sent to object: 'Object Repository/Dashboard_Series/Page_Goal Model Edit Page/button_Upload Image'
+
+2018-05-21 14:14:35 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Dashboard_Series/Page_Goal Model Edit Page/button_username4' is clicked on
+
+2018-05-21 14:14:35 - [MESSAGE][PASSED] - Object: 'Object Repository/Dashboard_Series/Page_Goal Model Edit Page/button_username4' is clicked on
+
+2018-05-21 14:14:35 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Dashboard_Series/Page_Goal Model Edit Page/a_Sign out' is clicked on
+
+2018-05-21 14:14:35 - [MESSAGE][PASSED] - Object: 'Object Repository/Dashboard_Series/Page_Goal Model Edit Page/a_Sign out' is clicked on
+
+2018-05-21 14:14:35 - [TEST_STEP][FAILED] - verifyElementPresent: Unable to verify object 'Object Repository/Modify_User_Profile_Series/Page_Goal Model Editor (1)/a_Go to Goal Model Editor' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Modify_User_Profile_Series/Page_Goal Model Editor (1)/a_Go to Goal Model Editor' located by 'By.xpath: //a[@href = '/login' and (text() = 'Go to Goal Model Editor' or . = 'Go to Goal Model Editor')]' not found)
+
+2018-05-21 14:15:09 - [MESSAGE][FAILED] - com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Modify_User_Profile_Series/Page_Goal Model Editor (1)/a_Go to Goal Model Editor' located by 'By.xpath: //a[@href = '/login' and (text() = 'Go to Goal Model Editor' or . = 'Go to Goal Model Editor')]' not found
+[[ATTACHMENT|/Users/edric.dang/Desktop/swen90013-2018-go/GoalModelEditor_Test/Reports/Dashboard_Test/20180521_141144/1526876108556.png]]
+
+2018-05-21 14:15:09 - [MESSAGE][FAILED] - Unable to verify object 'Object Repository/Modify_User_Profile_Series/Page_Goal Model Editor (1)/a_Go to Goal Model Editor' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Modify_User_Profile_Series/Page_Goal Model Editor (1)/a_Go to Goal Model Editor' located by 'By.xpath: //a[@href = '/login' and (text() = 'Go to Goal Model Editor' or . = 'Go to Goal Model Editor')]' not found)
+[[ATTACHMENT|/Users/edric.dang/Desktop/swen90013-2018-go/GoalModelEditor_Test/Reports/Dashboard_Test/20180521_141144/1526876109082.png]]]]></system-out>
+         <system-err><![CDATA[2018-05-21 14:14:28 - [TEST_CASE][FAILED] - Test Cases/DashBoard_Test: Test Cases/DashBoard_Test FAILED because (of) Unable to verify object 'Object Repository/Modify_User_Profile_Series/Page_Goal Model Editor (1)/a_Go to Goal Model Editor' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Modify_User_Profile_Series/Page_Goal Model Editor (1)/a_Go to Goal Model Editor' located by 'By.xpath: //a[@href = '/login' and (text() = 'Go to Goal Model Editor' or . = 'Go to Goal Model Editor')]' not found)]]></system-err>
+      </testcase>
+      <system-out><![CDATA[2018-05-21 14:14:28 - [TEST_SUITE][FAILED] - Dashboard_Test: Test Cases/DashBoard_Test FAILED because (of) Unable to verify object 'Object Repository/Modify_User_Profile_Series/Page_Goal Model Editor (1)/a_Go to Goal Model Editor' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Modify_User_Profile_Series/Page_Goal Model Editor (1)/a_Go to Goal Model Editor' located by 'By.xpath: //a[@href = '/login' and (text() = 'Go to Goal Model Editor' or . = 'Go to Goal Model Editor')]' not found)]]></system-out>
+      <system-err><![CDATA[2018-05-21 14:14:28 - [TEST_SUITE][FAILED] - Dashboard_Test: Test Cases/DashBoard_Test FAILED because (of) Unable to verify object 'Object Repository/Modify_User_Profile_Series/Page_Goal Model Editor (1)/a_Go to Goal Model Editor' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Modify_User_Profile_Series/Page_Goal Model Editor (1)/a_Go to Goal Model Editor' located by 'By.xpath: //a[@href = '/login' and (text() = 'Go to Goal Model Editor' or . = 'Go to Goal Model Editor')]' not found)]]></system-err>
+   </testsuite>
+</testsuites>
