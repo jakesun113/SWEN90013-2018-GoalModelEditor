@@ -32,7 +32,6 @@ $(document).ready(function () {
                             '</div> </div>';
                     }
                 });// end each
-
                 projectHTML = projectHTML + '</div>';
                 projectHTML = projectHTML + '<img src="/img/buffer.svg" alt="project-icon" class="project-icon">';
                 projectHTML = projectHTML + '<h6>' + project.project_name + '</h6>';
@@ -50,25 +49,24 @@ $(document).ready(function () {
                     'style="background-color: transparent">' +
                     '<img src="/img/close-outline.svg" title="Delete the project"></button>';
                 projectHTML = projectHTML + '</div>';
-
                 $('#projects-container').append(projectHTML);
             };// end each
         }
     }).fail(function(jqXHR){
-        alert(jqXHR.statusText + ". Please contact us.");
+        alert(jqXHR.responseJSON.message);
     }); // end ajax
 }); // end ready
 
 // reload user's file list after the user has created a new file
 // i.e. handle the "CREATE" button
 // create both project and first goal model
-// POST ('/project/create/:userid')
+// POST ('/project/:userid')
 $('#create-project').submit(function(evt){
    evt.preventDefault();
    var secret = JSON.parse((Cookies.get('LOKIDIED')));
    var token = secret.token;
    var id = secret.uid;
-   var url = '/project/create/'+ id;
+   var url = '/project/'+ id;
    var formData = $(this).serialize();
     $.ajax(url, {
         data: formData,
@@ -84,7 +82,7 @@ $('#create-project').submit(function(evt){
                 '<div class="col-6 text-center text-color">Last modified</div>' +
                 '</div>';
             projectHTML = projectHTML + '</div>';
-            projectHTML = projectHTML + '<img src="/img/folder.svg" alt="project-icon" class="project-icon">';
+            projectHTML = projectHTML + '<img src="/img/buffer.svg" alt="project-icon" class="project-icon">';
             projectHTML = projectHTML + '<h6>' + project.project_name + '</h6>';
             projectHTML = projectHTML + '<div class="text-center create-goal-model">';
             projectHTML = projectHTML + '<button class="btn btn-sm mb-2 new-model" ' +
@@ -103,7 +101,7 @@ $('#create-project').submit(function(evt){
             $('#projects-container').append(projectHTML);
             $('#add-project').modal('toggle');
             // send create goal model request
-            var create_model_url = '/goal_model/create/' + id + '/' + project.project_id;
+            var create_model_url = '/goal_model/' + id + '/' + project.project_id;
             // start ajax
             $.ajax(create_model_url, {
                 data: formData,
@@ -122,13 +120,13 @@ $('#create-project').submit(function(evt){
             });// end ajax
         }
     }).fail(function(jqXHR){
-        alert(jqXHR.statusText);
+        alert(jqXHR.responseJSON.message);
     });// end ajax
 });// end submit
 
 
 // create goal model for a project
-// POST '/goal_model/create/:userid/:projectid'
+// POST '/goal_model/:userid/:projectid'
 $('#create-model').submit(function(evt) {
     evt.preventDefault();
     var secret = JSON.parse((Cookies.get('LOKIDIED')));
@@ -138,7 +136,7 @@ $('#create-model').submit(function(evt) {
     if(typeof pid === "undefined") {
         alert("Please choose a project");
     }
-    var url = '/goal_model/create/'+ uid + '/' + pid;
+    var url = '/goal_model/'+ uid + '/' + pid;
     var formData = $(this).serialize();
     // start ajax
     $.ajax(url, {
@@ -155,7 +153,7 @@ $('#create-model').submit(function(evt) {
             $('#add-model').modal('toggle');
         }
     }).fail(function(jqXHR){
-        alert(jqXHR.statusText);
+        alert(jqXHR.responseJSON.message);
     });// end ajax
 });
 
@@ -170,13 +168,13 @@ $('#projects-container').click(function(event){
     if($(event.target).hasClass("goal-model")) {
         console.log(event.target.id);
         Cookies.set('MID', event.target.id);
-        window.location.href = '/edit';
+        window.location.href = '/goal_model/edit';
     }
     // handle click on the goal model
     else if($(event.target.parentNode).hasClass("goal-model")) {
         console.log(event.target.parentNode.id);
         Cookies.set('MID', event.target.parentNode.id);
-        window.location.href = '/edit';
+        window.location.href = '/goal_model/edit';
     }
     // handle click on the create goal model button & delete the project button
     else if($(event.target).hasClass("new-model") || $(event.target).hasClass("delete-project")) {
@@ -216,7 +214,7 @@ $('#signout').click(function (evt) {
 });
 
 // rename project
-// PUT ('/project/edit/:userid/:projectid')
+// PUT ('/project/:userid/:projectid')
 $('#rename_project').submit(function(evt){
    evt.preventDefault();
    var secret = JSON.parse((Cookies.get('LOKIDIED')));
@@ -226,19 +224,27 @@ $('#rename_project').submit(function(evt){
    if(typeof pid === "undefined") {
        alert("Please choose a project");
    }
-   var url = '/project/edit/' + uid + '/' + pid;
-   var formData = $(this).serialize();
+   var url = '/project/' + uid + '/' + pid;
+   var formData = JSON.parse($(this).serializeJSON());
+   console.log(typeof formData);
+   formData.description = "";
+   formData.size = 0;
+   console.log(formData);
    // start ajax
     $.ajax(url, {
-        data: formData,
+        data: JSON.stringify(formData),
         type: "PUT",
-        headers: {"Authorization": "Bearer " + token},
+        headers: { "Content-Type" : "application/json",
+            "Authorization": "Bearer " + token},
         success: function(project){
-            $('#' + pid + ' h4').eq(0).innerHTML(project.project_name);
+            console.log(project);
+            console.log($('#' + pid + ' h6').eq(0));
+            console.log(project.project_name);
+            $('#' + pid + ' h6').eq(0).html(project.project_name);
             $('#rename-project').modal('toggle');
         }
     }).fail(function(jqXHR){
-        alert(jqXHR.statusText);
+        alert(jqXHR.responseJSON.message);
     });// end ajax
 });
 
@@ -298,6 +304,6 @@ $('#delete_project').submit(function(evt){
             $('#delete-project').modal('toggle');
         }
     }).fail(function(jqXHR){
-        alert(jqXHR.statusText);
+        alert(jqXHR.responseJSON.message);
     });// end ajax
 });

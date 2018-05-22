@@ -376,24 +376,24 @@ function parseNode(node) {
 
 /*Add new goal by pressing "Enter" start*/
 document.onkeydown=function(event) {
-    var goalID;
-    var goalType;
-    //when the user press the "enter" button
-    if (document.activeElement.tagName === 'INPUT' && event.key === "Enter") {
-        //make the default enter invalid
-        goalType = document.activeElement.attributes['class'].nodeValue;
-        goalID = getID(goalType);
-        event.preventDefault();
-        var newlist = '<li id=L_"'+goalID+'"><input id="'+goalID+'" class="'+goalType+'" placeholder="New goal"/></li>';
-        if ($(event.target).parent().length > 0) {
-            var parent = $(event.target).parent();
-            parent.after(newlist);
+        var goalID;
+        var goalType;
+        //when the user press the "enter" button
+        if (document.activeElement.tagName === 'INPUT' && event.key === "Enter") {
+            //make the default enter invalid
+            goalType = document.activeElement.attributes['class'].nodeValue;
+            goalID = getID(goalType);
+            event.preventDefault();
+            var newlist = '<li id=L_"'+goalID+'"><input id="'+goalID+'" class="'+goalType+'" placeholder="New goal"/></li>';
+            if ($(event.target).parent().length > 0) {
+                var parent = $(event.target).parent();
+                parent.after(newlist);
+            }
+            else {
+                $(event.target).parent().after(newlist);
+            }
+            $('#'+goalID).focus();
         }
-        else {
-            $(event.target).parent().after(newlist);
-        }
-        $('#'+goalID).focus();
-    }
 };
 
 function getID(type) {
