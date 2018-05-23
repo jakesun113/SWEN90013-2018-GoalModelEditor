@@ -41,6 +41,6 @@ $('#login').submit(function(evt){
             window.location.href = '/dashboard';
         }
     }).fail(function(jqXHR){
-        alert(jqXHR.statusText);
+        alert(jqXHR.responseJSON.message);
     });// end ajax
 });// end submit

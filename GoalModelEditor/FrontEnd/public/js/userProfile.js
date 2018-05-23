@@ -57,7 +57,6 @@ $("#cancel1").click(function () {
 
     $("#title").html("<strong>Personal info</strong>");
 
-    $("#errmsg").hide();
 
     $("#fnametxt").val("");
     $("#lnametxt").val("");
@@ -92,7 +91,6 @@ $("#cancel2").click(function () {
 
     $("#title").html("<strong>Personal info</strong>");
 
-    $("#errmsg").hide();
 
     $("#orpwdtxt").val("");
     $("#newpwdtxt").val("");
@@ -143,9 +141,6 @@ $('#profile').validator().on('submit', function (evt) {
 
         $("#title").html("<strong>Personal info</strong>");
 
-        $("#errmsg").hide();
-
-
         $('#fnametxt').attr("readonly", "readonly");
         $('#lnametxt').attr("readonly", "readonly");
         $('#emailtxt').attr("readonly", "readonly");
@@ -172,7 +167,7 @@ $('#profile').validator().on('submit', function (evt) {
                 $('#email').val(result.email);
             }
         }).fail(function (jqXHR) {
-            alert(jqXHR.statusText + ". Please contact us.");
+            alert(jqXHR.responseJSON.message);
         });// end ajax
     }
 });
@@ -190,11 +185,10 @@ $('#pwdform').validator().on('submit', function (evt) {
 
         $("#title").html("<strong>Personal info</strong>");
 
-        $("#errmsg").hide();
 
-        $("#orpwdtxt").val("");
-        $("#newpwdtxt").val("");
-        $("#cfpwdtxt").val("");
+        $('#firstname').show();
+        $('#lastname').show();
+        $('#email').show();
 
         $('#fnametxt').attr("readonly", "readonly");
         $('#lnametxt').attr("readonly", "readonly");
@@ -209,7 +203,7 @@ $('#pwdform').validator().on('submit', function (evt) {
         var secret = JSON.parse((Cookies.get('LOKIDIED')));
         var token = secret.token;
         var id = secret.uid;
-        var url = '/user/profile/'+ id;
+        var url = '/user/cred/'+ id;
         $.ajax(url, {
             data: formData,
             type: "PUT",
@@ -219,7 +213,7 @@ $('#pwdform').validator().on('submit', function (evt) {
                 $("#notice").slideDown().delay(3000).slideUp();
             }
         }).fail(function (jqXHR) {
-            alert(jqXHR.statusText + ". Please contact us.");
+            alert(jqXHR.responseJSON.message);
         });// end ajax
     }
 });
