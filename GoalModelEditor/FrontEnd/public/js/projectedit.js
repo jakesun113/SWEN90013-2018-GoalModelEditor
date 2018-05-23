@@ -490,6 +490,17 @@ function hierachynextbtn() {
         b.innerHTML = "Back";
     }
 }
+
+// handle sign off button
+$('#signout').click(function (evt) {
+    evt.preventDefault();
+    Cookies.remove('LOKIDIED');
+    Cookies.remove('UIID');
+    Cookies.remove('MID');
+    Cookies.remove('PID');
+    window.location.href = '/';
+});
+
 /*Hide and show section end*/
 
 /*Get data from HTML to JSON start*/
