@@ -15,7 +15,7 @@ var dbModule = require('./DBModule');
 //     console.log(err);
 // });
 
-dbModule.updateGoalModel("07b26013-5266-11e8-8c21-02388973fed8", "DDSB", "mymodelDescription", "aaa").then(res => {
+dbModule.getGoalModelList('0aa452d7-4b67-11e8-8c21-02388973fed8', '').then(res => {
     console.log(JSON.stringify(res));
 
 }).catch(err => {

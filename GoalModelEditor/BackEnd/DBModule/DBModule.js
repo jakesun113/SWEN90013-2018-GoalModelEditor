@@ -44,7 +44,7 @@ const SQL_CREATE_PROJ = "INSERT INTO " +
 const SQL_RET_GOALMODEL_OF_PROJ = "SELECT ModelName " +
     "FROM Project LEFT JOIN GoalModel\n" +
     "ON Project.ProjectId = GoalModel.ProjectId\n" +
-    "WHERE Project.ProjectId = ?;";
+    "WHERE Project.ProjectId = ?";
 /**
  * The SQL sentence to create a goalmodel
  * @type {string}
@@ -122,12 +122,17 @@ const SQL_DELETE_PROJECT = "DELETE FROM Project WHERE ProjectId = ?";
  * DBModule
  * @returns {{DBModule}}
  */
+
+const SQL_CHECK_PRIORITY_ON_PROJECT = "SELECT Priority FROM GoalModel_A.User_Project " +
+    "WHERE UserId = ? AND ProjectId = ?";
 const DBModule = function () {
     let DBModule = {};
     DBModule.SUCCESS = 1;
     DBModule.ALREADY_EXIST = 0;
     DBModule.INVALID = "";
     DBModule.UNKNOWN_ERROR = -1;
+    DBModule.ACCESS_DENIED = -2;
+    DBModule.MESSAGE_ACCESS_DENIED = "You don\'t have the right to do so. Please contact your project manager.";
 
     pool = mysql.createPool(dbconfig);
 
@@ -282,20 +287,53 @@ const DBModule = function () {
         });
     };
 
+    // /**
+    //  * Load the goalmodel names under a given project.WARNING: Unsafe, just for reference
+    //  * @param ProjectId
+    //  */
+    // DBModule.getGoalModelListUnsafe = function (ProjectId) {
+    //     throw "Unsafe method";
+    //     return new Promise(function (resolve, reject) {
+    //         pool.query(
+    //             SQL_RET_GOALMODEL_OF_PROJ,
+    //             [ProjectId], function (err, result) {
+    //                 if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+    //                 resolve(result);
+    //             });
+    //     });
+    // };
+
     /**
-     * Load the goalmodel names under a given project.
+     * checks the user priority and load the goal models under a given project.
+     * @param UserId
      * @param ProjectId
      */
-    DBModule.getGoalModelList = function (ProjectId) {
-        return new Promise(function (resolve, reject) {
-            pool.query(
-                SQL_RET_GOALMODEL_OF_PROJ,
-                [ProjectId], function (err, result) {
-                    if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
-                    resolve(result);
+    DBModule.getGoalModelList = function (UserId, ProjectId) {
+        return new Promise((resolve, reject) => {
+            pool.getConnection(function (err, connection) {
+                connection.query(SQL_CHECK_PRIORITY_ON_PROJECT, [UserId, ProjectId], (err, result) => {
+                    if (err) {// network connection or other errors
+                        connection.release();
+                        return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                    }
+                    if (result.length === 0) {
+                        // No priority on the project
+                        connection.release();
+                        return reject({code: DBModule.ACCESS_DENIED, message: DBModule.MESSAGE_ACCESS_DENIED});
+                    } else if (result.length === 1) {
+                        connection.query(
+                            SQL_RET_GOALMODEL_OF_PROJ,
+                            [ProjectId], function (err, result) {
+                                connection.release();
+                                if (err) return reject({code: DBModule.UNKNOWN_ERROR, message: err.sqlMessage});
+                                resolve(result);
+                            });
+                    }
                 });
+
+            });
         });
-    };
+    }
 
     /**
      * get a peoject by its id.
