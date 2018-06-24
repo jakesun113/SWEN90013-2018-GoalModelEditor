@@ -15,11 +15,42 @@ var dbModule = require('./DBModule');
 //     console.log(err);
 // });
 
-dbModule.getGoalModelList('0aa452d7-4b67-11e8-8c21-02388973fed8', '').then(res => {
-    console.log(JSON.stringify(res));
+// dbModule.getGoalModelList('uid', 'pid11').then(res => {
+//     console.log(JSON.stringify(res));
+//
+// }).catch(err => {
+//     console.log(err);
+// });
 
+// test code for updateProject function:
+// dbModule.updateProject('uid', 'pid', 'projectName', 'projectDescription', '9').then(res => {
+//     console.log(JSON.stringify(res));
+//
+// }).catch(err => {
+//     console.log(err);
+// });
+
+//test code for updateGoalModel function:
+// dbModule.updateGoalModel('uid11', 'mid', 'modelName', 'modelDescription','filePath').then(res => {
+//     console.log(JSON.stringify(res));
+//
+// }).catch(err => {
+//     console.log(err);
+// });
+
+//test code for deleting GoalModel (return "1" if success)
+// dbModule.deleteGoalModel('uid', 'mid').then(res => {
+//     console.log(JSON.stringify(res));
+// }).catch(err => {
+//     console.log(err);
+// });
+
+//test code for deleting Project(return "1" if success)
+dbModule.deleteProject ('uid', 'pid2').then(res => {
+    console.log(JSON.stringify(res));
 }).catch(err => {
     console.log(err);
 });
+
 
 // dbModule.login().then();

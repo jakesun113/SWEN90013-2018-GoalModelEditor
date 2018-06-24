@@ -76,7 +76,7 @@ const SQL_GET_GOALMODEL_BY_ID = "SELECT GoalModel.*, Project.OwnerId " +
  * @type {string}
  */
 const SQL_UPDATE_PROJECT = "UPDATE Project " +
-    "SET ProjectName = ?, ProjectDescription = ?, size = ?, " +
+    "SET ProjectName = ?, ProjectDescription = ?, size = ? " +
     "WHERE ProjectId = ?";
 /**
  * Update a goal model
