@@ -9,7 +9,7 @@ const router = express.Router();
 
 // security related imports
 const auth = require("../authen");
-const db = require("../dbConn");
+const db = require("../DBModule/DBModule.js");
 
 // response codes
 const response_codes = require("./response_codes");
@@ -60,7 +60,7 @@ router.get("/list/:userId", (req, res, next) => {
         return res.end();
     }).catch(err => {
         res.statusCode = 500;
-        res.json({message: 'Failed to create new project'})
+        res.json({message: 'Failed to create new project: ' + err.message})
         return res.end();
     });
 
@@ -68,7 +68,7 @@ router.get("/list/:userId", (req, res, next) => {
 
 
 /* POST Create Project */
-router.post("/create/:userId", function(req, res, next){
+router.post("/:userId", function(req, res, next){
 
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
@@ -88,14 +88,14 @@ router.post("/create/:userId", function(req, res, next){
         return res.end();
     }).catch(err => {
         res.statusCode = 500;
-        res.json({message: 'Failed to create new project'});
+        res.json({message: 'Failed to create new project: ' + err.message});
         return res.end();
     });
 });
 
 
 /* POST Edit Project */
-router.put("/edit/:userId/:projectId", (req, res, next) => {
+router.put("/:userId/:projectId", (req, res, next) => {
 
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
@@ -104,24 +104,42 @@ router.put("/edit/:userId/:projectId", (req, res, next) => {
         return res.end();
     }
 
-    // edit project
-    db.updateProject(req.body.project_name, req.body.description, req.body.size,
-        req.params.userId, req.params.projectId).then((result)=>{
-        console.log(result);
-        if(result != db.UNKNOWN_ERROR) {
-            res.statusCode = 200;
-            res.json(result);
-        } else {
-            res.statusCode = 500;
-            res.json({message: 'Failed to update project'})
+    // get the old project info
+    db.getProject(req.params.projectId).then((result)=>{
+        if (result.OwnerId != req.params.userId) {
+            res.statusCode = 403;
+            res.json({message: "Failed to edit the project: user does not have the authority"});
+            return res.end();
         }
+
+        // edit project
+        db.updateProject(req.params.projectId, req.body.project_name, req.body.description,
+            req.body.size).then((result)=>{
+            console.log(result);
+            res.statusCode = 200;
+            res.json({
+                owner: result.OwnerId,
+                project_id: result.ProjectId,
+                project_name: result.ProjectName,
+                description: result.Description
+            });
+            return res.end();
+        }).catch(err => {
+            res.statusCode = 500;
+            res.json({message: 'Failed to update project: ' + err.message});
+            return res.end();
+        });
+    }).catch(err => {
+        res.statusCode = 404;
+        res.json({message: "Failed to get the old project information: " + err.message});
         return res.end();
     });
+
 });
 
 
 /* DELETE Delete Project */
-router.delete("/delete/:userId/:projectId", (req, res, next) => {
+router.delete("/:userId/:projectId", (req, res, next) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
@@ -129,15 +147,28 @@ router.delete("/delete/:userId/:projectId", (req, res, next) => {
         res.end();
     }
 
-    // delete project
-    db.deleteProject(req.params.userId, req.params.projectId).then((result)=>{
-        console.log(result);
-        if(result != db.UNKNOWN_ERROR) {
-            res.statusCode = 204;
-        } else {
-            res.statusCode = 500;
-            res.json({message: 'Failed to delete project'})
+    // get the old project info
+    db.getProject(req.params.projectId).then((result)=>{
+        if (result.OwnerId != req.params.userId) {
+            res.statusCode = 403;
+            res.json({message: "Failed to delete the project: user does not have the authority"});
+            return res.end();
         }
+
+        // delete project
+        db.deleteProject(req.params.projectId).then((result)=>{
+            console.log(result);
+            res.statusCode = 204;
+            return res.end();
+        }).catch(err => {
+            res.statusCode = 500;
+            res.json({message: 'Failed to delete project: ' + err.message});
+            return res.end();
+        });
+    }).catch(err => {
+        res.statusCode = 404;
+        res.json({message: "Failed to get the old project information: " + err.message});
+        return res.end();
     });
 });
 

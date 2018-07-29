@@ -99,7 +99,7 @@ $('#register').submit(function(evt){
         if(jqXHR.statusText === 'OK'){
             window.location.href = '/login';
         } else {
-            alert(jqXHR.statusText);
+            alert(jqXHR.responseJSON.message);
         }
     });// end ajax
 });// end submit

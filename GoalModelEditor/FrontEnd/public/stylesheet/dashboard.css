@@ -1,7 +1,7 @@
 /* header style */
 header {
     box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .5);
-    background-image: url('https://picsum.photos/3000/200?random');
+    background-image: url('/img/profile-background.jpg');
 }
 
 /* color of the text */
@@ -39,19 +39,23 @@ main {
 
 /* project img */
 .project-icon {
-    height: 15vh;
+    height: 100px;
+    max-height: 30vh;
     width: auto;
-    opacity: 1;
+    max-width: 25vw;
     margin: 1.25rem;
+    opacity: 1;
 }
 
 /* project block */
 .project {
-    padding: 2rem 5rem;
+    padding: 0 10px 0 0;
     display: inline-block;
+    height: 300px;
     max-height: 30vh;
     width: 33%;
-    overflow: scroll;
+    max-width: 30vw;
+    overflow-y: hidden;
     position: relative;
 }
 
@@ -68,6 +72,7 @@ main {
     overflow-y: scroll;
     overflow-x: hidden;
     border-bottom: 1px solid white;
+    padding: 0;
 }
 
 /* hover on project
@@ -92,6 +97,7 @@ main {
 
 .project:hover .goal-list {
     opacity: 1;
+    display: inline-block;
 }
 
 .project .goal-model{
@@ -103,11 +109,18 @@ main {
 }
 
 .project .create-goal-model {
-    display: none;
+    opacity: 0;
+}
+
+.project:hover h6 {
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    height: 10%;
 }
 
 .project:hover .create-goal-model {
-    display: block;
+    height: 10%;
+    opacity: 1;
 }
 
 .goal-model:hover {

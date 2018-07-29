@@ -1,4 +1,8 @@
-
+/*
+    This is test for user api
+    All tests goals have been listed in the code
+    Before test function
+*/
 const supertest = require("supertest");
 const should = require("should");
 

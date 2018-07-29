@@ -8,9 +8,23 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
     <title>User Profile</title>
+    <style>
+        #bg {
+            /* The image used */
+            background-image: url("/img/profile-background.jpg");
+
+            /* Full height */
+            height: 100%;
+
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
 </head>
-<body>
-<div class="container mt-5">
+<body id="bg">
+<div class="container mt-5" style="height: 85vh">
     <div class="row ">
         <div class="col-md-3">
         </div>
@@ -21,7 +35,7 @@
                 <i class="fa fa-coffee"></i>
                 Successfully changed the password.
             </div>
-            <h3 id="title">Personal info</h3>
+            <h2 id="title"><strong>Personal info</strong></h2>
 
             <!--profile form, add validation-->
             <form class="form-horizontal" data-toggle="validator" role="form" id="profile" action="/user/profile"
@@ -32,49 +46,66 @@
                         <input class="form-control" type="text" id="usernametext">
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="firstname" >
                     <label class="col-lg-3 control-label">First name:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="text" id="firstname" required>
+                        <input class="form-control" type="text" pattern="^[_A-z]{1,}$" name="firstname"
+                               id="fnametxt" required
+                               data-pattern-error="Alphabet characters only for this field">
                         <!--show error message-->
                         <div class="help-block with-errors"></div>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="lastname">
                     <label class="col-lg-3 control-label">Last name:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="text" id="lastname" required>
+                        <input class="form-control" type="text" pattern="^[_A-z]{1,}$" name="lastname"
+                               id="lnametxt" required
+                               data-pattern-error="Alphabet characters only for this field">
                         <div class="help-block with-errors"></div>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="email">
                     <label class="col-lg-3 control-label">Email:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="email" id="email" required>
+                        <input class="form-control" type="email" name="email"
+                               id="emailtxt" required>
                         <div class="help-block with-errors"></div>
                     </div>
                 </div>
-                <div class="form-group" id="orpwd" style="display:none">
+                <label class="col-md-3 control-label"></label>
+                <div class="col-md-8">
+                    <input class="btn btn-primary" type="button" id="edit" value="Edit Profile">
+                    <input class="btn btn-primary" type="button" id="changepwd" value="Change Password">
+                    <a class="btn btn-secondary" href="/dashboard" role="button" id="return">Return</a>
+                    <input class="btn btn-primary" type="submit" id="confirm1" style="display:none" value="Confirm">
+                    <input class="btn btn-default" type="button" id="cancel1" style="display:none" value="Cancel">
+                </div>
+            </form>
+            <!--change password form, add validation-->
+            <form class="form-horizontal" data-toggle="validator" role="form" id="pwdform" style="display:none" action="/user/profile"
+                  method="post">
+                <div class="form-group" id="orpwd">
                     <label class="col-md-3 control-label">Original password:</label>
                     <div class="col-md-8">
                         <input class="form-control" type="password" id="orpwdtxt"
-                               data-minlength="6"
+                               data-minlength="6" name="old_password"
                                data-minlength-error="Your password must be at least 6 characters long"
                                maxlength="20" required>
                         <div class="help-block with-errors"></div>
                     </div>
                 </div>
-                <div class="form-group" id="newpwd" style="display:none">
+                <div class="form-group" id="newpwd">
                     <label class="col-md-3 control-label">New password:</label>
                     <div class="col-md-8">
                         <input class="form-control" type="password" id="newpwdtxt"
-                               data-minlength="6"
+                               data-minlength="6" name="new_password"
                                data-minlength-error="Your password must be at least 6 characters long"
                                maxlength="20" required>
                         <div class="help-block with-errors"></div>
                     </div>
                 </div>
-                <div class="form-group" id="cfpwd" style="display:none">
+                <div class="form-group" id="cfpwd">
                     <label class="col-md-3 control-label">Confirm new password:</label>
                     <div class="col-md-8">
                         <!--confirm password should be the same as the new password-->
@@ -88,15 +119,19 @@
                 </div>
                 <label class="col-md-3 control-label"></label>
                 <div class="col-md-8">
-                    <input class="btn btn-primary" type="button" id="edit" value="Edit">
-                    <a class="btn btn-secondary" href="/user/myfile" role="button" id="return">Return</a>
-                    <input class="btn btn-primary" type="submit" id="confirm" style="display:none" value="Confirm">
-                    <input class="btn btn-default" type="button" id="cancel" style="display:none" value="Cancel">
+                    <input class="btn btn-primary" type="submit" id="confirm2" value="Confirm">
+                    <input class="btn btn-default" type="button" id="cancel2" value="Cancel">
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+<footer class="mastfoot">
+    <div class="inner">
+        <p class="text-center">&copy;<em>2018 The University of Melbourne</em></p>
+    </div>
+</footer>
 
 </body>
 
@@ -106,12 +141,10 @@
         crossorigin="anonymous"></script>
 <!--add bootstrap validator library-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.js"></script>
+<!--add cookie library-->
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <!--load javascript file-->
 <script src="/js/userProfile.js"></script>
 
-<footer class="mastfoot mt-auto">
-    <div class="inner">
-        <p class="text-center">&copy;<em>2018 The University of Melbourne</em></p>
-    </div>
-</footer>
+
 </html>

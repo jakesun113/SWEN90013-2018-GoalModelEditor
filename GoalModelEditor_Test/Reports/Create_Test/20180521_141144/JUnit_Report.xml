@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Create_Test" time="151" tests="1" failures="0" errors="0">
+   <testsuite name="Create_Test" tests="1" failures="0" errors="0" time="151" timestamp="2018-05-21 14:11:45" hostname="edric.dang - 10.0.0.3" id="Test Suites/Create_Test">
+      <properties>
+         <property name="deviceName" value=""/>
+         <property name="devicePlatform" value=""/>
+         <property name="logFolder" value="/Users/edric.dang/Desktop/swen90013-2018-go/GoalModelEditor_Test/Reports/Create_Test/20180521_141144"/>
+         <property name="logFiles" value="/Users/edric.dang/Desktop/swen90013-2018-go/GoalModelEditor_Test/Reports/Create_Test/20180521_141144/execution0.log"/>
+         <property name="attachments" value=""/>
+         <property name="hostName" value="edric.dang - 10.0.0.3"/>
+         <property name="os" value="Mac OS X 64bit"/>
+         <property name="katalonVersion" value="5.4.1.1"/>
+         <property name="browser" value="Chrome 66.0.3359.181"/>
+         <property name="hostAddress" value="10.0.0.3"/>
+         <property name="sessionId" value="b11e02ab75082857387d4a5541dc01fd"/>
+         <property name="seleniumVersion" value="3.7.1"/>
+         <property name="proxyInformation" value="ProxyInformation{proxyOption=NO_PROXY, proxyServerType=HTTP, password=, proxyServerAddress=, proxyServerPort=0}"/>
+         <property name="platform" value="Mac OS X"/>
+      </properties>
+      <testcase name="Test Cases/Create_Project_Goal_Model_Test" classname="Test Cases/Create_Project_Goal_Model_Test" status="PASSED">
+         <system-out><![CDATA[2018-05-21 14:11:45 - [TEST_CASE][PASSED] - Test Cases/Create_Project_Goal_Model_Test: Test Cases/Create_Project_Goal_Model_Test
+
+2018-05-21 14:11:46 - [TEST_STEP][PASSED] - openBrowser: Browser is opened with url: ''
+
+2018-05-21 14:11:47 - [MESSAGE][PASSED] - Browser is opened with url: ''
+
+2018-05-21 14:11:47 - [TEST_STEP][PASSED] - navigateToUrl: Navigate to 'https://localhost:8080/' successfully
+
+2018-05-21 14:11:48 - [MESSAGE][PASSED] - Navigate to 'https://localhost:8080/' successfully
+
+2018-05-21 14:11:48 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Editor (3)/a_Go to Goal Model Editor' is clicked on
+
+2018-05-21 14:12:05 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Editor (3)/a_Go to Goal Model Editor' is clicked on
+
+2018-05-21 14:12:05 - [TEST_STEP][PASSED] - setText: Text 'username4' is set on object 'Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_username'
+
+2018-05-21 14:12:06 - [MESSAGE][PASSED] - Text 'username4' is set on object 'Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_username'
+
+2018-05-21 14:12:06 - [TEST_STEP][PASSED] - setText: Text '1234' is set on object 'Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_password'
+
+2018-05-21 14:12:06 - [MESSAGE][PASSED] - Text '1234' is set on object 'Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_password'
+
+2018-05-21 14:12:06 - [TEST_STEP][PASSED] - sendKeys: Keys 'ENTER + ' sent to object: 'Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_password'
+
+2018-05-21 14:12:06 - [MESSAGE][PASSED] - Keys 'ENTER + ' sent to object: 'Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_password'
+
+2018-05-21 14:12:06 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (3)/button_username4' is clicked on
+
+2018-05-21 14:12:06 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (3)/button_username4' is clicked on
+
+2018-05-21 14:12:06 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (3)/a_Sign out' is clicked on
+
+2018-05-21 14:12:06 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (3)/a_Sign out' is clicked on
+
+2018-05-21 14:12:06 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Editor (3)/a_Go to Goal Model Editor' is clicked on
+
+2018-05-21 14:12:07 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Editor (3)/a_Go to Goal Model Editor' is clicked on
+
+2018-05-21 14:12:07 - [TEST_STEP][PASSED] - setText: Text 'u' is set on object 'Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_username'
+
+2018-05-21 14:12:07 - [MESSAGE][PASSED] - Text 'u' is set on object 'Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_username'
+
+2018-05-21 14:12:07 - [TEST_STEP][PASSED] - setText: Text 'username4' is set on object 'Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_username'
+
+2018-05-21 14:12:07 - [MESSAGE][PASSED] - Text 'username4' is set on object 'Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_username'
+
+2018-05-21 14:12:07 - [TEST_STEP][PASSED] - setText: Text '1234' is set on object 'Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_password'
+
+2018-05-21 14:12:07 - [MESSAGE][PASSED] - Text '1234' is set on object 'Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_password'
+
+2018-05-21 14:12:07 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/label_Remember me (1)' is clicked on
+
+2018-05-21 14:12:07 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/label_Remember me (1)' is clicked on
+
+2018-05-21 14:12:07 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/button_Sign in (1)' is clicked on
+
+2018-05-21 14:12:07 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/button_Sign in (1)' is clicked on
+
+2018-05-21 14:12:07 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (3)/button_New Project' is clicked on
+
+2018-05-21 14:12:08 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (3)/button_New Project' is clicked on
+
+2018-05-21 14:12:08 - [TEST_STEP][PASSED] - waitForElementVisible: Object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name' is visible
+
+2018-05-21 14:12:08 - [MESSAGE][PASSED] - Object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name' is visible
+
+2018-05-21 14:12:08 - [TEST_STEP][PASSED] - setText: Text 'hahaha' is set on object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name'
+
+2018-05-21 14:12:08 - [MESSAGE][PASSED] - Text 'hahaha' is set on object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name'
+
+2018-05-21 14:12:08 - [TEST_STEP][PASSED] - clearText: Text of object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name' is cleared
+
+2018-05-21 14:12:08 - [MESSAGE][PASSED] - Text of object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name' is cleared
+
+2018-05-21 14:12:08 - [TEST_STEP][PASSED] - mouseOver: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/label_Project Name' is hovered
+
+2018-05-21 14:12:08 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/label_Project Name' is hovered
+
+2018-05-21 14:12:08 - [TEST_STEP][PASSED] - setText: Text 'New_Project_Name_Test' is set on object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/input_project_name'
+
+2018-05-21 14:12:08 - [MESSAGE][PASSED] - Text 'New_Project_Name_Test' is set on object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/input_project_name'
+
+2018-05-21 14:12:08 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/div_Project Name (1)' is clicked on
+
+2018-05-21 14:12:09 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/div_Project Name (1)' is clicked on
+
+2018-05-21 14:12:09 - [TEST_STEP][PASSED] - setText: Text 'New_Goal_Model_Name_Test' is set on object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/input_model_name (1)'
+
+2018-05-21 14:12:09 - [MESSAGE][PASSED] - Text 'New_Goal_Model_Name_Test' is set on object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/input_model_name (1)'
+
+2018-05-21 14:12:09 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/button_CREATE (1)' is clicked on
+
+2018-05-21 14:12:09 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/button_CREATE (1)' is clicked on
+
+2018-05-21 14:12:09 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/div_New_Goal_Model_Name_Test (1)' is clicked on
+
+2018-05-21 14:12:10 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/div_New_Goal_Model_Name_Test (1)' is clicked on
+
+2018-05-21 14:12:10 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Edit Page (1)/strong_Goal Model (1)' is clicked on
+
+2018-05-21 14:12:10 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Edit Page (1)/strong_Goal Model (1)' is clicked on
+
+2018-05-21 14:12:10 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Edit Page (1)/a_Return (1)' is clicked on
+
+2018-05-21 14:12:10 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Edit Page (1)/a_Return (1)' is clicked on
+
+2018-05-21 14:12:10 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (3)/button_New Project' is clicked on
+
+2018-05-21 14:12:10 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (3)/button_New Project' is clicked on
+
+2018-05-21 14:12:10 - [TEST_STEP][PASSED] - waitForElementVisible: Object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name' is visible
+
+2018-05-21 14:12:11 - [MESSAGE][PASSED] - Object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name' is visible
+
+2018-05-21 14:12:11 - [TEST_STEP][PASSED] - setText: Text 'hahaha' is set on object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name'
+
+2018-05-21 14:12:11 - [MESSAGE][PASSED] - Text 'hahaha' is set on object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name'
+
+2018-05-21 14:12:11 - [TEST_STEP][PASSED] - clearText: Text of object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name' is cleared
+
+2018-05-21 14:12:11 - [MESSAGE][PASSED] - Text of object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name' is cleared
+
+2018-05-21 14:12:11 - [TEST_STEP][PASSED] - mouseOver: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/label_Project Name' is hovered
+
+2018-05-21 14:12:11 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/label_Project Name' is hovered
+
+2018-05-21 14:12:11 - [TEST_STEP][PASSED] - setText: Text 'New_Project_Name_Test' is set on object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/input_project_name'
+
+2018-05-21 14:12:11 - [MESSAGE][PASSED] - Text 'New_Project_Name_Test' is set on object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/input_project_name'
+
+2018-05-21 14:12:11 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/div_Project Name (1)' is clicked on
+
+2018-05-21 14:12:11 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/div_Project Name (1)' is clicked on
+
+2018-05-21 14:12:11 - [TEST_STEP][PASSED] - setText: Text 'New_Goal_Model_Name_Test' is set on object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/input_model_name (1)'
+
+2018-05-21 14:12:11 - [MESSAGE][PASSED] - Text 'New_Goal_Model_Name_Test' is set on object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/input_model_name (1)'
+
+2018-05-21 14:12:11 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/button_CREATE (1)' is clicked on
+
+2018-05-21 14:12:11 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/button_CREATE (1)' is clicked on
+
+2018-05-21 14:12:11 - [TEST_STEP][PASSED] - waitForAlert: Alert is present after 30 second(s).
+
+2018-05-21 14:12:11 - [MESSAGE][WARNING] - Timeout '0' is invalid. Using default page load timeout: '30'
+
+2018-05-21 14:12:12 - [MESSAGE][PASSED] - Alert is present after 30 second(s).
+
+2018-05-21 14:12:12 - [TEST_STEP][PASSED] - acceptAlert: Alert accepted
+
+2018-05-21 14:12:12 - [MESSAGE][PASSED] - Alert accepted
+
+2018-05-21 14:12:12 - [TEST_STEP][PASSED] - mouseOver: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (5)/button_CANCEL' is hovered
+
+2018-05-21 14:12:12 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (5)/button_CANCEL' is hovered
+
+2018-05-21 14:12:12 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (5)/button_CANCEL' is clicked on
+
+2018-05-21 14:12:12 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (5)/button_CANCEL' is clicked on
+
+2018-05-21 14:12:12 - [TEST_STEP][PASSED] - mouseOver: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test' is hovered
+
+2018-05-21 14:12:12 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test' is hovered
+
+2018-05-21 14:12:12 - [TEST_STEP][PASSED] - waitForElementHasAttribute: Object 'Object Repository/rename-project' does not have attribute ''
+
+2018-05-21 14:12:12 - [MESSAGE][WARNING] - Timeout '0' is invalid. Using default page load timeout: '30'
+
+2018-05-21 14:12:42 - [MESSAGE][WARNING] - Object 'Object Repository/rename-project' does not have attribute ''
+
+2018-05-21 14:12:42 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/rename-project' is clicked on
+
+2018-05-21 14:12:42 - [MESSAGE][PASSED] - Object: 'Object Repository/rename-project' is clicked on
+
+2018-05-21 14:12:42 - [TEST_STEP][PASSED] - waitForElementVisible: Object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name' is visible
+
+2018-05-21 14:12:43 - [MESSAGE][PASSED] - Object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name' is visible
+
+2018-05-21 14:12:43 - [TEST_STEP][PASSED] - focus: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name' is focused
+
+2018-05-21 14:12:43 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name' is focused
+
+2018-05-21 14:12:43 - [TEST_STEP][PASSED] - clearText: Text of object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name' is cleared
+
+2018-05-21 14:12:43 - [MESSAGE][PASSED] - Text of object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name' is cleared
+
+2018-05-21 14:12:43 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (13)/button_CANCEL' is clicked on
+
+2018-05-21 14:12:43 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (13)/button_CANCEL' is clicked on
+
+2018-05-21 14:12:43 - [TEST_STEP][PASSED] - mouseOver: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test' is hovered
+
+2018-05-21 14:12:43 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test' is hovered
+
+2018-05-21 14:12:43 - [TEST_STEP][PASSED] - waitForElementAttributeValue: Object 'Object Repository/rename-project' does not have attribute '' with value ''
+
+2018-05-21 14:12:43 - [MESSAGE][WARNING] - Timeout '0' is invalid. Using default page load timeout: '30'
+
+2018-05-21 14:13:13 - [MESSAGE][WARNING] - Object 'Object Repository/rename-project' does not have attribute '' with value ''
+
+2018-05-21 14:13:13 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/rename-project' is clicked on
+
+2018-05-21 14:13:13 - [MESSAGE][PASSED] - Object: 'Object Repository/rename-project' is clicked on
+
+2018-05-21 14:13:13 - [TEST_STEP][PASSED] - waitForElementVisible: Object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name' is visible
+
+2018-05-21 14:13:13 - [MESSAGE][WARNING] - Timeout '0' is invalid. Using default page load timeout: '30'
+
+2018-05-21 14:13:14 - [MESSAGE][PASSED] - Object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name' is visible
+
+2018-05-21 14:13:14 - [TEST_STEP][PASSED] - focus: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name' is focused
+
+2018-05-21 14:13:14 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name' is focused
+
+2018-05-21 14:13:14 - [TEST_STEP][PASSED] - setText: Text 'New_Model_Add_Test' is set on object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name'
+
+2018-05-21 14:13:14 - [MESSAGE][PASSED] - Text 'New_Model_Add_Test' is set on object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name'
+
+2018-05-21 14:13:14 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (13)/button_CREATE' is clicked on
+
+2018-05-21 14:13:14 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (13)/button_CREATE' is clicked on
+
+2018-05-21 14:13:14 - [TEST_STEP][PASSED] - mouseOver: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test' is hovered
+
+2018-05-21 14:13:14 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test' is hovered
+
+2018-05-21 14:13:14 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (14)/div_New_Model_Add_Test' is clicked on
+
+2018-05-21 14:13:15 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (14)/div_New_Model_Add_Test' is clicked on
+
+2018-05-21 14:13:15 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Edit Page (3)/a_Return' is clicked on
+
+2018-05-21 14:13:15 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Edit Page (3)/a_Return' is clicked on
+
+2018-05-21 14:13:15 - [TEST_STEP][PASSED] - mouseOver: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test' is hovered
+
+2018-05-21 14:13:15 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test' is hovered
+
+2018-05-21 14:13:15 - [TEST_STEP][PASSED] - waitForElementHasAttribute: Object 'Object Repository/CreateProjectGoalModelSeries/rename-project1' does not have attribute ''
+
+2018-05-21 14:13:15 - [MESSAGE][WARNING] - Timeout '0' is invalid. Using default page load timeout: '30'
+
+2018-05-21 14:13:45 - [MESSAGE][WARNING] - Object 'Object Repository/CreateProjectGoalModelSeries/rename-project1' does not have attribute ''
+
+2018-05-21 14:13:45 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/CreateProjectGoalModelSeries/rename-project1' is clicked on
+
+2018-05-21 14:13:45 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/rename-project1' is clicked on
+
+2018-05-21 14:13:45 - [TEST_STEP][PASSED] - waitForElementVisible: Object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/input_project_name' is visible
+
+2018-05-21 14:13:45 - [MESSAGE][WARNING] - Timeout '0' is invalid. Using default page load timeout: '30'
+
+2018-05-21 14:13:46 - [MESSAGE][PASSED] - Object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/input_project_name' is visible
+
+2018-05-21 14:13:46 - [TEST_STEP][PASSED] - focus: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/input_project_name' is focused
+
+2018-05-21 14:13:46 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/input_project_name' is focused
+
+2018-05-21 14:13:46 - [TEST_STEP][PASSED] - setText: Text 'Project_Rename_Test' is set on object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/input_project_name'
+
+2018-05-21 14:13:46 - [MESSAGE][PASSED] - Text 'Project_Rename_Test' is set on object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/input_project_name'
+
+2018-05-21 14:13:46 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/button_Confirm' is clicked on
+
+2018-05-21 14:13:46 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/button_Confirm' is clicked on
+
+2018-05-21 14:13:46 - [TEST_STEP][PASSED] - mouseOver: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test' is hovered
+
+2018-05-21 14:13:46 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test' is hovered
+
+2018-05-21 14:13:46 - [TEST_STEP][PASSED] - waitForElementHasAttribute: Object 'Object Repository/CreateProjectGoalModelSeries/delete-project' does not have attribute ''
+
+2018-05-21 14:13:46 - [MESSAGE][WARNING] - Timeout '0' is invalid. Using default page load timeout: '30'
+
+2018-05-21 14:14:16 - [MESSAGE][WARNING] - Object 'Object Repository/CreateProjectGoalModelSeries/delete-project' does not have attribute ''
+
+2018-05-21 14:14:16 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/CreateProjectGoalModelSeries/delete-project' is clicked on
+
+2018-05-21 14:14:16 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/delete-project' is clicked on
+
+2018-05-21 14:14:16 - [TEST_STEP][PASSED] - mouseOver: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/lable_You would lose all goal' is hovered
+
+2018-05-21 14:14:16 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/lable_You would lose all goal' is hovered
+
+2018-05-21 14:14:16 - [TEST_STEP][PASSED] - waitForElementPresent: Object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (18)/button_Confirm' is present
+
+2018-05-21 14:14:16 - [MESSAGE][PASSED] - Object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (18)/button_Confirm' is present
+
+2018-05-21 14:14:16 - [TEST_STEP][PASSED] - focus: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (18)/button_Confirm' is focused
+
+2018-05-21 14:14:16 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (18)/button_Confirm' is focused
+
+2018-05-21 14:14:16 - [TEST_STEP][PASSED] - waitForElementClickable: Object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (18)/button_Confirm' is clickable
+
+2018-05-21 14:14:16 - [MESSAGE][WARNING] - Timeout '0' is invalid. Using default page load timeout: '30'
+
+2018-05-21 14:14:17 - [MESSAGE][PASSED] - Object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (18)/button_Confirm' is clickable
+
+2018-05-21 14:14:17 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (18)/button_Confirm' is clicked on
+
+2018-05-21 14:14:17 - [MESSAGE][PASSED] - Object: 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (18)/button_Confirm' is clicked on
+
+2018-05-21 14:14:17 - [TEST_STEP][PASSED] - verifyElementNotVisible: Object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test' is NOT visible
+
+2018-05-21 14:14:17 - [MESSAGE][PASSED] - Object 'Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test' is NOT visible
+
+2018-05-21 14:14:17 - [TEST_STEP][PASSED] - closeBrowser: Browser is closed
+
+2018-05-21 14:14:17 - [MESSAGE][PASSED] - Browser is closed]]></system-out>
+         <system-err><![CDATA[]]></system-err>
+      </testcase>
+      <system-out><![CDATA[2018-05-21 14:11:45 - [TEST_SUITE][PASSED] - Create_Test: Test Cases/Create_Project_Goal_Model_Test]]></system-out>
+      <system-err><![CDATA[]]></system-err>
+   </testsuite>
+</testsuites>
