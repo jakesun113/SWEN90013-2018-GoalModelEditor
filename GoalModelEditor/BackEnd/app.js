@@ -16,7 +16,7 @@ const logger = require('morgan');
 const path = require('path');
 
 // database connection
-const database = require('./dbConn.js');
+const database = require('./DBModule/DBModule.js');
 
 // routes to endpoints
 const indexRouter = require('./routes/index');

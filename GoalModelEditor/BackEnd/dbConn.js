@@ -2,6 +2,13 @@
 const mysql = require('mysql');
 const Promise = require('bluebird');
 
+/*const dbconf = {
+    host    : 'localhost',
+    user    : 'root',
+    password: 'Success68',
+    database: 'goalmodel'
+};*/
+
 const dbconf = {
     connectionLimit: 100,
     host: 'ec2-52-65-15-37.ap-southeast-2.compute.amazonaws.com',
@@ -88,7 +95,7 @@ dbConn.createProject = function (ProjectName, ProjectDescription, Size, UserId) 
             SQL_Project_Creation,
             [ProjectName, ProjectDescription, Size, UserId], function (err, result) {
                 if (err) {
-                    console.log(JSON.stringify(err));
+                    //console.log(JSON.stringify(err));
                     if (err.errno == 1062) {// MYSQL error number for duplicate entry
                         // Username already exists.
                         reject(dbConn.ALREADY_EXIST);
@@ -129,7 +136,7 @@ dbConn.insertUser = function (username, password, Email, FirstName, LastName) {
             SQL_USER_REGISTER,
             [username, password, Email, FirstName, LastName], function (err, result) {
                 if (err) {
-                    console.log(JSON.stringify(err));
+                    //console.log(JSON.stringify(err));
                     if (err.errno == 1062) {// MYSQL error number for duplicate entry
                         // Username already exists.
                         reject(dbConn.ALREADY_EXIST);
@@ -195,7 +202,7 @@ dbConn.createGoalModel = function (modelName, modelDescription, url, ProjectId) 
     return new Promise(function (resolve, reject) {
         pool.query(SQL_CREATE_GOALMODEL, [modelName, modelDescription, url, ProjectId], function (err, result) {
             if (err) {
-                console.log(JSON.stringify(err));
+                //console.log(JSON.stringify(err));
                 if (err.errno == 1062) {// MYSQL error number for duplicate entry
                     // Username already exists.
                     reject(dbConn.ALREADY_EXIST);
@@ -205,7 +212,7 @@ dbConn.createGoalModel = function (modelName, modelDescription, url, ProjectId) 
             } else {
                 pool.query(SQL_RET_GOALMODEL, [modelName, ProjectId], function (err, result) {
                     if (err) {
-                        console.log(err);
+                        //console.log(err);
                         reject(dbConn.UNKNOWN_ERROR);
                     } else {
                         // success

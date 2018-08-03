@@ -1,7 +1,9 @@
 {
+
   "connectionLimit": 100,
-  "host": "ec2-52-65-15-37.ap-southeast-2.compute.amazonaws.com",
-  "user": "test",
-  "password": "SWEN90013goal!",
+  "host": "goal.c6qicuvmfc76.ap-southeast-2.rds.amazonaws.com",
+  "user": "admin",
+  "password": "SWEN90013goal",
   "database": "GoalModel_A"
 }
+
