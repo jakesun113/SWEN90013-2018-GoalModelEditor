@@ -13,6 +13,7 @@
 </head>
 
 <body class="text-center">
+
     <form class="form-signin" id="login" action="/user/login" method="post">
         <img class="mb-4" src="/img/icon.ico" alt="icon" width="72" height="72">
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
@@ -27,12 +28,30 @@
                 <input type="checkbox" value="remember-me"> Remember me
             </label>
         </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-            <a class="btn btn-lg btn-primary btn-block" href="/register">Register</a>
+        <div class="alert alert-danger" role="alert" style="display: none" id="login-error">
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <a class="btn btn-lg btn-primary btn-block" href="/register">Register</a>
+
         <footer>
             <p class="mt-5 mb-3 text-muted">&copy;<em>2018 The University of Melbourne</em></p>
         </footer>
     </form>
+
+    <!-- modal start -->
+    <div class="modal" id="login-successful" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="login-successful-title">Welcome!</h5>
+                </div>
+                <div class="modal-body">
+                    <a href="/dashboard">Go to Dashboard.</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal end -->
 </body>
 
 <!-- Bootstrap JavaScript -->

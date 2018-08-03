@@ -1,13 +1,16 @@
 /*import photos start*/
 $(document).ready(function() {
-    document.getElementById('pro-image').addEventListener('change', readImage, false);
-    $(document).on('click', '.image-cancel', function() {
-        let no = $(this).data('no');
-        $(".preview-image.preview-show-"+no).remove();
+    document
+        .getElementById("pro-image")
+        .addEventListener("change", readImage, false);
+    $(document).on("click", ".image-cancel", function() {
+        let no = $(this).data("no");
+        $(".preview-image.preview-show-" + no).remove();
     });
-    $('#username').eq(0).html(Cookies.get('UIID'));
+    $("#username")
+        .eq(0)
+        .html(Cookies.get("UIID"));
 });
-
 
 var num = 1;
 function readImage() {
@@ -17,25 +20,34 @@ function readImage() {
 
         for (let i = 0; i < files.length; i++) {
             var file = files[i];
-            if (!file.type.match('image')) continue;
+            if (!file.type.match("image")) continue;
 
             var picReader = new FileReader();
-            picReader.addEventListener('load', function (event) {
+            picReader.addEventListener("load", function(event) {
                 var picFile = event.target;
-                var html =  '<div class="preview-image preview-show-' + num + '">' +
-                    '<div class="image-cancel" data-no="' + num + '">x</div>' +
-                    '<div class="image-zone"><img id="pro-img-' + num + '" src="' + picFile.result + '"></div>' +
+                var html =
+                    '<div class="preview-image preview-show-' +
+                    num +
+                    '">' +
+                    '<div class="image-cancel" data-no="' +
+                    num +
+                    '">x</div>' +
+                    '<div class="image-zone"><img id="pro-img-' +
+                    num +
+                    '" src="' +
+                    picFile.result +
+                    '"></div>' +
                     // '<div class="tools-edit-image"><a href="javascript:void(0)" data-no="' + num + '" class="btn btn-light btn-edit-image">edit</a></div>' +
-                    '</div>';
+                    "</div>";
 
                 output.append(html);
                 num = num + 1;
             });
             picReader.readAsDataURL(file);
         }
-        $("#pro-image").val('');
+        $("#pro-image").val("");
     } else {
-        console.log('Browser not support');
+        console.log("Browser not support");
     }
 }
 /*import photos end*/
@@ -309,14 +321,34 @@ var clusterNumber = 3;
 
 /*Load data start*/
 function loadData() {
-    document.getElementById("functionaldata").appendChild(parseNodes(jsonData.GoalModelProject.GoalList.Functional));
-    document.getElementById("qualitydata").appendChild(parseNodes(jsonData.GoalModelProject.GoalList.Quality));
-    document.getElementById("emotionaldata").appendChild(parseNodes(jsonData.GoalModelProject.GoalList.Emotional));
-    document.getElementById("negativedata").appendChild(parseNodes(jsonData.GoalModelProject.GoalList.Negative));
-    document.getElementById("stakeholderdata").appendChild(parseNodes(jsonData.GoalModelProject.GoalList.Stakeholder));
-    document.getElementById("usedgoaldata").appendChild(parseNodes(jsonData.GoalModelProject.GoalList.UsedGoal));
-    document.getElementById("deletedgoaldata").appendChild(parseNodes(jsonData.GoalModelProject.GoalList.DeletedGoal));
-    document.getElementById("hierarchydata").appendChild(parseNodes(jsonData.GoalModelProject.Hierarchy.MainGoal));
+    document
+        .getElementById("functionaldata")
+        .appendChild(parseNodes(jsonData.GoalModelProject.GoalList.Functional));
+    document
+        .getElementById("qualitydata")
+        .appendChild(parseNodes(jsonData.GoalModelProject.GoalList.Quality));
+    document
+        .getElementById("emotionaldata")
+        .appendChild(parseNodes(jsonData.GoalModelProject.GoalList.Emotional));
+    document
+        .getElementById("negativedata")
+        .appendChild(parseNodes(jsonData.GoalModelProject.GoalList.Negative));
+    document
+        .getElementById("stakeholderdata")
+        .appendChild(
+            parseNodes(jsonData.GoalModelProject.GoalList.Stakeholder)
+        );
+    document
+        .getElementById("usedgoaldata")
+        .appendChild(parseNodes(jsonData.GoalModelProject.GoalList.UsedGoal));
+    document
+        .getElementById("deletedgoaldata")
+        .appendChild(
+            parseNodes(jsonData.GoalModelProject.GoalList.DeletedGoal)
+        );
+    document
+        .getElementById("hierarchydata")
+        .appendChild(parseNodes(jsonData.GoalModelProject.Hierarchy.MainGoal));
     FunctionalNum = jsonData.GoalModelProject.GoalList.FunctionalNum;
     EmotionalNum = jsonData.GoalModelProject.GoalList.EmotionalNum;
     QualityNum = jsonData.GoalModelProject.GoalList.QualityNum;
@@ -328,27 +360,36 @@ function loadData() {
 /*Load data end*/
 
 /*Add new cluster start*/
-function loadCluster(){
+function loadCluster() {
     var clusterNum = jsonData.GoalModelProject.Cluster.length;
-    if(clusterNum>3){
-        for (var i=0;i<(clusterNum-3);i++){
+    if (clusterNum > 3) {
+        for (var i = 0; i < clusterNum - 3; i++) {
             addCluster();
         }
     }
 
-    for(var i=0;i<clusterNum;i++){
+    for (var i = 0; i < clusterNum; i++) {
         var clusterID = jsonData.GoalModelProject.Cluster[i].ClusterID;
-        document.getElementById(clusterID).appendChild(parseNodes(jsonData.GoalModelProject.Cluster[i].ClusterGoals));
+        document
+            .getElementById(clusterID)
+            .appendChild(
+                parseNodes(jsonData.GoalModelProject.Cluster[i].ClusterGoals)
+            );
     }
 }
 /*Add new cluster end*/
 
 /*Add new cluster start*/
-function addCluster(){
+function addCluster() {
     var cluster = $("#cluster");
     clusterNumber++;
 
-    cluster.append('<div class="cluster showborder inside-scrollbar bgwhite" id=cluster_'+clusterNumber.toString()+'>'+'</div>');
+    cluster.append(
+        '<div class="cluster showborder inside-scrollbar bgwhite" id=cluster_' +
+            clusterNumber.toString() +
+            ">" +
+            "</div>"
+    );
 }
 /*Add new cluster end*/
 
@@ -356,7 +397,7 @@ function addCluster(){
 // takes a nodes array and turns it into a <ul>
 function parseNodes(nodes) {
     var ul = document.createElement("UL");
-    for(var i=0; i<nodes.length; i++) {
+    for (var i = 0; i < nodes.length; i++) {
         //ul.innerHTML = '<div>'+ node.GoalDescription + '</div>';
         ul.appendChild(parseNode(nodes[i]));
     }
@@ -367,37 +408,53 @@ function parseNode(node) {
     var li = document.createElement("LI");
     li.setAttribute("class", node.GoalType);
     li.setAttribute("id", node.GoalID);
-    li.innerHTML = '<input id= "'+node.GoalID+'" class="'+node.GoalType+'" value = "'+node.GoalDescription+'" placeholder="New goal"' + '/>';
+    li.innerHTML =
+        '<input id= "' +
+        node.GoalID +
+        '" class="' +
+        node.GoalType +
+        '" value = "' +
+        node.GoalDescription +
+        '" placeholder="New goal"' +
+        "/>";
     //countID(node.GoalType);
-    if(node.SubGoals) li.appendChild(parseNodes(node.SubGoals));
+    if (node.SubGoals) li.appendChild(parseNodes(node.SubGoals));
     return li;
 }
 /*Show JSON data on edit page end*/
 
 /*Add new goal by pressing "Enter" start*/
-document.onkeydown=function(event) {
-        var goalID;
-        var goalType;
-        //when the user press the "enter" button
-        if (document.activeElement.tagName === 'INPUT' && event.key === "Enter") {
-            //make the default enter invalid
-            goalType = document.activeElement.attributes['class'].nodeValue;
-            goalID = getID(goalType);
-            event.preventDefault();
-            var newlist = '<li id=L_"'+goalID+'"><input id="'+goalID+'" class="'+goalType+'" placeholder="New goal"/></li>';
-            if ($(event.target).parent().length > 0) {
-                var parent = $(event.target).parent();
-                parent.after(newlist);
-            }
-            else {
-                $(event.target).parent().after(newlist);
-            }
-            $('#'+goalID).focus();
+document.onkeydown = function(event) {
+    var goalID;
+    var goalType;
+    //when the user press the "enter" button
+    if (document.activeElement.tagName === "INPUT" && event.key === "Enter") {
+        //make the default enter invalid
+        goalType = document.activeElement.attributes["class"].nodeValue;
+        goalID = getID(goalType);
+        event.preventDefault();
+        var newlist =
+            '<li id=L_"' +
+            goalID +
+            '"><input id="' +
+            goalID +
+            '" class="' +
+            goalType +
+            '" placeholder="New goal"/></li>';
+        if ($(event.target).parent().length > 0) {
+            var parent = $(event.target).parent();
+            parent.after(newlist);
+        } else {
+            $(event.target)
+                .parent()
+                .after(newlist);
         }
+        $("#" + goalID).focus();
+    }
 };
 
 function getID(type) {
-    switch (type){
+    switch (type) {
         case "Functional":
             FunctionalNum++;
             return "F_" + FunctionalNum;
@@ -418,18 +475,17 @@ function getID(type) {
 /*Add new goal by pressing "Enter" end*/
 
 /*Delete goal by pressing "Backspace" when empty start*/
-document.onkeyup=function(event) {
+document.onkeyup = function(event) {
     var goalID;
     //when the user press the "enter" button
-    if (document.activeElement.tagName === 'INPUT' && event.key === "Escape") {
+    if (document.activeElement.tagName === "INPUT" && event.key === "Escape") {
         //make the default enter invalid
         var parent = document.activeElement.parentNode;
         var grandparent = parent.parentNode;
-        if(parent.previousElementSibling != null){
+        if (parent.previousElementSibling != null) {
             grandparent.removeChild(parent);
             event.preventDefault();
         }
-
     }
 };
 /*Delete goal by pressing "Backspace" when empty end*/
@@ -439,7 +495,7 @@ function photonextbtn() {
     var p = document.getElementById("photo");
     var goal = document.getElementById("goals");
     var u = document.getElementById("usedgoal");
-    var d = document.getElementById("deletedgoal")
+    var d = document.getElementById("deletedgoal");
     var c = document.getElementById("cluster");
     var h = document.getElementById("hierarchy");
     // var g = document.getElementById("generator");
@@ -476,14 +532,14 @@ function hierachynextbtn() {
 
     if (h.style.display === "none") {
         p.style.display = "none";
-        t.style.display = "block"
+        t.style.display = "block";
         c.style.display = "block";
         h.style.display = "block";
         g.style.display = "none";
         b.innerHTML = "Next";
     } else {
         p.style.display = "none";
-        t.style.display = "none"
+        t.style.display = "none";
         c.style.display = "none";
         h.style.display = "none";
         g.style.display = "block";
@@ -492,13 +548,13 @@ function hierachynextbtn() {
 }
 
 // handle sign off button
-$('#signout').click(function (evt) {
+$("#signout").click(function(evt) {
     evt.preventDefault();
-    Cookies.remove('LOKIDIED');
-    Cookies.remove('UIID');
-    Cookies.remove('MID');
-    Cookies.remove('PID');
-    window.location.href = '/';
+    Cookies.remove("LOKIDIED");
+    Cookies.remove("UIID");
+    Cookies.remove("MID");
+    Cookies.remove("PID");
+    window.location.href = "/";
 });
 
 /*Hide and show section end*/
@@ -508,58 +564,54 @@ $('#signout').click(function (evt) {
 /*Get data from HTML to JSON end*/
 
 window.jsonData = {
-    "GoalModelProject":
-        {
-            "UserID":"10001",
-            "ProjectID":"1" ,
-            "ProjectName":"My first goal model",
+    GoalModelProject: {
+        UserID: "10001",
+        ProjectID: "1",
+        ProjectName: "My first goal model",
 
-            //Goal list: [five goal types][used goal][deleted goal]
-            "GoalList":{
-                "FunctionalNum":1,
-                "EmotionalNum":1,
-                "QualityNum":1,
-                "NegativeNum":1,
-                "StakeholderNum":1,
-                "Functional":[
-                    {
-                        "GoalID":"F_1",
-                        "GoalType":"Functional",
-                        "GoalDescription":"",
-                        "SubGoals":[]
-                    }
-                ],
-                "Quality":[
-                    {
-                        "GoalID":"Q_1",
-                        "GoalType":"Quality",
-                        "GoalDescription":""
-                    },
-                ],
-                "Emotional":[
-                    {
-                        "GoalID":"E_1",
-                        "GoalType":"Emotional",
-                        "GoalDescription":""
-                    },
-                ],
-                "Negative":[
-                    {
-                        "GoalID":"N_1",
-                        "GoalType":"Negative",
-                        "GoalDescription":""
-                    },
-                ],
-                "Stakeholder":[
-                    {
-                        "GoalID":"S_1",
-                        "GoalType":"Stakeholder",
-                        "GoalDescription":""
-                    },
-                ],
-
-            },
-
-
+        //Goal list: [five goal types][used goal][deleted goal]
+        GoalList: {
+            FunctionalNum: 1,
+            EmotionalNum: 1,
+            QualityNum: 1,
+            NegativeNum: 1,
+            StakeholderNum: 1,
+            Functional: [
+                {
+                    GoalID: "F_1",
+                    GoalType: "Functional",
+                    GoalDescription: "",
+                    SubGoals: []
+                }
+            ],
+            Quality: [
+                {
+                    GoalID: "Q_1",
+                    GoalType: "Quality",
+                    GoalDescription: ""
+                }
+            ],
+            Emotional: [
+                {
+                    GoalID: "E_1",
+                    GoalType: "Emotional",
+                    GoalDescription: ""
+                }
+            ],
+            Negative: [
+                {
+                    GoalID: "N_1",
+                    GoalType: "Negative",
+                    GoalDescription: ""
+                }
+            ],
+            Stakeholder: [
+                {
+                    GoalID: "S_1",
+                    GoalType: "Stakeholder",
+                    GoalDescription: ""
+                }
+            ]
         }
+    }
 };

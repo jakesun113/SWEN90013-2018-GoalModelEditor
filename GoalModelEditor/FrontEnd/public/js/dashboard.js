@@ -249,13 +249,14 @@ $("#projects-container").click(function(event) {
     // handle click on the goal model
     // act on the clicked goal model only
     // set cookies for the clicked goal model
+    var secret = JSON.parse(Cookies.get("LOKIDIED"));
+    var uid = secret.uid;
     if ($(event.target).hasClass("goal-model")) {
         Cookies.set("MID", event.target.id);
         window.location.href = "/goal_model/edit";
     } else if ($(event.target.parentNode).hasClass("goal-model")) {
-        console.log(event.target.parentNode.id);
         Cookies.set("MID", event.target.parentNode.id);
-        window.location.href = "/goal_model/edit";
+        window.location.href = "/goal_model/edit/";
     }
     // handle click on the create goal model button & delete the project button
     else if (
