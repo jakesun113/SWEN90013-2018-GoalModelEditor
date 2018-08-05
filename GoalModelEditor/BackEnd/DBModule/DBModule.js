@@ -92,7 +92,7 @@ const SQL_UPDATE_PROJECT =
     "UPDATE Project " +
     "SET ProjectName = ?, ProjectDescription = ?, size = ? " +
     "WHERE ProjectId = ?";
-x;
+
 /**
  * Update a goal model
  * @type {string}
