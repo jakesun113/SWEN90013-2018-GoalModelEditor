@@ -33,7 +33,8 @@ router.get("/list/:userId", (req, res, next) => {
     }
 
     // (2) fetch project list
-    db.getProjectGoalModelList(req.params.userId)
+    db
+        .getProjectGoalModelList(req.params.userId)
         .then(result => {
             res.statusCode = 200;
             var projects = {};
@@ -82,12 +83,13 @@ router.post("/:userId", function(req, res, next) {
     }
 
     // create new project
-    db.createProject(
-        req.body.project_name,
-        req.body.description,
-        0,
-        req.params.userId
-    )
+    db
+        .createProject(
+            req.body.project_name,
+            req.body.description,
+            0,
+            req.params.userId
+        )
         .then(result => {
             console.log(result);
             res.statusCode = 201;
@@ -116,7 +118,8 @@ router.put("/:userId/:projectId", (req, res, next) => {
     }
 
     // get the old project info
-    db.getProject(req.params.projectId)
+    db
+        .getProject(req.params.projectId)
         .then(result => {
             if (result.OwnerId != req.params.userId) {
                 res.statusCode = 403;
@@ -128,12 +131,13 @@ router.put("/:userId/:projectId", (req, res, next) => {
             }
 
             // edit project
-            db.updateProject(
-                req.params.projectId,
-                req.body.project_name,
-                req.body.description,
-                req.body.size
-            )
+            db
+                .updateProject(
+                    req.params.projectId,
+                    req.body.project_name,
+                    req.body.description,
+                    req.body.size
+                )
                 .then(result => {
                     console.log(result);
                     res.statusCode = 200;
@@ -173,7 +177,8 @@ router.delete("/:userId/:projectId", (req, res, next) => {
     }
 
     // get the old project info
-    db.getProject(req.params.projectId)
+    db
+        .getProject(req.params.projectId)
         .then(result => {
             if (result.OwnerId != req.params.userId) {
                 res.statusCode = 403;
@@ -185,7 +190,8 @@ router.delete("/:userId/:projectId", (req, res, next) => {
             }
 
             // delete project
-            db.deleteProject(req.params.projectId)
+            db
+                .deleteProject(req.params.projectId)
                 .then(result => {
                     console.log(result);
                     res.statusCode = 204;

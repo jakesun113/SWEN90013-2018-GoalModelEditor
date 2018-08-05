@@ -57,7 +57,8 @@ router.post("/register", (req, res, next) => {
         .update(password)
         .digest("hex");
 
-    db.insertUser(username, hashPassword, email, firstname, lastname)
+    db
+        .insertUser(username, hashPassword, email, firstname, lastname)
         .then(result => {
             console.log(result);
             res.statusCode = 200;
@@ -93,7 +94,8 @@ router.get("/profile/:userId", function(req, res, next) {
     }
 
     // get user profile from db
-    db.getUserProfile(req.params.userId)
+    db
+        .getUserProfile(req.params.userId)
         .then(result => {
             res.statusCode = 200;
             res.json({
@@ -128,12 +130,13 @@ router.put("/profile/:userId", function(req, res, next) {
     }
 
     // get user profile from db
-    db.updateUserProfile(
-        req.params.userId,
-        req.body.firstname,
-        req.body.lastname,
-        req.body.email
-    )
+    db
+        .updateUserProfile(
+            req.params.userId,
+            req.body.firstname,
+            req.body.lastname,
+            req.body.email
+        )
         .then(result => {
             res.statusCode = 200;
             res.json({
@@ -180,7 +183,8 @@ router.put("/cred/:userId", function(req, res, next) {
     newhash.update(req.body.new_password);
     newpw = newhash.digest("hex");
 
-    db.changePassword(req.params.userId, oldpw, newpw)
+    db
+        .changePassword(req.params.userId, oldpw, newpw)
         .then(result => {
             res.statusCode = 200;
             return res.end();

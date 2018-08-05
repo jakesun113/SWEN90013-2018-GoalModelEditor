@@ -33,12 +33,13 @@ router.post("/:userId/:projectId", (req, res, next) => {
     var dirpath = "./UserFiles/" + req.params.userId + "/";
 
     // create new goal model
-    db.createGoalModel(
-        req.body.model_name,
-        req.body.description,
-        dirpath,
-        req.params.projectId
-    )
+    db
+        .createGoalModel(
+            req.body.model_name,
+            req.body.description,
+            dirpath,
+            req.params.projectId
+        )
         .then(result => {
             createDirectoryPath(dirpath);
             fs.writeFile(dirpath + "/" + result.ModelId, "", function(err) {
@@ -81,7 +82,8 @@ router.put("/:userId/:goalmodelId/save", (req, res, next) => {
     }
 
     var filepath = "";
-    db.getGoalmodel(req.params.goalmodelId)
+    db
+        .getGoalmodel(req.params.goalmodelId)
         .then(result => {
             filepath = result.filepath;
         })
@@ -140,12 +142,13 @@ router.put("/:userId/:goalmodelId", (req, res, next) => {
         req.params.userId +
         "/" +
         req.params.goalmodelId;
-    db.updateGpalModel(
-        req.params.goalmodelId,
-        req.body.model_name,
-        req.body.description,
-        filepath
-    )
+    db
+        .updateGpalModel(
+            req.params.goalmodelId,
+            req.body.model_name,
+            req.body.description,
+            filepath
+        )
         .then(result => {
             res.statusCode = 200;
             res.json({
@@ -186,7 +189,8 @@ router.delete("/:userId/:goalmodelId", (req, res, next) => {
     }
 
     // delete goal model
-    db.deleteGoalModel(req.params.goalmodelId)
+    db
+        .deleteGoalModel(req.params.goalmodelId)
         .then(result => {
             console.log(result);
             res.statusCode = 204;
