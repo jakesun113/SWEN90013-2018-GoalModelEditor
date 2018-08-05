@@ -1,1 +1,2212 @@
-{"devicePlatform":"","logFolder":"/Users/edric.dang/Desktop/swen90013-2018-go/GoalModelEditor_Test/Reports/Create_Test/20180521_141144","runData":{"hostName":"edric.dang - 10.0.0.3","os":"Mac OS X 64bit","katalonVersion":"5.4.1.1","browser":"Chrome 66.0.3359.181","hostAddress":"10.0.0.3","sessionId":"b11e02ab75082857387d4a5541dc01fd","seleniumVersion":"3.7.1","proxyInformation":"ProxyInformation{proxyOption\u003dNO_PROXY, proxyServerType\u003dHTTP, password\u003d, proxyServerAddress\u003d, proxyServerPort\u003d0}","platform":"Mac OS X"},"type":"TEST_SUITE","name":"Create_Test","id":"Test Suites/Create_Test","source":"","message":"Test Cases/Create_Project_Goal_Model_Test","description":"","startTime":1526875905641,"endTime":1526876057226,"childRecords":[{"isOptional":false,"type":"TEST_CASE","name":"Test Cases/Create_Project_Goal_Model_Test","id":"Test Cases/Create_Project_Goal_Model_Test","source":"\\\\Users\\\\edric.dang\\\\Desktop\\\\swen90013-2018-go\\\\GoalModelEditor_Test\\\\Test Cases\\\\Create_Project_Goal_Model_Test.tc","message":"Test Cases/Create_Project_Goal_Model_Test","description":"","startTime":1526875905884,"endTime":1526876057201,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"INFO"},"type":"MESSAGE","name":"","message":"Evaluating variables for test case","startTime":1526875905920,"endTime":0,"childRecords":[],"interuppted":false},{"index":1,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"openBrowser","message":"Browser is opened with url: \u0027\u0027","description":"","startTime":1526875906192,"endTime":1526875907835,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Browser is opened with url: \u0027\u0027","startTime":1526875907834,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":2,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"navigateToUrl","message":"Navigate to \u0027https://localhost:8080/\u0027 successfully","description":"","startTime":1526875907836,"endTime":1526875908266,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Navigate to \u0027https://localhost:8080/\u0027 successfully","startTime":1526875908265,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":3,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"click","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Editor (3)/a_Go to Goal Model Editor\u0027 is clicked on","description":"","startTime":1526875908266,"endTime":1526875925923,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Editor (3)/a_Go to Goal Model Editor\u0027 is clicked on","startTime":1526875925922,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":4,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"setText","message":"Text \u0027username4\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_username\u0027","description":"","startTime":1526875925923,"endTime":1526875926060,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Text \u0027username4\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_username\u0027","startTime":1526875926059,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":5,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"setText","message":"Text \u00271234\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_password\u0027","description":"","startTime":1526875926060,"endTime":1526875926147,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Text \u00271234\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_password\u0027","startTime":1526875926146,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":6,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"sendKeys","message":"Keys \u0027ENTER + \u0027 sent to object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_password\u0027","description":"","startTime":1526875926147,"endTime":1526875926192,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Keys \u0027ENTER + \u0027 sent to object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_password\u0027","startTime":1526875926192,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":7,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"click","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (3)/button_username4\u0027 is clicked on","description":"","startTime":1526875926193,"endTime":1526875926777,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (3)/button_username4\u0027 is clicked on","startTime":1526875926777,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":8,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"click","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (3)/a_Sign out\u0027 is clicked on","description":"","startTime":1526875926777,"endTime":1526875926890,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (3)/a_Sign out\u0027 is clicked on","startTime":1526875926890,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":9,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"click","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Editor (3)/a_Go to Goal Model Editor\u0027 is clicked on","description":"","startTime":1526875926891,"endTime":1526875927111,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Editor (3)/a_Go to Goal Model Editor\u0027 is clicked on","startTime":1526875927110,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":10,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"setText","message":"Text \u0027u\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_username\u0027","description":"","startTime":1526875927111,"endTime":1526875927281,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Text \u0027u\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_username\u0027","startTime":1526875927280,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":11,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"setText","message":"Text \u0027username4\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_username\u0027","description":"","startTime":1526875927281,"endTime":1526875927347,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Text \u0027username4\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_username\u0027","startTime":1526875927346,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":12,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"setText","message":"Text \u00271234\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_password\u0027","description":"","startTime":1526875927347,"endTime":1526875927422,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Text \u00271234\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_password\u0027","startTime":1526875927422,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":13,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"click","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/label_Remember me (1)\u0027 is clicked on","description":"","startTime":1526875927423,"endTime":1526875927486,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/label_Remember me (1)\u0027 is clicked on","startTime":1526875927485,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":14,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"click","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/button_Sign in (1)\u0027 is clicked on","description":"","startTime":1526875927486,"endTime":1526875927551,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/button_Sign in (1)\u0027 is clicked on","startTime":1526875927550,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":15,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"click","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (3)/button_New Project\u0027 is clicked on","description":"","startTime":1526875927551,"endTime":1526875928134,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (3)/button_New Project\u0027 is clicked on","startTime":1526875928133,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":16,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"waitForElementVisible","message":"Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name\u0027 is visible","description":"","startTime":1526875928134,"endTime":1526875928691,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name\u0027 is visible","startTime":1526875928691,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":17,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"setText","message":"Text \u0027hahaha\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name\u0027","description":"","startTime":1526875928692,"endTime":1526875928781,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Text \u0027hahaha\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name\u0027","startTime":1526875928780,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":18,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"clearText","message":"Text of object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name\u0027 is cleared","description":"","startTime":1526875928781,"endTime":1526875928813,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Text of object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name\u0027 is cleared","startTime":1526875928812,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":19,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"mouseOver","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/label_Project Name\u0027 is hovered","description":"","startTime":1526875928813,"endTime":1526875928869,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/label_Project Name\u0027 is hovered","startTime":1526875928869,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":20,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"setText","message":"Text \u0027New_Project_Name_Test\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/input_project_name\u0027","description":"","startTime":1526875928869,"endTime":1526875928981,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Text \u0027New_Project_Name_Test\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/input_project_name\u0027","startTime":1526875928980,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":21,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"click","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/div_Project Name (1)\u0027 is clicked on","description":"","startTime":1526875928981,"endTime":1526875929041,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/div_Project Name (1)\u0027 is clicked on","startTime":1526875929040,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":22,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"setText","message":"Text \u0027New_Goal_Model_Name_Test\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/input_model_name (1)\u0027","description":"","startTime":1526875929041,"endTime":1526875929193,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Text \u0027New_Goal_Model_Name_Test\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/input_model_name (1)\u0027","startTime":1526875929192,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":23,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"click","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/button_CREATE (1)\u0027 is clicked on","description":"","startTime":1526875929193,"endTime":1526875929261,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/button_CREATE (1)\u0027 is clicked on","startTime":1526875929261,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":24,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"click","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/div_New_Goal_Model_Name_Test (1)\u0027 is clicked on","description":"","startTime":1526875929261,"endTime":1526875930613,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/div_New_Goal_Model_Name_Test (1)\u0027 is clicked on","startTime":1526875930612,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":25,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"click","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Edit Page (1)/strong_Goal Model (1)\u0027 is clicked on","description":"","startTime":1526875930613,"endTime":1526875930689,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Edit Page (1)/strong_Goal Model (1)\u0027 is clicked on","startTime":1526875930688,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":26,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"click","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Edit Page (1)/a_Return (1)\u0027 is clicked on","description":"","startTime":1526875930689,"endTime":1526875930808,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Edit Page (1)/a_Return (1)\u0027 is clicked on","startTime":1526875930808,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":27,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"click","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (3)/button_New Project\u0027 is clicked on","description":"","startTime":1526875930809,"endTime":1526875930878,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (3)/button_New Project\u0027 is clicked on","startTime":1526875930878,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":28,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"waitForElementVisible","message":"Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name\u0027 is visible","description":"","startTime":1526875930879,"endTime":1526875931413,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name\u0027 is visible","startTime":1526875931413,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":29,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"setText","message":"Text \u0027hahaha\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name\u0027","description":"","startTime":1526875931413,"endTime":1526875931497,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Text \u0027hahaha\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name\u0027","startTime":1526875931497,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":30,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"clearText","message":"Text of object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name\u0027 is cleared","description":"","startTime":1526875931497,"endTime":1526875931519,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Text of object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name\u0027 is cleared","startTime":1526875931518,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":31,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"mouseOver","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/label_Project Name\u0027 is hovered","description":"","startTime":1526875931519,"endTime":1526875931556,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/label_Project Name\u0027 is hovered","startTime":1526875931556,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":32,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"setText","message":"Text \u0027New_Project_Name_Test\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/input_project_name\u0027","description":"","startTime":1526875931557,"endTime":1526875931688,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Text \u0027New_Project_Name_Test\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/input_project_name\u0027","startTime":1526875931687,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":33,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"click","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/div_Project Name (1)\u0027 is clicked on","description":"","startTime":1526875931688,"endTime":1526875931743,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/div_Project Name (1)\u0027 is clicked on","startTime":1526875931743,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":34,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"setText","message":"Text \u0027New_Goal_Model_Name_Test\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/input_model_name (1)\u0027","description":"","startTime":1526875931743,"endTime":1526875931895,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Text \u0027New_Goal_Model_Name_Test\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/input_model_name (1)\u0027","startTime":1526875931895,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":35,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"click","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/button_CREATE (1)\u0027 is clicked on","description":"","startTime":1526875931895,"endTime":1526875931964,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/button_CREATE (1)\u0027 is clicked on","startTime":1526875931963,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":36,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"waitForAlert","message":"Alert is present after 30 second(s).","description":"","startTime":1526875931964,"endTime":1526875932492,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"WARNING"},"type":"MESSAGE","name":"","message":"Timeout \u00270\u0027 is invalid. Using default page load timeout: \u002730\u0027","startTime":1526875931973,"endTime":0,"childRecords":[],"interuppted":false},{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Alert is present after 30 second(s).","startTime":1526875932492,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":37,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"acceptAlert","message":"Alert accepted","description":"","startTime":1526875932492,"endTime":1526875932509,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Alert accepted","startTime":1526875932508,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":38,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"mouseOver","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (5)/button_CANCEL\u0027 is hovered","description":"","startTime":1526875932509,"endTime":1526875932557,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (5)/button_CANCEL\u0027 is hovered","startTime":1526875932556,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":39,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"click","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (5)/button_CANCEL\u0027 is clicked on","description":"","startTime":1526875932557,"endTime":1526875932628,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (5)/button_CANCEL\u0027 is clicked on","startTime":1526875932627,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":40,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"mouseOver","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test\u0027 is hovered","description":"","startTime":1526875932628,"endTime":1526875932674,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test\u0027 is hovered","startTime":1526875932674,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":41,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"waitForElementHasAttribute","message":"Object \u0027Object Repository/rename-project\u0027 does not have attribute \u0027\u0027","description":"","startTime":1526875932675,"endTime":1526875962756,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"WARNING"},"type":"MESSAGE","name":"","message":"Timeout \u00270\u0027 is invalid. Using default page load timeout: \u002730\u0027","startTime":1526875932686,"endTime":0,"childRecords":[],"interuppted":false},{"testStatus":{"stackTrace":"","statusValue":"WARNING"},"type":"MESSAGE","name":"","message":"Object \u0027Object Repository/rename-project\u0027 does not have attribute \u0027\u0027","startTime":1526875962756,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":42,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"click","message":"Object: \u0027Object Repository/rename-project\u0027 is clicked on","description":"","startTime":1526875962757,"endTime":1526875962813,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/rename-project\u0027 is clicked on","startTime":1526875962813,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":43,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"waitForElementVisible","message":"Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name\u0027 is visible","description":"","startTime":1526875962814,"endTime":1526875963359,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name\u0027 is visible","startTime":1526875963359,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":44,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"focus","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name\u0027 is focused","description":"","startTime":1526875963359,"endTime":1526875963427,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name\u0027 is focused","startTime":1526875963426,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":45,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"clearText","message":"Text of object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name\u0027 is cleared","description":"","startTime":1526875963427,"endTime":1526875963458,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Text of object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name\u0027 is cleared","startTime":1526875963458,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":46,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"click","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (13)/button_CANCEL\u0027 is clicked on","description":"","startTime":1526875963458,"endTime":1526875963525,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (13)/button_CANCEL\u0027 is clicked on","startTime":1526875963525,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":47,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"mouseOver","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test\u0027 is hovered","description":"","startTime":1526875963526,"endTime":1526875963570,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test\u0027 is hovered","startTime":1526875963569,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":48,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"waitForElementAttributeValue","message":"Object \u0027Object Repository/rename-project\u0027 does not have attribute \u0027\u0027 with value \u0027\u0027","description":"","startTime":1526875963570,"endTime":1526875993635,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"WARNING"},"type":"MESSAGE","name":"","message":"Timeout \u00270\u0027 is invalid. Using default page load timeout: \u002730\u0027","startTime":1526875963578,"endTime":0,"childRecords":[],"interuppted":false},{"testStatus":{"stackTrace":"","statusValue":"WARNING"},"type":"MESSAGE","name":"","message":"Object \u0027Object Repository/rename-project\u0027 does not have attribute \u0027\u0027 with value \u0027\u0027","startTime":1526875993634,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":49,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"click","message":"Object: \u0027Object Repository/rename-project\u0027 is clicked on","description":"","startTime":1526875993635,"endTime":1526875993672,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/rename-project\u0027 is clicked on","startTime":1526875993672,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":50,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"waitForElementVisible","message":"Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name\u0027 is visible","description":"","startTime":1526875993673,"endTime":1526875994208,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"WARNING"},"type":"MESSAGE","name":"","message":"Timeout \u00270\u0027 is invalid. Using default page load timeout: \u002730\u0027","startTime":1526875993675,"endTime":0,"childRecords":[],"interuppted":false},{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name\u0027 is visible","startTime":1526875994207,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":51,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"focus","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name\u0027 is focused","description":"","startTime":1526875994208,"endTime":1526875994261,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name\u0027 is focused","startTime":1526875994260,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":52,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"setText","message":"Text \u0027New_Model_Add_Test\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name\u0027","description":"","startTime":1526875994261,"endTime":1526875994358,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Text \u0027New_Model_Add_Test\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name\u0027","startTime":1526875994358,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":53,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"click","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (13)/button_CREATE\u0027 is clicked on","description":"","startTime":1526875994358,"endTime":1526875994429,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (13)/button_CREATE\u0027 is clicked on","startTime":1526875994429,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":54,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"mouseOver","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test\u0027 is hovered","description":"","startTime":1526875994430,"endTime":1526875994470,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test\u0027 is hovered","startTime":1526875994470,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":55,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"click","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (14)/div_New_Model_Add_Test\u0027 is clicked on","description":"","startTime":1526875994470,"endTime":1526875995191,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (14)/div_New_Model_Add_Test\u0027 is clicked on","startTime":1526875995191,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":56,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"click","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Edit Page (3)/a_Return\u0027 is clicked on","description":"","startTime":1526875995191,"endTime":1526875995315,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Edit Page (3)/a_Return\u0027 is clicked on","startTime":1526875995315,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":57,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"mouseOver","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test\u0027 is hovered","description":"","startTime":1526875995315,"endTime":1526875995893,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test\u0027 is hovered","startTime":1526875995893,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":58,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"waitForElementHasAttribute","message":"Object \u0027Object Repository/CreateProjectGoalModelSeries/rename-project1\u0027 does not have attribute \u0027\u0027","description":"","startTime":1526875995893,"endTime":1526876025935,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"WARNING"},"type":"MESSAGE","name":"","message":"Timeout \u00270\u0027 is invalid. Using default page load timeout: \u002730\u0027","startTime":1526875995896,"endTime":0,"childRecords":[],"interuppted":false},{"testStatus":{"stackTrace":"","statusValue":"WARNING"},"type":"MESSAGE","name":"","message":"Object \u0027Object Repository/CreateProjectGoalModelSeries/rename-project1\u0027 does not have attribute \u0027\u0027","startTime":1526876025935,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":59,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"click","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/rename-project1\u0027 is clicked on","description":"","startTime":1526876025935,"endTime":1526876025990,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/rename-project1\u0027 is clicked on","startTime":1526876025989,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":60,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"waitForElementVisible","message":"Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/input_project_name\u0027 is visible","description":"","startTime":1526876025990,"endTime":1526876026529,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"WARNING"},"type":"MESSAGE","name":"","message":"Timeout \u00270\u0027 is invalid. Using default page load timeout: \u002730\u0027","startTime":1526876025992,"endTime":0,"childRecords":[],"interuppted":false},{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/input_project_name\u0027 is visible","startTime":1526876026529,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":61,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"focus","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/input_project_name\u0027 is focused","description":"","startTime":1526876026529,"endTime":1526876026572,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/input_project_name\u0027 is focused","startTime":1526876026572,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":62,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"setText","message":"Text \u0027Project_Rename_Test\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/input_project_name\u0027","description":"","startTime":1526876026572,"endTime":1526876026676,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Text \u0027Project_Rename_Test\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/input_project_name\u0027","startTime":1526876026676,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":63,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"click","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/button_Confirm\u0027 is clicked on","description":"","startTime":1526876026676,"endTime":1526876026747,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/button_Confirm\u0027 is clicked on","startTime":1526876026747,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":64,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"mouseOver","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test\u0027 is hovered","description":"","startTime":1526876026747,"endTime":1526876026787,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test\u0027 is hovered","startTime":1526876026786,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":65,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"waitForElementHasAttribute","message":"Object \u0027Object Repository/CreateProjectGoalModelSeries/delete-project\u0027 does not have attribute \u0027\u0027","description":"","startTime":1526876026787,"endTime":1526876056814,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"WARNING"},"type":"MESSAGE","name":"","message":"Timeout \u00270\u0027 is invalid. Using default page load timeout: \u002730\u0027","startTime":1526876026789,"endTime":0,"childRecords":[],"interuppted":false},{"testStatus":{"stackTrace":"","statusValue":"WARNING"},"type":"MESSAGE","name":"","message":"Object \u0027Object Repository/CreateProjectGoalModelSeries/delete-project\u0027 does not have attribute \u0027\u0027","startTime":1526876056813,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":66,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"click","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/delete-project\u0027 is clicked on","description":"","startTime":1526876056814,"endTime":1526876056866,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/delete-project\u0027 is clicked on","startTime":1526876056865,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":67,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"mouseOver","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/lable_You would lose all goal\u0027 is hovered","description":"","startTime":1526876056866,"endTime":1526876056915,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/lable_You would lose all goal\u0027 is hovered","startTime":1526876056915,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":68,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"waitForElementPresent","message":"Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (18)/button_Confirm\u0027 is present","description":"","startTime":1526876056916,"endTime":1526876056937,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (18)/button_Confirm\u0027 is present","startTime":1526876056937,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":69,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"focus","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (18)/button_Confirm\u0027 is focused","description":"","startTime":1526876056937,"endTime":1526876056985,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (18)/button_Confirm\u0027 is focused","startTime":1526876056985,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":70,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"waitForElementClickable","message":"Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (18)/button_Confirm\u0027 is clickable","description":"","startTime":1526876056985,"endTime":1526876057018,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"WARNING"},"type":"MESSAGE","name":"","message":"Timeout \u00270\u0027 is invalid. Using default page load timeout: \u002730\u0027","startTime":1526876056992,"endTime":0,"childRecords":[],"interuppted":false},{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (18)/button_Confirm\u0027 is clickable","startTime":1526876057018,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":71,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"click","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (18)/button_Confirm\u0027 is clicked on","description":"","startTime":1526876057018,"endTime":1526876057077,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (18)/button_Confirm\u0027 is clicked on","startTime":1526876057076,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":72,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"verifyElementNotVisible","message":"Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test\u0027 is NOT visible","description":"","startTime":1526876057077,"endTime":1526876057111,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test\u0027 is NOT visible","startTime":1526876057110,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"index":73,"isIgnoredIfFailed":false,"type":"TEST_STEP","name":"closeBrowser","message":"Browser is closed","description":"","startTime":1526876057111,"endTime":1526876057200,"childRecords":[{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Browser is closed","startTime":1526876057200,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false},{"testStatus":{"stackTrace":"","statusValue":"PASSED"},"type":"MESSAGE","name":"","message":"Test Cases/Create_Project_Goal_Model_Test","startTime":1526876057200,"endTime":0,"childRecords":[],"interuppted":false}],"interuppted":false}],"interuppted":false}
+{
+    "devicePlatform": "",
+    "logFolder":
+        "/Users/edric.dang/Desktop/swen90013-2018-go/GoalModelEditor_Test/Reports/Create_Test/20180521_141144",
+    "runData": {
+        "hostName": "edric.dang - 10.0.0.3",
+        "os": "Mac OS X 64bit",
+        "katalonVersion": "5.4.1.1",
+        "browser": "Chrome 66.0.3359.181",
+        "hostAddress": "10.0.0.3",
+        "sessionId": "b11e02ab75082857387d4a5541dc01fd",
+        "seleniumVersion": "3.7.1",
+        "proxyInformation":
+            "ProxyInformation{proxyOption\u003dNO_PROXY, proxyServerType\u003dHTTP, password\u003d, proxyServerAddress\u003d, proxyServerPort\u003d0}",
+        "platform": "Mac OS X"
+    },
+    "type": "TEST_SUITE",
+    "name": "Create_Test",
+    "id": "Test Suites/Create_Test",
+    "source": "",
+    "message": "Test Cases/Create_Project_Goal_Model_Test",
+    "description": "",
+    "startTime": 1526875905641,
+    "endTime": 1526876057226,
+    "childRecords": [
+        {
+            "isOptional": false,
+            "type": "TEST_CASE",
+            "name": "Test Cases/Create_Project_Goal_Model_Test",
+            "id": "Test Cases/Create_Project_Goal_Model_Test",
+            "source":
+                "\\\\Users\\\\edric.dang\\\\Desktop\\\\swen90013-2018-go\\\\GoalModelEditor_Test\\\\Test Cases\\\\Create_Project_Goal_Model_Test.tc",
+            "message": "Test Cases/Create_Project_Goal_Model_Test",
+            "description": "",
+            "startTime": 1526875905884,
+            "endTime": 1526876057201,
+            "childRecords": [
+                {
+                    "testStatus": { "stackTrace": "", "statusValue": "INFO" },
+                    "type": "MESSAGE",
+                    "name": "",
+                    "message": "Evaluating variables for test case",
+                    "startTime": 1526875905920,
+                    "endTime": 0,
+                    "childRecords": [],
+                    "interuppted": false
+                },
+                {
+                    "index": 1,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "openBrowser",
+                    "message": "Browser is opened with url: \u0027\u0027",
+                    "description": "",
+                    "startTime": 1526875906192,
+                    "endTime": 1526875907835,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Browser is opened with url: \u0027\u0027",
+                            "startTime": 1526875907834,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 2,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "navigateToUrl",
+                    "message":
+                        "Navigate to \u0027https://localhost:8080/\u0027 successfully",
+                    "description": "",
+                    "startTime": 1526875907836,
+                    "endTime": 1526875908266,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Navigate to \u0027https://localhost:8080/\u0027 successfully",
+                            "startTime": 1526875908265,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 3,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Editor (3)/a_Go to Goal Model Editor\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526875908266,
+                    "endTime": 1526875925923,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Editor (3)/a_Go to Goal Model Editor\u0027 is clicked on",
+                            "startTime": 1526875925922,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 4,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "setText",
+                    "message":
+                        "Text \u0027username4\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_username\u0027",
+                    "description": "",
+                    "startTime": 1526875925923,
+                    "endTime": 1526875926060,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Text \u0027username4\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_username\u0027",
+                            "startTime": 1526875926059,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 5,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "setText",
+                    "message":
+                        "Text \u00271234\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_password\u0027",
+                    "description": "",
+                    "startTime": 1526875926060,
+                    "endTime": 1526875926147,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Text \u00271234\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_password\u0027",
+                            "startTime": 1526875926146,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 6,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "sendKeys",
+                    "message":
+                        "Keys \u0027ENTER + \u0027 sent to object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_password\u0027",
+                    "description": "",
+                    "startTime": 1526875926147,
+                    "endTime": 1526875926192,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Keys \u0027ENTER + \u0027 sent to object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_password\u0027",
+                            "startTime": 1526875926192,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 7,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (3)/button_username4\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526875926193,
+                    "endTime": 1526875926777,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (3)/button_username4\u0027 is clicked on",
+                            "startTime": 1526875926777,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 8,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (3)/a_Sign out\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526875926777,
+                    "endTime": 1526875926890,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (3)/a_Sign out\u0027 is clicked on",
+                            "startTime": 1526875926890,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 9,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Editor (3)/a_Go to Goal Model Editor\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526875926891,
+                    "endTime": 1526875927111,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Editor (3)/a_Go to Goal Model Editor\u0027 is clicked on",
+                            "startTime": 1526875927110,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 10,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "setText",
+                    "message":
+                        "Text \u0027u\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_username\u0027",
+                    "description": "",
+                    "startTime": 1526875927111,
+                    "endTime": 1526875927281,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Text \u0027u\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_username\u0027",
+                            "startTime": 1526875927280,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 11,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "setText",
+                    "message":
+                        "Text \u0027username4\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_username\u0027",
+                    "description": "",
+                    "startTime": 1526875927281,
+                    "endTime": 1526875927347,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Text \u0027username4\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_username\u0027",
+                            "startTime": 1526875927346,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 12,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "setText",
+                    "message":
+                        "Text \u00271234\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_password\u0027",
+                    "description": "",
+                    "startTime": 1526875927347,
+                    "endTime": 1526875927422,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Text \u00271234\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/input_password\u0027",
+                            "startTime": 1526875927422,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 13,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/label_Remember me (1)\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526875927423,
+                    "endTime": 1526875927486,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/label_Remember me (1)\u0027 is clicked on",
+                            "startTime": 1526875927485,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 14,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/button_Sign in (1)\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526875927486,
+                    "endTime": 1526875927551,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Sign in (3)/button_Sign in (1)\u0027 is clicked on",
+                            "startTime": 1526875927550,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 15,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (3)/button_New Project\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526875927551,
+                    "endTime": 1526875928134,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (3)/button_New Project\u0027 is clicked on",
+                            "startTime": 1526875928133,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 16,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "waitForElementVisible",
+                    "message":
+                        "Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name\u0027 is visible",
+                    "description": "",
+                    "startTime": 1526875928134,
+                    "endTime": 1526875928691,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name\u0027 is visible",
+                            "startTime": 1526875928691,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 17,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "setText",
+                    "message":
+                        "Text \u0027hahaha\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name\u0027",
+                    "description": "",
+                    "startTime": 1526875928692,
+                    "endTime": 1526875928781,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Text \u0027hahaha\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name\u0027",
+                            "startTime": 1526875928780,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 18,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "clearText",
+                    "message":
+                        "Text of object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name\u0027 is cleared",
+                    "description": "",
+                    "startTime": 1526875928781,
+                    "endTime": 1526875928813,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Text of object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name\u0027 is cleared",
+                            "startTime": 1526875928812,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 19,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "mouseOver",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/label_Project Name\u0027 is hovered",
+                    "description": "",
+                    "startTime": 1526875928813,
+                    "endTime": 1526875928869,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/label_Project Name\u0027 is hovered",
+                            "startTime": 1526875928869,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 20,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "setText",
+                    "message":
+                        "Text \u0027New_Project_Name_Test\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/input_project_name\u0027",
+                    "description": "",
+                    "startTime": 1526875928869,
+                    "endTime": 1526875928981,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Text \u0027New_Project_Name_Test\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/input_project_name\u0027",
+                            "startTime": 1526875928980,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 21,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/div_Project Name (1)\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526875928981,
+                    "endTime": 1526875929041,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/div_Project Name (1)\u0027 is clicked on",
+                            "startTime": 1526875929040,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 22,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "setText",
+                    "message":
+                        "Text \u0027New_Goal_Model_Name_Test\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/input_model_name (1)\u0027",
+                    "description": "",
+                    "startTime": 1526875929041,
+                    "endTime": 1526875929193,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Text \u0027New_Goal_Model_Name_Test\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/input_model_name (1)\u0027",
+                            "startTime": 1526875929192,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 23,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/button_CREATE (1)\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526875929193,
+                    "endTime": 1526875929261,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/button_CREATE (1)\u0027 is clicked on",
+                            "startTime": 1526875929261,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 24,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/div_New_Goal_Model_Name_Test (1)\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526875929261,
+                    "endTime": 1526875930613,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/div_New_Goal_Model_Name_Test (1)\u0027 is clicked on",
+                            "startTime": 1526875930612,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 25,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Edit Page (1)/strong_Goal Model (1)\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526875930613,
+                    "endTime": 1526875930689,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Edit Page (1)/strong_Goal Model (1)\u0027 is clicked on",
+                            "startTime": 1526875930688,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 26,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Edit Page (1)/a_Return (1)\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526875930689,
+                    "endTime": 1526875930808,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Edit Page (1)/a_Return (1)\u0027 is clicked on",
+                            "startTime": 1526875930808,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 27,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (3)/button_New Project\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526875930809,
+                    "endTime": 1526875930878,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (3)/button_New Project\u0027 is clicked on",
+                            "startTime": 1526875930878,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 28,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "waitForElementVisible",
+                    "message":
+                        "Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name\u0027 is visible",
+                    "description": "",
+                    "startTime": 1526875930879,
+                    "endTime": 1526875931413,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name\u0027 is visible",
+                            "startTime": 1526875931413,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 29,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "setText",
+                    "message":
+                        "Text \u0027hahaha\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name\u0027",
+                    "description": "",
+                    "startTime": 1526875931413,
+                    "endTime": 1526875931497,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Text \u0027hahaha\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name\u0027",
+                            "startTime": 1526875931497,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 30,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "clearText",
+                    "message":
+                        "Text of object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name\u0027 is cleared",
+                    "description": "",
+                    "startTime": 1526875931497,
+                    "endTime": 1526875931519,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Text of object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/input_project_name\u0027 is cleared",
+                            "startTime": 1526875931518,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 31,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "mouseOver",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/label_Project Name\u0027 is hovered",
+                    "description": "",
+                    "startTime": 1526875931519,
+                    "endTime": 1526875931556,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/label_Project Name\u0027 is hovered",
+                            "startTime": 1526875931556,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 32,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "setText",
+                    "message":
+                        "Text \u0027New_Project_Name_Test\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/input_project_name\u0027",
+                    "description": "",
+                    "startTime": 1526875931557,
+                    "endTime": 1526875931688,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Text \u0027New_Project_Name_Test\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/input_project_name\u0027",
+                            "startTime": 1526875931687,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 33,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/div_Project Name (1)\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526875931688,
+                    "endTime": 1526875931743,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/div_Project Name (1)\u0027 is clicked on",
+                            "startTime": 1526875931743,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 34,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "setText",
+                    "message":
+                        "Text \u0027New_Goal_Model_Name_Test\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/input_model_name (1)\u0027",
+                    "description": "",
+                    "startTime": 1526875931743,
+                    "endTime": 1526875931895,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Text \u0027New_Goal_Model_Name_Test\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/input_model_name (1)\u0027",
+                            "startTime": 1526875931895,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 35,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/button_CREATE (1)\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526875931895,
+                    "endTime": 1526875931964,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor/button_CREATE (1)\u0027 is clicked on",
+                            "startTime": 1526875931963,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 36,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "waitForAlert",
+                    "message": "Alert is present after 30 second(s).",
+                    "description": "",
+                    "startTime": 1526875931964,
+                    "endTime": 1526875932492,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "WARNING"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Timeout \u00270\u0027 is invalid. Using default page load timeout: \u002730\u0027",
+                            "startTime": 1526875931973,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        },
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message": "Alert is present after 30 second(s).",
+                            "startTime": 1526875932492,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 37,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "acceptAlert",
+                    "message": "Alert accepted",
+                    "description": "",
+                    "startTime": 1526875932492,
+                    "endTime": 1526875932509,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message": "Alert accepted",
+                            "startTime": 1526875932508,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 38,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "mouseOver",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (5)/button_CANCEL\u0027 is hovered",
+                    "description": "",
+                    "startTime": 1526875932509,
+                    "endTime": 1526875932557,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (5)/button_CANCEL\u0027 is hovered",
+                            "startTime": 1526875932556,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 39,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (5)/button_CANCEL\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526875932557,
+                    "endTime": 1526875932628,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (5)/button_CANCEL\u0027 is clicked on",
+                            "startTime": 1526875932627,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 40,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "mouseOver",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test\u0027 is hovered",
+                    "description": "",
+                    "startTime": 1526875932628,
+                    "endTime": 1526875932674,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test\u0027 is hovered",
+                            "startTime": 1526875932674,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 41,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "waitForElementHasAttribute",
+                    "message":
+                        "Object \u0027Object Repository/rename-project\u0027 does not have attribute \u0027\u0027",
+                    "description": "",
+                    "startTime": 1526875932675,
+                    "endTime": 1526875962756,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "WARNING"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Timeout \u00270\u0027 is invalid. Using default page load timeout: \u002730\u0027",
+                            "startTime": 1526875932686,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        },
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "WARNING"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object \u0027Object Repository/rename-project\u0027 does not have attribute \u0027\u0027",
+                            "startTime": 1526875962756,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 42,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/rename-project\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526875962757,
+                    "endTime": 1526875962813,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/rename-project\u0027 is clicked on",
+                            "startTime": 1526875962813,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 43,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "waitForElementVisible",
+                    "message":
+                        "Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name\u0027 is visible",
+                    "description": "",
+                    "startTime": 1526875962814,
+                    "endTime": 1526875963359,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name\u0027 is visible",
+                            "startTime": 1526875963359,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 44,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "focus",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name\u0027 is focused",
+                    "description": "",
+                    "startTime": 1526875963359,
+                    "endTime": 1526875963427,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name\u0027 is focused",
+                            "startTime": 1526875963426,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 45,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "clearText",
+                    "message":
+                        "Text of object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name\u0027 is cleared",
+                    "description": "",
+                    "startTime": 1526875963427,
+                    "endTime": 1526875963458,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Text of object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name\u0027 is cleared",
+                            "startTime": 1526875963458,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 46,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (13)/button_CANCEL\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526875963458,
+                    "endTime": 1526875963525,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (13)/button_CANCEL\u0027 is clicked on",
+                            "startTime": 1526875963525,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 47,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "mouseOver",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test\u0027 is hovered",
+                    "description": "",
+                    "startTime": 1526875963526,
+                    "endTime": 1526875963570,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test\u0027 is hovered",
+                            "startTime": 1526875963569,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 48,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "waitForElementAttributeValue",
+                    "message":
+                        "Object \u0027Object Repository/rename-project\u0027 does not have attribute \u0027\u0027 with value \u0027\u0027",
+                    "description": "",
+                    "startTime": 1526875963570,
+                    "endTime": 1526875993635,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "WARNING"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Timeout \u00270\u0027 is invalid. Using default page load timeout: \u002730\u0027",
+                            "startTime": 1526875963578,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        },
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "WARNING"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object \u0027Object Repository/rename-project\u0027 does not have attribute \u0027\u0027 with value \u0027\u0027",
+                            "startTime": 1526875993634,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 49,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/rename-project\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526875993635,
+                    "endTime": 1526875993672,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/rename-project\u0027 is clicked on",
+                            "startTime": 1526875993672,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 50,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "waitForElementVisible",
+                    "message":
+                        "Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name\u0027 is visible",
+                    "description": "",
+                    "startTime": 1526875993673,
+                    "endTime": 1526875994208,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "WARNING"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Timeout \u00270\u0027 is invalid. Using default page load timeout: \u002730\u0027",
+                            "startTime": 1526875993675,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        },
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name\u0027 is visible",
+                            "startTime": 1526875994207,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 51,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "focus",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name\u0027 is focused",
+                    "description": "",
+                    "startTime": 1526875994208,
+                    "endTime": 1526875994261,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name\u0027 is focused",
+                            "startTime": 1526875994260,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 52,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "setText",
+                    "message":
+                        "Text \u0027New_Model_Add_Test\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name\u0027",
+                    "description": "",
+                    "startTime": 1526875994261,
+                    "endTime": 1526875994358,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Text \u0027New_Model_Add_Test\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (15)/input_model_name\u0027",
+                            "startTime": 1526875994358,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 53,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (13)/button_CREATE\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526875994358,
+                    "endTime": 1526875994429,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (13)/button_CREATE\u0027 is clicked on",
+                            "startTime": 1526875994429,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 54,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "mouseOver",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test\u0027 is hovered",
+                    "description": "",
+                    "startTime": 1526875994430,
+                    "endTime": 1526875994470,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test\u0027 is hovered",
+                            "startTime": 1526875994470,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 55,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (14)/div_New_Model_Add_Test\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526875994470,
+                    "endTime": 1526875995191,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (14)/div_New_Model_Add_Test\u0027 is clicked on",
+                            "startTime": 1526875995191,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 56,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Edit Page (3)/a_Return\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526875995191,
+                    "endTime": 1526875995315,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_Goal Model Edit Page (3)/a_Return\u0027 is clicked on",
+                            "startTime": 1526875995315,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 57,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "mouseOver",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test\u0027 is hovered",
+                    "description": "",
+                    "startTime": 1526875995315,
+                    "endTime": 1526875995893,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test\u0027 is hovered",
+                            "startTime": 1526875995893,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 58,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "waitForElementHasAttribute",
+                    "message":
+                        "Object \u0027Object Repository/CreateProjectGoalModelSeries/rename-project1\u0027 does not have attribute \u0027\u0027",
+                    "description": "",
+                    "startTime": 1526875995893,
+                    "endTime": 1526876025935,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "WARNING"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Timeout \u00270\u0027 is invalid. Using default page load timeout: \u002730\u0027",
+                            "startTime": 1526875995896,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        },
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "WARNING"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object \u0027Object Repository/CreateProjectGoalModelSeries/rename-project1\u0027 does not have attribute \u0027\u0027",
+                            "startTime": 1526876025935,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 59,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/rename-project1\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526876025935,
+                    "endTime": 1526876025990,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/rename-project1\u0027 is clicked on",
+                            "startTime": 1526876025989,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 60,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "waitForElementVisible",
+                    "message":
+                        "Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/input_project_name\u0027 is visible",
+                    "description": "",
+                    "startTime": 1526876025990,
+                    "endTime": 1526876026529,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "WARNING"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Timeout \u00270\u0027 is invalid. Using default page load timeout: \u002730\u0027",
+                            "startTime": 1526876025992,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        },
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/input_project_name\u0027 is visible",
+                            "startTime": 1526876026529,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 61,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "focus",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/input_project_name\u0027 is focused",
+                    "description": "",
+                    "startTime": 1526876026529,
+                    "endTime": 1526876026572,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/input_project_name\u0027 is focused",
+                            "startTime": 1526876026572,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 62,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "setText",
+                    "message":
+                        "Text \u0027Project_Rename_Test\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/input_project_name\u0027",
+                    "description": "",
+                    "startTime": 1526876026572,
+                    "endTime": 1526876026676,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Text \u0027Project_Rename_Test\u0027 is set on object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/input_project_name\u0027",
+                            "startTime": 1526876026676,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 63,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/button_Confirm\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526876026676,
+                    "endTime": 1526876026747,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/button_Confirm\u0027 is clicked on",
+                            "startTime": 1526876026747,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 64,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "mouseOver",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test\u0027 is hovered",
+                    "description": "",
+                    "startTime": 1526876026747,
+                    "endTime": 1526876026787,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test\u0027 is hovered",
+                            "startTime": 1526876026786,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 65,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "waitForElementHasAttribute",
+                    "message":
+                        "Object \u0027Object Repository/CreateProjectGoalModelSeries/delete-project\u0027 does not have attribute \u0027\u0027",
+                    "description": "",
+                    "startTime": 1526876026787,
+                    "endTime": 1526876056814,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "WARNING"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Timeout \u00270\u0027 is invalid. Using default page load timeout: \u002730\u0027",
+                            "startTime": 1526876026789,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        },
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "WARNING"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object \u0027Object Repository/CreateProjectGoalModelSeries/delete-project\u0027 does not have attribute \u0027\u0027",
+                            "startTime": 1526876056813,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 66,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/delete-project\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526876056814,
+                    "endTime": 1526876056866,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/delete-project\u0027 is clicked on",
+                            "startTime": 1526876056865,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 67,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "mouseOver",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/lable_You would lose all goal\u0027 is hovered",
+                    "description": "",
+                    "startTime": 1526876056866,
+                    "endTime": 1526876056915,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (16)/lable_You would lose all goal\u0027 is hovered",
+                            "startTime": 1526876056915,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 68,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "waitForElementPresent",
+                    "message":
+                        "Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (18)/button_Confirm\u0027 is present",
+                    "description": "",
+                    "startTime": 1526876056916,
+                    "endTime": 1526876056937,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (18)/button_Confirm\u0027 is present",
+                            "startTime": 1526876056937,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 69,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "focus",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (18)/button_Confirm\u0027 is focused",
+                    "description": "",
+                    "startTime": 1526876056937,
+                    "endTime": 1526876056985,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (18)/button_Confirm\u0027 is focused",
+                            "startTime": 1526876056985,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 70,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "waitForElementClickable",
+                    "message":
+                        "Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (18)/button_Confirm\u0027 is clickable",
+                    "description": "",
+                    "startTime": 1526876056985,
+                    "endTime": 1526876057018,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "WARNING"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Timeout \u00270\u0027 is invalid. Using default page load timeout: \u002730\u0027",
+                            "startTime": 1526876056992,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        },
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (18)/button_Confirm\u0027 is clickable",
+                            "startTime": 1526876057018,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 71,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (18)/button_Confirm\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526876057018,
+                    "endTime": 1526876057077,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (18)/button_Confirm\u0027 is clicked on",
+                            "startTime": 1526876057076,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 72,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "verifyElementNotVisible",
+                    "message":
+                        "Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test\u0027 is NOT visible",
+                    "description": "",
+                    "startTime": 1526876057077,
+                    "endTime": 1526876057111,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object \u0027Object Repository/CreateProjectGoalModelSeries/Page_My Project - Goal Model Editor (1)/div_New_Goal_Model_Name_Test\u0027 is NOT visible",
+                            "startTime": 1526876057110,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 73,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "closeBrowser",
+                    "message": "Browser is closed",
+                    "description": "",
+                    "startTime": 1526876057111,
+                    "endTime": 1526876057200,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message": "Browser is closed",
+                            "startTime": 1526876057200,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "testStatus": { "stackTrace": "", "statusValue": "PASSED" },
+                    "type": "MESSAGE",
+                    "name": "",
+                    "message": "Test Cases/Create_Project_Goal_Model_Test",
+                    "startTime": 1526876057200,
+                    "endTime": 0,
+                    "childRecords": [],
+                    "interuppted": false
+                }
+            ],
+            "interuppted": false
+        }
+    ],
+    "interuppted": false
+}
