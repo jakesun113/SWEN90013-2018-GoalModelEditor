@@ -6,7 +6,7 @@ const path = require('path');
 module.exports = {
 
     // default server listening port
-    LISTEN_PORT : "443",
+    LISTEN_PORT : "8080",
 
     // certificate and key file
     KEY_FILE : path.resolve(__dirname, "./certificate/private.pem"),
