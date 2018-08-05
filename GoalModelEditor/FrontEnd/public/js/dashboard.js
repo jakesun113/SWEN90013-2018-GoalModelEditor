@@ -88,7 +88,13 @@ $(document).ready(function() {
             } // end each
         }
     }).fail(function(jqXHR) {
-        alert(jqXHR.responseJSON.message);
+        $("#warning-alert").html(
+            jqXHR.responseJSON.message + " <br>Please try again."
+        );
+        $("#warning-alert")
+            .slideDown()
+            .delay(3000)
+            .slideUp();
     }); // end ajax
 }); // end ready
 
@@ -153,41 +159,23 @@ $("#create-project").submit(function(evt) {
             projectHTML = projectHTML + "</div>";
             $("#projects-container").append(projectHTML);
             $("#add-project").modal("toggle");
-            // send create goal model request
-            var create_model_url =
-                "/goal_model/" + id + "/" + project.project_id;
-            // start ajax
-            $.ajax(create_model_url, {
-                data: formData,
-                type: "POST",
-                headers: { Authorization: "Bearer " + token },
-                success: function(model) {
-                    var modelHTML = "";
-                    modelHTML =
-                        modelHTML +
-                        '<div class="row goal-model py-1" id="' +
-                        model.model_id +
-                        '">';
-                    modelHTML =
-                        modelHTML +
-                        '<div class="col-6 text-center">' +
-                        model.model_name +
-                        "</div>";
-                    modelHTML =
-                        modelHTML +
-                        '<div class="col-6 text-center text-color small">' +
-                        model.last_modified +
-                        "</div> </div>";
-                    $("#" + project.project_id + " .goal-list")
-                        .eq(0)
-                        .append(modelHTML);
-                }
-            }).fail(function(jqXHR) {
-                alert(jqXHR.statusText);
-            }); // end ajax
+            $("#success-alert").html(
+                "Project: " + project.project_name + " successfully created."
+            );
+            $("#success-alert")
+                .slideDown()
+                .delay(3000)
+                .slideUp();
         }
     }).fail(function(jqXHR) {
-        alert(jqXHR.responseJSON.message);
+        $("#add-project").modal("toggle");
+        $("#warning-alert").html(
+            jqXHR.responseJSON.message + " <br>Please try again."
+        );
+        $("#warning-alert")
+            .slideDown()
+            .delay(3000)
+            .slideUp();
     }); // end ajax
 }); // end submit
 
@@ -233,9 +221,22 @@ $("#create-model").submit(function(evt) {
                 .eq(0)
                 .append(modelHTML);
             $("#add-model").modal("toggle");
+            $("#success-alert").html(
+                "Model: " + model.project_name + " successfully created."
+            );
+            $("#success-alert")
+                .slideDown()
+                .delay(3000)
+                .slideUp();
         }
     }).fail(function(jqXHR) {
-        alert(jqXHR.responseJSON.message);
+        $("#warning-alert").html(
+            jqXHR.responseJSON.message + " <br>Please try again."
+        );
+        $("#warning-alert")
+            .slideDown()
+            .delay(3000)
+            .slideUp();
     }); // end ajax
 });
 
@@ -341,16 +342,32 @@ $("#rename_project").submit(function(evt) {
             Authorization: "Bearer " + token
         },
         success: function(project) {
-            console.log(project);
-            console.log($("#" + pid + " h6").eq(0));
-            console.log(project.project_name);
+            $("#rename-project").modal("toggle");
+            $("#success-alert").html(
+                "Project:" +
+                    $("#" + pid + " h6")
+                        .eq(0)
+                        .html() +
+                    " successfully renamed to " +
+                    project.project_name +
+                    "."
+            );
+            $("#success-alert")
+                .slideDown()
+                .delay(3000)
+                .slideUp();
             $("#" + pid + " h6")
                 .eq(0)
                 .html(project.project_name);
-            $("#rename-project").modal("toggle");
         }
     }).fail(function(jqXHR) {
-        alert(jqXHR.responseJSON.message);
+        $("#warning-alert").html(
+            jqXHR.responseJSON.message + " <br>Please try again."
+        );
+        $("#warning-alert")
+            .slideDown()
+            .delay(3000)
+            .slideUp();
     }); // end ajax
 });
 
@@ -413,8 +430,26 @@ $("#delete_project").submit(function(evt) {
         success: function(res) {
             $("#" + pid).hide();
             $("#delete-project").modal("toggle");
+            $("#success-alert").html(
+                "Project: " +
+                    $("#" + pid + " h6")
+                        .eq(0)
+                        .html() +
+                    " successfully deleted."
+            );
+            $("#success-alert")
+                .slideDown()
+                .delay(3000)
+                .slideUp();
         }
     }).fail(function(jqXHR) {
-        alert(jqXHR.responseJSON.message);
+        $("#delete-project").modal("toggle");
+        $("#warning-alert").html(
+            jqXHR.responseJSON.message + " <br>Please try again."
+        );
+        $("#warning-alert")
+            .slideDown()
+            .delay(3000)
+            .slideUp();
     }); // end ajax
 });
