@@ -12,6 +12,11 @@ $(document).ready(function() {
         .html(Cookies.get("UIID"));
 });
 
+$(document).on("mouseover", "#ul li input", function() {
+    // alert($(this).val());
+    $("#notedata").html("<p>" + $(this).attr("note") + "</p>");
+});
+
 var num = 1;
 function readImage() {
     if (window.File && window.FileList && window.FileReader) {
@@ -362,6 +367,7 @@ function addCluster() {
 // takes a nodes array and turns it into a <ul>
 function parseNodes(nodes) {
     var ul = document.createElement("UL");
+    ul.setAttribute("id", "ul");
     for (var i = 0; i < nodes.length; i++) {
         //ul.innerHTML = '<div>'+ node.GoalDescription + '</div>';
         ul.appendChild(parseNode(nodes[i]));
@@ -373,7 +379,7 @@ function parseNodes(nodes) {
 function parseNode(node) {
     var li = document.createElement("LI");
     li.setAttribute("class", node.GoalType);
-    li.setAttribute("id", node.GoalID);
+    // li.setAttribute("id", node.GoalID);
     li.innerHTML =
         '<input id= "' +
         node.GoalID +
@@ -381,8 +387,11 @@ function parseNode(node) {
         node.GoalType +
         '" value = "' +
         node.GoalContent +
-        '" placeholder="New goal"' +
+        '" placeholder="New goal" note="' +
+        node.GoalNote +
+        '"' +
         "/>";
+
     //countID(node.GoalType);
 
     // recursion to add sub goal
@@ -401,14 +410,14 @@ document.onkeydown = function(event) {
         goalType = document.activeElement.attributes["class"].nodeValue;
         goalID = getID(goalType);
         event.preventDefault();
+
         var newlist =
-            '<li id="' +
-            goalID +
-            '"><input id="' +
+            '<li><input id="' +
             goalID +
             '" class="' +
             goalType +
-            '" placeholder="New goal"/></li>';
+            '" placeholder="New goal" note="notes" value=""/></li>';
+
         if ($(event.target).parent().length > 0) {
             var parent = $(event.target).parent();
             parent.after(newlist);
