@@ -1,6 +1,6 @@
 'use strict';
-const mysql = require('../../BackEnd/node_modules/mysql');
-const Promise = require('../../BackEnd/node_modules/bluebird');
+const mysql = require('../../BackEnd/node_modules/mysql/index');
+const Promise = require('../../BackEnd/node_modules/bluebird/js/release/bluebird');
 
 const dbconfig = require('./dbconfig.json');
 
@@ -59,9 +59,12 @@ const SQL_RET_MODEL = " SELECT * FROM GoalModel WHERE ModelId = ? ";
  * get all project and its corresponding goalmodels
  * @type {string}
  */
-const SQL_GET_PROJ_GOALMODEL = "SELECT * " +
-    "FROM GoalModel AS GM INNER JOIN User_Project AS UP INNER JOIN Project " +
-    "ON UP.ProjectId = GM.ProjectId AND UP.ProjectId = Project.ProjectId " +
+const SQL_GET_PROJ_GOALMODEL =
+    "SELECT * " +
+    "FROM Project INNER JOIN User_Project AS UP " +
+    "ON  UP.ProjectId = Project.ProjectId " +
+    "LEFT JOIN GoalModel AS GM " +
+    "ON UP.ProjectId = GM.ProjectId " +
     "WHERE UserId = ?";
 /**
  * Get information of a goal model by its id
