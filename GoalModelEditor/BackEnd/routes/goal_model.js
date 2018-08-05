@@ -10,7 +10,7 @@ const fs = require('fs');
 
 // security related imports
 const auth = require("../authen");
-const db = require("../DBModule/DBModule.js");
+const db = require(path.resolve(__dirname, "../../Database/DBModule/DBModule.js"));
 
 /* GET get the edit page */
 router.get('/edit', function (req, res) {

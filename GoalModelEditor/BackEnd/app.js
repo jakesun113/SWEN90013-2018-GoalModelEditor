@@ -15,17 +15,17 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 const path = require('path');
 
+// server config
+let config = require('./config');
+
 // database connection
-const database = require('./DBModule/DBModule.js');
+const database = require(path.resolve(__dirname, "../Database/DBModule/DBModule.js"));
 
 // routes to endpoints
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/user');
 const projectRouter = require('./routes/project');
 const goalModelRouter = require("./routes/goal_model");
-
-// server config
-let config = require('./config');
 
 
 var app = express();

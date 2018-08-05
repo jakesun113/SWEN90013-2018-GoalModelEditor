@@ -1,6 +1,6 @@
 'use strict';
-const mysql = require('mysql');
-const Promise = require('bluebird');
+const mysql = require('../../BackEnd/node_modules/mysql');
+const Promise = require('../../BackEnd/node_modules/bluebird');
 
 const dbconfig = require('./dbconfig.json');
 
