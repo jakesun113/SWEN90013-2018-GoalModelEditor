@@ -187,16 +187,16 @@
                     </div>
 
                     <!--used goals-->
-                    <div id="usedgoal" class="showborder inside-scrollbar" style="display: none">
-                        <h6>Used Goals</h6>
-                        <div id="usedgoaldata"></div>
+                    <div id="notes" class="showborder inside-scrollbar" style="display: none">
+                        <h6>Notes</h6>
+                        <div id="notedata"></div>
                     </div>
 
                     <!--deleted goals-->
-                    <div id="deletedgoal" class="showborder inside-scrollbar" style="display: none">
-                        <h6>Deleted Goals</h6>
-                        <div id="deletedgoaldata"></div>
-                    </div>
+                    <!--<div id="deletedgoal" class="showborder inside-scrollbar" style="display: none">-->
+                        <!--<h6>Deleted Goals</h6>-->
+                        <!--<div id="deletedgoaldata"></div>-->
+                    <!--</div>-->
 
                 </div>
 
@@ -204,10 +204,12 @@
             <!--to do list section end-->
 
             <!--cluster section start-->
-            <div id="cluster" class="col-3 showborder scrollbar" style="display: none; background-color:rgba(35, 144, 231, 0.1);">
+            <div id="cluster" class="col-7 showborder scrollbar" style="display: none; background-color:rgba(35, 144, 231, 0.1);">
                 <div>
                     <h4>Cluster</h4>
                     <button class="btn-sm btn-outline-primary" onclick="addCluster()">Add</button>
+                    <button class="btn-sm btn-outline-primary" id="clusternextbtn" onclick="clusternext()">Render</button>
+                    <button style="display: none" class="btn-sm btn-outline-primary" id="renderbtn" onclick="render()">Render</button>
                 </div>
                 <!--show cluster data from JSON-->
                 <div class="cluster showborder inside-scrollbar" id="cluster_1" style="background-color: white"></div>
@@ -216,22 +218,21 @@
             </div>
             <!--cluster section end-->
 
-            <!--hierachy section start-->
-            <div id="hierarchy" class="col-4 showborder scrollbar" style="display: none; background-color: rgb(236, 244, 244)">
-                <div>
-                    <h4>Hierarchy</h4>
-                    <button class="btn-sm btn-outline-primary" id="hierachynextbtn" onclick="hierachynextbtn()">Generate</button>
-                </div>
-                <!--show hierarchy data from JSON-->
-                <div class="hierarchy showborder inside-scrollbar" id="hierarchydata" style="background-color: white"></div>
-            </div>
-            <!--hierachy section end-->
+            <!--&lt;!&ndash;hierachy section start&ndash;&gt;-->
+            <!--<div id="hierarchy" class="col-4 showborder scrollbar" style="display: none; background-color: rgb(236, 244, 244)">-->
+                <!--<div>-->
+                    <!--<h4>Hierarchy</h4>-->
+
+                <!--</div>-->
+                <!--&lt;!&ndash;show hierarchy data from JSON&ndash;&gt;-->
+                <!--<div class="hierarchy showborder inside-scrollbar" id="hierarchydata" style="background-color: white"></div>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;hierachy section end&ndash;&gt;-->
 
             <!--generate section start-->
             <div id="generator" class="col-sm showborder scrollbar" style="display: none; background-color: rgb(236, 244, 244)">
                 <div>
                     <h3>Generate Your Goal Model</h3>
-                    <button id="hierachynextbtn" class="btn-sm btn-outline-primary" onclick="hierachynextbtn()">Back</button>
                 </div>
                 <div>
                     <!--mxGraph part here-->
@@ -244,14 +245,13 @@
 </div>
 
 
-
-
 <!-- Loads and initializes the Bootstrap javascript -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-<!--<script type="text/javascript" src="/js/mxClient.js"></script>-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <script type="text/javascript" src="/js/projectedit.js"></script>
 <footer>

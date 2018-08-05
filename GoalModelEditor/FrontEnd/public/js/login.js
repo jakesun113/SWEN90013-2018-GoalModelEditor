@@ -24,23 +24,40 @@
 // Login submit
 // send the request to front-end server with {username, password}
 // store the response (id) into cookies - Name: UID
-$('#login').submit(function(evt){
+$("#login").submit(function(evt) {
     evt.preventDefault();
-    var url = '/user/login';
+    var url = "/user/login";
     var formData = $(this).serialize();
     $.ajax(url, {
         data: formData,
         type: "POST",
-        success: function(res){
+        success: function(res) {
             var tokenP = JSON.parse(JSON.stringify(res));
             console.log(tokenP);
-            var cookie = {"token": tokenP.token, "uid": tokenP.user_id};
-            Cookies.set('LOKIDIED', JSON.stringify(cookie), { expires: 1, path: '/' });
+            var cookie = { token: tokenP.token, uid: tokenP.user_id };
+            Cookies.set("LOKIDIED", JSON.stringify(cookie), {
+                expires: 1,
+                path: "/"
+            });
             // TODO change it later, for username passing
-            Cookies.set('UIID', $('#username').val(), {expires: 1, path: '/'});
-            window.location.href = '/dashboard';
+            Cookies.set("UIID", $("#username").val(), {
+                expires: 1,
+                path: "/"
+            });
+            $("#login-successful-title").html(
+                '<h5 class="modal-title" id="login-successful-title">Welcome! ' +
+                    $("#username").val() +
+                    "</h5>"
+            );
+            $("#login-successful").modal("show");
         }
-    }).fail(function(jqXHR){
-        alert(jqXHR.responseJSON.message);
-    });// end ajax
-});// end submit
+    }).fail(function(jqXHR) {
+        $("#login-error").html(
+            jqXHR.responseJSON.message + " <br>Please try again."
+        );
+        $("#login-error")
+            .slideDown()
+            .delay(3000)
+            .slideUp();
+    }); // end ajax
+}); // end submit

@@ -1,22 +1,22 @@
 /* Server Configuration File
  */
 
-const path = require('path');
+const path = require("path");
 
 module.exports = {
-
     // default server listening port
-    LISTEN_PORT : "8000",
+    LISTEN_PORT: "443",
 
     // certificate and key file
-    KEY_FILE : path.resolve(__dirname, "./certificate/private.pem"),
-    CERT_FILE : path.resolve(__dirname, "./certificate/file.crt"),
+    KEY_FILE: path.resolve(__dirname, "./certificate/private.pem"),
+    CERT_FILE: path.resolve(__dirname, "./certificate/file.crt"),
 
     // paths to front-end files (views and source files)
-    FRONT_VIEW_DIR : path.resolve(__dirname, "../FrontEnd/view"),
-    FRONT_SRC_DIR : path.resolve(__dirname, "../FrontEnd/public"),
+    FRONT_VIEW_DIR: path.resolve(__dirname, "../FrontEnd/view"),
+    FRONT_SRC_DIR: path.resolve(__dirname, "../FrontEnd/public"),
+
     // the secret for encrypting the cookie?
-    COOKIE_SECRET : ""
+    COOKIE_SECRET: ""
 };
 /*
 module.exports = {
