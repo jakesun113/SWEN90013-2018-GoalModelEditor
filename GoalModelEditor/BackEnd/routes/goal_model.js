@@ -206,18 +206,22 @@ router.delete("/:userId/:goalmodelId", (req, res, next) => {
 router.get("/:userId/:goalmodelId", (req, res, next) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
+        //auth is not successful
         res.statusCode = 401;
         res.json({ created: false, message: "Authentication failed" });
         return res.end();
     }
 
-    var filepath = "";
+    var filepath = ""; //store the file path of goal model in this
     db.getGoalmodel(req.params.goalmodelId)
         .then(result => {
+            //store the file path
             filepath = result.filepath;
         })
         .catch(err => {
             if ((err.code = db.INVALID)) {
+                //if db response err code "INVALID"
+                //set response : goal model is not found
                 res.statusCode = 404;
                 res.json({
                     message:
@@ -225,14 +229,17 @@ router.get("/:userId/:goalmodelId", (req, res, next) => {
                 });
                 return res.end();
             }
+            //set response: failed to get goal model
             res.statusCode = 500;
             res.json({
                 message: "Failed to get the goal model content: " + err.message
             });
             return res.end();
         });
+    //file path does not exist
     if (filepath == "" || !fs.existsSync(filepath)) {
         console.log("no such file");
+        //set response : file does not exists
         res.statusCode = 500;
         res.json({
             message:
@@ -240,8 +247,10 @@ router.get("/:userId/:goalmodelId", (req, res, next) => {
         });
         return res.end();
     }
+    //read the file and response with a json file
     fs.readFile(filepath, function(err, res) {
         if (err) {
+            //error response
             console.log(err);
             res.statusCode = 500;
             res.json({
@@ -249,6 +258,8 @@ router.get("/:userId/:goalmodelId", (req, res, next) => {
             });
             return res.end();
         }
+        //set response: successfully retrieve the goal model file and response
+        // with a json file
         res.statusCode = 200;
         res.json({ content: res });
         console.log(res);
