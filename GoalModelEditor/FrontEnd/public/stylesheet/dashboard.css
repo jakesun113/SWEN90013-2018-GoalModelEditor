@@ -1,12 +1,12 @@
 /* header style */
 header {
-  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.5);
-  background-image: url("/img/profile-background.jpg");
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.5);
+    background-image: url("/img/profile-background.jpg");
 }
 
 /* color of the text */
 .text-color {
-  color: rgba(0, 0, 0, 0.54);
+    color: rgba(0, 0, 0, 0.54);
 }
 
 /* for v1 */
@@ -25,101 +25,101 @@ header {
 
 /* main style */
 main {
-  background-color: #f5f5f5;
-  height: 80vh;
-  display: block;
+    background-color: #f5f5f5;
+    height: 80vh;
+    display: block;
 }
 
 /* project container style */
 #projects-container {
-  height: 75vh;
-  display: block;
-  overflow: scroll;
+    height: 75vh;
+    display: block;
+    overflow: scroll;
 }
 
 /* project img */
 .project-icon {
-  height: 60%;
-  max-height: 30vh;
-  width: auto;
-  max-width: 25vw;
-  margin: 1.25rem;
-  opacity: 1;
+    height: 60%;
+    max-height: 30vh;
+    width: auto;
+    max-width: 25vw;
+    margin: 1.25rem;
+    opacity: 1;
 }
 
 /* project block */
 .project {
-  padding: 0 10px 0 0;
-  display: inline-block;
-  height: 300px;
-  max-height: 30vh;
-  width: 33%;
-  max-width: 30vw;
-  overflow-y: hidden;
-  position: relative;
+    padding: 0 10px 0 0;
+    display: inline-block;
+    height: 300px;
+    max-height: 30vh;
+    width: 33%;
+    max-width: 30vw;
+    overflow-y: hidden;
+    position: relative;
 }
 
 /* hide goal list*/
 .project .goal-list {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 65%;
-  width: 100%;
-  opacity: 0;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  border-bottom: 1px solid white;
-  padding: 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 65%;
+    width: 100%;
+    opacity: 0;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    border-bottom: 1px solid white;
+    padding: 0;
 }
 
 /* hover on project
    show goal list */
 .project:hover {
-  background-image: -webkit-radial-gradient(80% 10%, skyblue, transparent),
-    -webkit-radial-gradient(80% 50%, blue, transparent),
-    -webkit-radial-gradient(20% 80%, lightblue, transparent),
-    -webkit-radial-gradient(10% 10%, darkblue, transparent);
-  color: #fff;
-  display: inline-block;
-  border-radius: 20px;
-  padding: 0;
+    background-image: -webkit-radial-gradient(80% 10%, skyblue, transparent),
+        -webkit-radial-gradient(80% 50%, blue, transparent),
+        -webkit-radial-gradient(20% 80%, lightblue, transparent),
+        -webkit-radial-gradient(10% 10%, darkblue, transparent);
+    color: #fff;
+    display: inline-block;
+    border-radius: 20px;
+    padding: 0;
 }
 
 .project:hover .project-icon {
-  opacity: 0;
-  margin-bottom: 0;
+    opacity: 0;
+    margin-bottom: 0;
 }
 
 .project:hover .goal-list {
-  opacity: 1;
-  display: inline-block;
+    opacity: 1;
+    display: inline-block;
 }
 
 .project .goal-model {
-  border-bottom: 1px solid white;
+    border-bottom: 1px solid white;
 }
 
 .project .goal-model-nav {
-  border-bottom: 3px solid white;
+    border-bottom: 3px solid white;
 }
 
 .project .create-goal-model {
-  opacity: 0;
+    opacity: 0;
 }
 
 .project:hover h6 {
-  height: 10%;
-  margin-bottom: 0;
+    height: 10%;
+    margin-bottom: 0;
 }
 
 .project:hover .create-goal-model {
-  height: 10%;
-  opacity: 1;
+    height: 10%;
+    opacity: 1;
 }
 
 .goal-model:hover {
-  background: linear-gradient(to right, #69c, #069, #69c);
+    background: linear-gradient(to right, #69c, #069, #69c);
 }
