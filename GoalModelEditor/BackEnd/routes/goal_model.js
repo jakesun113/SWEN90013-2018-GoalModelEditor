@@ -30,7 +30,8 @@ router.post("/:userId/:projectId", (req, res, next) => {
     }
 
     // path to the directory where the goal models should be stored
-    // path should be '/etc/GoalModelEditor' but need to find a way to resolve the folder permission problem
+    // path should be '/etc/GoalModelEditor' but need to find a way to resolve
+    // the folder permission problem
     var dirpath = "./UserFiles/" + req.params.userId + "/";
 
     // create new goal model
@@ -255,6 +256,73 @@ router.delete("/:userId/:goalmodelId", (req, res, next) => {
             });
             return res.end();
         });
+});
+
+/* Get Goal Model Content */
+router.get("/:userId/:goalmodelId", (req, res, next) => {
+    // check token for authentication
+    if (!auth.authenticate(req.headers)) {
+        //auth is not successful
+        res.statusCode = 401;
+        res.json({ created: false, message: "Authentication failed" });
+        return res.end();
+    }
+
+    var filepath = ""; //store the file path of goal model in this
+    db
+        .getGoalmodel(req.params.goalmodelId)
+        .then(result => {
+            //store the file path
+            filepath = result.filepath;
+        })
+        .catch(err => {
+            if ((err.code = db.INVALID)) {
+                //if db response err code "INVALID"
+                //set response : goal model is not found
+                res.statusCode = 404;
+                res.json({
+                    message:
+                        "Failed to get the goal model content: " + err.message
+                });
+                return res.end();
+            }
+            //set response: failed to get goal model
+            res.statusCode = 500;
+            res.json({
+                message: "Failed to get the goal model content: " + err.message
+            });
+            return res.end();
+        });
+    //file path does not exist
+    if (filepath == "" || !fs.existsSync(filepath)) {
+        console.log("no such file");
+        //set response : file does not exists
+        res.statusCode = 500;
+        res.json({
+            message:
+                "Failed to open the goal model: goal model file does not exists"
+        });
+        return res.end();
+    }
+    //read the file and response with a json file
+    fs.readFile(filepath, function(err, res) {
+        if (err) {
+            //error response
+            console.log(err);
+            res.statusCode = 500;
+            res.json({
+                message: "Failed to get the goal model: " + err.message
+            });
+            return res.end();
+        }
+        //set response: successfully retrieve the goal model file and response
+        // with a json file
+        res.statusCode = 200;
+        res.json({ content: res });
+        console.log(res);
+        console.log("get goal model");
+        return res.end();
+    });
 });
 
 /* Recursively creates the whole path to a directory */
