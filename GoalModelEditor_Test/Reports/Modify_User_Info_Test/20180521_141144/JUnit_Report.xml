@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Modify_User_Info_Test" time="5" tests="1" failures="0" errors="0">
+   <testsuite name="Modify_User_Info_Test" tests="1" failures="0" errors="0" time="5" timestamp="2018-05-21 14:14:20" hostname="edric.dang - 10.0.0.3" id="Test Suites/Modify_User_Info_Test">
+      <properties>
+         <property name="deviceName" value=""/>
+         <property name="devicePlatform" value=""/>
+         <property name="logFolder" value="/Users/edric.dang/Desktop/swen90013-2018-go/GoalModelEditor_Test/Reports/Modify_User_Info_Test/20180521_141144"/>
+         <property name="logFiles" value="/Users/edric.dang/Desktop/swen90013-2018-go/GoalModelEditor_Test/Reports/Modify_User_Info_Test/20180521_141144/execution0.log"/>
+         <property name="attachments" value=""/>
+         <property name="hostName" value="edric.dang - 10.0.0.3"/>
+         <property name="os" value="Mac OS X 64bit"/>
+         <property name="katalonVersion" value="5.4.1.1"/>
+         <property name="browser" value="Chrome 66.0.3359.181"/>
+         <property name="hostAddress" value="10.0.0.3"/>
+         <property name="sessionId" value="762b7dc907352aeb650e23efca8a88a6"/>
+         <property name="seleniumVersion" value="3.7.1"/>
+         <property name="proxyInformation" value="ProxyInformation{proxyOption=NO_PROXY, proxyServerType=HTTP, password=, proxyServerAddress=, proxyServerPort=0}"/>
+         <property name="platform" value="Mac OS X"/>
+      </properties>
+      <testcase name="Test Cases/Modify_User_Info_Test" classname="Test Cases/Modify_User_Info_Test" status="PASSED">
+         <system-out><![CDATA[2018-05-21 14:14:20 - [TEST_CASE][PASSED] - Test Cases/Modify_User_Info_Test: Test Cases/Modify_User_Info_Test
+
+2018-05-21 14:14:21 - [TEST_STEP][PASSED] - openBrowser: Browser is opened with url: ''
+
+2018-05-21 14:14:22 - [MESSAGE][PASSED] - Browser is opened with url: ''
+
+2018-05-21 14:14:22 - [TEST_STEP][PASSED] - navigateToUrl: Navigate to 'https://localhost:8080/' successfully
+
+2018-05-21 14:14:23 - [MESSAGE][PASSED] - Navigate to 'https://localhost:8080/' successfully
+
+2018-05-21 14:14:23 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Modify_User_Profile_Series/Page_Goal Model Editor/a_Go to Goal Model Editor' is clicked on
+
+2018-05-21 14:14:23 - [MESSAGE][PASSED] - Object: 'Object Repository/Modify_User_Profile_Series/Page_Goal Model Editor/a_Go to Goal Model Editor' is clicked on
+
+2018-05-21 14:14:23 - [TEST_STEP][PASSED] - setText: Text 'us' is set on object 'Object Repository/Modify_User_Profile_Series/Page_Sign in/input_username'
+
+2018-05-21 14:14:23 - [MESSAGE][PASSED] - Text 'us' is set on object 'Object Repository/Modify_User_Profile_Series/Page_Sign in/input_username'
+
+2018-05-21 14:14:23 - [TEST_STEP][PASSED] - setText: Text 'username4' is set on object 'Object Repository/Modify_User_Profile_Series/Page_Sign in/input_username'
+
+2018-05-21 14:14:23 - [MESSAGE][PASSED] - Text 'username4' is set on object 'Object Repository/Modify_User_Profile_Series/Page_Sign in/input_username'
+
+2018-05-21 14:14:23 - [TEST_STEP][PASSED] - setText: Text '1234' is set on object 'Object Repository/Modify_User_Profile_Series/Page_Sign in/input_password'
+
+2018-05-21 14:14:24 - [MESSAGE][PASSED] - Text '1234' is set on object 'Object Repository/Modify_User_Profile_Series/Page_Sign in/input_password'
+
+2018-05-21 14:14:24 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Modify_User_Profile_Series/Page_Sign in/button_Sign in' is clicked on
+
+2018-05-21 14:14:24 - [MESSAGE][PASSED] - Object: 'Object Repository/Modify_User_Profile_Series/Page_Sign in/button_Sign in' is clicked on
+
+2018-05-21 14:14:24 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Modify_User_Profile_Series/Page_My Project - Goal Model Editor/button_username4' is clicked on
+
+2018-05-21 14:14:24 - [MESSAGE][PASSED] - Object: 'Object Repository/Modify_User_Profile_Series/Page_My Project - Goal Model Editor/button_username4' is clicked on
+
+2018-05-21 14:14:24 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Modify_User_Profile_Series/Page_My Project - Goal Model Editor/a_Profile' is clicked on
+
+2018-05-21 14:14:24 - [MESSAGE][PASSED] - Object: 'Object Repository/Modify_User_Profile_Series/Page_My Project - Goal Model Editor/a_Profile' is clicked on
+
+2018-05-21 14:14:24 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Modify_User_Profile_Series/Page_User Profile/a_Return' is clicked on
+
+2018-05-21 14:14:24 - [MESSAGE][PASSED] - Object: 'Object Repository/Modify_User_Profile_Series/Page_User Profile/a_Return' is clicked on
+
+2018-05-21 14:14:24 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Modify_User_Profile_Series/Page_My Project - Goal Model Editor/button_username4' is clicked on
+
+2018-05-21 14:14:25 - [MESSAGE][PASSED] - Object: 'Object Repository/Modify_User_Profile_Series/Page_My Project - Goal Model Editor/button_username4' is clicked on
+
+2018-05-21 14:14:25 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Modify_User_Profile_Series/Page_My Project - Goal Model Editor/a_Profile' is clicked on
+
+2018-05-21 14:14:25 - [MESSAGE][PASSED] - Object: 'Object Repository/Modify_User_Profile_Series/Page_My Project - Goal Model Editor/a_Profile' is clicked on
+
+2018-05-21 14:14:25 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Modify_User_Profile_Series/Page_User Profile/input_edit' is clicked on
+
+2018-05-21 14:14:25 - [MESSAGE][PASSED] - Object: 'Object Repository/Modify_User_Profile_Series/Page_User Profile/input_edit' is clicked on
+
+2018-05-21 14:14:25 - [TEST_STEP][PASSED] - setText: Text 'First_Name' is set on object 'Object Repository/Modify_User_Profile_Series/Page_User Profile/input_firstname'
+
+2018-05-21 14:14:25 - [MESSAGE][PASSED] - Text 'First_Name' is set on object 'Object Repository/Modify_User_Profile_Series/Page_User Profile/input_firstname'
+
+2018-05-21 14:14:25 - [TEST_STEP][PASSED] - setText: Text 'Last_Name' is set on object 'Object Repository/Modify_User_Profile_Series/Page_User Profile/input_lastname'
+
+2018-05-21 14:14:25 - [MESSAGE][PASSED] - Text 'Last_Name' is set on object 'Object Repository/Modify_User_Profile_Series/Page_User Profile/input_lastname'
+
+2018-05-21 14:14:25 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Modify_User_Profile_Series/Page_User Profile/input_confirm1' is clicked on
+
+2018-05-21 14:14:25 - [MESSAGE][PASSED] - Object: 'Object Repository/Modify_User_Profile_Series/Page_User Profile/input_confirm1' is clicked on
+
+2018-05-21 14:14:25 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Modify_User_Profile_Series/Page_User Profile/a_Return' is clicked on
+
+2018-05-21 14:14:25 - [MESSAGE][PASSED] - Object: 'Object Repository/Modify_User_Profile_Series/Page_User Profile/a_Return' is clicked on
+
+2018-05-21 14:14:25 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Modify_User_Profile_Series/Page_My Project - Goal Model Editor/button_username4' is clicked on
+
+2018-05-21 14:14:26 - [MESSAGE][PASSED] - Object: 'Object Repository/Modify_User_Profile_Series/Page_My Project - Goal Model Editor/button_username4' is clicked on
+
+2018-05-21 14:14:26 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Modify_User_Profile_Series/Page_My Project - Goal Model Editor (1)/a_Sign out' is clicked on
+
+2018-05-21 14:14:26 - [MESSAGE][PASSED] - Object: 'Object Repository/Modify_User_Profile_Series/Page_My Project - Goal Model Editor (1)/a_Sign out' is clicked on
+
+2018-05-21 14:14:26 - [TEST_STEP][PASSED] - verifyElementPresent: Object 'Object Repository/Modify_User_Profile_Series/Page_Goal Model Editor (1)/a_Go to Goal Model Editor' is present
+
+2018-05-21 14:14:26 - [MESSAGE][WARNING] - Timeout '0' is invalid. Using default page load timeout: '30'
+
+2018-05-21 14:14:26 - [MESSAGE][PASSED] - Object 'Object Repository/Modify_User_Profile_Series/Page_Goal Model Editor (1)/a_Go to Goal Model Editor' is present
+
+2018-05-21 14:14:26 - [TEST_STEP][PASSED] - closeBrowser: Browser is closed
+
+2018-05-21 14:14:26 - [MESSAGE][PASSED] - Browser is closed]]></system-out>
+         <system-err><![CDATA[]]></system-err>
+      </testcase>
+      <system-out><![CDATA[2018-05-21 14:14:20 - [TEST_SUITE][PASSED] - Modify_User_Info_Test: Test Cases/Modify_User_Info_Test]]></system-out>
+      <system-err><![CDATA[]]></system-err>
+   </testsuite>
+</testsuites>

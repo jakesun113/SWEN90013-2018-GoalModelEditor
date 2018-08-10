@@ -1,0 +1,662 @@
+{
+    "devicePlatform": "",
+    "logFolder":
+        "/Users/edric.dang/Desktop/swen90013-2018-go/GoalModelEditor_Test/Reports/Modify_User_Info_Test/20180521_141144",
+    "runData": {
+        "hostName": "edric.dang - 10.0.0.3",
+        "os": "Mac OS X 64bit",
+        "katalonVersion": "5.4.1.1",
+        "browser": "Chrome 66.0.3359.181",
+        "hostAddress": "10.0.0.3",
+        "sessionId": "762b7dc907352aeb650e23efca8a88a6",
+        "seleniumVersion": "3.7.1",
+        "proxyInformation":
+            "ProxyInformation{proxyOption\u003dNO_PROXY, proxyServerType\u003dHTTP, password\u003d, proxyServerAddress\u003d, proxyServerPort\u003d0}",
+        "platform": "Mac OS X"
+    },
+    "type": "TEST_SUITE",
+    "name": "Modify_User_Info_Test",
+    "id": "Test Suites/Modify_User_Info_Test",
+    "source": "",
+    "message": "Test Cases/Modify_User_Info_Test",
+    "description": "",
+    "startTime": 1526876060606,
+    "endTime": 1526876066468,
+    "childRecords": [
+        {
+            "isOptional": false,
+            "type": "TEST_CASE",
+            "name": "Test Cases/Modify_User_Info_Test",
+            "id": "Test Cases/Modify_User_Info_Test",
+            "source":
+                "\\\\Users\\\\edric.dang\\\\Desktop\\\\swen90013-2018-go\\\\GoalModelEditor_Test\\\\Test Cases\\\\Modify_User_Info_Test.tc",
+            "message": "Test Cases/Modify_User_Info_Test",
+            "description": "",
+            "startTime": 1526876060815,
+            "endTime": 1526876066451,
+            "childRecords": [
+                {
+                    "testStatus": { "stackTrace": "", "statusValue": "INFO" },
+                    "type": "MESSAGE",
+                    "name": "",
+                    "message": "Evaluating variables for test case",
+                    "startTime": 1526876060835,
+                    "endTime": 0,
+                    "childRecords": [],
+                    "interuppted": false
+                },
+                {
+                    "index": 1,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "openBrowser",
+                    "message": "Browser is opened with url: \u0027\u0027",
+                    "description": "",
+                    "startTime": 1526876061026,
+                    "endTime": 1526876062767,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Browser is opened with url: \u0027\u0027",
+                            "startTime": 1526876062766,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 2,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "navigateToUrl",
+                    "message":
+                        "Navigate to \u0027https://localhost:8080/\u0027 successfully",
+                    "description": "",
+                    "startTime": 1526876062768,
+                    "endTime": 1526876063192,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Navigate to \u0027https://localhost:8080/\u0027 successfully",
+                            "startTime": 1526876063191,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 3,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/Modify_User_Profile_Series/Page_Goal Model Editor/a_Go to Goal Model Editor\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526876063192,
+                    "endTime": 1526876063672,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/Modify_User_Profile_Series/Page_Goal Model Editor/a_Go to Goal Model Editor\u0027 is clicked on",
+                            "startTime": 1526876063671,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 4,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "setText",
+                    "message":
+                        "Text \u0027us\u0027 is set on object \u0027Object Repository/Modify_User_Profile_Series/Page_Sign in/input_username\u0027",
+                    "description": "",
+                    "startTime": 1526876063672,
+                    "endTime": 1526876063861,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Text \u0027us\u0027 is set on object \u0027Object Repository/Modify_User_Profile_Series/Page_Sign in/input_username\u0027",
+                            "startTime": 1526876063860,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 5,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "setText",
+                    "message":
+                        "Text \u0027username4\u0027 is set on object \u0027Object Repository/Modify_User_Profile_Series/Page_Sign in/input_username\u0027",
+                    "description": "",
+                    "startTime": 1526876063861,
+                    "endTime": 1526876063929,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Text \u0027username4\u0027 is set on object \u0027Object Repository/Modify_User_Profile_Series/Page_Sign in/input_username\u0027",
+                            "startTime": 1526876063929,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 6,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "setText",
+                    "message":
+                        "Text \u00271234\u0027 is set on object \u0027Object Repository/Modify_User_Profile_Series/Page_Sign in/input_password\u0027",
+                    "description": "",
+                    "startTime": 1526876063929,
+                    "endTime": 1526876064009,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Text \u00271234\u0027 is set on object \u0027Object Repository/Modify_User_Profile_Series/Page_Sign in/input_password\u0027",
+                            "startTime": 1526876064008,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 7,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/Modify_User_Profile_Series/Page_Sign in/button_Sign in\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526876064009,
+                    "endTime": 1526876064079,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/Modify_User_Profile_Series/Page_Sign in/button_Sign in\u0027 is clicked on",
+                            "startTime": 1526876064078,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 8,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/Modify_User_Profile_Series/Page_My Project - Goal Model Editor/button_username4\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526876064079,
+                    "endTime": 1526876064656,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/Modify_User_Profile_Series/Page_My Project - Goal Model Editor/button_username4\u0027 is clicked on",
+                            "startTime": 1526876064655,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 9,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/Modify_User_Profile_Series/Page_My Project - Goal Model Editor/a_Profile\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526876064656,
+                    "endTime": 1526876064825,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/Modify_User_Profile_Series/Page_My Project - Goal Model Editor/a_Profile\u0027 is clicked on",
+                            "startTime": 1526876064824,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 10,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/Modify_User_Profile_Series/Page_User Profile/a_Return\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526876064825,
+                    "endTime": 1526876064956,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/Modify_User_Profile_Series/Page_User Profile/a_Return\u0027 is clicked on",
+                            "startTime": 1526876064956,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 11,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/Modify_User_Profile_Series/Page_My Project - Goal Model Editor/button_username4\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526876064957,
+                    "endTime": 1526876065028,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/Modify_User_Profile_Series/Page_My Project - Goal Model Editor/button_username4\u0027 is clicked on",
+                            "startTime": 1526876065028,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 12,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/Modify_User_Profile_Series/Page_My Project - Goal Model Editor/a_Profile\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526876065028,
+                    "endTime": 1526876065141,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/Modify_User_Profile_Series/Page_My Project - Goal Model Editor/a_Profile\u0027 is clicked on",
+                            "startTime": 1526876065140,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 13,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/Modify_User_Profile_Series/Page_User Profile/input_edit\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526876065141,
+                    "endTime": 1526876065257,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/Modify_User_Profile_Series/Page_User Profile/input_edit\u0027 is clicked on",
+                            "startTime": 1526876065256,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 14,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "setText",
+                    "message":
+                        "Text \u0027First_Name\u0027 is set on object \u0027Object Repository/Modify_User_Profile_Series/Page_User Profile/input_firstname\u0027",
+                    "description": "",
+                    "startTime": 1526876065257,
+                    "endTime": 1526876065378,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Text \u0027First_Name\u0027 is set on object \u0027Object Repository/Modify_User_Profile_Series/Page_User Profile/input_firstname\u0027",
+                            "startTime": 1526876065377,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 15,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "setText",
+                    "message":
+                        "Text \u0027Last_Name\u0027 is set on object \u0027Object Repository/Modify_User_Profile_Series/Page_User Profile/input_lastname\u0027",
+                    "description": "",
+                    "startTime": 1526876065378,
+                    "endTime": 1526876065479,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Text \u0027Last_Name\u0027 is set on object \u0027Object Repository/Modify_User_Profile_Series/Page_User Profile/input_lastname\u0027",
+                            "startTime": 1526876065479,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 16,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/Modify_User_Profile_Series/Page_User Profile/input_confirm1\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526876065480,
+                    "endTime": 1526876065556,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/Modify_User_Profile_Series/Page_User Profile/input_confirm1\u0027 is clicked on",
+                            "startTime": 1526876065555,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 17,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/Modify_User_Profile_Series/Page_User Profile/a_Return\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526876065556,
+                    "endTime": 1526876065674,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/Modify_User_Profile_Series/Page_User Profile/a_Return\u0027 is clicked on",
+                            "startTime": 1526876065674,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 18,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/Modify_User_Profile_Series/Page_My Project - Goal Model Editor/button_username4\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526876065674,
+                    "endTime": 1526876066251,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/Modify_User_Profile_Series/Page_My Project - Goal Model Editor/button_username4\u0027 is clicked on",
+                            "startTime": 1526876066250,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 19,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "click",
+                    "message":
+                        "Object: \u0027Object Repository/Modify_User_Profile_Series/Page_My Project - Goal Model Editor (1)/a_Sign out\u0027 is clicked on",
+                    "description": "",
+                    "startTime": 1526876066251,
+                    "endTime": 1526876066342,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object: \u0027Object Repository/Modify_User_Profile_Series/Page_My Project - Goal Model Editor (1)/a_Sign out\u0027 is clicked on",
+                            "startTime": 1526876066341,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 20,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "verifyElementPresent",
+                    "message":
+                        "Object \u0027Object Repository/Modify_User_Profile_Series/Page_Goal Model Editor (1)/a_Go to Goal Model Editor\u0027 is present",
+                    "description": "",
+                    "startTime": 1526876066342,
+                    "endTime": 1526876066362,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "WARNING"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Timeout \u00270\u0027 is invalid. Using default page load timeout: \u002730\u0027",
+                            "startTime": 1526876066351,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        },
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message":
+                                "Object \u0027Object Repository/Modify_User_Profile_Series/Page_Goal Model Editor (1)/a_Go to Goal Model Editor\u0027 is present",
+                            "startTime": 1526876066362,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "index": 21,
+                    "isIgnoredIfFailed": false,
+                    "type": "TEST_STEP",
+                    "name": "closeBrowser",
+                    "message": "Browser is closed",
+                    "description": "",
+                    "startTime": 1526876066362,
+                    "endTime": 1526876066450,
+                    "childRecords": [
+                        {
+                            "testStatus": {
+                                "stackTrace": "",
+                                "statusValue": "PASSED"
+                            },
+                            "type": "MESSAGE",
+                            "name": "",
+                            "message": "Browser is closed",
+                            "startTime": 1526876066450,
+                            "endTime": 0,
+                            "childRecords": [],
+                            "interuppted": false
+                        }
+                    ],
+                    "interuppted": false
+                },
+                {
+                    "testStatus": { "stackTrace": "", "statusValue": "PASSED" },
+                    "type": "MESSAGE",
+                    "name": "",
+                    "message": "Test Cases/Modify_User_Info_Test",
+                    "startTime": 1526876066450,
+                    "endTime": 0,
+                    "childRecords": [],
+                    "interuppted": false
+                }
+            ],
+            "interuppted": false
+        }
+    ],
+    "interuppted": false
+}

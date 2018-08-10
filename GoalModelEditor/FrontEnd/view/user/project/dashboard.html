@@ -12,6 +12,14 @@
 </head>
 <body>
     <div> <!-- Start wrapper div -->
+        <!-- Start alert div -->
+        <!-- Success alert -->
+        <div style="display: none" class="text-center alert alert-success mb-0" id="success-alert" role="alert">
+        </div>
+        <!-- Warning alert -->
+        <div style="display: none" class="text-center alert alert-warning mb-0" id="warning-alert" role="alert">
+        </div>
+        <!-- End alert div -->
         <!-- Header part of the page -->
         <header class="bg-white mb-2 py-3">
             <div class="pt-4 container-fluid">
@@ -74,9 +82,6 @@
                             <label class="my-2">Project Name:</label>
                             <input name="project_name" type="text" class="form-control"
                                    value="Untitled folder" placeholder="Project Name" required>
-                            <label class="my-2">First Goal Model Name:</label>
-                            <input name="model_name" type="text" class="form-control"
-                                   value="Untitled" placeholder="Goal Model Name" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn" style="background-color: transparent"
@@ -156,6 +161,60 @@
             </div>
         </div>
         <!-- Modal ends -->
+
+        <!-- Rename project modal -->
+        <div class="modal fade" id="rename-project" tabindex="-1" role="dialog"
+             aria-labelledby="new-model" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Project Rename</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="post" id="rename_project">
+                        <div class="modal-body">
+                            <input name="project_name" type="text" class="form-control">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn" style="background-color: transparent"
+                                    data-dismiss="modal">CANCEL</button>
+                            <button type="submit" class="btn btn-primary">Confirm</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- end modal -->
+
+        <!-- Delete project modal -->
+        <div class="modal fade" id="delete-project" tabindex="-1" role="dialog"
+             aria-labelledby="new-model" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Warning</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="post" id="delete_project">
+                        <div class="modal-body">
+                            <lable type="text">You would lose all goal models attached to the project.
+                                Are you sure?</lable>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn" style="background-color: transparent"
+                                    data-dismiss="modal">CANCEL</button>
+                            <button type="submit" class="btn btn-primary">Confirm</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- end model -->
+
         
 
     </div> <!-- End wrapper div -->
@@ -168,6 +227,7 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="/js/jquery.serialize-object.js"></script>
 
     <script src="/js/dashboard.js"></script>
 </body>

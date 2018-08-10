@@ -6,11 +6,14 @@ const express = require("express");
 const router = express.Router();
 const path = require("path");
 const fs = require("fs");
+<<<<<<< HEAD
 const multiparty = require("multiparty");
+=======
+>>>>>>> master
 
 // security related imports
 const auth = require("../authen");
-const db = require("../DBModule/DBModule.js");
+const db = require(path.resolve(__dirname, "../../Database/DBModule/DBModule.js"));
 
 /* GET get the edit page */
 router.get("/edit", function(req, res) {
@@ -30,8 +33,12 @@ router.post("/:userId/:projectId", (req, res, next) => {
     }
 
     // path to the directory where the goal models should be stored
+<<<<<<< HEAD
     // path should be '/etc/GoalModelEditor' but need to find a way to resolve
     // the folder permission problem
+=======
+    // path should be '/etc/GoalModelEditor' but need to find a way to resolve the folder permission problem
+>>>>>>> master
     var dirpath = "./UserFiles/" + req.params.userId + "/";
 
     // create new goal model
@@ -73,6 +80,7 @@ router.post("/:userId/:projectId", (req, res, next) => {
             return res.end();
         });
 });
+<<<<<<< HEAD
 
 /* POST Upload images */
 router.post("/images/:userId/:goalmodelId", (req, res, next) => {
@@ -134,6 +142,18 @@ router.put("/:userId/:goalmodelId", (req, res, next) => {
         return res.end();
     }
 
+=======
+
+/* PUT Edit Goal Model Content */
+router.put("/:userId/:goalmodelId/save", (req, res, next) => {
+    // check token for authentication
+    if (!auth.authenticate(req.headers)) {
+        res.statusCode = 401;
+        res.json({ created: false, message: "Authentication failed" });
+        return res.end();
+    }
+
+>>>>>>> master
     var filepath = "";
     db
         .getGoalmodel(req.params.goalmodelId)
@@ -250,6 +270,7 @@ router.delete("/:userId/:goalmodelId", (req, res, next) => {
             return res.end();
         })
         .catch(err => {
+<<<<<<< HEAD
             res.statusCode = 500;
             res.json({
                 message: "Failed to delete goal model: " + err.message
@@ -323,6 +344,14 @@ router.get("/:userId/:goalmodelId", (req, res, next) => {
         console.log("get goal model");
         return res.end();
     });
+=======
+            res.statusCode = 500;
+            res.json({
+                message: "Failed to delete goal model: " + err.message
+            });
+            return res.end();
+        });
+>>>>>>> master
 });
 
 /* Recursively creates the whole path to a directory */

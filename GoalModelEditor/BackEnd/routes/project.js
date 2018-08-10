@@ -5,10 +5,11 @@
 // express application
 const express = require("express");
 const router = express.Router();
+const path = require('path');
 
 // security related imports
 const auth = require("../authen");
-const db = require("../DBModule/DBModule.js");
+const db = require(path.resolve(__dirname, "../../Database/DBModule/DBModule.js"));
 
 // response codes
 const response_codes = require("./response_codes");

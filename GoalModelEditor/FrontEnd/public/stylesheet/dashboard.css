@@ -1,26 +1,26 @@
 /* header style */
 header {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .5);
-    background-image: url('https://picsum.photos/3000/200?random');
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.5);
+    background-image: url("/img/profile-background.jpg");
 }
 
 /* color of the text */
 .text-color {
-    color: rgba(0,0,0,.54);
+    color: rgba(0, 0, 0, 0.54);
 }
 
 /* for v1 */
 /*!* file list block *!*/
 /*#file-list {*/
-    /*overflow: scroll;*/
-    /*display: block;*/
-    /*height: 75vh;*/
+/*overflow: scroll;*/
+/*display: block;*/
+/*height: 75vh;*/
 /*}*/
 
 /*!* file item block *!*/
 /*.file-item {*/
-    /*overflow: scroll;*/
-    /*display: block;*/
+/*overflow: scroll;*/
+/*display: block;*/
 /*}*/
 
 /* main style */
@@ -39,7 +39,7 @@ main {
 
 /* project img */
 .project-icon {
-    height: 100px;
+    height: 60%;
     max-height: 30vh;
     width: auto;
     max-width: 25vw;
@@ -55,9 +55,8 @@ main {
     max-height: 30vh;
     width: 33%;
     max-width: 30vw;
-    over-flow-y: hidden;
+    overflow-y: hidden;
     position: relative;
-
 }
 
 /* hide goal list*/
@@ -69,7 +68,7 @@ main {
     right: 0;
     height: 65%;
     width: 100%;
-    display: none;
+    opacity: 0;
     overflow-y: scroll;
     overflow-x: hidden;
     border-bottom: 1px solid white;
@@ -79,21 +78,19 @@ main {
 /* hover on project
    show goal list */
 .project:hover {
-    background-image:
-            -webkit-radial-gradient(80% 10%, circle, skyblue, transparent),
-            -webkit-radial-gradient(80% 50%, circle, blue, transparent),
-            -webkit-radial-gradient(20% 80%, 40em 40em, lightblue, transparent),
-            -webkit-radial-gradient(10% 10%, circle, darkblue, transparent);
-    /*background: linear-gradient(to bottom, skyblue , white);*/
+    background-image: -webkit-radial-gradient(80% 10%, skyblue, transparent),
+        -webkit-radial-gradient(80% 50%, blue, transparent),
+        -webkit-radial-gradient(20% 80%, lightblue, transparent),
+        -webkit-radial-gradient(10% 10%, darkblue, transparent);
     color: #fff;
     display: inline-block;
     border-radius: 20px;
     padding: 0;
 }
 
-
 .project:hover .project-icon {
     opacity: 0;
+    margin-bottom: 0;
 }
 
 .project:hover .goal-list {
@@ -101,7 +98,7 @@ main {
     display: inline-block;
 }
 
-.project .goal-model{
+.project .goal-model {
     border-bottom: 1px solid white;
 }
 
@@ -113,10 +110,16 @@ main {
     opacity: 0;
 }
 
+.project:hover h6 {
+    height: 10%;
+    margin-bottom: 0;
+}
+
 .project:hover .create-goal-model {
+    height: 10%;
     opacity: 1;
 }
 
 .goal-model:hover {
-    background: linear-gradient(to right, #69c, #069, #69c );
+    background: linear-gradient(to right, #69c, #069, #69c);
 }
