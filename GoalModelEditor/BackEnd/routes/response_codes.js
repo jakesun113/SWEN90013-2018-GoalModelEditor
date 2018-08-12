@@ -2,6 +2,7 @@
  *
  * Standard codes/messages for responding to HTTP(S) requests.
  */
+'use strict'
 
 module.exports = {
 
