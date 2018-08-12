@@ -14,6 +14,7 @@ module.exports = {
     // paths to front-end files (views and source files)
     FRONT_VIEW_DIR: path.resolve(__dirname, "../FrontEnd/view"),
     FRONT_SRC_DIR: path.resolve(__dirname, "../FrontEnd/public"),
+    FRONT_MXGRAPH_DIR: path.resolve(__dirname, "../FrontEnd/mxgraph"),
 
     // the secret for encrypting the cookie?
     COOKIE_SECRET: ""

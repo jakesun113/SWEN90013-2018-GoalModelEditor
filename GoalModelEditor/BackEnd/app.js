@@ -40,6 +40,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(config.FRONT_SRC_DIR));
+app.use(express.static(config.FRONT_MXGRAPH_DIR));
 
 // route to endpoints
 app.use("/", indexRouter);
