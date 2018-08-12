@@ -87,7 +87,7 @@ router.post('/images/:userId/:goalmodelId', (req, res, next) => {
         return res.end();
     }
 
-    var form = new multiparty.Form();
+    let form = new multiparty.Form();
 
     form.parse(req, function(err, fields, files) {
         console.log(err);
