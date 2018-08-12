@@ -67,10 +67,10 @@ function uploadPictures(formData) {
     let secret = JSON.parse(Cookies.get("LOKIDIED"));
     let token = secret.token;
     let userId = secret.uid;
-    let projectId = secret.project_id;
+    let modelId = Cookies.get("MID");
     $.ajax({
         // the API of upload pictures
-        url: "/images/" + userId + "/" + projectId,
+        url: "/images/" + userId + "/" + modelId,
         type: "POST",
         contentType: false,
         data: formData,
