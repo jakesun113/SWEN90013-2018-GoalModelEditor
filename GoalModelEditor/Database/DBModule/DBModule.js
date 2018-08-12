@@ -290,6 +290,8 @@ const DBModule = function () {
     };
     /**
      * get the project and all the goal model of a user
+     * @return format(if success) :  ...
+     * @return format(if error) : {code:<Error Code>, message:<Error Message>}
      * @param userid
      */
     DBModule.getProjectGoalModelList = function (userid) {
@@ -305,6 +307,8 @@ const DBModule = function () {
 
     /**
      * The function to create a goal model under a project.
+     * @return format(if success) : <goal model DB row>
+     * @return format(if error) : {code:<Error Code>, message:<Error Message>}
      * @param modelName
      * @param modelDescription
      * @param filePath
@@ -365,6 +369,8 @@ const DBModule = function () {
 
     /**
      * checks the user priority and load the goal models under a given project.
+     * @return format(if success) : < all related goalmodels >
+     * @return format(if error) : {code:<Error Code>, message:<Error Message>}
      * @param UserId
      * @param ProjectId
      */
@@ -411,6 +417,8 @@ const DBModule = function () {
 
     /**
      * get a project by its id.
+     * @return format(if success) : <project DB row>
+     * @return format(if error) : {code:<Error Code>, message:<Error Message>}
      * @param projectId
      */
     DBModule.getProject = function (projectId) {
@@ -429,6 +437,8 @@ const DBModule = function () {
 
     /**
      * Get a goal model by its id.
+     * @return format(if success) : <goal model DB row>
+     * @return format(if error) : {code:<Error Code>, message:<Error Message>}
      * @param ModelId
      */
     DBModule.getGoalModel = function (ModelId) {
@@ -447,6 +457,8 @@ const DBModule = function () {
 
     /**
      * update a single project.
+     * @return format(if success) : {project_name:<>}
+     * @return format(if error) : {code:<Error Code>, message:<Error Message>}
      * @param userId
      * @param projectId
      * @param projectName
@@ -519,6 +531,8 @@ const DBModule = function () {
 
     /**
      * update a single goal model.
+     * @return format(if success) : {model_name:<>, last_modified:<>}
+     * @return format(if error) : {code:<Error Code>, message:<Error Message>}
      * @param modelId
      * @param modelName
      * @param modelDescription
@@ -629,6 +643,8 @@ const DBModule = function () {
 
     /**
      * change the password of a user.
+     * @return format(if success) : 1
+     * @return format(if error) : {code:<Error Code>, message:<Error Message>}
      * @param UserId
      * @param OldPassword
      * @param NewPassword
@@ -657,7 +673,9 @@ const DBModule = function () {
     };
 
     /**
-     * update a user's profile
+     * update a user's profile.
+     * @return format(if success) : 1
+     * @return format(if error) : {code:<Error Code>, message:<Error Message>}
      * @param UserId
      * @param FirstName
      * @param LastName
@@ -693,6 +711,8 @@ const DBModule = function () {
 
     /**
      * Delete a goalmodel
+     * @return format(if success) : 1
+     * @return format(if error) : {code:<Error Code>, message:<Error Message>}
      * @param userId
      * @param modelId
      */
@@ -750,7 +770,9 @@ const DBModule = function () {
     };
 
     /**
-     * delete a project
+     * delete a project with its id and userid for authentication purpose.
+     * @return format(if success) : 1
+     * @return format(if error) : {code:<Error Code>, message:<Error Message>}
      * @param userId
      * @param projectId
      */
