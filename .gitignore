@@ -64,3 +64,6 @@ fabric.properties
 node_modules
 ./**/node_modules
 ./**/node_modules
+
+#UserFiles
+./**/UserFiles/*
