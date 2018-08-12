@@ -36,7 +36,7 @@ router.post('/:userId/:projectId', (req, res, next) => {
     // path to the directory where the goal models should be stored
     // path should be '/etc/GoalModelEditor' but need to find a way to resolve
     // the folder permission problem
-    var dirpath = './UserFiles/' + req.params.userId + '/';
+    let dirpath = './UserFiles/' + req.params.userId + '/';
 
     // create new goal model
     db
@@ -47,7 +47,7 @@ router.post('/:userId/:projectId', (req, res, next) => {
             req.params.projectId
         )
         .then(result => {
-            createDirectoryPath(dirpath);
+            /*createDirectoryPath(dirpath);
             fs.writeFile(dirpath + '/' + result.ModelId, '', function(err) {
                 if (err) {
                     res.statusCode = 500;
@@ -62,13 +62,16 @@ router.post('/:userId/:projectId', (req, res, next) => {
             if (res.statusCode === 500) {
                 //res.json({message: 'Failed to create goal model file on server'});
                 return res.end();
-            }
+            }*/
+            res.statusCode = 201;
             res.json({
                 model_name: result.ModelName,
                 model_id: result.ModelId,
                 project_id: result.ProjectId,
                 last_modified: result.LastModified
             });
+            //TODO: filepath is not in db
+            console.log(result.filePath);
             return res.end();
         })
         .catch(err => {
@@ -139,11 +142,12 @@ router.put('/:userId/:goalmodelId', (req, res, next) => {
         return res.end();
     }
 
-    var filepath = '';
+    let dirpath = '';
     db
         .getGoalmodel(req.params.goalmodelId)
         .then(result => {
-            filepath = result.filepath;
+            //TODO: filepath is currently undefined
+            dirpath = result.filepath;
         })
         .catch(err => {
             if ((err.code = db.INVALID)) {
@@ -160,7 +164,7 @@ router.put('/:userId/:goalmodelId', (req, res, next) => {
             });
             return res.end();
         });
-    if (filepath === '' || !fs.existsSync(filepath)) {
+    if (dirpath === '') {
         console.log('no such file');
         res.statusCode = 500;
         res.json({
@@ -169,7 +173,10 @@ router.put('/:userId/:goalmodelId', (req, res, next) => {
         });
         return res.end();
     }
-    fs.writeFile(filepath, req.body.content, function(err) {
+
+    //TODO: check whether the path is dirpath or filepath
+    createDirectoryPath(dirpath);
+    fs.writeFile(dirpath + '/' + req.params.goalmodelId, req.body.content, function(err) {
         if (err) {
             console.log(err);
             res.statusCode = 500;
