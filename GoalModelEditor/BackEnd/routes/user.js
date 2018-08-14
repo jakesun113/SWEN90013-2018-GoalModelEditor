@@ -1,13 +1,18 @@
 /* End point for user-related HTTPS requests to the back-end REST API.
  *
  */
+"use strict";
 
 // express application imports
 const express = require("express");
 const router = express.Router();
+const path = require("path");
 
 // database connection
-const db = require("../DBModule/DBModule.js");
+const db = require(path.resolve(
+    __dirname,
+    "../../Database/DBModule/DBModule.js"
+));
 
 // security-related imports
 const auth = require("../authen");
@@ -32,7 +37,7 @@ router.post("/login", function(req, res, next) {
             return res.end();
         })
         .catch(err => {
-            if (err.code == db.INVALID) {
+            if (err.code === db.INVALID) {
                 res.statusCode = 401;
                 res.json({
                     user_id: "",
@@ -71,7 +76,7 @@ router.post("/register", (req, res, next) => {
             });
         })
         .catch(err => {
-            if (err.code == db.ALREADY_EXIST) {
+            if (err.code === db.ALREADY_EXIST) {
                 res.statusCode = 409;
                 res.json({
                     message: "User registration failed: " + err.message
@@ -107,7 +112,7 @@ router.get("/profile/:userId", function(req, res, next) {
             return res.end();
         })
         .catch(err => {
-            if (err.code == db.INVALID) {
+            if (err.code === db.INVALID) {
                 res.statusCode = 404;
                 res.json({
                     message: "Failed to get user profile: " + err.message
@@ -148,7 +153,7 @@ router.put("/profile/:userId", function(req, res, next) {
             return res.end();
         })
         .catch(err => {
-            if (err.code == db.INVALID) {
+            if (err.code === db.INVALID) {
                 res.statusCode = 404;
                 res.json({
                     message: "Failed to update user profile: " + err.message
@@ -176,12 +181,12 @@ router.put("/cred/:userId", function(req, res, next) {
     const oldhash = crypto.createHash("sha256");
     console.log("in login func");
     oldhash.update(req.body.old_password);
-    oldpw = oldhash.digest("hex");
+    let oldpw = oldhash.digest("hex");
 
     const newhash = crypto.createHash("sha256");
     console.log("in login func");
     newhash.update(req.body.new_password);
-    newpw = newhash.digest("hex");
+    let newpw = newhash.digest("hex");
 
     db
         .changePassword(req.params.userId, oldpw, newpw)
@@ -190,7 +195,7 @@ router.put("/cred/:userId", function(req, res, next) {
             return res.end();
         })
         .catch(err => {
-            if (err.code == db.INVALID) {
+            if (err.code === db.INVALID) {
                 res.statusCode = 404;
                 res.json({
                     message:

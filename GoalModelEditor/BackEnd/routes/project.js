@@ -1,14 +1,19 @@
 /* End-point for project related HTTP requests in back-end REST API.
  *
  */
+"use strict";
 
 // express application
 const express = require("express");
 const router = express.Router();
+const path = require("path");
 
 // security related imports
 const auth = require("../authen");
-const db = require("../DBModule/DBModule.js");
+const db = require(path.resolve(
+    __dirname,
+    "../../Database/DBModule/DBModule.js"
+));
 
 // response codes
 const response_codes = require("./response_codes");
@@ -37,9 +42,9 @@ router.get("/list/:userId", (req, res, next) => {
         .getProjectGoalModelList(req.params.userId)
         .then(result => {
             res.statusCode = 200;
-            var projects = {};
-            var model;
-            for (var i = 0; i < result.length; i++) {
+            let projects = {};
+            let model;
+            for (let i = 0; i < result.length; i++) {
                 model = result[i];
                 if (model.ProjectId in projects) {
                     projects[model.ProjectId].models.push({
@@ -121,7 +126,7 @@ router.put("/:userId/:projectId", (req, res, next) => {
     db
         .getProject(req.params.projectId)
         .then(result => {
-            if (result.OwnerId != req.params.userId) {
+            if (result.OwnerId !== req.params.userId) {
                 res.statusCode = 403;
                 res.json({
                     message:
@@ -133,6 +138,7 @@ router.put("/:userId/:projectId", (req, res, next) => {
             // edit project
             db
                 .updateProject(
+                    req.params.userId,
                     req.params.projectId,
                     req.body.project_name,
                     req.body.description,
@@ -191,7 +197,7 @@ router.delete("/:userId/:projectId", (req, res, next) => {
 
             // delete project
             db
-                .deleteProject(req.params.projectId)
+                .deleteProject(req.params.userId, req.params.projectId)
                 .then(result => {
                     console.log(result);
                     res.statusCode = 204;
