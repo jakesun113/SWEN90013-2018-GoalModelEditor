@@ -70,7 +70,7 @@ function uploadPictures(formData) {
     let modelId = Cookies.get("MID");
     $.ajax({
         // the API of upload pictures
-        url: "/images/" + userId + "/" + modelId,
+        url: "goal_model/images/" + userId + "/" + modelId,
         type: "POST",
         contentType: false,
         data: formData,
@@ -331,6 +331,57 @@ function loadData() {
     loadCluster();
 }
 /*Load data end*/
+
+/*Load images start*/
+// function loadImages() {
+//     // https://blog.csdn.net/ZteenMozart/article/details/80790920
+//     let secret = JSON.parse(Cookies.get("LOKIDIED"));
+//     let token = secret.token;
+//     let userId = secret.uid;
+//     let modelId = Cookies.get("MID");
+//     let reg = "/" + userId + modelId + "/";
+//
+//     var tbsource = "1"; //本地文件夹路径
+//
+//     var hdfiles = "";
+//     var objFSO = new ActiveXObject("Scripting.FileSystemObject");
+//     if (!objFSO.FolderExists(tbsource)) {
+//         alert("<" + tbsource + ">该文件夹路径不存在，或者路径不能含文件名！");
+//         objFSO = null;
+//     }
+//
+//     var objFolder = objFSO.GetFolder(tbsource);
+//
+//     var colFiles = new Enumerator(objFolder.Files);
+//     //读取文件夹下文件
+//     for (; !colFiles.atEnd(); colFiles.moveNext()) {
+//         var objFile = colFiles.item();
+//
+//         if (reg.test(objFile.Name.toLowerCase())) {
+//             hdfiles = hdfiles + "<img src='1/" + objFile.Name + "'>";
+//         }
+//     }
+//
+//     let output = $(".preview-images-zone");
+//     let html =
+//         '<div class="preview-image preview-show-' +
+//         num +
+//         '">' +
+//         '<div class="image-cancel" data-no="' +
+//         num +
+//         '">x</div>' +
+//         '<div class="image-zone"><img id="pro-img-' +
+//         num +
+//         '" src="' +
+//         picFile.result +
+//         '"></div>' +
+//         // '<div class="tools-edit-image"><a href="javascript:void(0)" data-no="' + num + '" class="btn btn-light btn-edit-image">edit</a></div>' +
+//         "</div>";
+//
+//     output.append(html);
+//     num = num + 1;
+// }
+/*Load images end*/
 
 /*Add new cluster start*/
 function loadCluster() {
@@ -669,10 +720,10 @@ window.jsonData = {
                         GoalNote: "Goal F_3 Note",
                         SubGoals: [
                             {
-                                GoalID: "F_1",
+                                GoalID: "F_4",
                                 GoalType: "Functional",
-                                GoalContent: "This is Functional Goal F_1",
-                                GoalNote: "Goal F_1 Note",
+                                GoalContent: "This is Functional Goal F_4",
+                                GoalNote: "Goal F_4 Note",
                                 SubGoals: []
                             },
                             {
