@@ -10,6 +10,7 @@ let pool = null;
  * The SQL sentence to insert a user with fields escaped;
  * @type {string}
  */
+
 const SQL_USER_REGISTER =
     "INSERT INTO " +
     "User (UserId, Username, Password, Email, FirstName, LastName, SignupTime, LastLogin) " +
@@ -70,8 +71,10 @@ const SQL_RET_MODEL = " SELECT * FROM GoalModel WHERE ModelId = ? ";
  */
 const SQL_GET_PROJ_GOALMODEL =
     "SELECT * " +
-    "FROM GoalModel AS GM INNER JOIN User_Project AS UP INNER JOIN Project " +
-    "ON UP.ProjectId = GM.ProjectId AND UP.ProjectId = Project.ProjectId " +
+    "FROM Project INNER JOIN User_Project AS UP " +
+    "ON  UP.ProjectId = Project.ProjectId " +
+    "LEFT JOIN GoalModel AS GM " +
+    "ON UP.ProjectId = GM.ProjectId " +
     "WHERE UserId = ?";
 /**
  * Get information of a goal model by its id
@@ -89,6 +92,7 @@ const SQL_UPDATE_PROJECT =
     "UPDATE Project " +
     "SET ProjectName = ?, ProjectDescription = ?, size = ? " +
     "WHERE ProjectId = ?";
+
 /**
  * Update a goal model
  * @type {string}

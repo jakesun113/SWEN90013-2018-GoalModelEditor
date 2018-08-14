@@ -230,6 +230,7 @@ $("#create-model").submit(function(evt) {
                 .slideUp();
         }
     }).fail(function(jqXHR) {
+        $("#add-model").modal("toggle");
         $("#warning-alert").html(
             jqXHR.responseJSON.message + " <br>Please try again."
         );
@@ -361,6 +362,7 @@ $("#rename_project").submit(function(evt) {
                 .html(project.project_name);
         }
     }).fail(function(jqXHR) {
+        $("#rename-project").modal("toggle");
         $("#warning-alert").html(
             jqXHR.responseJSON.message + " <br>Please try again."
         );
