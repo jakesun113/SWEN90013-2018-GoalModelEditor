@@ -21,7 +21,7 @@ const SQL_USER_REGISTER =
  */
 const SQL_USER_LOGIN =
     "UPDATE User SET LastLogin = NOW()" +
-    "WHERE BINARY Username = ? AND Password = ?";
+    "WHERE BINARY Username = ? AND BINARY Password = ?";
 /**
  * The SQL sentence to retrieve userid
  * @type {string}
@@ -44,24 +44,24 @@ const SQL_CREATE_PROJ =
     "VALUES (UUID(), ?, ?, ?, ?)";
 
 /**
- * The sql query to retrieve all goalmodels under a project
+ * The sql query to retrieve all goal models under a project
  * @type {string}
  */
 const SQL_RET_GOALMODEL_OF_PROJ =
     "SELECT ModelName " +
-    "FROM Project LEFT JOIN GoalModel\n" +
-    "ON Project.ProjectId = GoalModel.ProjectId\n" +
-    "WHERE Project.ProjectId = ?";
+    "FROM Project LEFT JOIN GoalModel " +
+    "ON Project.ProjectId = GoalModel.Project " +
+    "WHERE BINARY Project.ProjectId = ?";
 /**
  * The SQL sentence to create a goalmodel
  * @type {string}
  */
 const SQL_CREATE_GOALMODEL =
-    "INSERT INTO GoalModel (ModelId,ModelName, ModelDescription, FilePath, ProjectId) " +
+    "INSERT INTO GoalModel (ModelId,ModelName, ModelDescription, DirPath, Project) " +
     "VALUES (UUID(), ?, ?, ?, ?)";
 
 const SQL_RET_GOALMODEL =
-    "SELECT * FROM GoalModel WHERE BINARY ModelName = ? AND ProjectId = ?";
+    "SELECT * FROM GoalModel WHERE BINARY ModelName = ? AND Project = ?";
 
 const SQL_RET_MODEL = " SELECT * FROM GoalModel WHERE ModelId = ? ";
 /**
@@ -69,12 +69,13 @@ const SQL_RET_MODEL = " SELECT * FROM GoalModel WHERE ModelId = ? ";
  * @type {string}
  */
 const SQL_GET_PROJ_GOALMODEL =
-    "SELECT * " +
+    "SELECT Project.*, GM.ModelId, GM.ModelName, GM.ModelDescription, " +
+    "GM.DirPath, GM.LastModified, GM.GoalModelCreateTime " +
     "FROM Project INNER JOIN User_Project AS UP " +
     "ON  UP.ProjectId = Project.ProjectId " +
-    "LEFT JOIN GoalModel AS GM " +
-    "ON UP.ProjectId = GM.ProjectId " +
-    "WHERE UserId = ?";
+    "LEFT OUTER JOIN GoalModel AS GM " +
+    "ON GM.Project = UP.ProjectId " +
+    "WHERE BINARY UserId = ?";
 /**
  * Get information of a goal model by its id
  * @type {string}
@@ -82,7 +83,7 @@ const SQL_GET_PROJ_GOALMODEL =
 const SQL_GET_GOALMODEL_BY_ID =
     "SELECT GoalModel.*, Project.OwnerId " +
     "FROM GoalModel INNER JOIN Project " +
-    "WHERE ModelId = ? AND GoalModel.ProjectId = Project.ProjectId";
+    "WHERE BINARY ModelId = ? AND BINARY GoalModel.Project = Project.Project";
 /**
  * update a project's fields
  * @type {string}
@@ -90,32 +91,32 @@ const SQL_GET_GOALMODEL_BY_ID =
 const SQL_UPDATE_PROJECT =
     "UPDATE Project " +
     "SET ProjectName = ?, ProjectDescription = ?, size = ? " +
-    "WHERE ProjectId = ?";
+    "WHERE BINARY ProjectId = ?";
 /**
  * Update a goal model
  * @type {string}
  */
 const SQL_UPDATE_GOAL_MODEL =
     "UPDATE GoalModel " +
-    "SET ModelName = ?, ModelDescription = ?, FilePath = ?, LastModified = NOW() " +
-    "WHERE ModelId = ?";
+    "SET ModelName = ?, ModelDescription = ?, DirPath = ?, LastModified = NOW() " +
+    "WHERE BINARY ModelId = ?";
 /**
  * Get the information of a project
  * @type {string}
  */
-const SQL_GET_PROJECT = "SELECT * FROM Project WHERE ProjectId = ?";
+const SQL_GET_PROJECT = "SELECT * FROM Project WHERE BINARY ProjectId = ?";
 /**
  * Get a user's profile by his id.
  * @type {string}
  */
 const SQL_GET_USER_PROFILE =
-    "SELECT UserName, FirstName, LastName, Email FROM User WHERE UserId = ?";
+    "SELECT UserName, FirstName, LastName, Email FROM User WHERE BINARY UserId = ?";
 /**
  * Change a user's password using his id and current password
  * @type {string}
  */
 const SQL_CHANGE_USER_PASSWORD =
-    "UPDATE User " + "SET Password = ? " + "WHERE UserId = ? AND Password = ?";
+    "UPDATE User " + "SET Password = ? " + "WHERE BINARY UserId = ? AND BINARY Password = ?";
 /**
  * update a user's profile
  * @type {string}
@@ -123,17 +124,17 @@ const SQL_CHANGE_USER_PASSWORD =
 const SQL_UPDATE_USER_PROFILE =
     "UPDATE User " +
     "SET FirstName = ?, LastName = ?, Email = ? " +
-    "WHERE UserId = ?";
+    "WHERE BINARY UserId = ?";
 /**
  * Delete a GoalModel
  * @type {string}
  */
-const SQL_DELETE_GOAL_MODEL = "DELETE FROM GoalModel WHERE ModelId = ?";
+const SQL_DELETE_GOAL_MODEL = "DELETE FROM GoalModel WHERE BINARY ModelId = ?";
 /**
  *  Delete a
  * @type {string}
  */
-const SQL_DELETE_PROJECT = "DELETE FROM Project WHERE ProjectId = ?";
+const SQL_DELETE_PROJECT = "DELETE FROM Project WHERE BINARY ProjectId = ?";
 /**
  * DBModule
  * @returns {{DBModule}}
@@ -141,13 +142,13 @@ const SQL_DELETE_PROJECT = "DELETE FROM Project WHERE ProjectId = ?";
 
 const SQL_CHECK_PRIORITY_ON_PROJECT =
     "SELECT Priority FROM GoalModel_A.User_Project " +
-    "WHERE UserId = ? AND ProjectId = ?";
+    "WHERE BINARY UserId = ? AND BINARY ProjectId = ?";
 
 const SQL_CHECK_PRIORITY_ON_GOALMODEL =
     "SELECT User_Project.Priority FROM" +
     " User_Project " +
-    "INNER JOIN GoalModel ON User_Project.projectId = GoalModel.ProjectId" +
-    " where User_Project.UserId = ? AND GoalModel.ModelId = ?";
+    "INNER JOIN GoalModel ON User_Project.projectId = GoalModel.Project" +
+    " where BINARY User_Project.UserId = ? AND BINARY GoalModel.ModelId = ?";
 
 const DBModule = function () {
     let DBModule = {};
@@ -179,7 +180,7 @@ const DBModule = function () {
                 function (err, result) {
                     if (err) {
                         console.log(JSON.stringify(err));
-                        if (err.errno == 1062) {
+                        if (err.errno === 1062) {
                             // MYSQL error number for duplicate entry
                             // Username already exists.
                             reject({
@@ -234,7 +235,7 @@ const DBModule = function () {
                     if (err) {
                         console.log(JSON.stringify(err));
                         // MYSQL error number for duplicate entry
-                        if (err.errno == 1062) {
+                        if (err.errno === 1062) {
                             // Username already exists.
                             reject({
                                 code: DBModule.ALREADY_EXIST,
@@ -268,7 +269,7 @@ const DBModule = function () {
                         message: err.sqlMessage
                     });
                 }
-                if (result.affectedRows == 1) {
+                if (result.affectedRows === 1) {
                     // success
                     pool.query(SQL_RET_USERID, [username, password], function (err,
                                                                                result) {
@@ -323,7 +324,7 @@ const DBModule = function () {
                     if (err) {
                         console.log(JSON.stringify(err));
                         // MYSQL error number for duplicate entry
-                        if (err.errno == 1062) {
+                        if (err.errno === 1062) {
                             // Username already exists.
                             reject({
                                 code: DBModule.ALREADY_EXIST,
@@ -509,7 +510,7 @@ const DBModule = function () {
                                             });
                                         }
                                     }
-                                    if (result.affectedRows == 1) {
+                                    if (result.affectedRows === 1) {
                                         return resolve({project_name: projectName});
                                     } else {
                                         return reject({
@@ -530,17 +531,17 @@ const DBModule = function () {
      * update a single goal model.
      * @return format(if success) : {model_name:<>, last_modified:<>}
      * @return format(if error) : {code:<Error Code>, message:<Error Message>}
+     * @param userId
      * @param modelId
      * @param modelName
      * @param modelDescription
-     * @param filePath
-     * @param ProjectId
+     * @param dirPath
      */
     DBModule.updateGoalModel = function (userId,
                                          modelId,
                                          modelName,
                                          modelDescription,
-                                         filePath) {
+                                         dirPath) {
         return new Promise((resolve, reject) => {
             pool.getConnection(function (err, connection) {
                 connection.query(
@@ -565,7 +566,7 @@ const DBModule = function () {
                         } else if (result.length === 1) {
                             connection.query(
                                 SQL_UPDATE_GOAL_MODEL,
-                                [modelName, modelDescription, filePath, modelId],
+                                [modelName, modelDescription, dirPath, modelId],
                                 (err, result) => {
                                     if (err) {
                                         connection.release();
@@ -584,7 +585,7 @@ const DBModule = function () {
                                         }
                                     }
 
-                                    if (result.affectedRows == 1) {
+                                    if (result.affectedRows === 1) {
                                         // success
                                         //resolve(result);
                                         connection.query(SQL_RET_MODEL, [modelId], function (err,
@@ -659,7 +660,7 @@ const DBModule = function () {
                         });
                     }
                     console.log(result);
-                    if (result.affectedRows == 1) {
+                    if (result.affectedRows === 1) {
                         resolve(DBModule.SUCCESS);
                     } else {
                         reject({code: DBModule.INVALID, message: result.message});
@@ -690,7 +691,7 @@ const DBModule = function () {
                             message: err.sqlMessage
                         });
                     }
-                    if (result.affectedRows == 1) {
+                    if (result.affectedRows === 1) {
                         resolve(DBModule.SUCCESS);
                     } else {
                         if (err) {
@@ -744,7 +745,7 @@ const DBModule = function () {
                                         message: err.sqlMessage
                                     });
                                 }
-                                if (result.affectedRows == 1) {
+                                if (result.affectedRows === 1) {
                                     resolve(DBModule.SUCCESS);
                                 } else {
                                     if (err) {
@@ -803,7 +804,7 @@ const DBModule = function () {
                                         message: err.sqlMessage
                                     });
                                 }
-                                if (result.affectedRows == 1) {
+                                if (result.affectedRows === 1) {
                                     resolve(DBModule.SUCCESS);
                                 } else {
                                     if (err) {

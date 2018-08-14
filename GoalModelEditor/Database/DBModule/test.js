@@ -22,7 +22,7 @@ var dbModule = require("./DBModule");
 // });
 
 // test code for updateProject function:
-// dbModule.updateProject('uid', 'pid', 'projectName', 'projectDescription', '9').then(res => {
+// dbModule.updateProject('uid', 'pid', 'projectName', 'projectDescription', '110').then(res => {
 //     console.log(JSON.stringify(res));
 //
 // }).catch(err => {
@@ -45,13 +45,20 @@ var dbModule = require("./DBModule");
 // });
 
 //test code for deleting Project(return "1" if success)
-dbModule
-    .deleteProject("uid", "pid2")
-    .then(res => {
-        console.log(JSON.stringify(res));
-    })
-    .catch(err => {
-        console.log(err);
-    });
+// dbModule
+//     .deleteProject("uid", "pid2")
+//     .then(res => {
+//         console.log(JSON.stringify(res));
+//     })
+//     .catch(err => {
+//         console.log(err);
+//     });
 
 // dbModule.login().then();
+
+
+dbModule.getProjectGoalModelList("dbfb25a2-98a4-11e8-b616-02b330fa6e48").then(res => {
+    console.log(JSON.stringify(res));
+}).catch(err => {
+    console.log(err);
+});

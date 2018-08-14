@@ -138,6 +138,7 @@ router.put('/:userId/:projectId', (req, res, next) => {
             // edit project
             db
                 .updateProject(
+                    req.params.userId,
                     req.params.projectId,
                     req.body.project_name,
                     req.body.description,
@@ -196,7 +197,7 @@ router.delete('/:userId/:projectId', (req, res, next) => {
 
             // delete project
             db
-                .deleteProject(req.params.projectId)
+                .deleteProject(req.params.userId, req.params.projectId)
                 .then(result => {
                     console.log(result);
                     res.statusCode = 204;
