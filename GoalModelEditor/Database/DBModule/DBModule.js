@@ -1,8 +1,8 @@
-'use strict';
-const mysql = require('../../BackEnd/node_modules/mysql/index');
-const Promise = require('../../BackEnd/node_modules/bluebird/js/release/bluebird');
+"use strict";
+const mysql = require("../../BackEnd/node_modules/mysql/index");
+const Promise = require("../../BackEnd/node_modules/bluebird/js/release/bluebird");
 
-const dbconfig = require('./dbconfig.json');
+const dbconfig = require("./dbconfig.json");
 
 let pool = null;
 
@@ -207,9 +207,6 @@ const DBModule = function () {
                                 // success
                                 resolve(result[0]);
                             }
-                            // if success: return userid
-                            //console.log(result);
-                            //resolve(result.ProjectId);
                         });
                     }
                 }
@@ -295,7 +292,7 @@ const DBModule = function () {
      * @return format(if error) : {code:<Error Code>, message:<Error Message>}
      * @param userid
      */
-    DBModule.getProjectGoalModelList = function (userid) {
+    DBModule.getProjectGoalModelList = function(userid) {
         return new Promise((resolve, reject) => {
             pool.query(SQL_GET_PROJ_GOALMODEL, [userid], (err, result) => {
                 if (err) {
@@ -422,7 +419,7 @@ const DBModule = function () {
      * @return format(if error) : {code:<Error Code>, message:<Error Message>}
      * @param projectId
      */
-    DBModule.getProject = function (projectId) {
+    DBModule.getProject = function(projectId) {
         return new Promise((resolve, reject) => {
             pool.query(SQL_GET_PROJECT, [projectId], (err, result) => {
                 if (err) {
@@ -442,7 +439,7 @@ const DBModule = function () {
      * @return format(if error) : {code:<Error Code>, message:<Error Message>}
      * @param ModelId
      */
-    DBModule.getGoalModel = function (ModelId) {
+    DBModule.getGoalModel = function(ModelId) {
         return new Promise((resolve, reject) => {
             pool.query(SQL_GET_GOALMODEL_BY_ID, [ModelId], (err, result) => {
                 if (err) {
@@ -628,7 +625,7 @@ const DBModule = function () {
      * Get the user profiles by id.
      * @param UserId
      */
-    DBModule.getUserProfile = function (UserId) {
+    DBModule.getUserProfile = function(UserId) {
         return new Promise((resolve, reject) => {
             pool.query(SQL_GET_USER_PROFILE, [UserId], (err, result) => {
                 if (err) {
@@ -650,7 +647,7 @@ const DBModule = function () {
      * @param OldPassword
      * @param NewPassword
      */
-    DBModule.changePassword = function (UserId, OldPassword, NewPassword) {
+    DBModule.changePassword = function(UserId, OldPassword, NewPassword) {
         return new Promise((resolve, reject) => {
             pool.query(
                 SQL_CHANGE_USER_PASSWORD,
@@ -682,7 +679,7 @@ const DBModule = function () {
      * @param LastName
      * @param Email
      */
-    DBModule.updateUserProfile = function (UserId, FirstName, LastName, Email) {
+    DBModule.updateUserProfile = function(UserId, FirstName, LastName, Email) {
         return new Promise((resolve, reject) => {
             pool.query(
                 SQL_UPDATE_USER_PROFILE,
