@@ -71,7 +71,7 @@ router.post('/:userId/:projectId', (req, res, next) => {
                 last_modified: result.LastModified
             });
             //TODO: filepath is not in db
-            console.log(result.filePath);
+            console.log(result.DirPath);
             return res.end();
         })
         .catch(err => {
@@ -147,7 +147,7 @@ router.put('/:userId/:goalmodelId', (req, res, next) => {
         .getGoalmodel(req.params.goalmodelId)
         .then(result => {
             //TODO: filepath is currently undefined
-            dirpath = result.filepath;
+            dirpath = result.DirPath;
         })
         .catch(err => {
             if ((err.code = db.INVALID)) {

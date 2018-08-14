@@ -70,7 +70,7 @@ function uploadPictures(formData) {
     let modelId = Cookies.get("MID");
     $.ajax({
         // the API of upload pictures
-        url: "/images/" + userId + "/" + modelId,
+        url: "/goal_model/images/" + userId + "/" + modelId,
         type: "POST",
         contentType: false,
         data: formData,
