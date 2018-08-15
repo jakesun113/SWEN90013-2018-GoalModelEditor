@@ -115,17 +115,19 @@
 /*import photos end*/
 
 /*cluster div start*/
-.cluster {
+.dd {
     width: 90%;
-    height: 30vh;
+    min-height: 30vh;
     margin: 10px auto;
+    height: auto;
+    position: relative;
 }
 /*cluster div end*/
-.hierarchy {
-    width: 90%;
-    height: 30vh;
-    margin: 10px auto;
-}
+/*.hierarchy {*/
+/*width: 90%;*/
+/*height: 30vh;*/
+/*margin: 10px auto;*/
+/*}*/
 input {
     border: 0px;
     width: 100%;

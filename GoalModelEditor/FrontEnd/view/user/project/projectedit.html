@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="/stylesheet/projectedit.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <!--add nestable library-->
+    <link rel="stylesheet" href="/stylesheet/jquery.nestable.css">
     <!--<noscript>-->
     <!--<div style="display:inline;">-->
     <!--<img class="mb-4" src="/img/icon.ico" alt="icon" width="1" height="1">-->
@@ -306,34 +308,34 @@
                         <div class="tab-pane fade in show active pt-2" id="panel1" role="tabpanel">
                             <!--<h6>Functional Goals</h6>-->
                             <!--show functional data from JSON-->
-                            <div id="functionaldata"></div>
+                            <div id="functionaldata" class="goal-list"></div>
                         </div>
                         <!--/.Panel 1-->
                         <!--Panel 2-->
                         <div class="tab-pane fade pt-2" id="panel2" role="tabpanel">
                             <!--<h6>Quality Goals</h6>-->
                             <!--show quality data from JSON-->
-                            <div id="qualitydata"></div>
+                            <div id="qualitydata" class="goal-list"></div>
                         </div>
                         <!--/.Panel 2-->
                         <!--Panel 3-->
                         <div class="tab-pane fade pt-2" id="panel3" role="tabpanel">
                             <!--<h6>Emotional Goals</h6>-->
                             <!--show emotional data from JSON-->
-                            <div id="emotionaldata"></div>
+                            <div id="emotionaldata" class="goal-list"></div>
                         </div>
                         <!--/.Panel 3-->
                         <!--Panel 4-->
                         <div class="tab-pane fade pt-2" id="panel4" role="tabpanel">
                             <!--<h6>Negative Goals</h6>-->
                             <!--show negative data from JSON-->
-                            <div id="negativedata"></div>
+                            <div id="negativedata" class="goal-list"></div>
                         </div>
                         <!--/.Panel 5-->
                         <div class="tab-pane fade pt-2" id="panel5" role="tabpanel">
                             <!--<h6>Stakeholder</h6>-->
                             <!--show stakeholder data from JSON-->
-                            <div id="stakeholderdata"></div>
+                            <div id="stakeholderdata" class="goal-list"></div>
                         </div>
                         <!--/.Panel 5-->
                     </div>
@@ -364,9 +366,11 @@
                     <button class="btn-sm btn-outline-primary" onclick="addCluster()">Add</button>
                     <button class="btn-sm btn-outline-primary" id="clusternextbtn" onclick="clusternext()">Render</button>
                     <button style="display: none" class="btn-sm btn-outline-primary" id="renderbtn" onclick="renderGraph(document.getElementById('graphContainer'))">Render</button>
+                    <button type="button" id="edit">Edit All</button>
+                    <button type="button" id="drag">Drag All</button>
                 </div>
                 <!--show cluster data from JSON-->
-                <div class="cluster showborder inside-scrollbar" id="cluster_1" style="background-color: white"></div>
+                <div class="showborder inside-scrollbar dd" id="cluster_1" style="background-color: white"></div>
             </div>
             <!--cluster section end-->
 
@@ -405,6 +409,8 @@
         crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<!--add nestable library-->
+<script src="/js/jquery.nestable.js"></script>
 <script type="text/javascript" src="/js/projectedit.js"></script>
 <footer>
     <p class="text-center">&copy;<em>&nbsp;2018 The University of Melbourne</em></p>

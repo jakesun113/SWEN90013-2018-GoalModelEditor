@@ -376,7 +376,7 @@ mxCellEditor.prototype.installListeners = function(elt) {
                 elt.innerHTML == this.getEmptyLabelText() &&
                 (!mxClient.IS_FF ||
                     (evt.keyCode != 8 /* Backspace */ &&
-                        evt.keyCode != 46) /* Delete */)
+                        evt.keyCode != 46)) /* Delete */
             ) {
                 this.clearOnChange = false;
                 elt.innerHTML = "";

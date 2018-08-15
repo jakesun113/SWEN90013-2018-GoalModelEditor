@@ -11,6 +11,8 @@ $(document).ready(function() {
     $("#username")
         .eq(0)
         .html(Cookies.get("UIID"));
+
+    $(".input-font").css("font-weight", "bold");
 });
 
 $(document).on("mouseover", "#ul li input", function() {
@@ -394,11 +396,21 @@ function loadCluster() {
 
     for (let i = 0; i < clusterNum; i++) {
         let clusterID = jsonData.GoalModelProject.Clusters[i].ClusterID;
-        document
-            .getElementById(clusterID)
-            .appendChild(
-                parseNodes(jsonData.GoalModelProject.Clusters[i].ClusterGoals)
-            );
+        if (
+            jsonData.GoalModelProject.Clusters[i].ClusterGoals !== undefined &&
+            jsonData.GoalModelProject.Clusters[i].ClusterGoals.length > 0
+        ) {
+            document
+                .getElementById(clusterID)
+                .appendChild(
+                    parseClusterNodes(
+                        jsonData.GoalModelProject.Clusters[i].ClusterGoals
+                    )
+                );
+
+            //console.log($(".dd-empty").length);
+            $("div").remove(".dd-empty");
+        }
     }
 }
 /*Add new cluster end*/
@@ -409,11 +421,22 @@ function addCluster() {
     clusterNumber++;
 
     cluster.append(
-        '<div class="cluster showborder inside-scrollbar" style="background-color: white" id=cluster_' +
+        '<div class="showborder inside-scrollbar dd" style="background-color: white" id=cluster_' +
             clusterNumber.toString() +
             ">" +
             "</div>"
     );
+
+    //activate drag and drop function
+    drop_zone(clusterNumber);
+    $(".dd").nestable({
+        callback: function(l, e) {
+            // l is the main container
+            // e is the element that was moved
+            appendCluster();
+        },
+        scroll: true
+    });
 }
 /*Add new cluster end*/
 
@@ -422,6 +445,7 @@ function addCluster() {
 function parseNodes(nodes) {
     let ul = document.createElement("UL");
     ul.setAttribute("id", "ul");
+    ul.setAttribute("class", "drag-list");
     for (let i = 0; i < nodes.length; i++) {
         //ul.innerHTML = '<div>'+ node.GoalDescription + '</div>';
         ul.appendChild(parseNode(nodes[i]));
@@ -429,19 +453,36 @@ function parseNodes(nodes) {
     return ul;
 }
 
+/*parse Cluster nodes start*/
+function parseClusterNodes(nodes) {
+    let ol = document.createElement("OL");
+    ol.setAttribute("class", "dd-list");
+    for (let i = 0; i < nodes.length; i++) {
+        //ul.innerHTML = '<div>'+ node.GoalDescription + '</div>';
+        ol.appendChild(parseClusterNode(nodes[i]));
+    }
+    return ol;
+}
+/*parse Cluster nodes end*/
+
 // takes a node object and turns it into a <li>
 function parseNode(node) {
     let li = document.createElement("LI");
     li.setAttribute("class", node.GoalType);
+    li.setAttribute("class", "dragger");
+    li.setAttribute("draggable", "true");
     // li.setAttribute("id", node.GoalID);
     li.innerHTML =
         '<input id= "' +
         node.GoalID +
         '" class="' +
         node.GoalType +
+        " " +
+        "input-font" +
         '" value = "' +
         node.GoalContent +
-        '" placeholder="New goal" note="' +
+        '" placeholder="New goal" style="font-weight: bold" onchange="handleInputChange()" ' +
+        'note="' +
         node.GoalNote +
         '"' +
         "/>";
@@ -449,28 +490,74 @@ function parseNode(node) {
     //countID(node.GoalType);
 
     // recursion to add sub goal
-    if (node.SubGoals) li.appendChild(parseNodes(node.SubGoals));
+    if (node.SubGoals !== undefined && node.SubGoals.length > 0)
+        li.appendChild(parseNodes(node.SubGoals));
     return li;
 }
 /*Show JSON data on edit page end*/
+
+/*parse Cluster node start*/
+function parseClusterNode(node) {
+    let li = document.createElement("LI");
+    li.setAttribute("class", "dd-item");
+
+    li.innerHTML =
+        '<input id= "' +
+        node.GoalID +
+        '" class="' +
+        node.GoalType +
+        " " +
+        "input-font" +
+        " " +
+        "dd-handle" +
+        '" value = "' +
+        node.GoalContent +
+        '" placeholder="New goal" style="font-weight: bold" onchange="handleInputChange()" ' +
+        'note="' +
+        node.GoalNote +
+        '"' +
+        "/>";
+
+    // recursion to add sub goal
+
+    if (node.SubGoals !== undefined && node.SubGoals.length > 0) {
+        li.appendChild(parseClusterNodes(node.SubGoals));
+    }
+
+    return li;
+}
+/*parse Cluster node end*/
+
+/*handle input change start*/
+//TODO: set input value based on change
+function handleInputChange() {}
+/*handle input change end*/
 
 /*Add new goal by pressing "Enter" start*/
 document.onkeydown = function(event) {
     let goalID;
     let goalType;
     //when the user press the "enter" button
-    if (document.activeElement.tagName === "INPUT" && event.key === "Enter") {
+    if (
+        document.activeElement.tagName === "INPUT" &&
+        event.key === "Enter" &&
+        $(event.target.parentNode.parentNode).hasClass("drag-list")
+    ) {
         //make the default enter invalid
-        goalType = document.activeElement.attributes["class"].nodeValue;
+        goalType = document.activeElement.attributes["class"].nodeValue.split(
+            " "
+        )[0];
         goalID = getID(goalType);
         event.preventDefault();
 
         let newlist =
-            '<li><input id="' +
+            '<li draggable="true" class="dragger"><input id="' +
             goalID +
             '" class="' +
             goalType +
-            '" placeholder="New goal" note="notes" value=""/></li>';
+            " " +
+            "input-font" +
+            '" placeholder="New goal" note="notes" value="" style="font-weight: bold"/></li>';
 
         if ($(event.target).parent().length > 0) {
             let parent = $(event.target).parent();
@@ -481,6 +568,9 @@ document.onkeydown = function(event) {
                 .after(newlist);
         }
         $("#" + goalID).focus();
+
+        //activate drag and drop
+        drag();
     }
 };
 
@@ -578,6 +668,139 @@ function clusternext() {
 /*render the goal model start*/
 function render() {}
 /*render the goal model end*/
+
+/*drag and drop start*/
+let nowCopying;
+
+function drag() {
+    $(".dragger").on("dragstart", function(e) {
+        nowCopying = e.target;
+        //console.log(nowCopying);
+    });
+}
+
+function drop_zone(clusterNumber) {
+    $("#cluster_" + clusterNumber).on("dragover", function(e) {
+        e.preventDefault();
+    });
+
+    $("#cluster_" + clusterNumber).on("drop", function(e) {
+        e.preventDefault();
+        var fromGoallist = $(nowCopying.parentNode.parentNode).hasClass(
+            "goal-list"
+        );
+        var nowCop = $(nowCopying);
+
+        $(".dd").nestable({
+            callback: function(l, e) {
+                // l is the main container
+                // e is the element that was moved
+                appendCluster();
+            },
+            scroll: true
+        });
+
+        var draggableWrapper = '<ol class="dd-list">';
+        draggableWrapper += '<li class="dd-item">';
+        var newNode = createElementFromHTML(nowCop.html());
+
+        $(newNode).css("font-weight", "bold");
+
+        newNode.classList.add("dd-handle");
+        draggableWrapper += newNode.outerHTML;
+        draggableWrapper += "</li></ol>";
+        var node = createElementFromHTML(draggableWrapper);
+
+        //if the drag element comes from the goal list
+        if (fromGoallist) {
+            //if there is dd-empty (first time drag to here)
+            if ($(this).children(".dd-empty")[0]) {
+                $(this)
+                    .children(".dd-empty")[0]
+                    .replaceWith(node);
+
+                appendCluster();
+            }
+            //if no dd-empty, already not first time to drag here, there is ol (alrady has one element)
+            else {
+                $(this)
+                    .children("ol")[0]
+                    .appendChild(
+                        createElementFromHTML(
+                            '<li class="dd-item">' + newNode.outerHTML + "</li>"
+                        )
+                    );
+            }
+        }
+
+        $(nowCopying)
+            .children("input")
+            .css("font-weight", "normal");
+    });
+}
+
+drop_zone(clusterNumber);
+
+$(".dd").nestable({
+    callback: function(l, e) {
+        // l is the main container
+        // e is the element that was moved
+        appendCluster();
+    },
+    scroll: true
+});
+
+function createElementFromHTML(htmlString) {
+    var div = document.createElement("div");
+    div.innerHTML = htmlString.trim();
+
+    // Change this to div.childNodes to support multiple top-level nodes
+    return div.firstChild;
+}
+
+$("#drag").hide();
+
+$("#edit").click(function() {
+    $("#cluster")
+        .find("input")
+        .removeClass("dd-handle");
+
+    $("#edit").hide();
+    $("#drag").show();
+});
+
+$("#drag").click(function() {
+    $("#cluster")
+        .find("input")
+        .addClass("dd-handle");
+
+    $("#drag").hide();
+    $("#edit").show();
+});
+
+function appendCluster() {
+    if (!$(".dd-empty").length) {
+        var cluster = $("#cluster");
+        clusterNumber++;
+        cluster.append(
+            '<div class="dd" id=cluster_' +
+                clusterNumber.toString() +
+                ">" +
+                "</div>"
+        );
+
+        drop_zone(clusterNumber);
+        $(".dd").nestable({
+            callback: function(l, e) {
+                // l is the main container
+                // e is the element that was moved
+                appendCluster();
+            },
+            scroll: true
+        });
+    }
+}
+/*drag and drop end*/
 
 // handle sign off button
 $("#signout").click(function(evt) {
