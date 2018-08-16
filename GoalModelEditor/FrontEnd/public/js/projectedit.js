@@ -953,13 +953,15 @@ window.jsonData = {
                                 GoalID: "E_2",
                                 GoalType: "Emotional",
                                 GoalContent: "This is Emotional Goal E_2",
-                                GoalNote: "Goal E_2 Note"
+                                GoalNote: "Goal E_2 Note",
+                                SubGoals: []
                             },
                             {
                                 GoalID: "Q_3",
                                 GoalType: "Quality",
                                 GoalContent: "This is Quality Goal Q_3",
-                                GoalNote: "Goal Q_3 Note"
+                                GoalNote: "Goal Q_3 Note",
+                                SubGoals: []
                             }
                         ]
                     }
