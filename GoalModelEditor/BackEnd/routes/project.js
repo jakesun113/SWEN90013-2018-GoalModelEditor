@@ -113,7 +113,7 @@ router.post('/:userId', function(req, res, next) {
         });
 });
 
-/* POST Edit Project */
+/* PUT Edit Project */
 router.put('/:userId/:projectId', (req, res, next) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
@@ -147,12 +147,6 @@ router.put('/:userId/:projectId', (req, res, next) => {
                 .then(result => {
                     console.log(result);
                     res.statusCode = 200;
-                    res.json({
-                        owner: result.OwnerId,
-                        project_id: result.ProjectId,
-                        project_name: result.ProjectName,
-                        description: result.Description
-                    });
                     return res.end();
                 })
                 .catch(err => {
@@ -186,7 +180,7 @@ router.delete('/:userId/:projectId', (req, res, next) => {
     db
         .getProject(req.params.projectId)
         .then(result => {
-            if (result.OwnerId != req.params.userId) {
+            if (result.OwnerId !== req.params.userId) {
                 res.statusCode = 403;
                 res.json({
                     message:
