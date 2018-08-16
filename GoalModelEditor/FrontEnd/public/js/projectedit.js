@@ -481,7 +481,7 @@ function parseNode(node) {
         "input-font" +
         '" value = "' +
         node.GoalContent +
-        '" placeholder="New goal" style="font-weight: bold" onchange="handleInputChange()" ' +
+        '" placeholder="New goal" style="font-weight: bold"" ' +
         'note="' +
         node.GoalNote +
         '"' +
@@ -512,7 +512,7 @@ function parseClusterNode(node) {
         "dd-handle" +
         '" value = "' +
         node.GoalContent +
-        '" placeholder="New goal" style="font-weight: bold" onchange="handleInputChange()" ' +
+        '" placeholder="New goal" style="font-weight: bold"" ' +
         'note="' +
         node.GoalNote +
         '"' +
@@ -527,11 +527,6 @@ function parseClusterNode(node) {
     return li;
 }
 /*parse Cluster node end*/
-
-/*handle input change start*/
-//TODO: set input value based on change
-function handleInputChange() {}
-/*handle input change end*/
 
 /*Add new goal by pressing "Enter" start*/
 document.onkeydown = function(event) {
@@ -686,10 +681,9 @@ function drop_zone(clusterNumber) {
 
     $("#cluster_" + clusterNumber).on("drop", function(e) {
         e.preventDefault();
-        var fromGoallist = $(nowCopying.parentNode.parentNode).hasClass(
+        let fromGoallist = $(nowCopying.parentNode.parentNode).hasClass(
             "goal-list"
         );
-        var nowCop = $(nowCopying);
 
         $(".dd").nestable({
             callback: function(l, e) {
@@ -700,16 +694,19 @@ function drop_zone(clusterNumber) {
             scroll: true
         });
 
-        var draggableWrapper = '<ol class="dd-list">';
+        let draggableWrapper = '<ol class="dd-list">';
         draggableWrapper += '<li class="dd-item">';
-        var newNode = createElementFromHTML(nowCop.html());
+        let newNode = createElementFromHTML($(nowCopying).html());
 
         $(newNode).css("font-weight", "bold");
 
         newNode.classList.add("dd-handle");
+
+        $(newNode).attr("value", $(nowCopying).children("input")[0].value);
+
         draggableWrapper += newNode.outerHTML;
         draggableWrapper += "</li></ol>";
-        var node = createElementFromHTML(draggableWrapper);
+        let node = createElementFromHTML(draggableWrapper);
 
         //if the drag element comes from the goal list
         if (fromGoallist) {
@@ -739,6 +736,9 @@ function drop_zone(clusterNumber) {
     });
 }
 
+//activate drag function
+drag();
+
 drop_zone(clusterNumber);
 
 $(".dd").nestable({
@@ -751,7 +751,7 @@ $(".dd").nestable({
 });
 
 function createElementFromHTML(htmlString) {
-    var div = document.createElement("div");
+    let div = document.createElement("div");
     div.innerHTML = htmlString.trim();
 
     // Change this to div.childNodes to support multiple top-level nodes
@@ -780,7 +780,7 @@ $("#drag").click(function() {
 
 function appendCluster() {
     if (!$(".dd-empty").length) {
-        var cluster = $("#cluster");
+        let cluster = $("#cluster");
         clusterNumber++;
         cluster.append(
             '<div class="dd" id=cluster_' +
