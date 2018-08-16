@@ -70,7 +70,6 @@ router.post('/:userId/:projectId', (req, res, next) => {
                 project_id: result.ProjectId,
                 last_modified: result.LastModified
             });
-            //TODO: filepath is not in db
             console.log(result.DirPath);
             return res.end();
         })
@@ -146,7 +145,6 @@ router.put('/:userId/:goalmodelId', (req, res, next) => {
     db
         .getGoalmodel(req.params.goalmodelId)
         .then(result => {
-            //TODO: filepath is currently undefined
             dirpath = result.DirPath;
         })
         .catch(err => {
@@ -174,7 +172,6 @@ router.put('/:userId/:goalmodelId', (req, res, next) => {
         return res.end();
     }
 
-    //TODO: check whether the path is dirpath or filepath
     createDirectoryPath(dirpath);
     fs.writeFile(dirpath + '/' + req.params.goalmodelId, req.body.content, function(err) {
         if (err) {
