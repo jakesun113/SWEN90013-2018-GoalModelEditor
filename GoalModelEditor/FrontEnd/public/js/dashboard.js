@@ -350,7 +350,7 @@ $("#rename_project").submit(function(evt) {
                         .eq(0)
                         .html() +
                     " successfully renamed to " +
-                    project.project_name +
+                    formData.project_name +
                     "."
             );
             $("#success-alert")
@@ -359,7 +359,7 @@ $("#rename_project").submit(function(evt) {
                 .slideUp();
             $("#" + pid + " h6")
                 .eq(0)
-                .html(project.project_name);
+                .html(formData.project_name);
         }
     }).fail(function(jqXHR) {
         $("#rename-project").modal("toggle");
