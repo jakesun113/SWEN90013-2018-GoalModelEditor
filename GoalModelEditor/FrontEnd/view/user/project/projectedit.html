@@ -31,6 +31,12 @@
 
     <!-- script for rendering graph #currently a stub -->
     <script type="text/javascript">
+
+const WIDTH = 120;
+const HEIGHT = 80;
+const HORIZONTAL_TRANSLATION = 100;
+const VERTICAL_TRANSLATION = 150;
+
 /* Renders the window.jsonData into a symbolic goal model.
  *
  */
@@ -71,32 +77,38 @@ function renderCluster(cluster, graph) {
     var parent = graph.getDefaultParent();
 
     // render each goal in the cluster
+    x = 200; // initial x-coord of cell
+    y = 20; // initial y-coord of cell
     for (var i=0; i<cluster.ClusterGoals.length; i++) {
-        renderGoal(parent, cluster.ClusterGoals[i], graph);
+        renderGoal(null, cluster.ClusterGoals[i], graph, x, y);
+        x = x + WIDTH + HORIZONTAL_TRANSLATION;
     }
 }
 
 /* Renders a goal subtree.
  *
  */
-function renderGoal(parent, goal, graph) {
+function renderGoal(supergoal, goal, graph, x, y) {
     console.log("Logging: renderGoal() called with goal: " + goal);
 
-    // render current goal
+    // fetch the default mxGraph cell parent
+    var parent = graph.getDefaultParent();
 
     // if the goal is functional ...
-    if goal.GoalType == "Functional" {
-        var node = graph.insertVertex(parent, null, goal.GoalContent, 20, 20, 80, 30);
-        var edge = graph.insertEdge(parent, null, '', node, child);
+    if (goal.GoalType == 'Functional') {
+        var node = graph.insertVertex(parent, null, goal.GoalContent, x, y, WIDTH, HEIGHT);
+        if (supergoal != null) {
+            var edge = graph.insertEdge(parent, null, '', supergoal, node);
+        }
 
-    // if  otherwise non-functional ...
+    // else if non-functional ...
     } else {
         // do nothing for the moment
     }
 
-    // ... as well as all it's children 
+    // render each of the goal's children
     for (var i=0; i<goal.SubGoals.length; i++) {
-        child = renderGoal(node, goal.SubGoals[i], graph);
+        child = renderGoal(node, goal.SubGoals[i], graph, x, y + VERTICAL_TRANSLATION);
     }
     return node;
 }
