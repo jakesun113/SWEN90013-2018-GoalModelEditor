@@ -222,7 +222,7 @@ $("#create-model").submit(function(evt) {
                 .append(modelHTML);
             $("#add-model").modal("toggle");
             $("#success-alert").html(
-                "Model: " + model.project_name + " successfully created."
+                "Model: " + model.model_name + " successfully created."
             );
             $("#success-alert")
                 .slideDown()
