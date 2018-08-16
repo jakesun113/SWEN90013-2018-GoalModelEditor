@@ -34,8 +34,6 @@
 
 const WIDTH = 120;
 const HEIGHT = 80;
-const HORIZONTAL_TRANSLATION = 100;
-const VERTICAL_TRANSLATION = 150;
 
 /* Renders the window.jsonData into a symbolic goal model.
  *
@@ -62,6 +60,7 @@ function renderGraph(container) {
     // render the graph
     graph.getModel().beginUpdate(); // start transaction
     renderCluster(cluster, graph); // update
+    autolayout(graph);
     graph.getModel().endUpdate(); // end transaction
 }
 
@@ -76,19 +75,18 @@ function renderCluster(cluster, graph) {
     // parent of all "root" goals in the hierarchy
     var parent = graph.getDefaultParent();
 
+    // 
+
     // render each goal in the cluster
-    x = 200; // initial x-coord of cell
-    y = 20; // initial y-coord of cell
     for (var i=0; i<cluster.ClusterGoals.length; i++) {
-        renderGoal(null, cluster.ClusterGoals[i], graph, x, y);
-        x = x + WIDTH + HORIZONTAL_TRANSLATION;
+        renderGoal(null, cluster.ClusterGoals[i], graph);
     }
 }
 
 /* Renders a goal subtree.
  *
  */
-function renderGoal(supergoal, goal, graph, x, y) {
+function renderGoal(supergoal, goal, graph) {
     console.log("Logging: renderGoal() called with goal: " + goal);
 
     // fetch the default mxGraph cell parent
@@ -96,7 +94,7 @@ function renderGoal(supergoal, goal, graph, x, y) {
 
     // if the goal is functional ...
     if (goal.GoalType == 'Functional') {
-        var node = graph.insertVertex(parent, null, goal.GoalContent, x, y, WIDTH, HEIGHT);
+        var node = graph.insertVertex(parent, null, goal.GoalContent, 0, 0, WIDTH, HEIGHT);
         if (supergoal != null) {
             var edge = graph.insertEdge(parent, null, '', supergoal, node);
         }
@@ -108,9 +106,18 @@ function renderGoal(supergoal, goal, graph, x, y) {
 
     // render each of the goal's children
     for (var i=0; i<goal.SubGoals.length; i++) {
-        child = renderGoal(node, goal.SubGoals[i], graph, x, y + VERTICAL_TRANSLATION);
+        child = renderGoal(node, goal.SubGoals[i], graph);
     }
     return node;
+}
+
+
+/* Auto-layout for graph
+ *
+ */
+function autolayout(graph) {
+    var layout = new mxHierarchicalLayout(graph, mxConstants.DIRECTION_NORTH);
+    layout.execute(graph.getDefaultParent());
 }
 
         function nothing(container) {
