@@ -31,20 +31,89 @@
 
     <!-- script for rendering graph #currently a stub -->
     <script type="text/javascript">
-        /* Renders a graph into the container specified by the given id.
-         *
-         */
+/* Renders the window.jsonData into a symbolic goal model.
+ *
+ */
+function renderGraph(container) {
+    console.log("Logging: renderGraph() called.");
 
-        function renderGraph(container) {
-            console.log("renderGraph function called...");
+    // check that browser is supported
+    if (!mxClient.isBrowserSupported()) {
+        console.log("Logging: browser not supported");
+        mxUtils.error("Browser not supported!", 200, false);
+        return;
+    }
 
-            // Checks if the browser is supported
+    // disable context menu
+    mxEvent.disableContextMenu(container);
+
+    // create the graph object and configure
+    graph = new mxGraph(container);
+
+    // grab the first cluster from the global json
+    var cluster = window.jsonData.GoalModelProject.Clusters[0]
+
+    // render the graph
+    graph.getModel().beginUpdate(); // start transaction
+    renderCluster(cluster, graph); // update
+    graph.getModel().endUpdate(); // end transaction
+}
+
+
+/* Renders a cluster of goals.
+ *
+ */
+function renderCluster(cluster, graph) {
+    console.log("Logging: renderCluster() called on cluster: " + cluster);
+
+    // retrieve the graph's default parent - this effectively becomes the
+    // parent of all "root" goals in the hierarchy
+    var parent = graph.getDefaultParent();
+
+    // render each goal in the cluster
+    for (var i=0; i<cluster.ClusterGoals.length; i++) {
+        renderGoal(parent, cluster.ClusterGoals[i], graph);
+    }
+}
+
+/* Renders a goal subtree.
+ *
+ */
+function renderGoal(parent, goal, graph) {
+    console.log("Logging: renderGoal() called with goal: " + goal);
+
+    // render current goal
+
+    // if the goal is functional ...
+    if goal.GoalType == "Functional" {
+        var node = graph.insertVertex(parent, null, goal.GoalContent, 20, 20, 80, 30);
+        var edge = graph.insertEdge(parent, null, '', node, child);
+
+    // if  otherwise non-functional ...
+    } else {
+        // do nothing for the moment
+    }
+
+    // ... as well as all it's children 
+    for (var i=0; i<goal.SubGoals.length; i++) {
+        child = renderGoal(node, goal.SubGoals[i], graph);
+    }
+    return node;
+}
+
+        function nothing(container) {
+            console.log("Logging: renderGraph() called");
+
+            // check that browser is supported
 	    if (!mxClient.isBrowserSupported()) {
-		// Displays an error message if the browser is not supported.
 		mxUtils.error('Browser is not supported!', 200, false);
 	    } else {
 
+                // disable the build-in context menu
 		mxEvent.disableContextMenu(container);
+
+
+                /*
 		var mxCellRendererInstallCellOverlayListeners = mxCellRenderer.prototype.installCellOverlayListeners;
 
 		mxCellRenderer.prototype.installCellOverlayListeners = function(state, overlay, shape) {
@@ -59,22 +128,38 @@
 			});
 		    }
 		};
+                */
 				
-		// Creates the graph inside the given container
+		// Create the graph in the given container
 		var graph = new mxGraph(container);
-	        graph.setPanning(true);
-		graph.panningHandler.useLeftButtonForPanning = true;
-		graph.setAllowDanglingEdges(false);
-	        graph.connectionHandler.select = false;
-	        graph.view.setTranslate(20, 20);
 
-		// Enables rubberband selection
+                // Graph settings
+	        //graph.setPanning(true);
+		//graph.panningHandler.useLeftButtonForPanning = true;
+		//graph.setAllowDanglingEdges(false);
+	        //graph.connectionHandler.select = false;
+	        //graph.view.setTranslate(20, 20);
+
+		// Enable rubberband selection
 		new mxRubberband(graph);
 				
 		// Gets the default parent for inserting new cells. This
 		// is normally the first child of the root (ie. layer 0).
 		var parent = graph.getDefaultParent();
-				
+
+                graph.getModel().beginUpdate();
+                try {
+                    var a = graph.insertVertex(parent, null, 'hello', 20, 20, 80, 30);
+                    var b = graph.insertVertex(parent, null, window.jsonData.GoalModelProject.Clusters[0].ClusterID, 20, 20, 80, 30);
+                    var c = graph.insertEdge(parent, null, '', a, b);
+                } finally {
+                    graph.getModel().endUpdate();
+                }
+
+
+                /*
+                var associate = function(cell) {};
+
 		var addOverlay = function(cell) {
 		    // Creates a new overlay with an image and a tooltip
 		    var overlay = new mxCellOverlay(new mxImage('/src/images/add.png', 24, 24), 'Add outgoing');
@@ -153,6 +238,7 @@
 			morph.startAnimation();
 		    }
                 };
+                // end addOverlay()
 				
 	        var edgeHandleConnect = mxEdgeHandler.prototype.connect;
 		mxEdgeHandler.prototype.connect = function(edge, terminal, isSource, isClone, me) {
@@ -169,6 +255,8 @@
 		    executeLayout();
 	        });
 	    }
+            */
+            }
 	};
     </script>
 
