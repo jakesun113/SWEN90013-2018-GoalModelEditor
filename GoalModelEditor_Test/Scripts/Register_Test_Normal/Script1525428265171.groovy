@@ -36,9 +36,9 @@ WebUI.setText(findTestObject('RegisterSeries/Page_Registration/input_firstname')
 
 WebUI.setText(findTestObject('RegisterSeries/Page_Registration/input_email'), 'dsy502yc@gmail.com')
 
-WebUI.setText(findTestObject('RegisterSeries/Page_Registration/input_password'), '1234')
+WebUI.setText(findTestObject('RegisterSeries/Page_Registration/input_password'), '123456')
 
-WebUI.setText(findTestObject('RegisterSeries/Page_Registration/input_confirmPassword'), '1234')
+WebUI.setText(findTestObject('RegisterSeries/Page_Registration/input_confirmPassword'), '123456')
 
 WebUI.click(findTestObject('RegisterSeries/Page_Registration/button_Submit'))
 

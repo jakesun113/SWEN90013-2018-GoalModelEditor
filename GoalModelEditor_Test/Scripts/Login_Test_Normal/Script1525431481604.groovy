@@ -28,7 +28,7 @@ WebUI.click(findTestObject('LoginSeries/Page_Goal Model Editor/a_Go to Goal Mode
 
 WebUI.setText(findTestObject('LoginSeries/Page_Sign in/input_username'), 'username4')
 
-WebUI.setText(findTestObject('LoginSeries/Page_Sign in/input_password'), '1234')
+WebUI.setText(findTestObject('LoginSeries/Page_Sign in/input_password'), '123456')
 
 WebUI.click(findTestObject('LoginSeries/Page_Sign in/button_Sign in'))
 
