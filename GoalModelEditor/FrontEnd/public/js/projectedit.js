@@ -623,6 +623,7 @@ function photonextbtn() {
         b.innerHTML = "Next";
     } else {
         p.style.display = "none";
+        getData();
         // goal.removeAttributeNode("style");
         // goal.addAttributes("goalscrollbar");
         n.style.display = "block";
@@ -835,10 +836,12 @@ $("#save").submit(function(evt) {
 
 /*Get data from HTML to JSON start*/
 function getData() {
-    // var functionaldata = $("#functionaldata").ul.childNodes;
-    // for (let i = 0; i < functionaldata.size(); i++) {
-    //     console.log(functionaldata[i].textContent);
-    // }
+    var functionaldata = $('#functionaldata').find('ul')[0].children;
+    //console.log(functionaldata);
+    let i = 0;
+    for (i = 0; i < functionaldata.length; i++) {
+        console.log($(functionaldata[i]).find('input')[0].value);
+    }
     // $("#qualitydata").append(
     //     parseNodes(jsonData.GoalModelProject.GoalList.Quality)
     // );
@@ -858,6 +861,9 @@ function getData() {
     // NegativeNum = jsonData.GoalModelProject.GoalList.NegativeNum;
     // StakeholderNum = jsonData.GoalModelProject.GoalList.StakeholderNum;
     // window.jsonData.
+    // console.log("front end get data log => " + $('#qualitydata').find('li').forEach(a,()=>{
+    //     console.log(a.value);
+    // }))
 }
 /*Get data from HTML to JSON end*/
 
