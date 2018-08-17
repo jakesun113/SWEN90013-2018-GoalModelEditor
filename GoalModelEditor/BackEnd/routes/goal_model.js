@@ -1,42 +1,42 @@
 /* End-point for Goal Model related HTTP requests in back-end REST API
  *
  */
-'use strict'
+"use strict";
 
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const path = require('path');
-const fs = require('fs');
-const multiparty = require('multiparty');
+const path = require("path");
+const fs = require("fs");
+const multiparty = require("multiparty");
 
 // security related imports
-const auth = require('../authen');
+const auth = require("../authen");
 const db = require(path.resolve(
     __dirname,
-    '../../Database/DBModule/DBModule.js'
+    "../../Database/DBModule/DBModule.js"
 ));
 
 /* GET get the edit page */
-router.get('/edit', function(req, res) {
+router.get("/edit", function(req, res) {
     if (req.cookies.LOKIDIED) {
-        res.render('user/project/projectedit');
+        res.render("user/project/projectedit");
     }
-    res.redirect('/login');
+    res.redirect("/login");
 });
 
 /* POST Create Goal Model */
-router.post('/:userId/:projectId', (req, res, next) => {
+router.post("/:userId/:projectId", (req, res, next) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
-        res.json({ created: false, message: 'Authentication failed' });
+        res.json({ created: false, message: "Authentication failed" });
         return res.end();
     }
 
     // path to the directory where the goal models should be stored
     // path should be '/etc/GoalModelEditor' but need to find a way to resolve
     // the folder permission problem
-    let dirpath = './UserFiles/' + req.params.userId + '/';
+    let dirpath = "./UserFiles/" + req.params.userId + "/";
 
     // create new goal model
     db
@@ -75,17 +75,17 @@ router.post('/:userId/:projectId', (req, res, next) => {
         })
         .catch(err => {
             res.statusCode = 500;
-            res.json({ message: 'Failed to create new model' });
+            res.json({ message: "Failed to create new model" });
             return res.end();
         });
 });
 
 /* POST Upload images */
-router.post('/images/:userId/:goalmodelId', (req, res, next) => {
+router.post("/images/:userId/:goalmodelId", (req, res, next) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
-        res.json({ created: false, message: 'Authentication failed' });
+        res.json({ created: false, message: "Authentication failed" });
         return res.end();
     }
 
@@ -98,25 +98,25 @@ router.post('/images/:userId/:goalmodelId', (req, res, next) => {
         let j = 0;
         console.log(j++);
 
-        let dirpath = './UserFiles/' + req.params.userId + '/';
+        let dirpath = "./UserFiles/" + req.params.userId + "/";
         createDirectoryPath(dirpath);
 
         let i = 0;
-        for (let _ in files['image']) {
-            console.log('pathpath:  ' + files['image'][i].path);
+        for (let _ in files["image"]) {
+            console.log("pathpath:  " + files["image"][i].path);
             fs.renameSync(
-                files['image'][i].path,
+                files["image"][i].path,
                 dirpath +
                     req.params.goalmodelId +
-                    '-' +
-                    files['image'][i].originalFilename,
+                    "-" +
+                    files["image"][i].originalFilename,
                 function(err) {
                     if (err) {
-                        console.log('error when renaming images: ' + err);
+                        console.log("error when renaming images: " + err);
                         res.statusCode = 500;
                         res.json({
                             created: false,
-                            message: 'failed to save the images'
+                            message: "failed to save the images"
                         });
                         return res.end();
                     }
@@ -128,20 +128,20 @@ router.post('/images/:userId/:goalmodelId', (req, res, next) => {
 
     res.statusCode = 201;
     res.json({ created: true });
-    console.log('images saved');
+    console.log("images saved");
     return res.end();
 });
 
 /* PUT Edit Goal Model Content */
-router.put('/:userId/:goalmodelId', (req, res, next) => {
+router.put("/:userId/:goalmodelId", (req, res, next) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
-        res.json({ created: false, message: 'Authentication failed' });
+        res.json({ created: false, message: "Authentication failed" });
         return res.end();
     }
 
-    let dirpath = '';
+    let dirpath = "";
     db
         .getGoalmodel(req.params.goalmodelId)
         .then(result => {
@@ -152,57 +152,61 @@ router.put('/:userId/:goalmodelId', (req, res, next) => {
                 res.statusCode = 404;
                 res.json({
                     message:
-                        'Failed to save the goal model content: ' + err.message
+                        "Failed to save the goal model content: " + err.message
                 });
                 return res.end();
             }
             res.statusCode = 500;
             res.json({
-                message: 'Failed to save the goal model content: ' + err.message
+                message: "Failed to save the goal model content: " + err.message
             });
             return res.end();
         });
-    if (dirpath === '') {
-        console.log('no such file');
+    if (dirpath === "") {
+        console.log("no such file");
         res.statusCode = 500;
         res.json({
             message:
-                'Failed to update the goal model: goal model file does not exists'
+                "Failed to update the goal model: goal model file does not exists"
         });
         return res.end();
     }
 
     createDirectoryPath(dirpath);
-    fs.writeFile(dirpath + '/' + req.params.goalmodelId, req.body.content, function(err) {
-        if (err) {
-            console.log(err);
-            res.statusCode = 500;
-            res.json({
-                message: 'Failed to update the goal model: ' + err.message
-            });
+    fs.writeFile(
+        dirpath + "/" + req.params.goalmodelId,
+        req.body.content,
+        function(err) {
+            if (err) {
+                console.log(err);
+                res.statusCode = 500;
+                res.json({
+                    message: "Failed to update the goal model: " + err.message
+                });
+                return res.end();
+            }
+            res.statusCode = 200;
+            res.json({ content: req.body.content });
+            console.log("Saved!");
             return res.end();
         }
-        res.statusCode = 200;
-        res.json({ content: req.body.content });
-        console.log('Saved!');
-        return res.end();
-    });
+    );
 });
 
 /* PUT Edit Goal Model Info */
-router.put('/:userId/:goalmodelId', (req, res, next) => {
+router.put("/:userId/:goalmodelId", (req, res, next) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
-        res.json({ created: false, message: 'Authentication failed' });
+        res.json({ created: false, message: "Authentication failed" });
         return res.end();
     }
 
     // update goal model
     let filepath =
-        '/etc/GoalModelEditor/' +
+        "/etc/GoalModelEditor/" +
         req.params.userId +
-        '/' +
+        "/" +
         req.params.goalmodelId;
     db
         .updateGpalModel(
@@ -225,7 +229,7 @@ router.put('/:userId/:goalmodelId', (req, res, next) => {
                 res.statusCode = 409;
                 res.json({
                     message:
-                        'Failed to update the goal model information: ' +
+                        "Failed to update the goal model information: " +
                         err.message
                 });
                 return res.end();
@@ -233,7 +237,7 @@ router.put('/:userId/:goalmodelId', (req, res, next) => {
                 res.statusCode = 404;
                 res.json({
                     message:
-                        'Failed to update the goal model information: ' +
+                        "Failed to update the goal model information: " +
                         err.message
                 });
                 return res.end();
@@ -242,11 +246,11 @@ router.put('/:userId/:goalmodelId', (req, res, next) => {
 });
 
 /* DELETE Goal Model */
-router.delete('/:userId/:goalmodelId', (req, res, next) => {
+router.delete("/:userId/:goalmodelId", (req, res, next) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
-        res.json({ created: false, message: 'Authentication failed' });
+        res.json({ created: false, message: "Authentication failed" });
         return res.end();
     }
 
@@ -261,23 +265,23 @@ router.delete('/:userId/:goalmodelId', (req, res, next) => {
         .catch(err => {
             res.statusCode = 500;
             res.json({
-                message: 'Failed to delete goal model: ' + err.message
+                message: "Failed to delete goal model: " + err.message
             });
             return res.end();
         });
 });
 
 /* Get Goal Model Content */
-router.get('/:userId/:goalmodelId', (req, res, next) => {
+router.get("/:userId/:goalmodelId", (req, res, next) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         //auth is not successful
         res.statusCode = 401;
-        res.json({ created: false, message: 'Authentication failed' });
+        res.json({ created: false, message: "Authentication failed" });
         return res.end();
     }
 
-    var filepath = ''; //store the file path of goal model in this
+    var filepath = ""; //store the file path of goal model in this
     db
         .getGoalmodel(req.params.goalmodelId)
         .then(result => {
@@ -291,25 +295,25 @@ router.get('/:userId/:goalmodelId', (req, res, next) => {
                 res.statusCode = 404;
                 res.json({
                     message:
-                        'Failed to get the goal model content: ' + err.message
+                        "Failed to get the goal model content: " + err.message
                 });
                 return res.end();
             }
             //set response: failed to get goal model
             res.statusCode = 500;
             res.json({
-                message: 'Failed to get the goal model content: ' + err.message
+                message: "Failed to get the goal model content: " + err.message
             });
             return res.end();
         });
     //file path does not exist
-    if (filepath === '' || !fs.existsSync(filepath)) {
-        console.log('no such file');
+    if (filepath === "" || !fs.existsSync(filepath)) {
+        console.log("no such file");
         //set response : file does not exists
         res.statusCode = 500;
         res.json({
             message:
-                'Failed to open the goal model: goal model file does not exists'
+                "Failed to open the goal model: goal model file does not exists"
         });
         return res.end();
     }
@@ -320,7 +324,7 @@ router.get('/:userId/:goalmodelId', (req, res, next) => {
             console.log(err);
             res.statusCode = 500;
             res.json({
-                message: 'Failed to get the goal model: ' + err.message
+                message: "Failed to get the goal model: " + err.message
             });
             return res.end();
         }
@@ -329,7 +333,7 @@ router.get('/:userId/:goalmodelId', (req, res, next) => {
         res.statusCode = 200;
         res.json({ content: res });
         console.log(res);
-        console.log('get goal model');
+        console.log("get goal model");
         return res.end();
     });
 });

@@ -44,12 +44,7 @@ $("#login").submit(function(evt) {
                 expires: 1,
                 path: "/"
             });
-            $("#login-successful-title").html(
-                '<h5 class="modal-title" id="login-successful-title">Welcome! ' +
-                    $("#username").val() +
-                    "</h5>"
-            );
-            $("#login-successful").modal("show");
+            window.location.href = "/dashboard";
         }
     }).fail(function(jqXHR) {
         $("#login-error").html(

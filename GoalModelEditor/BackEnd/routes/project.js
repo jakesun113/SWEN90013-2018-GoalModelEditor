@@ -1,22 +1,22 @@
 /* End-point for project related HTTP requests in back-end REST API.
  *
  */
-'use strict'
+"use strict";
 
 // express application
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const path = require('path');
+const path = require("path");
 
 // security related imports
-const auth = require('../authen');
+const auth = require("../authen");
 const db = require(path.resolve(
     __dirname,
-    '../../Database/DBModule/DBModule.js'
+    "../../Database/DBModule/DBModule.js"
 ));
 
 // response codes
-const response_codes = require('./response_codes');
+const response_codes = require("./response_codes");
 
 /* GET List (a user's) File System */
 /* This should return a JSON (or some other equivalent data structure)
@@ -29,11 +29,11 @@ const response_codes = require('./response_codes');
  *      }
  *
  */
-router.get('/list/:userId', (req, res, next) => {
+router.get("/list/:userId", (req, res, next) => {
     // (1) authenticate request
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
-        res.json({ created: false, message: 'Authentication failed' });
+        res.json({ created: false, message: "Authentication failed" });
         return res.end();
     }
 
@@ -72,18 +72,18 @@ router.get('/list/:userId', (req, res, next) => {
         .catch(err => {
             res.statusCode = 500;
             res.json({
-                message: 'Failed to create new project: ' + err.message
+                message: "Failed to create new project: " + err.message
             });
             return res.end();
         });
 });
 
 /* POST Create Project */
-router.post('/:userId', function(req, res, next) {
+router.post("/:userId", function(req, res, next) {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
-        res.json({ created: false, message: 'Authentication failed' });
+        res.json({ created: false, message: "Authentication failed" });
         return res.end();
     }
 
@@ -107,7 +107,7 @@ router.post('/:userId', function(req, res, next) {
         .catch(err => {
             res.statusCode = 500;
             res.json({
-                message: 'Failed to create new project: ' + err.message
+                message: "Failed to create new project: " + err.message
             });
             return res.end();
         });
@@ -118,7 +118,7 @@ router.put('/:userId/:projectId', (req, res, next) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
-        res.json({ created: false, message: 'Authentication failed' });
+        res.json({ created: false, message: "Authentication failed" });
         return res.end();
     }
 
@@ -130,7 +130,7 @@ router.put('/:userId/:projectId', (req, res, next) => {
                 res.statusCode = 403;
                 res.json({
                     message:
-                        'Failed to edit the project: user does not have the authority'
+                        "Failed to edit the project: user does not have the authority"
                 });
                 return res.end();
             }
@@ -152,7 +152,7 @@ router.put('/:userId/:projectId', (req, res, next) => {
                 .catch(err => {
                     res.statusCode = 500;
                     res.json({
-                        message: 'Failed to update project: ' + err.message
+                        message: "Failed to update project: " + err.message
                     });
                     return res.end();
                 });
@@ -161,18 +161,18 @@ router.put('/:userId/:projectId', (req, res, next) => {
             res.statusCode = 404;
             res.json({
                 message:
-                    'Failed to get the old project information: ' + err.message
+                    "Failed to get the old project information: " + err.message
             });
             return res.end();
         });
 });
 
 /* DELETE Delete Project */
-router.delete('/:userId/:projectId', (req, res, next) => {
+router.delete("/:userId/:projectId", (req, res, next) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
-        res.json({ created: false, message: 'Authentication failed' });
+        res.json({ created: false, message: "Authentication failed" });
         res.end();
     }
 
@@ -184,7 +184,7 @@ router.delete('/:userId/:projectId', (req, res, next) => {
                 res.statusCode = 403;
                 res.json({
                     message:
-                        'Failed to delete the project: user does not have the authority'
+                        "Failed to delete the project: user does not have the authority"
                 });
                 return res.end();
             }
@@ -200,7 +200,7 @@ router.delete('/:userId/:projectId', (req, res, next) => {
                 .catch(err => {
                     res.statusCode = 500;
                     res.json({
-                        message: 'Failed to delete project: ' + err.message
+                        message: "Failed to delete project: " + err.message
                     });
                     return res.end();
                 });
@@ -209,7 +209,7 @@ router.delete('/:userId/:projectId', (req, res, next) => {
             res.statusCode = 404;
             res.json({
                 message:
-                    'Failed to get the old project information: ' + err.message
+                    "Failed to get the old project information: " + err.message
             });
             return res.end();
         });
