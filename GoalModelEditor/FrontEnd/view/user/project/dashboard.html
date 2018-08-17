@@ -14,10 +14,12 @@
     <div> <!-- Start wrapper div -->
         <!-- Start alert div -->
         <!-- Success alert -->
-        <div style="display: none" class="text-center alert alert-success mb-0" id="success-alert" role="alert">
+        <div style="display: none" class="text-center alert alert-success mb-0 notification"
+             id="success-alert" role="alert">
         </div>
         <!-- Warning alert -->
-        <div style="display: none" class="text-center alert alert-warning mb-0" id="warning-alert" role="alert">
+        <div style="display: none" class="text-center alert alert-warning mb-0 notification"
+             id="warning-alert" role="alert">
         </div>
         <!-- End alert div -->
         <!-- Header part of the page -->
@@ -81,7 +83,7 @@
                         <div class="modal-body">
                             <label class="my-2">Project Name:</label>
                             <input name="project_name" type="text" class="form-control"
-                                   value="Untitled folder" placeholder="Project Name" required>
+                                   placeholder="Project Name" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn" style="background-color: transparent"
@@ -149,7 +151,7 @@
                     <form method="post" id="create-model">
                         <div class="modal-body">
                             <input name="model_name" type="text" class="form-control"
-                                   value="Untitled">
+                                   placeholder="Untitled">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn" style="background-color: transparent"
