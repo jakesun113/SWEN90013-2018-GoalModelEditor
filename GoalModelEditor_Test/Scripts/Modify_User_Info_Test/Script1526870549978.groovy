@@ -30,7 +30,7 @@ WebUI.setText(findTestObject('Modify_User_Profile_Series/Page_Sign in/input_user
 
 WebUI.setText(findTestObject('Modify_User_Profile_Series/Page_Sign in/input_username'), 'username4')
 
-WebUI.setText(findTestObject('Modify_User_Profile_Series/Page_Sign in/input_password'), '1234')
+WebUI.setText(findTestObject('Modify_User_Profile_Series/Page_Sign in/input_password'), '123456')
 
 WebUI.click(findTestObject('Modify_User_Profile_Series/Page_Sign in/button_Sign in'))
 

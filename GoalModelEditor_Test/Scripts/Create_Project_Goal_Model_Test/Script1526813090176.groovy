@@ -28,7 +28,7 @@ WebUI.click(findTestObject('CreateProjectGoalModelSeries/Page_Goal Model Editor 
 
 WebUI.setText(findTestObject('CreateProjectGoalModelSeries/Page_Sign in (3)/input_username'), 'username4')
 
-WebUI.setText(findTestObject('CreateProjectGoalModelSeries/Page_Sign in (3)/input_password'), '1234')
+WebUI.setText(findTestObject('CreateProjectGoalModelSeries/Page_Sign in (3)/input_password'), '123456')
 
 WebUI.sendKeys(findTestObject('CreateProjectGoalModelSeries/Page_Sign in (3)/input_password'), Keys.chord(Keys.ENTER))
 
@@ -42,7 +42,7 @@ WebUI.setText(findTestObject('CreateProjectGoalModelSeries/Page_Sign in (3)/inpu
 
 WebUI.setText(findTestObject('CreateProjectGoalModelSeries/Page_Sign in (3)/input_username'), 'username4')
 
-WebUI.setText(findTestObject('CreateProjectGoalModelSeries/Page_Sign in (3)/input_password'), '1234')
+WebUI.setText(findTestObject('CreateProjectGoalModelSeries/Page_Sign in (3)/input_password'), '123456')
 
 WebUI.click(findTestObject('CreateProjectGoalModelSeries/Page_Sign in (3)/label_Remember me (1)'))
 
