@@ -53,6 +53,7 @@ router.post("/:userId/:projectId", (req, res, next) => {
             {
                 GoalModelProject: {
                     ModelName: result.ModelName,
+                    ProjectName: result.ProjectName,
 
                         //Goal list: [five goal types][used goal][deleted goal]
                         GoalList: {

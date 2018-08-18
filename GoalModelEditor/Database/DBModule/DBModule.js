@@ -61,7 +61,9 @@ const SQL_CREATE_GOALMODEL =
     "VALUES (UUID(), ?, ?, ?, ?)";
 
 const SQL_RET_GOALMODEL =
-    "SELECT * FROM GoalModel WHERE BINARY ModelName = ? AND Project = ?";
+    "SELECT * FROM GoalModel LEFT JOIN Project "+
+    "ON Project.ProjectId = GoalModel.Project"+
+    " WHERE BINARY ModelName = ? AND Project = ?";
 
 const SQL_RET_MODEL = " SELECT * FROM GoalModel WHERE ModelId = ? ";
 /**
@@ -211,6 +213,7 @@ const DBModule = function() {
                                     }); // unknown error
                                 } else {
                                     // success
+
                                     resolve(result[0]);
                                 }
                             }
