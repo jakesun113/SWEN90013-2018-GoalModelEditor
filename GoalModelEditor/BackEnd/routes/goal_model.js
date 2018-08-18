@@ -47,8 +47,72 @@ router.post("/:userId/:projectId", (req, res, next) => {
             req.params.projectId
         )
         .then(result => {
-            /*createDirectoryPath(dirpath);
-            fs.writeFile(dirpath + '/' + result.ModelId, '', function(err) {
+            createDirectoryPath(dirpath);
+
+            let init=
+            {
+                GoalModelProject: {
+                    ModelName: result.ModelName,
+
+                        //Goal list: [five goal types][used goal][deleted goal]
+                        GoalList: {
+                        FunctionalNum: 1,
+                            EmotionalNum: 1,
+                            QualityNum: 1,
+                            NegativeNum: 1,
+                            StakeholderNum: 1,
+                            Functional: [
+                            {
+                                GoalID: "F_1",
+                                GoalType: "Functional",
+                                GoalContent: "",
+                                GoalNote: "Goal F_1 Note",
+                                SubGoals: []
+                            }
+                        ],
+                            Quality: [
+                            {
+                                GoalID: "Q_1",
+                                GoalType: "Quality",
+                                GoalContent: "",
+                                GoalNote: "Goal Q_1 Note"
+                            }
+                        ],
+                            Emotional: [
+                            {
+                                GoalID: "E_1",
+                                GoalType: "Emotional",
+                                GoalContent: "",
+                                GoalNote: "Goal E_1 Note"
+                            }
+                        ],
+                            Negative: [
+                            {
+                                GoalID: "N_1",
+                                GoalType: "Negative",
+                                GoalContent: "",
+                                GoalNote: "Goal N_1 Note"
+                            }
+                        ],
+                            Stakeholder: [
+                            {
+                                GoalID: "S_1",
+                                GoalType: "Stakeholder",
+                                GoalContent: "",
+                                GoalNote: "Goal S_1 Note"
+                            }
+                        ]
+                    },
+
+                    Clusters: [
+                        {
+
+                        }
+                    ]
+                }
+            };
+
+            fs.writeFile(dirpath + '/' + result.ModelId+'.json', JSON.stringify(init),function(err) {
                 if (err) {
                     res.statusCode = 500;
                     res.json({
@@ -62,7 +126,7 @@ router.post("/:userId/:projectId", (req, res, next) => {
             if (res.statusCode === 500) {
                 //res.json({message: 'Failed to create goal model file on server'});
                 return res.end();
-            }*/
+            }
             res.statusCode = 201;
             res.json({
                 model_name: result.ModelName,
