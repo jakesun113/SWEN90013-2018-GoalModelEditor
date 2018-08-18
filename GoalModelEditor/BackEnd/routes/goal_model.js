@@ -163,7 +163,6 @@ router.post("/images/:userId/:goalmodelId", (req, res, next) => {
         //console.log(files);
         let j = 0;
         console.log(j++);
-
         let imagepath = "./UserFiles/" + req.params.userId + "/"+req.params.goalmodelId+'/images/';
         createDirectoryPath(imagepath);
         let i = 0;
@@ -423,20 +422,23 @@ router.get("/images/:userId/:goalmodelId", (req, res, next) => {
                 imagepath = result.DirPath+ "" + result.ModelId + "/images/";
                 let formData = new FormData();
                 fs.readdir(imagepath,function(err,items){
+                    let j = 0;
                     for (let i = 0; i < items.length; i++) {
-                        fs.readFile(items[i], function (err, image) {
+                        fs.readFile(imagepath + items[i],'base64', function (err, image) {
                             if (err) throw err;
-                            //res.write(data);
                             formData.append("image", image);
+                            j++;
+                            if(j === items.length) {
+                                console.log(formData);
+                                res.statusCode = 200;
+                                res.format({
+                                    "multipart/form-data": function(){
+                                        res.send(formData)}});
+                                console.log("get images");
+                                return res.end();
+                            }
                         });
                     }
-                    console.log(formData);
-                    res.statusCode = 200;
-                    res.format({
-                        "multipart/form-data": function(){
-                            res.send(formData)}});
-                    console.log("get images");
-                    return res.end();
                 });
             }
 

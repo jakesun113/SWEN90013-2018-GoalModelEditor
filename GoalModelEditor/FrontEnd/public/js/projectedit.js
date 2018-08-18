@@ -1073,10 +1073,30 @@ function loadImages() {
         // the API of upload pictures
         type: "GET",
         headers: { Authorization: "Bearer " + token },
-        success: function(images) {
-            console.log(images);
-            // for(image in images) {
-            //     let output = $(".preview-images-zone");
+        success: function(stream) {
+            let images = JSON.parse(stream)._streams;
+            let output = $(".preview-images-zone");
+            for (let i in images){
+                if(images[i] && images[i][0] !== "-") {
+                    console.log(images[i]);
+                        let html =
+                            '<div class="preview-image preview-show-' +
+                            i +
+                            '">' +
+                            '<div class="image-cancel" data-no="' +
+                            i +
+                            '">x</div>' +
+                            '<div class="image-zone"><img id="pro-img-' +
+                            i +
+                            '" src="' +
+                            'data:image/png;base64,' + images[i] +
+                            '"></div>' +
+                            // '<div class="tools-edit-image"><a href="javascript:void(0)" data-no="' + num + '" class="btn btn-light btn-edit-image">edit</a></div>' +
+                            "</div>";
+                        output.append(html);
+                    }
+                }
+            }
             //     let html =
             //         '<div class="preview-image preview-show-' +
             //         num +
@@ -1093,7 +1113,6 @@ function loadImages() {
             //         "</div>";
             //     output.append(html);
             // }
-        }
     }).fail(function(jqXHR) {
         $("#warning-alert").html(
             jqXHR.responseJSON.message + " <br>Please try again."
