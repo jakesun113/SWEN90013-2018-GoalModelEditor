@@ -1,4 +1,5 @@
 "use strict";
+
 /*import photos start*/
 $(document).ready(function() {
     document
@@ -12,9 +13,6 @@ $(document).ready(function() {
     $("#username")
         .eq(0)
         .html(Cookies.get("UIID"));
-    // Get json File from server
-    getJSONFile();
-
 
     $(".input-font").css("font-weight", "bold");
 });
@@ -24,9 +22,6 @@ $(document).on("mouseover", "#ul li input", function() {
     $("#notedata").html("<p>" + $(this).attr("note") + "</p>");
 });
 
-/*
-Get JSON file from the server and store it in the window.jsonData
- */
 function getJSONFile() {
     let secret = JSON.parse(Cookies.get("LOKIDIED"));
     let token = secret.token;
@@ -38,8 +33,10 @@ function getJSONFile() {
         type: "GET",
         headers: { Authorization: "Bearer " + token },
         success: function(data) {
-            window.jsonData = data;
-            console.log(data);
+            window.jsonData = JSON.parse(JSON.parse(JSON.stringify(data)));
+            $('#model_name strong').html(jsonData.GoalModelProject.ProjectName + ' - '
+                + jsonData.GoalModelProject.ModelName);
+            loadData();
         }
     }).fail(function(jqXHR) {
         $("#warning-alert").html(
@@ -102,9 +99,9 @@ function uploadPictures(formData) {
     let token = secret.token;
     let userId = secret.uid;
     let modelId = Cookies.get("MID");
-    $.ajax({
+    let url = "/goal_model/images/" + userId + "/" + modelId;
+    $.ajax(url, {
         // the API of upload pictures
-        url: "goal_model/images/" + userId + "/" + modelId,
         type: "POST",
         contentType: false,
         data: formData,
@@ -112,11 +109,22 @@ function uploadPictures(formData) {
         async: true,
         headers: { Authorization: "Bearer " + token },
         success: function(data) {
-            alert("Upload Successfully");
-        },
-        error: function(data) {
-            alert("Fail to upload");
+            $("#success-alert").html(
+                "Image successfully Uploaded."
+            );
+            $("#success-alert")
+                .slideDown()
+                .delay(3000)
+                .slideUp();
         }
+    }).fail(function(jqXHR) {
+        $("#warning-alert").html(
+            jqXHR.responseJSON.message + " <br>Please try again."
+        );
+        $("#warning-alert")
+            .slideDown()
+            .delay(3000)
+            .slideUp();
     });
 }
 /*import photos end*/
@@ -340,6 +348,7 @@ function readData() {}
 
 /*Load data start*/
 function loadData() {
+    console.log(window.jsonData);
     $("#functionaldata").append(
         parseNodes(jsonData.GoalModelProject.GoalList.Functional)
     );
@@ -848,20 +857,39 @@ $("#signout").click(function(evt) {
 /*Hide and show section end*/
 
 /*Send data to backend start*/
-$("#save").submit(function(evt) {
+$("#save").click(function(evt) {
     evt.preventDefault();
-    let url = "";
-    let data = window.jsonData;
+    let secret = JSON.parse(Cookies.get("LOKIDIED"));
+    let model = window.jsonData;
+    console.log(typeof(model));
+    let token = secret.token;
+    let userId = secret.uid;
+    let modelId = Cookies.get("MID");
+    let url = "/goal_model/" + userId + "/" + modelId;
+    // ajax starts
     $.ajax(url, {
-        data: data,
-        type: "POST",
-        success: function() {}
-    }).fail(function(jqXHR) {
-        if (jqXHR.statusText === "OK") {
-            alert("Upload successfully");
-        } else {
-            alert(jqXHR.responseJSON.message);
+        type: "PUT",
+        data: JSON.stringify(model),
+        dataType: 'json',
+        contentType: 'application/json',
+        headers: { Authorization: "Bearer " + token },
+        success: function(data) {
+            $("#success-alert").html(
+                "Successfully Saved."
+            );
+            $("#success-alert")
+                .slideDown()
+                .delay(3000)
+                .slideUp();
         }
+    }).fail(function(jqXHR) {
+        $("#warning-alert").html(
+            jqXHR.responseJSON.message + " <br>Please try again."
+        );
+        $("#warning-alert")
+            .slideDown()
+            .delay(3000)
+            .slideUp();
     }); // end ajax
 }); // end submit
 /*Send data to backend end*/
@@ -900,135 +928,136 @@ function getData() {
 /*Get data from HTML to JSON end*/
 
 // the mock JSON data
-window.jsonData = {
-    GoalModelProject: {
-        UserID: "10001",
-        GoalModelID: "1",
-        ProjectName: "My first goal model",
+// window.jsonData = {
+//     GoalModelProject: {
+//         UserID: "10001",
+//         GoalModelID: "1",
+//         ProjectName: "My first goal model",
+//
+//         //Goal list: [five goal types][used goal][deleted goal]
+//         GoalList: {
+//             FunctionalNum: 1,
+//             EmotionalNum: 1,
+//             QualityNum: 1,
+//             NegativeNum: 1,
+//             StakeholderNum: 1,
+//             Functional: [
+//                 {
+//                     GoalID: "F_1",
+//                     GoalType: "Functional",
+//                     GoalContent: "",
+//                     GoalNote: "Goal F_1 Note",
+//                     SubGoals: []
+//                 }
+//             ],
+//             Quality: [
+//                 {
+//                     GoalID: "Q_1",
+//                     GoalType: "Quality",
+//                     GoalContent: "",
+//                     GoalNote: "Goal Q_1 Note"
+//                 }
+//             ],
+//             Emotional: [
+//                 {
+//                     GoalID: "E_1",
+//                     GoalType: "Emotional",
+//                     GoalContent: "",
+//                     GoalNote: "Goal E_1 Note"
+//                 }
+//             ],
+//             Negative: [
+//                 {
+//                     GoalID: "N_1",
+//                     GoalType: "Negative",
+//                     GoalContent: "",
+//                     GoalNote: "Goal N_1 Note"
+//                 }
+//             ],
+//             Stakeholder: [
+//                 {
+//                     GoalID: "S_1",
+//                     GoalType: "Stakeholder",
+//                     GoalContent: "",
+//                     GoalNote: "Goal S_1 Note"
+//                 }
+//             ]
+//         },
+//
+//         Clusters: [
+//             {
+//                 ClusterID: "cluster_1",
+//                 ClusterGoals: [
+//                     {
+//                         GoalID: "F_1",
+//                         GoalType: "Functional",
+//                         GoalContent: "This is Functional Goal F_1",
+//                         GoalNote: "Goal F_1 Note",
+//                         SubGoals: []
+//                     },
+//                     {
+//                         GoalID: "F_2",
+//                         GoalType: "Functional",
+//                         GoalContent: "This is Functional Goal F_2",
+//                         GoalNote: "Goal F_2 Note",
+//                         SubGoals: []
+//                     },
+//                     {
+//                         GoalID: "F_3",
+//                         GoalType: "Functional",
+//                         GoalContent: "This is Functional Goal F_3",
+//                         GoalNote: "Goal F_3 Note",
+//                         SubGoals: [
+//                             {
+//                                 GoalID: "F_4",
+//                                 GoalType: "Functional",
+//                                 GoalContent: "This is Functional Goal F_4",
+//                                 GoalNote: "Goal F_4 Note",
+//                                 SubGoals: []
+//                             },
+//                             {
+//                                 GoalID: "F_5",
+//                                 GoalType: "Functional",
+//                                 GoalContent: "This is Functional Goal F_5",
+//                                 GoalNote: "Goal F_5 Note",
+//                                 SubGoals: []
+//                             },
+//                             {
+//                                 GoalID: "E_2",
+//                                 GoalType: "Emotional",
+//                                 GoalContent: "This is Emotional Goal E_2",
+//                                 GoalNote: "Goal E_2 Note",
+//                                 SubGoals: []
+//                             },
+//                             {
+//                                 GoalID: "Q_3",
+//                                 GoalType: "Quality",
+//                                 GoalContent: "This is Quality Goal Q_3",
+//                                 GoalNote: "Goal Q_3 Note",
+//                                 SubGoals: []
+//                             }
+//                         ]
+//                     }
+//                 ]
+//             },
+//             {
+//                 ClusterID: "cluster_2",
+//                 ClusterGoals: [
+//                     {
+//                         GoalID: "E_2",
+//                         GoalType: "Emotional",
+//                         GoalContent: "This is Emotional Goal E_2",
+//                         GoalNote: "Goal E_2 Note"
+//                     },
+//                     {
+//                         GoalID: "Q_3",
+//                         GoalType: "Quality",
+//                         GoalContent: "This is Quality Goal Q_3",
+//                         GoalNote: "Goal Q_3 Note"
+//                     }
+//                 ]
+//             }
+//         ]
+//     }
+// };
 
-        //Goal list: [five goal types][used goal][deleted goal]
-        GoalList: {
-            FunctionalNum: 1,
-            EmotionalNum: 1,
-            QualityNum: 1,
-            NegativeNum: 1,
-            StakeholderNum: 1,
-            Functional: [
-                {
-                    GoalID: "F_1",
-                    GoalType: "Functional",
-                    GoalContent: "",
-                    GoalNote: "Goal F_1 Note",
-                    SubGoals: []
-                }
-            ],
-            Quality: [
-                {
-                    GoalID: "Q_1",
-                    GoalType: "Quality",
-                    GoalContent: "",
-                    GoalNote: "Goal Q_1 Note"
-                }
-            ],
-            Emotional: [
-                {
-                    GoalID: "E_1",
-                    GoalType: "Emotional",
-                    GoalContent: "",
-                    GoalNote: "Goal E_1 Note"
-                }
-            ],
-            Negative: [
-                {
-                    GoalID: "N_1",
-                    GoalType: "Negative",
-                    GoalContent: "",
-                    GoalNote: "Goal N_1 Note"
-                }
-            ],
-            Stakeholder: [
-                {
-                    GoalID: "S_1",
-                    GoalType: "Stakeholder",
-                    GoalContent: "",
-                    GoalNote: "Goal S_1 Note"
-                }
-            ]
-        },
-
-        Clusters: [
-            {
-                ClusterID: "cluster_1",
-                ClusterGoals: [
-                    {
-                        GoalID: "F_1",
-                        GoalType: "Functional",
-                        GoalContent: "This is Functional Goal F_1",
-                        GoalNote: "Goal F_1 Note",
-                        SubGoals: []
-                    },
-                    {
-                        GoalID: "F_2",
-                        GoalType: "Functional",
-                        GoalContent: "This is Functional Goal F_2",
-                        GoalNote: "Goal F_2 Note",
-                        SubGoals: []
-                    },
-                    {
-                        GoalID: "F_3",
-                        GoalType: "Functional",
-                        GoalContent: "This is Functional Goal F_3",
-                        GoalNote: "Goal F_3 Note",
-                        SubGoals: [
-                            {
-                                GoalID: "F_4",
-                                GoalType: "Functional",
-                                GoalContent: "This is Functional Goal F_4",
-                                GoalNote: "Goal F_4 Note",
-                                SubGoals: []
-                            },
-                            {
-                                GoalID: "F_5",
-                                GoalType: "Functional",
-                                GoalContent: "This is Functional Goal F_5",
-                                GoalNote: "Goal F_5 Note",
-                                SubGoals: []
-                            },
-                            {
-                                GoalID: "E_2",
-                                GoalType: "Emotional",
-                                GoalContent: "This is Emotional Goal E_2",
-                                GoalNote: "Goal E_2 Note",
-                                SubGoals: []
-                            },
-                            {
-                                GoalID: "Q_3",
-                                GoalType: "Quality",
-                                GoalContent: "This is Quality Goal Q_3",
-                                GoalNote: "Goal Q_3 Note",
-                                SubGoals: []
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                ClusterID: "cluster_2",
-                ClusterGoals: [
-                    {
-                        GoalID: "E_2",
-                        GoalType: "Emotional",
-                        GoalContent: "This is Emotional Goal E_2",
-                        GoalNote: "Goal E_2 Note"
-                    },
-                    {
-                        GoalID: "Q_3",
-                        GoalType: "Quality",
-                        GoalContent: "This is Quality Goal Q_3",
-                        GoalNote: "Goal Q_3 Note"
-                    }
-                ]
-            }
-        ]
-    }
-};
