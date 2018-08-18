@@ -8,9 +8,13 @@ $(document).ready(function() {
         let no = $(this).data("no");
         $(".preview-image.preview-show-" + no).remove();
     });
+    // Set the username in display
     $("#username")
         .eq(0)
         .html(Cookies.get("UIID"));
+    // Get json File from server
+    getJSONFile();
+
 
     $(".input-font").css("font-weight", "bold");
 });
@@ -19,6 +23,34 @@ $(document).on("mouseover", "#ul li input", function() {
     // alert($(this).val());
     $("#notedata").html("<p>" + $(this).attr("note") + "</p>");
 });
+
+/*
+Get JSON file from the server and store it in the window.jsonData
+ */
+function getJSONFile() {
+    let secret = JSON.parse(Cookies.get("LOKIDIED"));
+    let token = secret.token;
+    let userId = secret.uid;
+    let modelId = Cookies.get("MID");
+    let url = "/goal_model/" + userId + "/" + modelId;
+    $.ajax(url, {
+        // the API of upload pictures
+        type: "GET",
+        headers: { Authorization: "Bearer " + token },
+        success: function(data) {
+            window.jsonData = data;
+            console.log(data);
+        }
+    }).fail(function(jqXHR) {
+        $("#warning-alert").html(
+            jqXHR.responseJSON.message + " <br>Please try again."
+        );
+        $("#warning-alert")
+            .slideDown()
+            .delay(3000)
+            .slideUp();
+    }); // end ajax
+}
 
 let num = 1;
 function readImage() {
