@@ -37,6 +37,7 @@ function getJSONFile() {
             $('#model_name strong').html(jsonData.GoalModelProject.ProjectName + ' - '
                 + jsonData.GoalModelProject.ModelName);
             loadData();
+            loadImages();
         }
     }).fail(function(jqXHR) {
         $("#warning-alert").html(
@@ -1060,4 +1061,47 @@ function getData() {
 //         ]
 //     }
 // };
+
+/* Load images from server */
+function loadImages() {
+    let secret = JSON.parse(Cookies.get("LOKIDIED"));
+    let token = secret.token;
+    let userId = secret.uid;
+    let modelId = Cookies.get("MID");
+    let url = "/goal_model/images/" + userId + "/" + modelId;
+    $.ajax(url, {
+        // the API of upload pictures
+        type: "GET",
+        headers: { Authorization: "Bearer " + token },
+        success: function(images) {
+            console.log(images);
+            // for(image in images) {
+            //     let output = $(".preview-images-zone");
+            //     let html =
+            //         '<div class="preview-image preview-show-' +
+            //         num +
+            //         '">' +
+            //         '<div class="image-cancel" data-no="' +
+            //         num +
+            //         '">x</div>' +
+            //         '<div class="image-zone"><img id="pro-img-' +
+            //         num +
+            //         '" src="' +
+            //         '' +
+            //         '"></div>' +
+            //         // '<div class="tools-edit-image"><a href="javascript:void(0)" data-no="' + num + '" class="btn btn-light btn-edit-image">edit</a></div>' +
+            //         "</div>";
+            //     output.append(html);
+            // }
+        }
+    }).fail(function(jqXHR) {
+        $("#warning-alert").html(
+            jqXHR.responseJSON.message + " <br>Please try again."
+        );
+        $("#warning-alert")
+            .slideDown()
+            .delay(3000)
+            .slideUp();
+    }); // end ajax
+}
 

@@ -485,11 +485,13 @@ function autolayout(graph) {
                     <button class="btn-sm btn-outline-primary" onclick="addCluster()">Add</button>
                     <button class="btn-sm btn-outline-primary" id="clusternextbtn" onclick="clusternext()">Render</button>
                     <button style="display: none" class="btn-sm btn-outline-primary" id="renderbtn" onclick="renderGraph(document.getElementById('graphContainer'))">Render</button>
-                    <button type="button" id="edit">Edit All</button>
-                    <button type="button" id="drag">Drag All</button>
+                    <button type="button" class="btn-sm btn-outline-primary" id="edit">Edit All</button>
+                    <button type="button" class="btn-sm btn-outline-primary" id="drag">Drag All</button>
                 </div>
                 <!--show cluster data from JSON-->
-                <div class="showborder inside-scrollbar dd" id="cluster_1" style="background-color: white"></div>
+                <div class="inside-scrollbar dd" id="cluster_1">
+                     <!--style="background-color: white"-->
+                </div>
             </div>
             <!--cluster section end-->
 
