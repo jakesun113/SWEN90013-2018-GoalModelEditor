@@ -8,6 +8,7 @@ const router = express.Router();
 const path = require("path");
 const fs = require("fs");
 const multiparty = require("multiparty");
+const FormData = require("form-data");
 
 // security related imports
 const auth = require("../authen");
@@ -164,8 +165,7 @@ router.post("/images/:userId/:goalmodelId", (req, res, next) => {
         console.log(j++);
 
         let imagepath = "./UserFiles/" + req.params.userId + "/"+req.params.goalmodelId+'/images/';
-        createDirectoryPath(dirpath);
-
+        createDirectoryPath(imagepath);
         let i = 0;
         for (let _ in files["image"]) {
             console.log("pathpath:  " + files["image"][i].path);
@@ -410,8 +410,8 @@ router.get("/images/:userId/:goalmodelId", (req, res, next) => {
             //store the file path
             imagepath = result.DirPath ;
             //file path does not exist
-            if (filepath === "" || !fs.existsSync(filepath)) {
-                console.log(filepath);
+            if (imagepath === "" || !fs.existsSync(imagepath)) {
+                console.log(imagepath);
                 console.log("no such file");
                 //set response : file does not exists
                 res.statusCode = 500;
@@ -419,22 +419,23 @@ router.get("/images/:userId/:goalmodelId", (req, res, next) => {
                         "Failed to get images: goal model file does not" +
                         " exists"});
                 return res.end();
-            }else{
-                imagepath = result.DirPath+ "/" + result.ModelId + "/images/";
+            } else {
+                imagepath = result.DirPath+ "" + result.ModelId + "/images/";
                 let formData = new FormData();
                 fs.readdir(imagepath,function(err,items){
                     for (let i = 0; i < items.length; i++) {
                         let file = items[i];
-                        // check file type
-                        if (!file.type.match("image")) continue;
                         // add file to formData
                         formData.append("image", file);
                     }
+                    console.log(formData);
+                    res.statusCode = 200;
+                    res.format({
+                        "multipart/form-data": function(){
+                            res.send(formData)}});
+                    console.log("get images");
+                    return res.end();
                 });
-                res.statusCode = 200;
-                res.json({data:formData});
-                console.log("get images");
-                return res.end();
             }
 
         })
