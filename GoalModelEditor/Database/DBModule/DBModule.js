@@ -83,7 +83,7 @@ const SQL_GET_PROJ_GOALMODEL =
 const SQL_GET_GOALMODEL_BY_ID =
     "SELECT GoalModel.*, Project.OwnerId " +
     "FROM GoalModel INNER JOIN Project " +
-    "WHERE BINARY ModelId = ? AND BINARY GoalModel.Project = Project.Project";
+    "WHERE BINARY ModelId = ? AND BINARY GoalModel.Project = Project.ProjectId";
 /**
  * update a project's fields
  * @type {string}
