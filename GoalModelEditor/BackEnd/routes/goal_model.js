@@ -342,7 +342,7 @@ router.get("/:userId/:goalmodelId", (req, res, next) => {
     db.getGoalModel(req.params.goalmodelId)
         .then(result => {
             //store the file path
-            filepath = result.DirPath + "/"+ result.ModelId + "/" + result.ModelId + ".json";
+            filepath = result.DirPath + result.ModelId + "/" + result.ModelId + ".json";
             //file path does not exist
             if (filepath === "" || !fs.existsSync(filepath)) {
                 console.log(filepath);
