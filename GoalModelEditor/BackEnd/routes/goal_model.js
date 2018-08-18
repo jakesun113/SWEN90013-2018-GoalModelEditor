@@ -113,7 +113,7 @@ router.post("/:userId/:projectId", (req, res, next) => {
                 }
             };
 
-            fs.writeFile(dirpath + '/' + result.ModelId+'.json', JSON.stringify(init),function(err) {
+            fs.writeFile(dirpath + '/' + result.ModelId+'/'+result.ModelId+'.json', JSON.stringify(init),function(err) {
                 if (err) {
                     res.statusCode = 500;
                     res.json({
@@ -163,7 +163,7 @@ router.post("/images/:userId/:goalmodelId", (req, res, next) => {
         let j = 0;
         console.log(j++);
 
-        let dirpath = "./UserFiles/" + req.params.userId + "/";
+        let imagepath = "./UserFiles/" + req.params.userId + "/"+req.params.goalmodelId+'/images/';
         createDirectoryPath(dirpath);
 
         let i = 0;
@@ -171,9 +171,7 @@ router.post("/images/:userId/:goalmodelId", (req, res, next) => {
             console.log("pathpath:  " + files["image"][i].path);
             fs.renameSync(
                 files["image"][i].path,
-                dirpath +
-                    req.params.goalmodelId +
-                    "-" +
+                imagepath+
                     files["image"][i].originalFilename,
                 function(err) {
                     if (err) {
@@ -221,7 +219,7 @@ router.put("/:userId/:goalmodelId", (req, res, next) => {
             }
             // createDirectoryPath(dirpath);
             fs.writeFile(
-                dirpath + "/" + req.params.goalmodelId + ".json",
+                dirpath + "/" + req.params.goalmodelId+'/'+req.params.goalmodelId + ".json",
                 JSON.stringify(req.body),
                 function(err) {
                     if (err) {
@@ -344,7 +342,7 @@ router.get("/:userId/:goalmodelId", (req, res, next) => {
     db.getGoalModel(req.params.goalmodelId)
         .then(result => {
             //store the file path
-            filepath = result.DirPath + "/" + result.ModelId + ".json";
+            filepath = result.DirPath + "/"+ result.ModelId + "/" + result.ModelId + ".json";
             //file path does not exist
             if (filepath === "" || !fs.existsSync(filepath)) {
                 console.log(filepath);
@@ -395,6 +393,77 @@ router.get("/:userId/:goalmodelId", (req, res, next) => {
             return res.end();
         });
 });
+
+/* Get Goal Model images */
+router.get("/images/:userId/:goalmodelId", (req, res, next) => {
+    // check token for authentication
+    if (!auth.authenticate(req.headers)) {
+        //auth is not successful
+        res.statusCode = 401;
+        res.json({ created: false, message: "Authentication failed" });
+        return res.end();
+    }
+
+    var imagepath = "";
+    db.getGoalModel(req.params.goalmodelId)
+        .then(result => {
+            //store the file path
+            imagepath = result.DirPath ;
+            //file path does not exist
+            if (filepath === "" || !fs.existsSync(filepath)) {
+                console.log(filepath);
+                console.log("no such file");
+                //set response : file does not exists
+                res.statusCode = 500;
+                res.json({message:
+                        "Failed to get images: goal model file does not" +
+                        " exists"});
+                return res.end();
+            }else{
+                imagepath = result.DirPath+ "/" + result.ModelId + "/images/";
+                let formData = new FormData();
+                fs.readdir(imagepath,function(err,items){
+                    for (let i = 0; i < items.length; i++) {
+                        let file = items[i];
+                        // check file type
+                        if (!file.type.match("image")) continue;
+                        // add file to formData
+                        formData.append("image", file);
+                    }
+                });
+                res.statusCode = 200;
+                res.json({data:formData});
+                console.log("get images");
+                return res.end();
+            }
+            
+        })
+        .catch(err => {
+            if ((err.code = db.INVALID)) {
+                //if db response err code "INVALID"
+                //set response : goal model is not found
+                res.statusCode = 404;
+                res.json({
+                    message:
+                        "Failed to get the goal model content: " + err.message
+                });
+                return res.end();
+            }
+            //set response: failed to get goal model
+            res.statusCode = 500;
+            res.json({
+                message: "Failed to get the goal model content: " + err.message
+            });
+            return res.end();
+        });
+});
+
+
+
+
+
+
+
 
 /* Recursively creates the whole path to a directory */
 function createDirectoryPath(filePath) {
