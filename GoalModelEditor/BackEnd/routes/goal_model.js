@@ -112,8 +112,8 @@ router.post("/:userId/:projectId", (req, res, next) => {
                     ]
                 }
             };
-
-            fs.writeFile(dirpath + '/' + result.ModelId+'/'+result.ModelId+'.json', JSON.stringify(init),function(err) {
+            createDirectoryPath(dirpath+result.ModelId+'/');
+            fs.writeFile(dirpath + result.ModelId+'/'+result.ModelId+'.json', JSON.stringify(init),function(err) {
                 if (err) {
                     res.statusCode = 500;
                     res.json({
@@ -436,7 +436,7 @@ router.get("/images/:userId/:goalmodelId", (req, res, next) => {
                 console.log("get images");
                 return res.end();
             }
-            
+
         })
         .catch(err => {
             if ((err.code = db.INVALID)) {
