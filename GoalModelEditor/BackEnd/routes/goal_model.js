@@ -203,17 +203,13 @@ router.put("/:userId/:goalmodelId", (req, res, next) => {
     }
 
     // update goal model
-    let filepath =
-        "/etc/GoalModelEditor/" +
-        req.params.userId +
-        "/" +
-        req.params.goalmodelId;
+    let dirpath = "./UserFiles/" + req.params.userId + "/";
     db
         .updateGpalModel(
             req.params.goalmodelId,
             req.body.model_name,
             req.body.description,
-            filepath
+            dirpath
         )
         .then(result => {
             res.statusCode = 200;
