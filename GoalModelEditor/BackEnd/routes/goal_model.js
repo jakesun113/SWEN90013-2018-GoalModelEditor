@@ -278,11 +278,40 @@ router.get("/:userId/:goalmodelId", (req, res, next) => {
     }
 
     var filepath = ""; //store the file path of goal model in this
-    db
-        .getGoalmodel(req.params.goalmodelId)
+    db.getGoalModel(req.params.goalmodelId)
         .then(result => {
             //store the file path
-            filepath = result.filepath;
+            filepath = result.DirPath + "/" + result.ModelId + ".json";
+            //file path does not exist
+            if (filepath === "" || !fs.existsSync(filepath)) {
+                console.log(filepath);
+                console.log("no such file");
+                //set response : file does not exists
+                res.statusCode = 500;
+                res.json({
+                    message:
+                        "Failed to open the goal model: goal model file does not exists"
+                });
+                return res.end();
+            }
+            //read the file and response with a json file
+            fs.readFile(filepath, 'utf8', function(err, data) {
+                if (err) {
+                    //error response
+                    console.log(err);
+                    res.statusCode = 500;
+                    res.json({
+                        message: "Failed to get the goal model: " + err.message
+                    });
+                    return res.end();
+                }
+                //set response: successfully retrieve the goal model file and response
+                // with a json file
+                res.statusCode = 200;
+                res.json(JSON.parse(JSON.stringify(data)));
+                console.log("get goal model");
+                return res.end();
+            });
         })
         .catch(err => {
             if ((err.code = db.INVALID)) {
@@ -302,36 +331,6 @@ router.get("/:userId/:goalmodelId", (req, res, next) => {
             });
             return res.end();
         });
-    //file path does not exist
-    if (filepath === "" || !fs.existsSync(filepath)) {
-        console.log("no such file");
-        //set response : file does not exists
-        res.statusCode = 500;
-        res.json({
-            message:
-                "Failed to open the goal model: goal model file does not exists"
-        });
-        return res.end();
-    }
-    //read the file and response with a json file
-    fs.readFile(filepath, function(err, res) {
-        if (err) {
-            //error response
-            console.log(err);
-            res.statusCode = 500;
-            res.json({
-                message: "Failed to get the goal model: " + err.message
-            });
-            return res.end();
-        }
-        //set response: successfully retrieve the goal model file and response
-        // with a json file
-        res.statusCode = 200;
-        res.json({ content: res });
-        console.log(res);
-        console.log("get goal model");
-        return res.end();
-    });
 });
 
 /* Recursively creates the whole path to a directory */
