@@ -424,9 +424,11 @@ router.get("/images/:userId/:goalmodelId", (req, res, next) => {
                 let formData = new FormData();
                 fs.readdir(imagepath,function(err,items){
                     for (let i = 0; i < items.length; i++) {
-                        let file = items[i];
-                        // add file to formData
-                        formData.append("image", file);
+                        fs.readFile(items[i], function (err, image) {
+                            if (err) throw err;
+                            //res.write(data);
+                            formData.append("image", image);
+                        });
                     }
                     console.log(formData);
                     res.statusCode = 200;
