@@ -207,10 +207,37 @@ router.put("/:userId/:goalmodelId", (req, res, next) => {
     }
 
     let dirpath = "";
-    db
-        .getGoalmodel(req.params.goalmodelId)
+    db.getGoalModel(req.params.goalmodelId)
         .then(result => {
             dirpath = result.DirPath;
+            if (dirpath === "") {
+                console.log("no such file");
+                res.statusCode = 500;
+                res.json({
+                    message:
+                        "Failed to update the goal model: goal model file does not exists"
+                });
+                return res.end();
+            }
+            // createDirectoryPath(dirpath);
+            fs.writeFile(
+                dirpath + "/" + req.params.goalmodelId + ".json",
+                JSON.stringify(req.body),
+                function(err) {
+                    if (err) {
+                        console.log(err);
+                        res.statusCode = 500;
+                        res.json({
+                            message: "Failed to update the goal model: " + err.message
+                        });
+                        return res.end();
+                    }
+                    res.statusCode = 200;
+                    res.json({ content: req.body.content });
+                    console.log("Saved!");
+                    return res.end();
+                }
+            );
         })
         .catch(err => {
             if ((err.code = db.INVALID)) {
@@ -227,39 +254,10 @@ router.put("/:userId/:goalmodelId", (req, res, next) => {
             });
             return res.end();
         });
-    if (dirpath === "") {
-        console.log("no such file");
-        res.statusCode = 500;
-        res.json({
-            message:
-                "Failed to update the goal model: goal model file does not exists"
-        });
-        return res.end();
-    }
-
-    createDirectoryPath(dirpath);
-    fs.writeFile(
-        dirpath + "/" + req.params.goalmodelId,
-        req.body.content,
-        function(err) {
-            if (err) {
-                console.log(err);
-                res.statusCode = 500;
-                res.json({
-                    message: "Failed to update the goal model: " + err.message
-                });
-                return res.end();
-            }
-            res.statusCode = 200;
-            res.json({ content: req.body.content });
-            console.log("Saved!");
-            return res.end();
-        }
-    );
 });
 
 /* PUT Edit Goal Model Info */
-router.put("/:userId/:goalmodelId", (req, res, next) => {
+router.put("/info/:userId/:goalmodelId", (req, res, next) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
