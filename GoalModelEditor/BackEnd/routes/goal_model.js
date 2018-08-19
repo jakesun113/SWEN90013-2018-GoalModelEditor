@@ -136,7 +136,7 @@ router.post("/:userId/:projectId", (req, res, next) => {
                 project_id: result.ProjectId,
                 last_modified: result.LastModified
             });
-            console.log(result.DirPath);
+            // console.log(result.DirPath);
             return res.end();
         })
         .catch(err => {
@@ -429,7 +429,6 @@ router.get("/images/:userId/:goalmodelId", (req, res, next) => {
                             formData.append("image", image);
                             j++;
                             if(j === items.length) {
-                                console.log(formData);
                                 res.statusCode = 200;
                                 res.format({
                                     "multipart/form-data": function(){

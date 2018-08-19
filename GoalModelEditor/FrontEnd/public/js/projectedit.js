@@ -91,7 +91,13 @@ function readImage() {
         uploadPictures(formData);
         $("#pro-image").val("");
     } else {
-        console.log("Browser not support");
+        $("#warning-alert").html(
+            "Browser supporting issue, please try another browser."
+        );
+        $("#warning-alert")
+            .slideDown()
+            .delay(3000)
+            .slideUp();
     }
 }
 
@@ -343,13 +349,8 @@ let StakeholderNum = 0;
 /*Three clusters at start*/
 let clusterNumber = 1;
 
-/*read goal from html and transform them to JSON start*/
-function readData() {}
-/*read goal from html and transform them to JSON end*/
-
 /*Load data start*/
 function loadData() {
-    console.log(window.jsonData);
     $("#functionaldata").append(
         parseNodes(jsonData.GoalModelProject.GoalList.Functional)
     );
@@ -463,7 +464,7 @@ function addCluster() {
     clusterNumber++;
 
     cluster.append(
-        '<div class="showborder inside-scrollbar dd" style="background-color: white" id=cluster_' +
+        '<div class="inside-scrollbar dd" id=cluster_' +
             clusterNumber.toString() +
             ">" +
             "</div>"
@@ -665,7 +666,6 @@ function photonextbtn() {
         b.innerHTML = "Next";
     } else {
         p.style.display = "none";
-        getData();
         // goal.removeAttributeNode("style");
         // goal.addAttributes("goalscrollbar");
         n.style.display = "block";
@@ -862,11 +862,11 @@ $("#save").click(function(evt) {
     evt.preventDefault();
     let secret = JSON.parse(Cookies.get("LOKIDIED"));
     let model = window.jsonData;
-    console.log(typeof(model));
     let token = secret.token;
     let userId = secret.uid;
     let modelId = Cookies.get("MID");
     let url = "/goal_model/" + userId + "/" + modelId;
+    getData();
     // ajax starts
     $.ajax(url, {
         type: "PUT",
@@ -895,172 +895,149 @@ $("#save").click(function(evt) {
 }); // end submit
 /*Send data to backend end*/
 
-/*Get data from HTML to JSON start*/
+/*Get data from HTML to JSON start */
 function getData() {
-    var functionaldata = $('#functionaldata').find('ul')[0].children;
-    //console.log(functionaldata);
-    let i = 0;
-    for (i = 0; i < functionaldata.length; i++) {
-        console.log($(functionaldata[i]).find('input')[0].value);
-    }
-    // $("#qualitydata").append(
-    //     parseNodes(jsonData.GoalModelProject.GoalList.Quality)
-    // );
-    // $("#emotionaldata").append(
-    //     parseNodes(jsonData.GoalModelProject.GoalList.Emotional)
-    // );
-    // $("#negativedata").append(
-    //     parseNodes(jsonData.GoalModelProject.GoalList.Negative)
-    // );
-    // $("#stakeholderdata").append(
-    //     parseNodes(jsonData.GoalModelProject.GoalList.Stakeholder)
-    // );
-    //
-    // FunctionalNum = jsonData.GoalModelProject.GoalList.FunctionalNum;
-    // EmotionalNum = jsonData.GoalModelProject.GoalList.EmotionalNum;
-    // QualityNum = jsonData.GoalModelProject.GoalList.QualityNum;
-    // NegativeNum = jsonData.GoalModelProject.GoalList.NegativeNum;
-    // StakeholderNum = jsonData.GoalModelProject.GoalList.StakeholderNum;
-    // window.jsonData.
-    // console.log("front end get data log => " + $('#qualitydata').find('li').forEach(a,()=>{
-    //     console.log(a.value);
-    // }))
-}
-/*Get data from HTML to JSON end*/
+    // get all data from HTML (in goal list)
+    const functionalData = $($('#functionaldata').children('ul')[0]).children('li');
+    const qualityData = $($('#qualitydata').children('ul')[0]).children('li');
+    const emotionalData = $($('#emotionaldata').children('ul')[0]).children('li');
+    const negetiveData = $($('#negativedata').children('ul')[0]).children('li');
+    const stakeholderData = $($('#stakeholderdata').children('ul')[0]).children('li');
 
-// the mock JSON data
-// window.jsonData = {
-//     GoalModelProject: {
-//         UserID: "10001",
-//         GoalModelID: "1",
-//         ProjectName: "My first goal model",
-//
-//         //Goal list: [five goal types][used goal][deleted goal]
-//         GoalList: {
-//             FunctionalNum: 1,
-//             EmotionalNum: 1,
-//             QualityNum: 1,
-//             NegativeNum: 1,
-//             StakeholderNum: 1,
-//             Functional: [
-//                 {
-//                     GoalID: "F_1",
-//                     GoalType: "Functional",
-//                     GoalContent: "",
-//                     GoalNote: "Goal F_1 Note",
-//                     SubGoals: []
-//                 }
-//             ],
-//             Quality: [
-//                 {
-//                     GoalID: "Q_1",
-//                     GoalType: "Quality",
-//                     GoalContent: "",
-//                     GoalNote: "Goal Q_1 Note"
-//                 }
-//             ],
-//             Emotional: [
-//                 {
-//                     GoalID: "E_1",
-//                     GoalType: "Emotional",
-//                     GoalContent: "",
-//                     GoalNote: "Goal E_1 Note"
-//                 }
-//             ],
-//             Negative: [
-//                 {
-//                     GoalID: "N_1",
-//                     GoalType: "Negative",
-//                     GoalContent: "",
-//                     GoalNote: "Goal N_1 Note"
-//                 }
-//             ],
-//             Stakeholder: [
-//                 {
-//                     GoalID: "S_1",
-//                     GoalType: "Stakeholder",
-//                     GoalContent: "",
-//                     GoalNote: "Goal S_1 Note"
-//                 }
-//             ]
-//         },
-//
-//         Clusters: [
-//             {
-//                 ClusterID: "cluster_1",
-//                 ClusterGoals: [
-//                     {
-//                         GoalID: "F_1",
-//                         GoalType: "Functional",
-//                         GoalContent: "This is Functional Goal F_1",
-//                         GoalNote: "Goal F_1 Note",
-//                         SubGoals: []
-//                     },
-//                     {
-//                         GoalID: "F_2",
-//                         GoalType: "Functional",
-//                         GoalContent: "This is Functional Goal F_2",
-//                         GoalNote: "Goal F_2 Note",
-//                         SubGoals: []
-//                     },
-//                     {
-//                         GoalID: "F_3",
-//                         GoalType: "Functional",
-//                         GoalContent: "This is Functional Goal F_3",
-//                         GoalNote: "Goal F_3 Note",
-//                         SubGoals: [
-//                             {
-//                                 GoalID: "F_4",
-//                                 GoalType: "Functional",
-//                                 GoalContent: "This is Functional Goal F_4",
-//                                 GoalNote: "Goal F_4 Note",
-//                                 SubGoals: []
-//                             },
-//                             {
-//                                 GoalID: "F_5",
-//                                 GoalType: "Functional",
-//                                 GoalContent: "This is Functional Goal F_5",
-//                                 GoalNote: "Goal F_5 Note",
-//                                 SubGoals: []
-//                             },
-//                             {
-//                                 GoalID: "E_2",
-//                                 GoalType: "Emotional",
-//                                 GoalContent: "This is Emotional Goal E_2",
-//                                 GoalNote: "Goal E_2 Note",
-//                                 SubGoals: []
-//                             },
-//                             {
-//                                 GoalID: "Q_3",
-//                                 GoalType: "Quality",
-//                                 GoalContent: "This is Quality Goal Q_3",
-//                                 GoalNote: "Goal Q_3 Note",
-//                                 SubGoals: []
-//                             }
-//                         ]
-//                     }
-//                 ]
-//             },
-//             {
-//                 ClusterID: "cluster_2",
-//                 ClusterGoals: [
-//                     {
-//                         GoalID: "E_2",
-//                         GoalType: "Emotional",
-//                         GoalContent: "This is Emotional Goal E_2",
-//                         GoalNote: "Goal E_2 Note"
-//                     },
-//                     {
-//                         GoalID: "Q_3",
-//                         GoalType: "Quality",
-//                         GoalContent: "This is Quality Goal Q_3",
-//                         GoalNote: "Goal Q_3 Note"
-//                     }
-//                 ]
-//             }
-//         ]
-//     }
-// };
+    let functionalList = [];
+    let qualityList = [];
+    let emotionalList = [];
+    let negativeList = [];
+    let stakeholderList = [];
+    // get the all parts of JSON
+    listParseGoalsToJSON(functionalData, functionalList, "Functional");
+    listParseGoalsToJSON(qualityData, qualityList, "Quality");
+    listParseGoalsToJSON(emotionalData, emotionalList, "Emotional");
+    listParseGoalsToJSON(negetiveData, negativeList, "Negative");
+    listParseGoalsToJSON(stakeholderData, stakeholderList, "Stakeholder");
+
+    // change the json data for storing
+    window.jsonData.GoalModelProject.GoalList.Functional = functionalList;
+    window.jsonData.GoalModelProject.GoalList.Quality = qualityList;
+    window.jsonData.GoalModelProject.GoalList.Emotional = emotionalList;
+    window.jsonData.GoalModelProject.GoalList.Negative = negativeList;
+    window.jsonData.GoalModelProject.GoalList.Stakeholder = stakeholderList;
+
+    // change json data according to the current process
+    window.jsonData.GoalModelProject.GoalList.FunctionalNum = FunctionalNum;
+    window.jsonData.GoalModelProject.GoalList.QualityNum = QualityNum;
+    window.jsonData.GoalModelProject.GoalList.EmotionalNum = EmotionalNum;
+    window.jsonData.GoalModelProject.GoalList.NegativeNum = NegativeNum;
+    window.jsonData.GoalModelProject.GoalList.StakeholderNum = StakeholderNum;
+
+
+    // get all data from HTML clusters
+    let $clusters = $('.dd');
+    let clusterList = [];
+    for(let i = 0; i < $clusters.length; i++) {
+        let $cluster = $($clusters[i]);
+        let clusterJSON = {
+            ClusterID: $cluster.attr('id'),
+            ClusterGoals: []
+        };
+        // if there're goals in the cluster
+        if($cluster.children('ol')) {
+            let listItems = $($cluster.children('ol')).children('li');
+            let $listItems = $(listItems);
+            // iterate all list items and their subgoals if there is one
+            for(let i = 0; i < $listItems.length; i++){
+                let $goal = $($(listItems[i]).children('input')[0]);
+                let type = getType($goal);
+                let subGoals = [];
+                if($($(listItems[i]).children('ol')).length !== 0) {
+                    subGoals = getAllSubgoals($(listItems[i]), subGoals);
+                }
+                let innerClusterGoalJSON = clusterParseGoalToJSON($goal.attr('id'), type,
+                    $goal.val(), $goal.attr('note'), subGoals);
+                clusterJSON.ClusterGoals.push(innerClusterGoalJSON);
+            }
+        }
+        clusterList.push(clusterJSON);
+    }
+    // change the cluster JSON data
+    window.jsonData.GoalModelProject.Clusters = clusterList;
+
+
+
+}
+/* Get data from HTML to JSON end */
+
+/* Parse all goals for a certain type in goal list start */
+function listParseGoalsToJSON(data, list, type) {
+    for (let i = 0; i < data.length; i++) {
+        let $goal = $($(data).children('input')[i]);
+        list.push(listParseGoalToJSON($goal.attr("id"), type, $goal.val(), $goal.attr("note")));
+    }
+}
+/* Parse all goals for a certain type in goal list end */
+
+/* Parse a single goal to JSON in goal list start */
+function listParseGoalToJSON(id, type, content, note) {
+    let resultJSON = {
+        GoalID: id,
+        GoalType: type,
+        GoalContent: content,
+        GoalNote: note
+    };
+    return resultJSON;
+}
+/* Parse a single goal in goal list to JSON end */
+
+/* Parse a single goal in clusters to JSON start */
+function clusterParseGoalToJSON(id, type, content, note, subGoals) {
+    let resultJSON = {
+        GoalID: id,
+        GoalType: type,
+        GoalContent: content,
+        GoalNote: note,
+        SubGoals: subGoals
+    };
+    return resultJSON;
+}
+/* Parse a single goal in clusters to JSON end */
+
+/* Find type of the goal start*/
+function getType($goal) {
+    if($goal.hasClass('Functional')) {
+        return "Functional";
+    } else if($goal.hasClass('Quality')) {
+        return "Quality";
+    } else if($goal.hasClass('Negative')) {
+        return "Negative";
+    } else if($goal.hasClass('Emotional')) {
+        return "Emotional";
+    } else {
+        return "Stakeholder";
+    }
+}
+/* Find type of the goal end*/
+
+/* Get all sub goals of a goal in the cluster start*/
+// Use recursive function to get all subgoals
+function getAllSubgoals($goalList, subGoals) {
+    if($($goalList.children('ol')).length !== 0) {
+        let $goal = $($goalList.children('input')[0]);
+        let listItems = $($goalList.children('ol')).children('li');
+        let $listItems = $(listItems);
+        for(let i = 0; i < $listItems.length; i++) {
+            subGoals.push(getAllSubgoals($(listItems[i]), subGoals));
+        }
+        return subGoals;
+    } else {
+        let $goal = $($goalList.children('input')[0]);
+        let type = getType($goal);
+        let innerClusterGoalJSON = clusterParseGoalToJSON($goal.attr('id'), type,
+            $goal.val(), $goal.attr('note'), []);
+        return innerClusterGoalJSON;
+    }
+};
+/* Get all sub goals of a goal in the cluster end*/
+
 
 /* Load images from server */
 function loadImages() {
@@ -1076,43 +1053,27 @@ function loadImages() {
         success: function(stream) {
             let images = JSON.parse(stream)._streams;
             let output = $(".preview-images-zone");
+            let number = 1;
             for (let i in images){
                 if(images[i] && images[i][0] !== "-") {
-                    console.log(images[i]);
-                        let html =
-                            '<div class="preview-image preview-show-' +
-                            i +
-                            '">' +
-                            '<div class="image-cancel" data-no="' +
-                            i +
-                            '">x</div>' +
-                            '<div class="image-zone"><img id="pro-img-' +
-                            i +
-                            '" src="' +
-                            'data:image/png;base64,' + images[i] +
-                            '"></div>' +
-                            // '<div class="tools-edit-image"><a href="javascript:void(0)" data-no="' + num + '" class="btn btn-light btn-edit-image">edit</a></div>' +
-                            "</div>";
+                    let html =
+                        '<div class="preview-image preview-show-' +
+                        number +
+                        '">' +
+                        '<div class="image-cancel" data-no="' +
+                        number +
+                        '">x</div>' +
+                        '<div class="image-zone"><img id="pro-img-' +
+                        number +
+                        '" src="' +
+                        'data:image/png;base64,' + images[i] +
+                        '"></div>' +
+                        "</div>";
                         output.append(html);
-                    }
+                        number++;
                 }
             }
-            //     let html =
-            //         '<div class="preview-image preview-show-' +
-            //         num +
-            //         '">' +
-            //         '<div class="image-cancel" data-no="' +
-            //         num +
-            //         '">x</div>' +
-            //         '<div class="image-zone"><img id="pro-img-' +
-            //         num +
-            //         '" src="' +
-            //         '' +
-            //         '"></div>' +
-            //         // '<div class="tools-edit-image"><a href="javascript:void(0)" data-no="' + num + '" class="btn btn-light btn-edit-image">edit</a></div>' +
-            //         "</div>";
-            //     output.append(html);
-            // }
+        }
     }).fail(function(jqXHR) {
         $("#warning-alert").html(
             jqXHR.responseJSON.message + " <br>Please try again."
