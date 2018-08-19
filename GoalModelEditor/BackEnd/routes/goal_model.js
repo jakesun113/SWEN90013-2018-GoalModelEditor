@@ -312,7 +312,7 @@ router.delete("/:userId/:goalmodelId", (req, res, next) => {
 
     // delete goal model
     db
-        .deleteGoalModel(req.params.goalmodelId)
+        .deleteGoalModel(req.params.userId, req.params.goalmodelId)
         .then(result => {
             console.log(result);
             res.statusCode = 204;
