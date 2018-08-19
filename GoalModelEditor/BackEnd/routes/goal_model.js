@@ -407,36 +407,38 @@ router.get("/images/:userId/:goalmodelId", (req, res, next) => {
     db.getGoalModel(req.params.goalmodelId)
         .then(result => {
             //store the file path
-            imagepath = result.DirPath ;
+            imagepath = result.DirPath + result.ModelId + "/images/";
             //file path does not exist
             if (imagepath === "" || !fs.existsSync(imagepath)) {
                 console.log(imagepath);
                 console.log("no such file");
                 //set response : file does not exists
-                res.statusCode = 500;
+                res.statusCode = 200;
                 res.json({message:
                         "Failed to get images: goal model file does not" +
                         " exists"});
                 return res.end();
             } else {
-                imagepath = result.DirPath+ "" + result.ModelId + "/images/";
+                imagepath = result.DirPath + result.ModelId + "/images/";
                 let formData = new FormData();
                 fs.readdir(imagepath,function(err,items){
                     let j = 0;
-                    for (let i = 0; i < items.length; i++) {
-                        fs.readFile(imagepath + items[i],'base64', function (err, image) {
-                            if (err) throw err;
-                            formData.append("image", image);
-                            j++;
-                            if(j === items.length) {
-                                res.statusCode = 200;
-                                res.format({
-                                    "multipart/form-data": function(){
-                                        res.send(formData)}});
-                                console.log("get images");
-                                return res.end();
-                            }
-                        });
+                    if(items.length) {
+                        for (let i = 0; i < items.length; i++) {
+                            fs.readFile(imagepath + items[i],'base64', function (err, image) {
+                                if (err) throw err;
+                                formData.append("image", image);
+                                j++;
+                                if(j === items.length) {
+                                    res.statusCode = 200;
+                                    res.format({
+                                        "multipart/form-data": function(){
+                                            res.send(formData)}});
+                                    console.log("get images");
+                                    return res.end();
+                                }
+                            });
+                        }
                     }
                 });
             }
