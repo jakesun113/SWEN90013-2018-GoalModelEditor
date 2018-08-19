@@ -885,7 +885,7 @@ $("#save").click(function(evt) {
         }
     }).fail(function(jqXHR) {
         $("#warning-alert").html(
-            jqXHR.responseJSON.message + " <br>Please try again."
+             "Save Failed.<br>Please try again."
         );
         $("#warning-alert")
             .slideDown()
@@ -936,6 +936,9 @@ function getData() {
     let clusterList = [];
     for(let i = 0; i < $clusters.length; i++) {
         let $cluster = $($clusters[i]);
+        if($($cluster.children('.dd-empty')).length !== 0) {
+            continue;
+        }
         let clusterJSON = {
             ClusterID: $cluster.attr('id'),
             ClusterGoals: []
