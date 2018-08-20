@@ -265,7 +265,8 @@ router.put("/info/:userId/:goalmodelId", (req, res, next) => {
     // update goal model
     let dirpath = "./UserFiles/" + req.params.userId + "/";
     db
-        .updateGpalModel(
+        .updateGoalModel(
+            req.params.userId,
             req.params.goalmodelId,
             req.body.model_name,
             req.body.description,
