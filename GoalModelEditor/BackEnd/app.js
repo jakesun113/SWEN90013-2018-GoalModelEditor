@@ -4,6 +4,7 @@
  * routing incoming HTTP(S) requests from the front-end to their endpoints.
  *
  */
+'use strict';
 
 // express application and middleware modules
 const express = require("express");

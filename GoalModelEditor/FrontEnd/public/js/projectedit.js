@@ -38,6 +38,18 @@ function getJSONFile() {
                 + jsonData.GoalModelProject.ModelName);
             loadData();
             loadImages();
+            //activate drag function
+            drag();
+
+            $(".dd").nestable({
+                callback: function(l, e) {
+                    // l is the main container
+                    // e is the element that was moved
+                    appendCluster();
+                },
+                scroll: true
+            });
+
         }
     }).fail(function(jqXHR) {
         $("#warning-alert").html(
@@ -951,15 +963,19 @@ function getData() {
             for(let i = 0; i < $listItems.length; i++){
                 let $goal = $($(listItems[i]).children('input')[0]);
                 let type = getType($goal);
-                let subGoals = [];
+                let goals = [];
                 if($($(listItems[i]).children('ol')).length !== 0) {
-                    subGoals = getAllSubgoals($(listItems[i]), subGoals);
+                    getAllSubgoals($(listItems[i]), goals);
+                } else {
+                    let innerClusterGoalJSON = clusterParseGoalToJSON($goal.attr('id'), type,
+                        $goal.val(), $goal.attr('note'), []);
+                    goals.push(innerClusterGoalJSON);
                 }
-                let innerClusterGoalJSON = clusterParseGoalToJSON($goal.attr('id'), type,
-                    $goal.val(), $goal.attr('note'), subGoals);
-                clusterJSON.ClusterGoals.push(innerClusterGoalJSON);
+                console.log(goals);
+                clusterJSON.ClusterGoals.push(goals[0]);
             }
         }
+        console.log(clusterJSON);
         clusterList.push(clusterJSON);
     }
     // change the cluster JSON data
@@ -1022,23 +1038,23 @@ function getType($goal) {
 
 /* Get all sub goals of a goal in the cluster start*/
 // Use recursive function to get all subgoals
-function getAllSubgoals($goalList, subGoals) {
+function getAllSubgoals($goalList, goals) {
+    let $goal = $($goalList.children('input')[0]);
+    let type = getType($goal);
+    let newSubGoals = [];
+    let innerClusterGoalJSON = clusterParseGoalToJSON($goal.attr('id'), type,
+        $goal.val(), $goal.attr('note'), newSubGoals);
     if($($goalList.children('ol')).length !== 0) {
-        let $goal = $($goalList.children('input')[0]);
         let listItems = $($goalList.children('ol')).children('li');
         let $listItems = $(listItems);
         for(let i = 0; i < $listItems.length; i++) {
-            subGoals.push(getAllSubgoals($(listItems[i]), subGoals));
+            getAllSubgoals($(listItems[i]), newSubGoals);
         }
-        return subGoals;
+        goals.push(innerClusterGoalJSON);
     } else {
-        let $goal = $($goalList.children('input')[0]);
-        let type = getType($goal);
-        let innerClusterGoalJSON = clusterParseGoalToJSON($goal.attr('id'), type,
-            $goal.val(), $goal.attr('note'), []);
-        return innerClusterGoalJSON;
+        goals.push(innerClusterGoalJSON);
     }
-};
+}
 /* Get all sub goals of a goal in the cluster end*/
 
 

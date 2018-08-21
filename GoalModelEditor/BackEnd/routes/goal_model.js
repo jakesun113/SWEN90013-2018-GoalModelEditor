@@ -186,6 +186,7 @@ router.post("/images/:userId/:goalmodelId", (req, res, next) => {
             );
             i++;
         }
+        console.log("fda");
     });
 
     res.statusCode = 201;
