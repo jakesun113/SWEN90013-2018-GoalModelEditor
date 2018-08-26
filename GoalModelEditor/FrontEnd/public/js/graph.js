@@ -1,13 +1,13 @@
-'use strict';
+"use strict";
 
 const SYMBOL_WIDTH = 120;
 const SYMBOL_HEIGHT = 80;
 
-const TYPE_FUNCTIONAL = 'Functional';
-const TYPE_EMOTIONAL = 'Emotional';
-const TYPE_NEGATIVE = 'Negative';
-const TYPE_QUALITY = 'Quality';
-const TYPE_STAKEHOLDER = 'Stakeholder';
+const TYPE_FUNCTIONAL = "Functional";
+const TYPE_EMOTIONAL = "Emotional";
+const TYPE_NEGATIVE = "Negative";
+const TYPE_QUALITY = "Quality";
+const TYPE_STAKEHOLDER = "Stakeholder";
 
 // create the graph object and configure
 let graph = new mxGraph();
@@ -36,13 +36,12 @@ function renderGraph(container) {
 
     // render the graph
     graph.getModel().beginUpdate(); // start transaction
-    for (var i=0; i<clusters.length; i++) {
+    for (var i = 0; i < clusters.length; i++) {
         renderCluster(clusters[i], graph);
     }
     autolayout(graph);
     graph.getModel().endUpdate(); // end transaction
 }
-
 
 /* Renders a cluster.
  *
@@ -56,7 +55,7 @@ function renderCluster(cluster, graph) {
 
     // render each goal in the cluster
     var goal;
-    for (var i=0; i<cluster.ClusterGoals.length; i++) {
+    for (var i = 0; i < cluster.ClusterGoals.length; i++) {
         goal = cluster.ClusterGoals[i];
         if (goal.GoalType == TYPE_FUNCTIONAL) {
             renderFunctionalGoal(null, goal, graph);
@@ -74,9 +73,17 @@ function renderFunctionalGoal(supergoal, goal, graph) {
     var parent = graph.getDefaultParent();
 
     // render the functional goal
-    var node = graph.insertVertex(parent, null, goal.GoalContent, 0, 0, SYMBOL_WIDTH, SYMBOL_HEIGHT);
+    var node = graph.insertVertex(
+        parent,
+        null,
+        goal.GoalContent,
+        0,
+        0,
+        SYMBOL_WIDTH,
+        SYMBOL_HEIGHT
+    );
     if (supergoal != null) {
-        var edge = graph.insertEdge(parent, null, '', supergoal, node);
+        var edge = graph.insertEdge(parent, null, "", supergoal, node);
     }
 
     // accumulate the goal's associated non-functional subgoals
@@ -88,7 +95,7 @@ function renderFunctionalGoal(supergoal, goal, graph) {
 
     var subgoal;
     var type;
-    for (var i=0; i<subgoals.length; i++) {
+    for (var i = 0; i < subgoals.length; i++) {
         subgoal = subgoals[i];
         type = subgoal.GoalType;
         let content = subgoal.GoalContent;
@@ -109,22 +116,53 @@ function renderFunctionalGoal(supergoal, goal, graph) {
 
     // render separate symbols for each non-functional group
     if (qualities) {
-        var node = graph.insertVertex(parent, null, qualities, 0, 0, SYMBOL_WIDTH, SYMBOL_HEIGHT);
+        var node = graph.insertVertex(
+            parent,
+            null,
+            qualities,
+            0,
+            0,
+            SYMBOL_WIDTH,
+            SYMBOL_HEIGHT
+        );
     }
 
     if (emotions) {
-        var node = graph.insertVertex(parent, null, emotions, 0, 0, SYMBOL_WIDTH, SYMBOL_HEIGHT);
+        var node = graph.insertVertex(
+            parent,
+            null,
+            emotions,
+            0,
+            0,
+            SYMBOL_WIDTH,
+            SYMBOL_HEIGHT
+        );
     }
 
     if (concerns) {
-        var node = graph.insertVertex(parent, null, concerns, 0, 0, SYMBOL_WIDTH, SYMBOL_HEIGHT);
+        var node = graph.insertVertex(
+            parent,
+            null,
+            concerns,
+            0,
+            0,
+            SYMBOL_WIDTH,
+            SYMBOL_HEIGHT
+        );
     }
 
     if (stakeholders) {
-        var node = graph.insertVertex(parent, null, stakeholders, 0, 0, SYMBOL_WIDTH, SYMBOL_HEIGHT);
+        var node = graph.insertVertex(
+            parent,
+            null,
+            stakeholders,
+            0,
+            0,
+            SYMBOL_WIDTH,
+            SYMBOL_HEIGHT
+        );
     }
 }
-
 
 /* Auto-layout for graph
  *

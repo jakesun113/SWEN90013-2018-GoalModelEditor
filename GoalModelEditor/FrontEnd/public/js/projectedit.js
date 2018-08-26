@@ -896,6 +896,13 @@ $("#signout").click(function(evt) {
 /*Send data to backend start*/
 $("#save").click(function(evt) {
     evt.preventDefault();
+    save();
+});
+
+/**
+ * save goal model to backend
+ */
+function save() {
     let secret = JSON.parse(Cookies.get("LOKIDIED"));
     let model = window.jsonData;
     let token = secret.token;
@@ -925,6 +932,7 @@ $("#save").click(function(evt) {
             .slideUp();
     }); // end ajax
 }
+
 /*Send data to backend end*/
 
 /*Get data from HTML to JSON start */
@@ -1206,14 +1214,12 @@ function sendXML() {
     mxUtils.popup(xml, true);
     $.ajax(url, {
         // the API of upload pictures
-        type: 'POST',
-        contentType: 'application/xml',
+        type: "POST",
+        contentType: "application/xml",
         data: xml,
         async: true,
-        headers: { Authorization: 'Bearer ' + token },
-        success: function() {
-
-        }
+        headers: { Authorization: "Bearer " + token },
+        success: function() {}
     }).fail(function(jqXHR) {
         $("#warning-alert").html(
             jqXHR.responseJSON.message + " <br>Please try again."
