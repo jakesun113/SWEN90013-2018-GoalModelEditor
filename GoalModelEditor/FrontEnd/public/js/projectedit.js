@@ -450,7 +450,7 @@ function addCluster() {
 
     // add cluster html
     cluster.append(
-        '<div class="inside-scrollbar dd" id=cluster_' +
+        '<div class="dd" id=cluster_' +
             clusterNumber.toString() +
             ">" +
             "</div>"
@@ -773,6 +773,8 @@ function drop_zone(clusterNumber) {
         let draggableWrapper = '<ol class="dd-list">';
         draggableWrapper += '<li class="dd-item">';
         let newNode = createElementFromHTML($(nowCopying).html());
+
+        $(newNode).css("font-weight", "bold");
 
         newNode.classList.add("dd-handle");
 
