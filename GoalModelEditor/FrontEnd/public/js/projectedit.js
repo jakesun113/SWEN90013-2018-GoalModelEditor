@@ -401,6 +401,7 @@ function loadData() {
     NegativeNum = jsonData.GoalModelProject.GoalList.NegativeNum;
     StakeholderNum = jsonData.GoalModelProject.GoalList.StakeholderNum;
     loadCluster();
+    appendCluster();
 }
 /*Load data end*/
 
@@ -736,7 +737,7 @@ function clusternext() {
         r.style.display = "block";
         g.style.display = "block";
         b.innerHTML = "Back";
-        renderGraph(document.getElementById('graphContainer'))
+        renderGraph(document.getElementById("graphContainer"));
     }
 }
 
