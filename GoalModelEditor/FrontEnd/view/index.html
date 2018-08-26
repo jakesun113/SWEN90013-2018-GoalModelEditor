@@ -46,7 +46,7 @@
             height: 80vh;
             justify-content: center;
             align-items: center;
-            background: rgba(255,255,255,0.3);
+            background: rgba(0,0,0,.15);
             border-radius: 40px;
         }
 
@@ -117,7 +117,7 @@
                 <div class="carousel-item">
                     <div class="content">
                     <h4 class="font-weight-bold font-italic">About Leon Sterling</h4>
-  
+
                     <p class="font-weight-light text-left">
                         Professor Leon Sterling has had a distinguished academic career. After completing a PhD at the Australian National University, he worked for 15 years at universities in the UK, Israel and the United States. He returned to Australia as Professor of Computer Science at the University of Melbourne in 1995. He served as Head of the Department of Computer Science and Engineering for 6 years. After stepping down as Head, he took up an industry-sponsored chair becoming the Adacel Professor of Software Innovation and Engineering. In 2010, he moved to Swinburne where he served as Dean of the Faculty of Information and Communication Technologies for 4 years and Pro Vice-Chancellor (Digital Frontiers) for two years. He has been a prominent figure in IT in Australia, being a strong advocate for coding in schools through public lectures, blogs, and committee memberships. His current research is in incorporating emotions in technology development, where motivational models are an essential element.
                     </p>
@@ -153,4 +153,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+<script>
+    $('.carousel').carousel({
+        interval: 4000
+    })
+</script>
 </html>
