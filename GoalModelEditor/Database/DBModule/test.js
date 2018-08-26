@@ -56,11 +56,20 @@ var dbModule = require("./DBModule");
 
 // dbModule.login().then();
 
-dbModule
-    .getProjectGoalModelList("dbfb25a2-98a4-11e8-b616-02b330fa6e48")
-    .then(res => {
-        console.log(JSON.stringify(res));
-    })
-    .catch(err => {
-        console.log(err);
-    });
+// dbModule
+//     .getProjectGoalModelList("dbfb25a2-98a4-11e8-b616-02b330fa6e48")
+//     .then(res => {
+//         console.log(JSON.stringify(res));
+//     })
+//     .catch(err => {
+//         console.log(err);
+//     });
+
+// dbModule
+//     .createProject("project111","desc",1,"1a141503-9f6f-11e8-b616-02b330fa6e48")
+//     .then(res => {
+//         console.log(JSON.stringify(res));
+//     })
+//     .catch(err => {
+//         console.log(err);
+//     });

@@ -17,7 +17,7 @@ const db = require(path.resolve(
 ));
 
 /* GET get the edit page */
-router.get("/edit", function(req, res) {
+router.get("/edit", function (req, res) {
     if (req.cookies.LOKIDIED) {
         res.render("user/project/projectedit");
     }
@@ -29,7 +29,7 @@ router.post("/:userId/:projectId", (req, res, next) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
-        res.json({ created: false, message: "Authentication failed" });
+        res.json({created: false, message: "Authentication failed"});
         return res.end();
     }
 
@@ -75,7 +75,7 @@ router.post("/:userId/:projectId", (req, res, next) => {
         })
         .catch(err => {
             res.statusCode = 500;
-            res.json({ message: "Failed to create new model" });
+            res.json({message: "Failed to create new model"});
             return res.end();
         });
 });
@@ -85,32 +85,29 @@ router.post("/images/:userId/:goalmodelId", (req, res, next) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
-        res.json({ created: false, message: "Authentication failed" });
+        res.json({created: false, message: "Authentication failed"});
         return res.end();
     }
 
     let form = new multiparty.Form();
 
-    form.parse(req, function(err, fields, files) {
-        console.log(err);
-        //console.log(fields);
-        //console.log(files);
-        let j = 0;
-        console.log(j++);
-
+    form.parse(req, function (err, fields, files) {
+        if (err) {
+            console.log(err);
+        }
         let dirpath = "./UserFiles/" + req.params.userId + "/";
         createDirectoryPath(dirpath);
 
-        let i = 0;
-        for (let _ in files["image"]) {
-            console.log("pathpath:  " + files["image"][i].path);
+        for (let i of files["image"]) {
+            console.log("i:" + i);
+            console.log("pathpath:  " + i.path);
             fs.renameSync(
-                files["image"][i].path,
+                i.path,
                 dirpath +
-                    req.params.goalmodelId +
-                    "-" +
-                    files["image"][i].originalFilename,
-                function(err) {
+                req.params.goalmodelId +
+                "-" +
+                i.originalFilename,
+                function (err) {
                     if (err) {
                         console.log("error when renaming images: " + err);
                         res.statusCode = 500;
@@ -122,13 +119,53 @@ router.post("/images/:userId/:goalmodelId", (req, res, next) => {
                     }
                 }
             );
-            i++;
         }
     });
 
     res.statusCode = 201;
-    res.json({ created: true });
+    res.json({created: true});
     console.log("images saved");
+    return res.end();
+});
+
+
+/* =====================================================================
+ * POST Upload XML
+ * @input('req')
+ *  content-type: application/xml
+ *  body: <xml graph file>
+ *
+ * =====================================================================*/
+router.post("/xml/:userId/:goalmodelId", (req, res, next) => {
+    // check token for authentication
+    if (!auth.authenticate(req.headers)) {
+        res.statusCode = 401;
+        res.json({created: false, message: "Authentication failed"});
+        return res.end();
+    }
+    let ditpath = "/UserFiles/" + req.params.userId;
+    createDirectoryPath(dirpath);
+    fs.writeFile(
+        dirpath + "/" + req.params.goalmodelId,
+        req.body.content,
+        function (err) {
+            if (err) {
+                console.log(err);
+                res.statusCode = 500;
+                res.json({
+                    message: "Failed to update the goal model: " + err.message
+                });
+                return res.end();
+            }
+            res.statusCode = 200;
+            res.json({content: req.body.content});
+            console.log("Saved!");
+            return res.end();
+        }
+    );
+    res.statusCode = 201;
+    res.json({created: true});
+    console.log("xml file saved");
     return res.end();
 });
 
@@ -137,7 +174,7 @@ router.put("/:userId/:goalmodelId", (req, res, next) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
-        res.json({ created: false, message: "Authentication failed" });
+        res.json({created: false, message: "Authentication failed"});
         return res.end();
     }
 
@@ -152,7 +189,7 @@ router.put("/:userId/:goalmodelId", (req, res, next) => {
                 res.statusCode = 404;
                 res.json({
                     message:
-                        "Failed to save the goal model content: " + err.message
+                    "Failed to save the goal model content: " + err.message
                 });
                 return res.end();
             }
@@ -176,7 +213,7 @@ router.put("/:userId/:goalmodelId", (req, res, next) => {
     fs.writeFile(
         dirpath + "/" + req.params.goalmodelId,
         req.body.content,
-        function(err) {
+        function (err) {
             if (err) {
                 console.log(err);
                 res.statusCode = 500;
@@ -186,7 +223,7 @@ router.put("/:userId/:goalmodelId", (req, res, next) => {
                 return res.end();
             }
             res.statusCode = 200;
-            res.json({ content: req.body.content });
+            res.json({content: req.body.content});
             console.log("Saved!");
             return res.end();
         }
@@ -198,7 +235,7 @@ router.put("/:userId/:goalmodelId", (req, res, next) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
-        res.json({ created: false, message: "Authentication failed" });
+        res.json({created: false, message: "Authentication failed"});
         return res.end();
     }
 
@@ -225,16 +262,16 @@ router.put("/:userId/:goalmodelId", (req, res, next) => {
                 res.statusCode = 409;
                 res.json({
                     message:
-                        "Failed to update the goal model information: " +
-                        err.message
+                    "Failed to update the goal model information: " +
+                    err.message
                 });
                 return res.end();
             } else if (err.code === db.INVALID) {
                 res.statusCode = 404;
                 res.json({
                     message:
-                        "Failed to update the goal model information: " +
-                        err.message
+                    "Failed to update the goal model information: " +
+                    err.message
                 });
                 return res.end();
             }
@@ -246,7 +283,7 @@ router.delete("/:userId/:goalmodelId", (req, res, next) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
-        res.json({ created: false, message: "Authentication failed" });
+        res.json({created: false, message: "Authentication failed"});
         return res.end();
     }
 
@@ -273,7 +310,7 @@ router.get("/:userId/:goalmodelId", (req, res, next) => {
     if (!auth.authenticate(req.headers)) {
         //auth is not successful
         res.statusCode = 401;
-        res.json({ created: false, message: "Authentication failed" });
+        res.json({created: false, message: "Authentication failed"});
         return res.end();
     }
 
@@ -291,7 +328,7 @@ router.get("/:userId/:goalmodelId", (req, res, next) => {
                 res.statusCode = 404;
                 res.json({
                     message:
-                        "Failed to get the goal model content: " + err.message
+                    "Failed to get the goal model content: " + err.message
                 });
                 return res.end();
             }
@@ -314,7 +351,7 @@ router.get("/:userId/:goalmodelId", (req, res, next) => {
         return res.end();
     }
     //read the file and response with a json file
-    fs.readFile(filepath, function(err, res) {
+    fs.readFile(filepath, function (err, res) {
         if (err) {
             //error response
             console.log(err);
@@ -327,7 +364,7 @@ router.get("/:userId/:goalmodelId", (req, res, next) => {
         //set response: successfully retrieve the goal model file and response
         // with a json file
         res.statusCode = 200;
-        res.json({ content: res });
+        res.json({content: res});
         console.log(res);
         console.log("get goal model");
         return res.end();
