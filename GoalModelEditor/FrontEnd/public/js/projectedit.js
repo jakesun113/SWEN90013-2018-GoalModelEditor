@@ -721,7 +721,7 @@ function clusternext() {
         c.setAttribute("class", "col-7 showborder scrollbar");
         r.style.display = "none";
         g.style.display = "none";
-        b.innerHTML = "Render";
+        b.innerHTML = "Next";
     } else {
         p.style.display = "none";
         t.style.display = "none";
