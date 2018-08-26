@@ -1213,11 +1213,12 @@ function sendXML() {
     let encoder = new mxCodec();
     let node = encoder.encode(graph.getModel());
     let xml = mxUtils.getXml(node);
+    console.log(xml);
     $.ajax(url, {
         // the API of upload pictures
         type: "POST",
-        contentType: "application/xml",
-        data: xml,
+        contentType: "application/json",
+        data: JSON.stringify({xml: xml}),
         async: true,
         headers: { Authorization: "Bearer " + token },
         success: function() {}

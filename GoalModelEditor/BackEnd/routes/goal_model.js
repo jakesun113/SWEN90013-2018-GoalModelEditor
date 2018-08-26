@@ -209,9 +209,10 @@ router.post("/xml/:userId/:goalmodelId", (req, res, next) => {
         return res.end();
     }
     let dirpath = "./UserFiles/" + req.params.userId;
+    console.log(req.body.xml);
     fs.writeFile(
         dirpath + "/" + req.params.goalmodelId + "/" + req.params.goalmodelId + ".xml",
-        req,
+        req.body.xml,
         function (err) {
             if (err) {
                 console.log(err);
