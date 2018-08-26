@@ -894,6 +894,8 @@ $("#save").click(function(evt) {
                 .slideDown()
                 .delay(3000)
                 .slideUp();
+            let xml = parseToXML(graph);
+            sendXML(xml);
         }
     }).fail(function(jqXHR) {
         $("#warning-alert").html(
@@ -1104,3 +1106,34 @@ function loadImages() {
     }); // end ajax
 }
 
+function sendXML() {
+    let secret = JSON.parse(Cookies.get("LOKIDIED"));
+    let token = secret.token;
+    let userId = secret.uid;
+    let modelId = Cookies.get("MID");
+    let url = "/goal_model/xml/" + userId + "/" + modelId;
+
+    let encoder = new mxCodec();
+    let node = encoder.encode(graph.getModel());
+    let xml = mxUtils.getXml(node);
+    mxUtils.popup(xml, true);
+    $.ajax(url, {
+        // the API of upload pictures
+        type: 'POST',
+        contentType: 'application/xml',
+        data: xml,
+        async: true,
+        headers: { Authorization: 'Bearer ' + token },
+        success: function() {
+
+        }
+    }).fail(function(jqXHR) {
+        $("#warning-alert").html(
+            jqXHR.responseJSON.message + " <br>Please try again."
+        );
+        $("#warning-alert")
+            .slideDown()
+            .delay(3000)
+            .slideUp();
+    }); // end ajax
+}
