@@ -925,6 +925,7 @@ function save() {
                 .slideDown()
                 .delay(3000)
                 .slideUp();
+            sendXML();
         }
     }).fail(function(jqXHR) {
         $("#warning-alert").html("Save Failed.<br>Please try again.");
@@ -1212,7 +1213,6 @@ function sendXML() {
     let encoder = new mxCodec();
     let node = encoder.encode(graph.getModel());
     let xml = mxUtils.getXml(node);
-    mxUtils.popup(xml, true);
     $.ajax(url, {
         // the API of upload pictures
         type: "POST",
