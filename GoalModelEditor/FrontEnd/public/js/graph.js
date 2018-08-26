@@ -10,14 +10,16 @@ const TYPE_QUALITY = "Quality";
 const TYPE_STAKEHOLDER = "Stakeholder";
 
 // create the graph object and configure
-let graph = new mxGraph();
+let graph = new mxGraph(document.getElementById('graphContainer'));
+// let graph = new mxGraph();
 
 /* Renders the window.jsonData into a symbolic goal model.
  *
  */
 function renderGraph(container) {
     console.log("Logging: renderGraph() called.");
-
+    graph.destroy();
+    graph = new mxGraph(document.getElementById('graphContainer'));
     // check that browser is supported
     if (!mxClient.isBrowserSupported()) {
         console.log("Logging: browser not supported");
@@ -32,7 +34,7 @@ function renderGraph(container) {
     var clusters = window.jsonData.GoalModelProject.Clusters;
 
     // create the graph object and configure
-    graph = new mxGraph(container);
+    // graph = new mxGraph(container);
 
     // render the graph
     graph.getModel().beginUpdate(); // start transaction
@@ -177,4 +179,24 @@ function parseToXML(graph) {
     let node = encoder.encode(graph.getModel());
     let xml = mxUtils.getPrettyXml(node);
     return xml;
+}
+
+function renderFromXML(xml) {
+    console.log(xml);
+    var doc = mxUtils.parseXml(xml);
+    console.log(doc);
+    var codec = new mxCodec(doc);
+    var elt = doc.documentElement.firstChild;
+    var cells = [];
+
+    console.log(codec);
+    while (elt != null)
+    {
+        console.log(elt);
+        cells.push(codec.decode(elt));
+        elt = elt.nextSibling;
+    }
+
+    graph.addCells(cells);
+
 }

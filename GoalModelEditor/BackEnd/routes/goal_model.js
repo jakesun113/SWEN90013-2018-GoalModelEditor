@@ -209,10 +209,15 @@ router.post("/xml/:userId/:goalmodelId", (req, res, next) => {
         return res.end();
     }
     let dirpath = "./UserFiles/" + req.params.userId;
-    console.log(req.body.xml);
+
+    let xml = req.body.xml;
+
+    xml = xml.replace("<mxGraphModel>","");
+    xml = xml.replace("</mxGraphModel>","");
+
     fs.writeFile(
         dirpath + "/" + req.params.goalmodelId + "/" + req.params.goalmodelId + ".xml",
-        req.body.xml,
+        xml,
         function (err) {
             if (err) {
                 console.log(err);
@@ -245,7 +250,6 @@ router.get("/xml/:userId/:goalmodelId", (req, res, next) => {
         return res.end();
     }
     let dirpath = "./UserFiles/" + req.params.userId;
-    console.log(req.body.xml);
 
     fs.readFile(
         dirpath + "/" + req.params.goalmodelId + "/" + req.params.goalmodelId + ".xml",

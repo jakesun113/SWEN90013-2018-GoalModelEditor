@@ -54,6 +54,7 @@ function getJSONFile() {
                 },
                 scroll: true
             });
+            getXML();
         }
     }).fail(function(jqXHR) {
         $("#warning-alert").html(
@@ -732,7 +733,7 @@ function clusternext() {
         r.style.display = "block";
         g.style.display = "block";
         b.innerHTML = "Back";
-        renderGraph(document.getElementById("graphContainer"));
+        // renderGraph(document.getElementById("graphContainer"));
     }
 }
 
@@ -1194,7 +1195,7 @@ function loadImages() {
 /**
  * Auto save every 60 seconds
  */
-setInterval("save()", "60000");
+// setInterval("save()", "60000");
 
 function sendXML() {
     let secret = JSON.parse(Cookies.get("LOKIDIED"));
@@ -1206,7 +1207,6 @@ function sendXML() {
     let encoder = new mxCodec();
     let node = encoder.encode(graph.getModel());
     let xml = mxUtils.getXml(node);
-    console.log(xml);
     $.ajax(url, {
         // the API of upload pictures
         type: "POST",
@@ -1215,6 +1215,31 @@ function sendXML() {
         async: true,
         headers: { Authorization: "Bearer " + token },
         success: function() {}
+    }).fail(function(jqXHR) {
+        $("#warning-alert").html(
+            jqXHR.responseJSON.message + " <br>Please try again."
+        );
+        $("#warning-alert")
+            .slideDown()
+            .delay(3000)
+            .slideUp();
+    }); // end ajax
+}
+
+function getXML() {
+    let secret = JSON.parse(Cookies.get("LOKIDIED"));
+    let token = secret.token;
+    let userId = secret.uid;
+    let modelId = Cookies.get("MID");
+    let url = "/goal_model/xml/" + userId + "/" + modelId;
+
+    $.ajax(url, {
+        // the API of upload pictures
+        type: "GET",
+        headers: { Authorization: "Bearer " + token },
+        success: function(xmlFile) {
+            renderFromXML(xmlFile.xml);
+        }
     }).fail(function(jqXHR) {
         $("#warning-alert").html(
             jqXHR.responseJSON.message + " <br>Please try again."
