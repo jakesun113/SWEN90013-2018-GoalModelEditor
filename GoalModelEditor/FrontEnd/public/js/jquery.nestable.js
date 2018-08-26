@@ -32,7 +32,7 @@
         },
         listNodeName: "ol",
         itemNodeName: "li",
-        handleNodeName: "div",
+        handleNodeName: "input",
         contentNodeName: "span",
         rootClass: "dd",
         listClass: "dd-list",
@@ -46,9 +46,9 @@
         noChildrenClass: "dd-nochildren",
         emptyClass: "dd-empty",
         expandBtnHTML:
-            '<button class="dd-expand" data-action="expand" type="button">Expand</button>',
+            '<button class="dd-expand" data-action="expand">Expand</button>',
         collapseBtnHTML:
-            '<button class="dd-collapse" data-action="collapse" type="button">Collapse</button>',
+            '<button class="dd-collapse" data-action="collapse">Collapse</button>',
         group: 0,
         maxDepth: 5,
         threshold: 20,

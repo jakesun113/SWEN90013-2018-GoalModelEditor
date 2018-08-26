@@ -22,6 +22,9 @@ $(document).on("mouseover", "#ul li input", function() {
     $("#notedata").html("<p>" + $(this).attr("note") + "</p>");
 });
 
+/**
+ * get JSON file from backend according to userId and modelId
+ */
 function getJSONFile() {
     let secret = JSON.parse(Cookies.get("LOKIDIED"));
     let token = secret.token;
@@ -34,8 +37,11 @@ function getJSONFile() {
         headers: { Authorization: "Bearer " + token },
         success: function(data) {
             window.jsonData = JSON.parse(JSON.parse(JSON.stringify(data)));
-            $('#model_name strong').html(jsonData.GoalModelProject.ProjectName + ' - '
-                + jsonData.GoalModelProject.ModelName);
+            $("#model_name strong").html(
+                jsonData.GoalModelProject.ProjectName +
+                    " - " +
+                    jsonData.GoalModelProject.ModelName
+            );
             loadData();
             loadImages();
             //activate drag function
@@ -49,7 +55,6 @@ function getJSONFile() {
                 },
                 scroll: true
             });
-
         }
     }).fail(function(jqXHR) {
         $("#warning-alert").html(
@@ -62,7 +67,12 @@ function getJSONFile() {
     }); // end ajax
 }
 
+// picture numbers
 let num = 1;
+
+/**
+ * read image from local and show on the page
+ */
 function readImage() {
     if (window.File && window.FileList && window.FileReader) {
         let files = event.target.files; //FileList object
@@ -99,7 +109,7 @@ function readImage() {
             });
             picReader.readAsDataURL(file);
         }
-        // alert(formData.getAll("picture"));
+        // alert(formData.getAll('picture'));
         uploadPictures(formData);
         $("#pro-image").val("");
     } else {
@@ -113,6 +123,10 @@ function readImage() {
     }
 }
 
+/**
+ * Upload pictures function
+ * @param formData
+ */
 function uploadPictures(formData) {
     let secret = JSON.parse(Cookies.get("LOKIDIED"));
     let token = secret.token;
@@ -128,9 +142,7 @@ function uploadPictures(formData) {
         async: true,
         headers: { Authorization: "Bearer " + token },
         success: function(data) {
-            $("#success-alert").html(
-                "Image successfully Uploaded."
-            );
+            $("#success-alert").html("Image successfully Uploaded.");
             $("#success-alert")
                 .slideDown()
                 .delay(3000)
@@ -351,7 +363,7 @@ function uploadPictures(formData) {
 // };
 /*JSON data end*/
 
-/*Count goals num*/
+/*Count goals numbers*/
 let FunctionalNum = 0;
 let EmotionalNum = 0;
 let NegativeNum = 0;
@@ -362,6 +374,9 @@ let StakeholderNum = 0;
 let clusterNumber = 1;
 
 /*Load data start*/
+/**
+ * load goals from JSON
+ */
 function loadData() {
     $("#functionaldata").append(
         parseNodes(jsonData.GoalModelProject.GoalList.Functional)
@@ -379,76 +394,31 @@ function loadData() {
         parseNodes(jsonData.GoalModelProject.GoalList.Stakeholder)
     );
 
-    // getData();
+    // get goal numbers from JSON
     FunctionalNum = jsonData.GoalModelProject.GoalList.FunctionalNum;
     EmotionalNum = jsonData.GoalModelProject.GoalList.EmotionalNum;
     QualityNum = jsonData.GoalModelProject.GoalList.QualityNum;
     NegativeNum = jsonData.GoalModelProject.GoalList.NegativeNum;
     StakeholderNum = jsonData.GoalModelProject.GoalList.StakeholderNum;
     loadCluster();
+    appendCluster();
 }
 /*Load data end*/
 
-/*Load images start*/
-// function loadImages() {
-//     // https://blog.csdn.net/ZteenMozart/article/details/80790920
-//     let secret = JSON.parse(Cookies.get("LOKIDIED"));
-//     let token = secret.token;
-//     let userId = secret.uid;
-//     let modelId = Cookies.get("MID");
-//     let reg = "/" + userId + modelId + "/";
-//
-//     var tbsource = "1"; //本地文件夹路径
-//
-//     var hdfiles = "";
-//     var objFSO = new ActiveXObject("Scripting.FileSystemObject");
-//     if (!objFSO.FolderExists(tbsource)) {
-//         alert("<" + tbsource + ">该文件夹路径不存在，或者路径不能含文件名！");
-//         objFSO = null;
-//     }
-//
-//     var objFolder = objFSO.GetFolder(tbsource);
-//
-//     var colFiles = new Enumerator(objFolder.Files);
-//     //读取文件夹下文件
-//     for (; !colFiles.atEnd(); colFiles.moveNext()) {
-//         var objFile = colFiles.item();
-//
-//         if (reg.test(objFile.Name.toLowerCase())) {
-//             hdfiles = hdfiles + "<img src='1/" + objFile.Name + "'>";
-//         }
-//     }
-//
-//     let output = $(".preview-images-zone");
-//     let html =
-//         '<div class="preview-image preview-show-' +
-//         num +
-//         '">' +
-//         '<div class="image-cancel" data-no="' +
-//         num +
-//         '">x</div>' +
-//         '<div class="image-zone"><img id="pro-img-' +
-//         num +
-//         '" src="' +
-//         picFile.result +
-//         '"></div>' +
-//         // '<div class="tools-edit-image"><a href="javascript:void(0)" data-no="' + num + '" class="btn btn-light btn-edit-image">edit</a></div>' +
-//         "</div>";
-//
-//     output.append(html);
-//     num = num + 1;
-// }
-/*Load images end*/
-
 /*Add new cluster start*/
+/**
+ * load clusters according to JSON
+ */
 function loadCluster() {
     let clusterNum = jsonData.GoalModelProject.Clusters.length;
+    // add new clusters according to cluster numbers
     if (clusterNum > 1) {
         for (let i = 0; i < clusterNum - 1; i++) {
             addCluster();
         }
     }
 
+    // add goals to clusters
     for (let i = 0; i < clusterNum; i++) {
         let clusterID = jsonData.GoalModelProject.Clusters[i].ClusterID;
         if (
@@ -463,7 +433,7 @@ function loadCluster() {
                     )
                 );
 
-            //console.log($(".dd-empty").length);
+            //console.log($('.dd-empty').length);
             $("div").remove(".dd-empty");
         }
     }
@@ -471,10 +441,15 @@ function loadCluster() {
 /*Add new cluster end*/
 
 /*Add new cluster start*/
+/**
+ * add new cluster
+ */
 function addCluster() {
     let cluster = $("#cluster");
+    // count cluster number
     clusterNumber++;
 
+    // add cluster html
     cluster.append(
         '<div class="inside-scrollbar dd" id=cluster_' +
             clusterNumber.toString() +
@@ -496,8 +471,13 @@ function addCluster() {
 /*Add new cluster end*/
 
 /*Show JSON data on edit page start*/
-// takes a nodes array and turns it into a <ul>
+/**
+ * parse parent node in goal list
+ * @param nodes
+ * @returns {HTMLElement}
+ */
 function parseNodes(nodes) {
+    // takes a nodes array and turns it into a <ul>
     let ul = document.createElement("UL");
     ul.setAttribute("id", "ul");
     ul.setAttribute("class", "drag-list");
@@ -509,6 +489,11 @@ function parseNodes(nodes) {
 }
 
 /*parse Cluster nodes start*/
+/**
+ * parse parent node in cluster
+ * @param nodes
+ * @returns {HTMLElement}
+ */
 function parseClusterNodes(nodes) {
     let ol = document.createElement("OL");
     ol.setAttribute("class", "dd-list");
@@ -520,13 +505,22 @@ function parseClusterNodes(nodes) {
 }
 /*parse Cluster nodes end*/
 
-// takes a node object and turns it into a <li>
+/**
+ * parse children goals in goal list
+ * @param node
+ * @returns {HTMLElement}
+ */
 function parseNode(node) {
+    // takes a node object and turns it into a <li>
     let li = document.createElement("LI");
     li.setAttribute("class", node.GoalType);
     li.setAttribute("class", "dragger");
     li.setAttribute("draggable", "true");
-    // li.setAttribute("id", node.GoalID);
+    let fontWeight = "bold";
+    if (node.Used) {
+        fontWeight = "normal";
+    }
+    // li.setAttribute('id', node.GoalID);
     li.innerHTML =
         '<input id= "' +
         node.GoalID +
@@ -536,7 +530,9 @@ function parseNode(node) {
         "input-font" +
         '" value = "' +
         node.GoalContent +
-        '" placeholder="New goal" style="font-weight: bold"" ' +
+        '" placeholder="New goal" style="font-weight: ' +
+        fontWeight +
+        '" ' +
         'note="' +
         node.GoalNote +
         '"' +
@@ -552,6 +548,11 @@ function parseNode(node) {
 /*Show JSON data on edit page end*/
 
 /*parse Cluster node start*/
+/**
+ * parse children goals in cluster
+ * @param node
+ * @returns {HTMLElement}
+ */
 function parseClusterNode(node) {
     let li = document.createElement("LI");
     li.setAttribute("class", "dd-item");
@@ -574,7 +575,6 @@ function parseClusterNode(node) {
         "/>";
 
     // recursion to add sub goal
-
     if (node.SubGoals !== undefined && node.SubGoals.length > 0) {
         li.appendChild(parseClusterNodes(node.SubGoals));
     }
@@ -583,11 +583,15 @@ function parseClusterNode(node) {
 }
 /*parse Cluster node end*/
 
-/*Add new goal by pressing "Enter" start*/
+/*Add new goal by pressing 'Enter' start*/
+/**
+ * add new goal by pressing 'Enter'
+ * @param event
+ */
 document.onkeydown = function(event) {
     let goalID;
     let goalType;
-    //when the user press the "enter" button
+    //when the user press the 'enter' button
     if (
         document.activeElement.tagName === "INPUT" &&
         event.key === "Enter" &&
@@ -600,6 +604,7 @@ document.onkeydown = function(event) {
         goalID = getID(goalType);
         event.preventDefault();
 
+        // new goal html
         let newlist =
             '<li draggable="true" class="dragger"><input id="' +
             goalID +
@@ -609,6 +614,7 @@ document.onkeydown = function(event) {
             "input-font" +
             '" placeholder="New goal" note="notes" value="" style="font-weight: bold"/></li>';
 
+        // add new goal node to its parent node
         if ($(event.target).parent().length > 0) {
             let parent = $(event.target).parent();
             parent.after(newlist);
@@ -624,6 +630,11 @@ document.onkeydown = function(event) {
     }
 };
 
+/**
+ * get goal type
+ * @param type
+ * @returns {string}
+ */
 function getID(type) {
     switch (type) {
         case "Functional":
@@ -643,51 +654,65 @@ function getID(type) {
             return "S_" + StakeholderNum;
     }
 }
-/*Add new goal by pressing "Enter" end*/
+/*Add new goal by pressing 'Enter' end*/
 
-/*Delete goal by pressing "Backspace" when empty start*/
+/*Delete goal by pressing 'Backspace' when empty start*/
+/**
+ * delete goal by pressing 'Backspace' when empty
+ * @param event
+ */
 document.onkeyup = function(event) {
     let goalID;
-    //when the user press the "enter" button
+    //when the user press the 'enter' button
     if (document.activeElement.tagName === "INPUT" && event.key === "Escape") {
         //make the default enter invalid
         let parent = document.activeElement.parentNode;
         let grandparent = parent.parentNode;
+        // if parent not null, delete child
         if (parent.previousElementSibling != null) {
             grandparent.removeChild(parent);
             event.preventDefault();
         }
     }
 };
-/*Delete goal by pressing "Backspace" when empty end*/
+/*Delete goal by pressing 'Backspace' when empty end*/
 
 /*Hide and show section start*/
+/**
+ * next button in the first page
+ * [image section hide]
+ * [cluster section show]
+ */
 function photonextbtn() {
     let p = document.getElementById("photo");
     let goal = document.getElementById("goals");
     let n = document.getElementById("notes");
     let c = document.getElementById("cluster");
-    // let g = document.getElementById("generator");
+    // let g = document.getElementById('generator');
     let b = document.getElementById("photonextbtn");
 
     if (p.style.display === "none") {
         p.style.display = "block";
         n.style.display = "none";
         c.style.display = "none";
-        // g.style.display = "none";
+        // g.style.display = 'none';
         b.innerHTML = "Next";
     } else {
         p.style.display = "none";
-        // goal.removeAttributeNode("style");
-        // goal.addAttributes("goalscrollbar");
+        // goal.removeAttributeNode('style');
+        // goal.addAttributes('goalscrollbar');
         n.style.display = "block";
         c.style.display = "block";
-        // g.style.display = "block";
+        // g.style.display = 'block';
         b.innerHTML = "Back";
     }
 }
 
-// cluster to generator
+/**
+ * next button in the second page, the Render button
+ * [goal list section hide]
+ * [mxgraph section show]
+ */
 function clusternext() {
     let p = document.getElementById("photo");
     let t = document.getElementById("todolist");
@@ -703,7 +728,7 @@ function clusternext() {
         c.setAttribute("class", "col-7 showborder scrollbar");
         r.style.display = "none";
         g.style.display = "none";
-        b.innerHTML = "Render";
+        b.innerHTML = "Next";
     } else {
         p.style.display = "none";
         t.style.display = "none";
@@ -712,6 +737,7 @@ function clusternext() {
         r.style.display = "block";
         g.style.display = "block";
         b.innerHTML = "Back";
+        renderGraph(document.getElementById("graphContainer"));
     }
 }
 
@@ -872,6 +898,13 @@ $("#signout").click(function(evt) {
 /*Send data to backend start*/
 $("#save").click(function(evt) {
     evt.preventDefault();
+    save();
+});
+
+/**
+ * save goal model to backend
+ */
+function save() {
     let secret = JSON.parse(Cookies.get("LOKIDIED"));
     let model = window.jsonData;
     let token = secret.token;
@@ -883,38 +916,43 @@ $("#save").click(function(evt) {
     $.ajax(url, {
         type: "PUT",
         data: JSON.stringify(model),
-        dataType: 'json',
-        contentType: 'application/json',
+        dataType: "json",
+        contentType: "application/json",
         headers: { Authorization: "Bearer " + token },
         success: function(data) {
-            $("#success-alert").html(
-                "Successfully Saved."
-            );
+            $("#success-alert").html("Successfully Saved.");
             $("#success-alert")
                 .slideDown()
                 .delay(3000)
                 .slideUp();
         }
     }).fail(function(jqXHR) {
-        $("#warning-alert").html(
-             "Save Failed.<br>Please try again."
-        );
+        $("#warning-alert").html("Save Failed.<br>Please try again.");
         $("#warning-alert")
             .slideDown()
             .delay(3000)
             .slideUp();
     }); // end ajax
-}); // end submit
+}
 /*Send data to backend end*/
 
 /*Get data from HTML to JSON start */
+/**
+ * get data from HTML to JSON
+ */
 function getData() {
     // get all data from HTML (in goal list)
-    const functionalData = $($('#functionaldata').children('ul')[0]).children('li');
-    const qualityData = $($('#qualitydata').children('ul')[0]).children('li');
-    const emotionalData = $($('#emotionaldata').children('ul')[0]).children('li');
-    const negetiveData = $($('#negativedata').children('ul')[0]).children('li');
-    const stakeholderData = $($('#stakeholderdata').children('ul')[0]).children('li');
+    const functionalData = $($("#functionaldata").children("ul")[0]).children(
+        "li"
+    );
+    const qualityData = $($("#qualitydata").children("ul")[0]).children("li");
+    const emotionalData = $($("#emotionaldata").children("ul")[0]).children(
+        "li"
+    );
+    const negetiveData = $($("#negativedata").children("ul")[0]).children("li");
+    const stakeholderData = $($("#stakeholderdata").children("ul")[0]).children(
+        "li"
+    );
 
     let functionalList = [];
     let qualityList = [];
@@ -942,33 +980,37 @@ function getData() {
     window.jsonData.GoalModelProject.GoalList.NegativeNum = NegativeNum;
     window.jsonData.GoalModelProject.GoalList.StakeholderNum = StakeholderNum;
 
-
     // get all data from HTML clusters
-    let $clusters = $('.dd');
+    let $clusters = $(".dd");
     let clusterList = [];
-    for(let i = 0; i < $clusters.length; i++) {
+    for (let i = 0; i < $clusters.length; i++) {
         let $cluster = $($clusters[i]);
-        if($($cluster.children('.dd-empty')).length !== 0) {
+        if ($($cluster.children(".dd-empty")).length !== 0) {
             continue;
         }
         let clusterJSON = {
-            ClusterID: $cluster.attr('id'),
+            ClusterID: $cluster.attr("id"),
             ClusterGoals: []
         };
         // if there're goals in the cluster
-        if($cluster.children('ol')) {
-            let listItems = $($cluster.children('ol')).children('li');
+        if ($cluster.children("ol")) {
+            let listItems = $($cluster.children("ol")).children("li");
             let $listItems = $(listItems);
             // iterate all list items and their subgoals if there is one
-            for(let i = 0; i < $listItems.length; i++){
-                let $goal = $($(listItems[i]).children('input')[0]);
+            for (let i = 0; i < $listItems.length; i++) {
+                let $goal = $($(listItems[i]).children("input")[0]);
                 let type = getType($goal);
                 let goals = [];
-                if($($(listItems[i]).children('ol')).length !== 0) {
+                if ($($(listItems[i]).children("ol")).length !== 0) {
                     getAllSubgoals($(listItems[i]), goals);
                 } else {
-                    let innerClusterGoalJSON = clusterParseGoalToJSON($goal.attr('id'), type,
-                        $goal.val(), $goal.attr('note'), []);
+                    let innerClusterGoalJSON = clusterParseGoalToJSON(
+                        $goal.attr("id"),
+                        type,
+                        $goal.val(),
+                        $goal.attr("note"),
+                        []
+                    );
                     goals.push(innerClusterGoalJSON);
                 }
                 console.log(goals);
@@ -980,34 +1022,68 @@ function getData() {
     }
     // change the cluster JSON data
     window.jsonData.GoalModelProject.Clusters = clusterList;
-
-
-
 }
 /* Get data from HTML to JSON end */
 
 /* Parse all goals for a certain type in goal list start */
+/**
+ * Parse all goals for a certain type in goal list
+ * @param data
+ * @param list
+ * @param type
+ */
 function listParseGoalsToJSON(data, list, type) {
     for (let i = 0; i < data.length; i++) {
-        let $goal = $($(data).children('input')[i]);
-        list.push(listParseGoalToJSON($goal.attr("id"), type, $goal.val(), $goal.attr("note")));
+        let $goal = $($(data).children("input")[i]);
+        let used = false;
+        // alert($goal.css("font-weight"));
+        if ($goal.css("font-weight") == 400) {
+            used = true;
+        }
+        list.push(
+            listParseGoalToJSON(
+                $goal.attr("id"),
+                type,
+                $goal.val(),
+                $goal.attr("note"),
+                used
+            )
+        );
     }
 }
 /* Parse all goals for a certain type in goal list end */
 
 /* Parse a single goal to JSON in goal list start */
-function listParseGoalToJSON(id, type, content, note) {
+/**
+ * Parse a single goal to JSON in goal list
+ * @param id
+ * @param type
+ * @param content
+ * @param note
+ * @returns {{GoalID: *, GoalType: *, GoalContent: *, GoalNote: *}}
+ */
+function listParseGoalToJSON(id, type, content, note, used) {
     let resultJSON = {
         GoalID: id,
         GoalType: type,
         GoalContent: content,
-        GoalNote: note
+        GoalNote: note,
+        Used: used
     };
     return resultJSON;
 }
 /* Parse a single goal in goal list to JSON end */
 
 /* Parse a single goal in clusters to JSON start */
+/**
+ * Parse a single goal in clusters to JSON
+ * @param id
+ * @param type
+ * @param content
+ * @param note
+ * @param subGoals
+ * @returns {{GoalID: *, GoalType: *, GoalContent: *, GoalNote: *, SubGoals: *}}
+ */
 function clusterParseGoalToJSON(id, type, content, note, subGoals) {
     let resultJSON = {
         GoalID: id,
@@ -1021,14 +1097,19 @@ function clusterParseGoalToJSON(id, type, content, note, subGoals) {
 /* Parse a single goal in clusters to JSON end */
 
 /* Find type of the goal start*/
+/**
+ * Find type of the goal
+ * @param $goal
+ * @returns {string}
+ */
 function getType($goal) {
-    if($goal.hasClass('Functional')) {
+    if ($goal.hasClass("Functional")) {
         return "Functional";
-    } else if($goal.hasClass('Quality')) {
+    } else if ($goal.hasClass("Quality")) {
         return "Quality";
-    } else if($goal.hasClass('Negative')) {
+    } else if ($goal.hasClass("Negative")) {
         return "Negative";
-    } else if($goal.hasClass('Emotional')) {
+    } else if ($goal.hasClass("Emotional")) {
         return "Emotional";
     } else {
         return "Stakeholder";
@@ -1037,17 +1118,26 @@ function getType($goal) {
 /* Find type of the goal end*/
 
 /* Get all sub goals of a goal in the cluster start*/
-// Use recursive function to get all subgoals
+/**
+ * Use recursive function to get all subgoals
+ * @param $goalList
+ * @param goals
+ */
 function getAllSubgoals($goalList, goals) {
-    let $goal = $($goalList.children('input')[0]);
+    let $goal = $($goalList.children("input")[0]);
     let type = getType($goal);
     let newSubGoals = [];
-    let innerClusterGoalJSON = clusterParseGoalToJSON($goal.attr('id'), type,
-        $goal.val(), $goal.attr('note'), newSubGoals);
-    if($($goalList.children('ol')).length !== 0) {
-        let listItems = $($goalList.children('ol')).children('li');
+    let innerClusterGoalJSON = clusterParseGoalToJSON(
+        $goal.attr("id"),
+        type,
+        $goal.val(),
+        $goal.attr("note"),
+        newSubGoals
+    );
+    if ($($goalList.children("ol")).length !== 0) {
+        let listItems = $($goalList.children("ol")).children("li");
         let $listItems = $(listItems);
-        for(let i = 0; i < $listItems.length; i++) {
+        for (let i = 0; i < $listItems.length; i++) {
             getAllSubgoals($(listItems[i]), newSubGoals);
         }
         goals.push(innerClusterGoalJSON);
@@ -1057,8 +1147,10 @@ function getAllSubgoals($goalList, goals) {
 }
 /* Get all sub goals of a goal in the cluster end*/
 
-
 /* Load images from server */
+/**
+ * Load images from server
+ */
 function loadImages() {
     let secret = JSON.parse(Cookies.get("LOKIDIED"));
     let token = secret.token;
@@ -1073,8 +1165,8 @@ function loadImages() {
             let images = JSON.parse(stream)._streams;
             let output = $(".preview-images-zone");
             let number = 1;
-            for (let i in images){
-                if(images[i] && images[i][0] !== "-") {
+            for (let i in images) {
+                if (images[i] && images[i][0] !== "-") {
                     let html =
                         '<div class="preview-image preview-show-' +
                         number +
@@ -1085,11 +1177,12 @@ function loadImages() {
                         '<div class="image-zone"><img id="pro-img-' +
                         number +
                         '" src="' +
-                        'data:image/png;base64,' + images[i] +
+                        "data:image/png;base64," +
+                        images[i] +
                         '"></div>' +
                         "</div>";
-                        output.append(html);
-                        number++;
+                    output.append(html);
+                    number++;
                 }
             }
         }
@@ -1104,3 +1197,37 @@ function loadImages() {
     }); // end ajax
 }
 
+/**
+ * Auto save every 60 seconds
+ */
+setInterval("save()", "60000");
+
+function sendXML() {
+    let secret = JSON.parse(Cookies.get("LOKIDIED"));
+    let token = secret.token;
+    let userId = secret.uid;
+    let modelId = Cookies.get("MID");
+    let url = "/goal_model/xml/" + userId + "/" + modelId;
+
+    let encoder = new mxCodec();
+    let node = encoder.encode(graph.getModel());
+    let xml = mxUtils.getXml(node);
+    mxUtils.popup(xml, true);
+    $.ajax(url, {
+        // the API of upload pictures
+        type: "POST",
+        contentType: "application/xml",
+        data: xml,
+        async: true,
+        headers: { Authorization: "Bearer " + token },
+        success: function() {}
+    }).fail(function(jqXHR) {
+        $("#warning-alert").html(
+            jqXHR.responseJSON.message + " <br>Please try again."
+        );
+        $("#warning-alert")
+            .slideDown()
+            .delay(3000)
+            .slideUp();
+    }); // end ajax
+}

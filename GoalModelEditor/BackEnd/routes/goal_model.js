@@ -50,20 +50,19 @@ router.post("/:userId/:projectId", (req, res, next) => {
         .then(result => {
             createDirectoryPath(dirpath);
 
-            let init=
-            {
+            let init = {
                 GoalModelProject: {
                     ModelName: result.ModelName,
                     ProjectName: result.ProjectName,
 
-                        //Goal list: [five goal types][used goal][deleted goal]
-                        GoalList: {
+                    //Goal list: [five goal types][used goal][deleted goal]
+                    GoalList: {
                         FunctionalNum: 1,
-                            EmotionalNum: 1,
-                            QualityNum: 1,
-                            NegativeNum: 1,
-                            StakeholderNum: 1,
-                            Functional: [
+                        EmotionalNum: 1,
+                        QualityNum: 1,
+                        NegativeNum: 1,
+                        StakeholderNum: 1,
+                        Functional: [
                             {
                                 GoalID: "F_1",
                                 GoalType: "Functional",
@@ -72,7 +71,7 @@ router.post("/:userId/:projectId", (req, res, next) => {
                                 SubGoals: []
                             }
                         ],
-                            Quality: [
+                        Quality: [
                             {
                                 GoalID: "Q_1",
                                 GoalType: "Quality",
@@ -80,7 +79,7 @@ router.post("/:userId/:projectId", (req, res, next) => {
                                 GoalNote: "Goal Q_1 Note"
                             }
                         ],
-                            Emotional: [
+                        Emotional: [
                             {
                                 GoalID: "E_1",
                                 GoalType: "Emotional",
@@ -88,7 +87,7 @@ router.post("/:userId/:projectId", (req, res, next) => {
                                 GoalNote: "Goal E_1 Note"
                             }
                         ],
-                            Negative: [
+                        Negative: [
                             {
                                 GoalID: "N_1",
                                 GoalType: "Negative",
@@ -96,7 +95,7 @@ router.post("/:userId/:projectId", (req, res, next) => {
                                 GoalNote: "Goal N_1 Note"
                             }
                         ],
-                            Stakeholder: [
+                        Stakeholder: [
                             {
                                 GoalID: "S_1",
                                 GoalType: "Stakeholder",
@@ -106,25 +105,25 @@ router.post("/:userId/:projectId", (req, res, next) => {
                         ]
                     },
 
-                    Clusters: [
-                        {
-
-                        }
-                    ]
+                    Clusters: [{}]
                 }
             };
-            createDirectoryPath(dirpath+result.ModelId+'/');
-            fs.writeFile(dirpath + result.ModelId+'/'+result.ModelId+'.json', JSON.stringify(init),function(err) {
-                if (err) {
-                    res.statusCode = 500;
-                    res.json({
-                        message:
-                            'Failed to create goal model file on server: ' +
-                            err.message
-                    });
+            createDirectoryPath(dirpath + result.ModelId + "/");
+            fs.writeFile(
+                dirpath + result.ModelId + "/" + result.ModelId + ".json",
+                JSON.stringify(init),
+                function(err) {
+                    if (err) {
+                        res.statusCode = 500;
+                        res.json({
+                            message:
+                                "Failed to create goal model file on server: " +
+                                err.message
+                        });
+                    }
+                    res.statusCode = 201;
                 }
-                res.statusCode = 201;
-            });
+            );
             if (res.statusCode === 500) {
                 //res.json({message: 'Failed to create goal model file on server'});
                 return res.end();
@@ -163,15 +162,19 @@ router.post("/images/:userId/:goalmodelId", (req, res, next) => {
         //console.log(files);
         let j = 0;
         console.log(j++);
-        let imagepath = "./UserFiles/" + req.params.userId + "/"+req.params.goalmodelId+'/images/';
+        let imagepath =
+            "./UserFiles/" +
+            req.params.userId +
+            "/" +
+            req.params.goalmodelId +
+            "/images/";
         createDirectoryPath(imagepath);
         let i = 0;
         for (let _ in files["image"]) {
             console.log("pathpath:  " + files["image"][i].path);
             fs.renameSync(
                 files["image"][i].path,
-                imagepath+
-                    files["image"][i].originalFilename,
+                imagepath + files["image"][i].originalFilename,
                 function(err) {
                     if (err) {
                         console.log("error when renaming images: " + err);
@@ -205,7 +208,8 @@ router.put("/:userId/:goalmodelId", (req, res, next) => {
     }
 
     let dirpath = "";
-    db.getGoalModel(req.params.goalmodelId)
+    db
+        .getGoalModel(req.params.goalmodelId)
         .then(result => {
             dirpath = result.DirPath;
             if (dirpath === "") {
@@ -219,14 +223,21 @@ router.put("/:userId/:goalmodelId", (req, res, next) => {
             }
             // createDirectoryPath(dirpath);
             fs.writeFile(
-                dirpath + "/" + req.params.goalmodelId+'/'+req.params.goalmodelId + ".json",
+                dirpath +
+                    "/" +
+                    req.params.goalmodelId +
+                    "/" +
+                    req.params.goalmodelId +
+                    ".json",
                 JSON.stringify(req.body),
                 function(err) {
                     if (err) {
                         console.log(err);
                         res.statusCode = 500;
                         res.json({
-                            message: "Failed to update the goal model: " + err.message
+                            message:
+                                "Failed to update the goal model: " +
+                                err.message
                         });
                         return res.end();
                     }
@@ -339,10 +350,16 @@ router.get("/:userId/:goalmodelId", (req, res, next) => {
     }
 
     var filepath = ""; //store the file path of goal model in this
-    db.getGoalModel(req.params.goalmodelId)
+    db
+        .getGoalModel(req.params.goalmodelId)
         .then(result => {
             //store the file path
-            filepath = result.DirPath + result.ModelId + "/" + result.ModelId + ".json";
+            filepath =
+                result.DirPath +
+                result.ModelId +
+                "/" +
+                result.ModelId +
+                ".json";
             //file path does not exist
             if (filepath === "" || !fs.existsSync(filepath)) {
                 console.log(filepath);
@@ -356,7 +373,7 @@ router.get("/:userId/:goalmodelId", (req, res, next) => {
                 return res.end();
             }
             //read the file and response with a json file
-            fs.readFile(filepath, 'utf8', function(err, data) {
+            fs.readFile(filepath, "utf8", function(err, data) {
                 if (err) {
                     //error response
                     console.log(err);
@@ -405,7 +422,8 @@ router.get("/images/:userId/:goalmodelId", (req, res, next) => {
     }
 
     var imagepath = "";
-    db.getGoalModel(req.params.goalmodelId)
+    db
+        .getGoalModel(req.params.goalmodelId)
         .then(result => {
             //store the file path
             imagepath = result.DirPath + result.ModelId + "/images/";
@@ -415,35 +433,42 @@ router.get("/images/:userId/:goalmodelId", (req, res, next) => {
                 console.log("no such file");
                 //set response : file does not exists
                 res.statusCode = 200;
-                res.json({message:
+                res.json({
+                    message:
                         "Failed to get images: goal model file does not" +
-                        " exists"});
+                        " exists"
+                });
                 return res.end();
             } else {
                 imagepath = result.DirPath + result.ModelId + "/images/";
                 let formData = new FormData();
-                fs.readdir(imagepath,function(err,items){
+                fs.readdir(imagepath, function(err, items) {
                     let j = 0;
-                    if(items.length) {
+                    if (items.length) {
                         for (let i = 0; i < items.length; i++) {
-                            fs.readFile(imagepath + items[i],'base64', function (err, image) {
-                                if (err) throw err;
-                                formData.append("image", image);
-                                j++;
-                                if(j === items.length) {
-                                    res.statusCode = 200;
-                                    res.format({
-                                        "multipart/form-data": function(){
-                                            res.send(formData)}});
-                                    console.log("get images");
-                                    return res.end();
+                            fs.readFile(
+                                imagepath + items[i],
+                                "base64",
+                                function(err, image) {
+                                    if (err) throw err;
+                                    formData.append("image", image);
+                                    j++;
+                                    if (j === items.length) {
+                                        res.statusCode = 200;
+                                        res.format({
+                                            "multipart/form-data": function() {
+                                                res.send(formData);
+                                            }
+                                        });
+                                        console.log("get images");
+                                        return res.end();
+                                    }
                                 }
-                            });
+                            );
                         }
                     }
                 });
             }
-
         })
         .catch(err => {
             if ((err.code = db.INVALID)) {
@@ -464,13 +489,6 @@ router.get("/images/:userId/:goalmodelId", (req, res, next) => {
             return res.end();
         });
 });
-
-
-
-
-
-
-
 
 /* Recursively creates the whole path to a directory */
 function createDirectoryPath(filePath) {
