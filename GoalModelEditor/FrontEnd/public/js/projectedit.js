@@ -896,6 +896,10 @@ $("#signout").click(function(evt) {
 /*Send data to backend start*/
 $("#save").click(function(evt) {
     evt.preventDefault();
+    save();
+}); // end submit
+
+function save() {
     let secret = JSON.parse(Cookies.get("LOKIDIED"));
     let model = window.jsonData;
     let token = secret.token;
@@ -924,7 +928,7 @@ $("#save").click(function(evt) {
             .delay(3000)
             .slideUp();
     }); // end ajax
-}); // end submit
+}
 /*Send data to backend end*/
 
 /*Get data from HTML to JSON start */
@@ -1187,3 +1191,8 @@ function loadImages() {
             .slideUp();
     }); // end ajax
 }
+
+/**
+ * Auto save every 60 seconds
+ */
+setInterval("save()", "60000");

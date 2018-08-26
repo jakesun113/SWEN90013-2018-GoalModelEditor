@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  Page OnReady function
@@ -7,20 +7,22 @@
  */
 $(document).ready(() => {
     // Get the authorisation info from Cookies
-    const secret = JSON.parse(Cookies.get('LOKIDIED'));
+    const secret = JSON.parse(Cookies.get("LOKIDIED"));
     const token = secret.token;
     const id = secret.uid;
 
     // Set the ajax URL
-    const url = '/project/list/' + id;
+    const url = "/project/list/" + id;
 
     // Start Retrieving all projects and the associated goal models for the current user
     $.ajax(url, {
         type: "GET",
-        headers: { Authorization: 'Bearer ' + token },
-        success: (projects) => {
+        headers: { Authorization: "Bearer " + token },
+        success: projects => {
             // Set the username from Cookies
-            $('#username').eq(0).html(Cookies.get('UIID'));
+            $("#username")
+                .eq(0)
+                .html(Cookies.get("UIID"));
 
             // Loop the projects, render them in the projects container
             for (let i in projects.projects) {
@@ -44,17 +46,19 @@ $(document).ready(() => {
  * @param projects (json)
  * @return HTMLElement
  */
-function parseProjectList (project) {
+function parseProjectList(project) {
     let projectHTML = "";
 
     // Single project container
-    projectHTML += '<div class="project text-center" id="' + project.project_id + '">';
+    projectHTML +=
+        '<div class="project text-center" id="' + project.project_id + '">';
 
     // Goal model list container
     projectHTML += '<div class="goal-list">';
 
     // Goal model list header
-    projectHTML = projectHTML +
+    projectHTML =
+        projectHTML +
         '<div class="row goal-model-nav py-2">' +
         '<div class="col-6 text-center text-color">Name</div>' +
         '<div class="col-6 text-center text-color">Last modified</div>' +
@@ -70,11 +74,9 @@ function parseProjectList (project) {
         projectHTML +
         '<img src="/img/buffer.svg" alt="project-icon" class="project-icon">';
     // project name
-    projectHTML =
-        projectHTML + "<h6>" + project.project_name + "</h6>";
+    projectHTML = projectHTML + "<h6>" + project.project_name + "</h6>";
     // project tools - add / rename / delete
-    projectHTML =
-        projectHTML + '<div class="text-center create-goal-model">';
+    projectHTML = projectHTML + '<div class="text-center create-goal-model">';
     projectHTML =
         projectHTML +
         '<button class="btn btn-sm mb-2 new-model" ' +
