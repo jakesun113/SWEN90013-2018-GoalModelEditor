@@ -401,6 +401,7 @@ function loadData() {
     NegativeNum = jsonData.GoalModelProject.GoalList.NegativeNum;
     StakeholderNum = jsonData.GoalModelProject.GoalList.StakeholderNum;
     loadCluster();
+    appendCluster();
 }
 /*Load data end*/
 
@@ -736,7 +737,7 @@ function clusternext() {
         r.style.display = "block";
         g.style.display = "block";
         b.innerHTML = "Back";
-        renderGraph(document.getElementById('graphContainer'))
+        renderGraph(document.getElementById("graphContainer"));
     }
 }
 
@@ -897,6 +898,13 @@ $("#signout").click(function(evt) {
 /*Send data to backend start*/
 $("#save").click(function(evt) {
     evt.preventDefault();
+    save();
+});
+
+/**
+ * save goal model to backend
+ */
+function save() {
     let secret = JSON.parse(Cookies.get("LOKIDIED"));
     let model = window.jsonData;
     let token = secret.token;
@@ -925,7 +933,7 @@ $("#save").click(function(evt) {
             .delay(3000)
             .slideUp();
     }); // end ajax
-}); // end submit
+}
 /*Send data to backend end*/
 
 /*Get data from HTML to JSON start */
@@ -1178,6 +1186,41 @@ function loadImages() {
                 }
             }
         }
+    }).fail(function(jqXHR) {
+        $("#warning-alert").html(
+            jqXHR.responseJSON.message + " <br>Please try again."
+        );
+        $("#warning-alert")
+            .slideDown()
+            .delay(3000)
+            .slideUp();
+    }); // end ajax
+}
+
+/**
+ * Auto save every 60 seconds
+ */
+setInterval("save()", "60000");
+
+function sendXML() {
+    let secret = JSON.parse(Cookies.get("LOKIDIED"));
+    let token = secret.token;
+    let userId = secret.uid;
+    let modelId = Cookies.get("MID");
+    let url = "/goal_model/xml/" + userId + "/" + modelId;
+
+    let encoder = new mxCodec();
+    let node = encoder.encode(graph.getModel());
+    let xml = mxUtils.getXml(node);
+    mxUtils.popup(xml, true);
+    $.ajax(url, {
+        // the API of upload pictures
+        type: "POST",
+        contentType: "application/xml",
+        data: xml,
+        async: true,
+        headers: { Authorization: "Bearer " + token },
+        success: function() {}
     }).fail(function(jqXHR) {
         $("#warning-alert").html(
             jqXHR.responseJSON.message + " <br>Please try again."
