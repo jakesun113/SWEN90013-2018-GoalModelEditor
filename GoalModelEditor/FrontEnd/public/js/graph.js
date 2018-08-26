@@ -166,7 +166,7 @@ function renderNonFunction(descriptions, graph, source=null, type="None") {
 
     // make the edge invisible - we still want to create the edge
     // the edge is needed when running the autolayout logic
-    edge.isvisible = false;
+    edge.visible = false;
 }
 
 /**
