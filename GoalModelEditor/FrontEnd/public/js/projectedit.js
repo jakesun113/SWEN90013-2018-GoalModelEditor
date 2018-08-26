@@ -515,6 +515,10 @@ function parseNode(node) {
     li.setAttribute("class", node.GoalType);
     li.setAttribute("class", "dragger");
     li.setAttribute("draggable", "true");
+    let fontWeight = "bold";
+    if (node.Used) {
+        fontWeight = "normal";
+    }
     // li.setAttribute('id', node.GoalID);
     li.innerHTML =
         '<input id= "' +
@@ -525,7 +529,9 @@ function parseNode(node) {
         "input-font" +
         '" value = "' +
         node.GoalContent +
-        '" placeholder="New goal" style="font-weight: bold"" ' +
+        '" placeholder="New goal" style="font-weight: ' +
+        fontWeight +
+        '" ' +
         'note="' +
         node.GoalNote +
         '"' +
@@ -1020,12 +1026,18 @@ function getData() {
 function listParseGoalsToJSON(data, list, type) {
     for (let i = 0; i < data.length; i++) {
         let $goal = $($(data).children("input")[i]);
+        let used = false;
+        // alert($goal.css("font-weight"));
+        if ($goal.css("font-weight") == 400) {
+            used = true;
+        }
         list.push(
             listParseGoalToJSON(
                 $goal.attr("id"),
                 type,
                 $goal.val(),
-                $goal.attr("note")
+                $goal.attr("note"),
+                used
             )
         );
     }
@@ -1041,12 +1053,13 @@ function listParseGoalsToJSON(data, list, type) {
  * @param note
  * @returns {{GoalID: *, GoalType: *, GoalContent: *, GoalNote: *}}
  */
-function listParseGoalToJSON(id, type, content, note) {
+function listParseGoalToJSON(id, type, content, note, used) {
     let resultJSON = {
         GoalID: id,
         GoalType: type,
         GoalContent: content,
-        GoalNote: note
+        GoalNote: note,
+        Used: used
     };
     return resultJSON;
 }
