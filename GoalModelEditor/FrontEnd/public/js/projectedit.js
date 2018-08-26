@@ -925,7 +925,7 @@ $("#save").click(function(evt) {
             .delay(3000)
             .slideUp();
     }); // end ajax
-}
+})
 /*Send data to backend end*/
 
 /*Get data from HTML to JSON start */
