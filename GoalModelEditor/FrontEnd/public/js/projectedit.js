@@ -736,6 +736,7 @@ function clusternext() {
         r.style.display = "block";
         g.style.display = "block";
         b.innerHTML = "Back";
+        renderGraph(document.getElementById('graphContainer'))
     }
 }
 
@@ -932,7 +933,6 @@ function save() {
             .slideUp();
     }); // end ajax
 }
-
 /*Send data to backend end*/
 
 /*Get data from HTML to JSON start */
