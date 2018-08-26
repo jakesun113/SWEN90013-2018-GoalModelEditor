@@ -14,7 +14,6 @@ $(document).ready(function() {
         .eq(0)
         .html(Cookies.get("UIID"));
 
-    $(".input-font").css("font-weight", "bold");
 });
 
 $(document).on("mouseover", "#ul li input", function() {
@@ -527,7 +526,6 @@ function parseNode(node) {
         '" class="' +
         node.GoalType +
         " " +
-        "input-font" +
         '" value = "' +
         node.GoalContent +
         '" placeholder="New goal" style="font-weight: ' +
@@ -563,12 +561,10 @@ function parseClusterNode(node) {
         '" class="' +
         node.GoalType +
         " " +
-        "input-font" +
-        " " +
         "dd-handle" +
         '" value = "' +
         node.GoalContent +
-        '" placeholder="New goal" style="font-weight: bold"" ' +
+        '" placeholder="New goal" ' +
         'note="' +
         node.GoalNote +
         '"' +
@@ -611,7 +607,6 @@ document.onkeydown = function(event) {
             '" class="' +
             goalType +
             " " +
-            "input-font" +
             '" placeholder="New goal" note="notes" value="" style="font-weight: bold"/></li>';
 
         // add new goal node to its parent node
@@ -778,8 +773,6 @@ function drop_zone(clusterNumber) {
         let draggableWrapper = '<ol class="dd-list">';
         draggableWrapper += '<li class="dd-item">';
         let newNode = createElementFromHTML($(nowCopying).html());
-
-        $(newNode).css("font-weight", "bold");
 
         newNode.classList.add("dd-handle");
 
