@@ -736,6 +736,7 @@ function clusternext() {
         r.style.display = "block";
         g.style.display = "block";
         b.innerHTML = "Back";
+        renderGraph(document.getElementById('graphContainer'))
     }
 }
 
