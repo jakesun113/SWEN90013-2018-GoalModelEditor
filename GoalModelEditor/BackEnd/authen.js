@@ -3,7 +3,7 @@
  * Responsible for generating unique OAuth tokens for clients, as well
  * as verifying tokens sent by clients.
  */
-"use strict";
+'use strict';
 
 // module handling OAuth
 const jwt = require("jsonwebtoken");
