@@ -15,6 +15,13 @@ const TYPE_NEGATIVE = "Negative";
 const TYPE_QUALITY = "Quality";
 const TYPE_STAKEHOLDER = "Stakeholder";
 
+// paths to the images of the different types
+const PATH_FUNCTIONAL = "/src/images/heartshape.jpg";
+const PATH_EMOTIONAL = "/src/images/heartshape.jpg";
+const PATH_NEGATIVE = "/src/images/heartshape.jpg";
+const PATH_QUALITY = "/src/images/heartshape.jpg";
+const PATH_STAKEHOLDER = "/src/images/heartshape.jpg";
+
 // default spacing for auto-layout algorithm
 const VERTICAL_SPACING = 100;
 const HORIZONTAL_SPACING = 100;
@@ -123,13 +130,15 @@ function renderGoals(goals, graph, source=null) {
  * : source, the parent of the goal
  */
 function renderFunction(goal, graph, source=null) {
+    let image = PATH_FUNCTIONAL;
 
     // insert new vertex and edge into graph
     var node = graph.insertVertex(
         null, null, 
         goal.GoalContent,
         SYMBOL_X_COORD, SYMBOL_Y_COORD,
-        SYMBOL_WIDTH, SYMBOL_HEIGHT
+        SYMBOL_WIDTH, SYMBOL_HEIGHT,
+        "shape=image;image="+image
     );
     var edge = graph.insertEdge(
         null, null, null,
@@ -152,13 +161,24 @@ function renderFunction(goal, graph, source=null) {
  *      goal into
  */
 function renderNonFunction(descriptions, graph, source=null, type="None") {
-
+    let image = '';
+    switch (type) {
+        case TYPE_EMOTIONAL:
+            image = PATH_EMOTIONAL;
+        case TYPE_NEGATIVE:
+            image = PATH_NEGATIVE;
+        case TYPE_QUALITY:
+            image = PATH_QUALITY;
+        case TYPE_STAKEHOLDER:
+            image = PATH_STAKEHOLDER;
+    }
     // insert new vertex and edge into graph
     var node = graph.insertVertex(
         null, null, 
         descriptions.join(";\n"),
         SYMBOL_X_COORD, SYMBOL_Y_COORD,
-        SYMBOL_WIDTH, SYMBOL_HEIGHT
+        SYMBOL_WIDTH, SYMBOL_HEIGHT,
+        "shape=image;image="+image
     );
     var edge = graph.insertEdge(
         null, null, null,
