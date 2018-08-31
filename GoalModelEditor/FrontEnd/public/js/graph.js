@@ -32,6 +32,7 @@ function renderGraph(container) {
     var clusters = window.jsonData.GoalModelProject.Clusters;
 
     // create the graph object and configure
+    graph.destroy();
     graph = new mxGraph(container);
 
     // render the graph
@@ -58,7 +59,7 @@ function renderCluster(cluster, graph) {
     var goal;
     for (var i=0; i<cluster.ClusterGoals.length; i++) {
         goal = cluster.ClusterGoals[i];
-        if (goal.GoalType == TYPE_FUNCTIONAL) {
+        if (goal.GoalType === TYPE_FUNCTIONAL) {
             renderFunctionalGoal(null, goal, graph);
         }
     }
@@ -80,11 +81,15 @@ function renderFunctionalGoal(supergoal, goal, graph) {
     }
 
     // accumulate the goal's associated non-functional subgoals
-    var subgoals = goal.SubGoals;
-    var qualities = "";
-    var emotions = "";
-    var concerns = "";
-    var stakeholders = "";
+    let subgoals = goal.SubGoals;
+    let qualityList = [];
+    let emotionList = [];
+    let concernList = [];
+    let stakeholderList = [];
+    let qualities = "";
+    let emotions = "";
+    let concerns = "";
+    let stakeholders = "";
 
     var subgoal;
     var type;
@@ -95,13 +100,16 @@ function renderFunctionalGoal(supergoal, goal, graph) {
 
         if (type == TYPE_EMOTIONAL) {
             console.log(type);
-            emotions += ";\n" + content;
+            emotionList.push(content);
+            emotions = emotionList.join(";");
         } else if (type == TYPE_QUALITY) {
-            qualities += ";\n" + content;
+            qualityList.push(content);
+            qualities = qualityList.join(";");
         } else if (type == TYPE_NEGATIVE) {
-            concerns += ";\n" + content;
+            concernList.push(content);
+            concerns = concernList.join(";");
         } else if (type == TYPE_STAKEHOLDER) {
-            stakeholders += ";\n" + content;
+            stakeholderList.push(content);
         } else if (type == TYPE_FUNCTIONAL) {
             renderFunctionalGoal(node, subgoal, graph);
         }
@@ -124,7 +132,6 @@ function renderFunctionalGoal(supergoal, goal, graph) {
         var node = graph.insertVertex(parent, null, stakeholders, 0, 0, SYMBOL_WIDTH, SYMBOL_HEIGHT);
     }
 }
-
 
 /* Auto-layout for graph
  *
