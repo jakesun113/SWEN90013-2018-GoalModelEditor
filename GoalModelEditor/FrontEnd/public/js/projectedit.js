@@ -14,7 +14,6 @@ $(document).ready(function() {
         .eq(0)
         .html(Cookies.get("UIID"));
 
-    $(".input-font").css("font-weight", "bold");
 });
 
 $(document).on("mouseover", "#ul li input", function() {
@@ -55,6 +54,7 @@ function getJSONFile() {
                 },
                 scroll: true
             });
+            getXML();
         }
     }).fail(function(jqXHR) {
         $("#warning-alert").html(
@@ -401,6 +401,7 @@ function loadData() {
     NegativeNum = jsonData.GoalModelProject.GoalList.NegativeNum;
     StakeholderNum = jsonData.GoalModelProject.GoalList.StakeholderNum;
     loadCluster();
+    appendCluster();
 }
 /*Load data end*/
 
@@ -450,7 +451,7 @@ function addCluster() {
 
     // add cluster html
     cluster.append(
-        '<div class="inside-scrollbar dd" id=cluster_' +
+        '<div class="dd" id=cluster_' +
             clusterNumber.toString() +
             ">" +
             "</div>"
@@ -526,7 +527,6 @@ function parseNode(node) {
         '" class="' +
         node.GoalType +
         " " +
-        "input-font" +
         '" value = "' +
         node.GoalContent +
         '" placeholder="New goal" style="font-weight: ' +
@@ -562,12 +562,10 @@ function parseClusterNode(node) {
         '" class="' +
         node.GoalType +
         " " +
-        "input-font" +
-        " " +
         "dd-handle" +
         '" value = "' +
         node.GoalContent +
-        '" placeholder="New goal" style="font-weight: bold"" ' +
+        '" placeholder="New goal" ' +
         'note="' +
         node.GoalNote +
         '"' +
@@ -610,7 +608,6 @@ document.onkeydown = function(event) {
             '" class="' +
             goalType +
             " " +
-            "input-font" +
             '" placeholder="New goal" note="notes" value="" style="font-weight: bold"/></li>';
 
         // add new goal node to its parent node
@@ -736,7 +733,7 @@ function clusternext() {
         r.style.display = "block";
         g.style.display = "block";
         b.innerHTML = "Back";
-        renderGraph(document.getElementById('graphContainer'))
+        // renderGraph(document.getElementById("graphContainer"));
     }
 }
 
@@ -897,6 +894,13 @@ $("#signout").click(function(evt) {
 /*Send data to backend start*/
 $("#save").click(function(evt) {
     evt.preventDefault();
+    save();
+});
+
+/**
+ * save goal model to backend
+ */
+function save() {
     let secret = JSON.parse(Cookies.get("LOKIDIED"));
     let model = window.jsonData;
     let token = secret.token;
@@ -917,6 +921,7 @@ $("#save").click(function(evt) {
                 .slideDown()
                 .delay(3000)
                 .slideUp();
+            sendXML();
         }
     }).fail(function(jqXHR) {
         $("#warning-alert").html("Save Failed.<br>Please try again.");
@@ -925,7 +930,7 @@ $("#save").click(function(evt) {
             .delay(3000)
             .slideUp();
     }); // end ajax
-})
+}
 /*Send data to backend end*/
 
 /*Get data from HTML to JSON start */
@@ -1192,7 +1197,7 @@ function loadImages() {
 /**
  * Auto save every 60 seconds
  */
-setInterval("save()", "60000");
+// setInterval("save()", "60000");
 
 function sendXML() {
     let secret = JSON.parse(Cookies.get("LOKIDIED"));
@@ -1204,16 +1209,38 @@ function sendXML() {
     let encoder = new mxCodec();
     let node = encoder.encode(graph.getModel());
     let xml = mxUtils.getXml(node);
-    mxUtils.popup(xml, true);
     $.ajax(url, {
         // the API of upload pictures
-        type: 'POST',
-        contentType: 'application/xml',
-        data: xml,
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({xml: xml}),
         async: true,
-        headers: { Authorization: 'Bearer ' + token },
-        success: function() {
+        headers: { Authorization: "Bearer " + token },
+        success: function() {}
+    }).fail(function(jqXHR) {
+        $("#warning-alert").html(
+            jqXHR.responseJSON.message + " <br>Please try again."
+        );
+        $("#warning-alert")
+            .slideDown()
+            .delay(3000)
+            .slideUp();
+    }); // end ajax
+}
 
+function getXML() {
+    let secret = JSON.parse(Cookies.get("LOKIDIED"));
+    let token = secret.token;
+    let userId = secret.uid;
+    let modelId = Cookies.get("MID");
+    let url = "/goal_model/xml/" + userId + "/" + modelId;
+
+    $.ajax(url, {
+        // the API of upload pictures
+        type: "GET",
+        headers: { Authorization: "Bearer " + token },
+        success: function(xmlFile) {
+            renderFromXML(xmlFile.xml);
         }
     }).fail(function(jqXHR) {
         $("#warning-alert").html(
