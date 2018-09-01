@@ -18,7 +18,7 @@ const TYPE_STAKEHOLDER = "Stakeholder";
 // paths to the images of the different types
 const PATH_FUNCTIONAL = "/src/images/Function.png";
 const PATH_EMOTIONAL = "/src/images/Heart.png";
-const PATH_NEGATIVE = "/src/images/heartshape.jpg";
+const PATH_NEGATIVE = "/src/images/Risk.png";
 const PATH_QUALITY = "/src/images/Cloud.png";
 const PATH_STAKEHOLDER = "/src/images/Stakeholder.png";
 
