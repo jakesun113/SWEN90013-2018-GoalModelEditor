@@ -16,11 +16,11 @@ const TYPE_QUALITY = "Quality";
 const TYPE_STAKEHOLDER = "Stakeholder";
 
 // paths to the images of the different types
-const PATH_FUNCTIONAL = "/src/images/heartshape.jpg";
-const PATH_EMOTIONAL = "/src/images/heartshape.jpg";
+const PATH_FUNCTIONAL = "/src/images/Function.png";
+const PATH_EMOTIONAL = "/src/images/Heart.png";
 const PATH_NEGATIVE = "/src/images/heartshape.jpg";
-const PATH_QUALITY = "/src/images/heartshape.jpg";
-const PATH_STAKEHOLDER = "/src/images/heartshape.jpg";
+const PATH_QUALITY = "/src/images/Cloud.png";
+const PATH_STAKEHOLDER = "/src/images/Stakeholder.png";
 
 // default spacing for auto-layout algorithm
 const VERTICAL_SPACING = 100;
@@ -165,10 +165,13 @@ function renderNonFunction(descriptions, graph, source=null, type="None") {
     switch (type) {
         case TYPE_EMOTIONAL:
             image = PATH_EMOTIONAL;
+            break;
         case TYPE_NEGATIVE:
             image = PATH_NEGATIVE;
+            break;
         case TYPE_QUALITY:
             image = PATH_QUALITY;
+            break;
         case TYPE_STAKEHOLDER:
             image = PATH_STAKEHOLDER;
     }
