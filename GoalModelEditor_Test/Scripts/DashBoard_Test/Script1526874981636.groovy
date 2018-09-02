@@ -22,15 +22,13 @@ import org.openqa.selenium.Keys as Keys
 
 WebUI.openBrowser('')
 
-WebUI.navigateToUrl('https://localhost:8080/')
+WebUI.navigateToUrl('https://localhost:8080/login')
 
-WebUI.click(findTestObject('Dashboard_Series/Page_Goal Model Editor/a_Go to Goal Model Editor'))
+WebUI.setText(findTestObject('LoginSeries/Page_Sign in/input_username'), 'username4')
 
-WebUI.setText(findTestObject('Dashboard_Series/Page_Sign in/input_username'), 'username4')
+WebUI.setText(findTestObject('LoginSeries/Page_Sign in/input_password'), '123456')
 
-WebUI.setText(findTestObject('Dashboard_Series/Page_Sign in/input_password'), '1234')
-
-WebUI.sendKeys(findTestObject('Dashboard_Series/Page_Sign in/input_password'), Keys.chord(Keys.ENTER))
+WebUI.sendKeys(findTestObject('LoginSeries/Page_Sign in/input_password'), Keys.chord(Keys.ENTER))
 
 WebUI.click(findTestObject('Dashboard_Series/Page_My Project - Goal Model Editor/div_Untitled'))
 
@@ -38,32 +36,45 @@ WebUI.click(findTestObject('Dashboard_Series/Page_Goal Model Edit Page/a_Return'
 
 WebUI.click(findTestObject('Dashboard_Series/Page_My Project - Goal Model Editor/div_Untitled'))
 
-WebUI.click(findTestObject('Dashboard_Series/Page_Goal Model Edit Page/a_Functional'))
+WebUI.click(findTestObject('ClusterSeries/Page_Goal Model Edit Page/a_Functional'))
 
-WebUI.click(findTestObject('Dashboard_Series/Page_Goal Model Edit Page/a_Quality'))
+WebUI.setText(findTestObject('ClusterSeries/Page_Goal Model Edit Page/input_F_1'), 'try functional goal')
 
-WebUI.click(findTestObject('Dashboard_Series/Page_Goal Model Edit Page/a_Feeling'))
+WebUI.sendKeys(findTestObject('ClusterSeries/Page_Goal Model Edit Page/input_F_1'), Keys.chord(Keys.ENTER))
 
-WebUI.click(findTestObject('Dashboard_Series/Page_Goal Model Edit Page/a_Concern'))
+WebUI.setText(findTestObject('ClusterSeries/Page_Goal Model Edit Page/input_F_2'), 'try another one')
 
-WebUI.click(findTestObject('Dashboard_Series/Page_Goal Model Edit Page/a_Actor'))
+WebUI.click(findTestObject('ClusterSeries/Page_Goal Model Edit Page/a_Quality'))
 
-WebUI.click(findTestObject('Dashboard_Series/Page_Goal Model Edit Page/button_Next'))
+WebUI.click(findTestObject('ClusterSeries/Page_Goal Model Edit Page/a_Feeling'))
 
-WebUI.click(findTestObject('Dashboard_Series/Page_Goal Model Edit Page/button_Add'))
+WebUI.setText(findTestObject('ClusterSeries/Page_Goal Model Edit Page/input_E_1'), 'try new')
 
-WebUI.click(findTestObject('Dashboard_Series/Page_Goal Model Edit Page/button_Back'))
+WebUI.click(findTestObject('ClusterSeries/Page_Goal Model Edit Page/a_Concern'))
 
-WebUI.click(findTestObject('Dashboard_Series/Page_Goal Model Edit Page/button_Upload Image'))
+WebUI.setText(findTestObject('ClusterSeries/Page_Goal Model Edit Page/input_N_1'), 'try new goal')
 
-WebUI.uploadFile(findTestObject('Dashboard_Series/Page_Goal Model Edit Page/button_Upload Image'), '/Users/edric.dang/Desktop/Screen Shot 2018-05-16 at 7.51.53 pm.png')
+WebUI.click(findTestObject('ClusterSeries/Page_Goal Model Edit Page/a_Actor'))
+
+WebUI.setText(findTestObject('ClusterSeries/Page_Goal Model Edit Page/input_S_1'), 'try new actor')
+
+WebUI.sendKeys(findTestObject('ClusterSeries/Page_Goal Model Edit Page/input_S_1'), Keys.chord(Keys.ENTER))
+
+WebUI.setText(findTestObject('ClusterSeries/Page_Goal Model Edit Page/input_S_2'), 'try another actor')
+
+WebUI.click(findTestObject('ClusterSeries/Page_Goal Model Edit Page/div_goals'))
+
+WebUI.click(findTestObject('ClusterSeries/Page_Goal Model Edit Page/button_Next'))
+
+WebUI.click(findTestObject('ClusterSeries/Page_Goal Model Edit Page/button_Back'))
+
+WebUI.click(findTestObject('Dashboard_Series/Page_Goal Model Edit Page (1)/button_Upload Image'))
+
+WebUI.uploadFile(findTestObject('Dashboard_Series/Page_Goal Model Edit Page (1)/button_Upload Image'), '/Users/edric.dang/Desktop/Screen Shot 2018-05-16 at 7.51.53 pm.png')
 
 WebUI.click(findTestObject('Dashboard_Series/Page_Goal Model Edit Page/button_username4'))
 
-WebUI.click(findTestObject('Dashboard_Series/Page_Goal Model Edit Page/a_Sign out'))
-
-WebUI.verifyElementPresent(findTestObject('Modify_User_Profile_Series/Page_Goal Model Editor (1)/a_Go to Goal Model Editor'), 
-    30)
+WebUI.click(findTestObject('Page_Goal Model Edit Page/a_Sign out'))
 
 WebUI.closeBrowser()
 

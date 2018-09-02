@@ -122,12 +122,6 @@
     height: auto;
     position: relative;
 }
-/*cluster div end*/
-/*.hierarchy {*/
-/*width: 90%;*/
-/*height: 30vh;*/
-/*margin: 10px auto;*/
-/*}*/
 input {
     border: 0px;
     width: 100%;
@@ -146,4 +140,16 @@ input {
     border-top-width: 0px;
     border-style: solid;
     border-color: lightgrey;
+}
+
+.notification {
+    position: absolute;
+    z-index: 101;
+    top: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    -webkit-box-shadow: 0 0 5px black;
+    -moz-box-shadow: 0 0 5px black;
+    box-shadow: 0 0 5px black;
 }

@@ -61,7 +61,9 @@ const SQL_CREATE_GOALMODEL =
     "VALUES (UUID(), ?, ?, ?, ?)";
 
 const SQL_RET_GOALMODEL =
-    "SELECT * FROM GoalModel WHERE BINARY ModelName = ? AND Project = ?";
+    "SELECT * FROM GoalModel LEFT JOIN Project " +
+    "ON Project.ProjectId = GoalModel.Project" +
+    " WHERE BINARY ModelName = ? AND Project = ?";
 
 const SQL_RET_MODEL = " SELECT * FROM GoalModel WHERE ModelId = ? ";
 /**
@@ -83,7 +85,7 @@ const SQL_GET_PROJ_GOALMODEL =
 const SQL_GET_GOALMODEL_BY_ID =
     "SELECT GoalModel.*, Project.OwnerId " +
     "FROM GoalModel INNER JOIN Project " +
-    "WHERE BINARY ModelId = ? AND BINARY GoalModel.Project = Project.Project";
+    "WHERE BINARY ModelId = ? AND BINARY GoalModel.Project = Project.ProjectId";
 /**
  * update a project's fields
  * @type {string}
@@ -210,6 +212,7 @@ const DBModule = function () {
                                     }); // unknown error
                                 } else {
                                     // success
+
                                     resolve(result[0]);
                                 }
                             }

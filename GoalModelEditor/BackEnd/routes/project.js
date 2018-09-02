@@ -111,7 +111,7 @@ router.post("/:userId", function(req, res, next) {
 });
 
 /* PUT Edit Project */
-router.put('/:userId/:projectId', (req, res, next) => {
+router.put("/:userId/:projectId", (req, res, next) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
