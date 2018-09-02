@@ -536,17 +536,15 @@ router.get("/images/:userId/:goalmodelId", (req, res) => {
                         );
                         formData.append("image", image);
                         console.log("appended item " + i );
-                        if (i === (items.length - 1)) {
-                            res.statusCode = 200;
-                            res.format({
-                                "multipart/form-data": function () {
-                                    res.send(formData);
-                                }
-                            });
-                            console.log("get images");
-                            return res.end();
-                        }
                     }
+                    res.statusCode = 200;
+                    res.format({
+                        "multipart/form-data": function () {
+                            res.send(formData);
+                        }
+                    });
+                    console.log("get images");
+                    return res.end();
                 });
             }
         })
