@@ -82,3 +82,34 @@ function renderFromXML(xml) {
 
     graph.addCells(cells);
 }
+
+/**
+ * Can only be called when the svg is rendered onto the screen!!!!!!
+ */
+function exportImage() {
+    var svg = document.getElementsByTagName("svg")[0];
+    svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    svg.setAttribute("version", "1.1");
+    console.log(svg.outerHTML);
+
+    var file = new Blob([svg.outerHTML], {type: "text/plain"});
+    if (window.navigator.msSaveOrOpenBlob) // IE10+
+        window.navigator.msSaveOrOpenBlob(file, filename);
+    else { // Others
+        var a = document.createElement("a"),
+            url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = "a.svg";
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function () {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }, 0);
+    }
+
+}
+
+$("#Export").click(function (evt) {
+    exportImage();
+});
