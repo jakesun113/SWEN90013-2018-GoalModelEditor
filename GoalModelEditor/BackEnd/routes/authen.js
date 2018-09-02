@@ -18,6 +18,7 @@ function authenticate(headers) {
     let token = authString.split(" ")[1];
     try {
         let decoded = jwt.verify(token, SECRET);
+        // TODO: return id to check authorization
     } catch (err) {
         return false;
     }

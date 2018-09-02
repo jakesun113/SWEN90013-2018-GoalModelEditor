@@ -15,9 +15,6 @@ const db = require(path.resolve(
     "../../Database/DBModule/DBModule.js"
 ));
 
-// response codes
-const response_codes = require("./response_codes");
-
 /* GET List (a user's) File System */
 /* This should return a JSON (or some other equivalent data structure)
  * list of goal model project names AND the the names of goal models

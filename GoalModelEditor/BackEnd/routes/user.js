@@ -18,8 +18,6 @@ const db = require(path.resolve(
 const auth = require("../authen");
 const crypto = require("crypto");
 
-const response_codes = require("./response_codes");
-
 /* POST User Login */
 router.post("/login", function(req, res, next) {
     const hash = crypto.createHash("sha256");
@@ -30,7 +28,6 @@ router.post("/login", function(req, res, next) {
         .then(function(user_id) {
             console.log("result is " + user_id);
             let token = auth.genToken(user_id);
-            //let token = auth.genToken(1);
             res.statusCode = 200;
             res.contentType("application/json");
             res.json({ user_id: user_id, token: token });
