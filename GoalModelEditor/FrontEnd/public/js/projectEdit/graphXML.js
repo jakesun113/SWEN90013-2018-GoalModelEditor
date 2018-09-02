@@ -15,7 +15,13 @@ function sendXML() {
         data: JSON.stringify({ xml: xml }),
         async: true,
         headers: { Authorization: "Bearer " + token },
-        success: function() {}
+        success: function() {
+            $("#success-alert").html("Graph successfully Saved.");
+            $("#success-alert")
+                .slideDown()
+                .delay(3000)
+                .slideUp();
+        }
     }).fail(function(jqXHR) {
         $("#warning-alert").html(
             jqXHR.responseJSON.message + " <br>Please try again."
@@ -112,4 +118,9 @@ function exportImage() {
 
 $("#Export").click(function (evt) {
     exportImage();
+});
+
+$("#saveXML").click( evt => {
+    evt.preventDefault();
+    sendXML();
 });

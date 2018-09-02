@@ -231,17 +231,10 @@ function parseClusterNode(node) {
 }
 /*parse Cluster node end*/
 
-
-/*Send data to backend start*/
-$("#save").click(function(evt) {
-    evt.preventDefault();
-    save();
-});
-
 /**
  * save goal model to backend
  */
-function save() {
+function saveJSON() {
     let secret = JSON.parse(Cookies.get("LOKIDIED"));
     let model = window.jsonData;
     let token = secret.token;
@@ -262,7 +255,6 @@ function save() {
                 .slideDown()
                 .delay(3000)
                 .slideUp();
-            sendXML();
         }
     }).fail(function(jqXHR) {
         $("#warning-alert").html("Save Failed.<br>Please try again.");
