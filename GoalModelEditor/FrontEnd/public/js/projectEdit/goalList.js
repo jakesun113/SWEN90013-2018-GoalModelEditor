@@ -374,7 +374,7 @@ function listParseGoalsToJSON(data, list, type) {
         let $goal = $($(data).children("input")[i]);
         let used = false;
         // alert($goal.css("font-weight"));
-        if ($goal.css("font-weight") == 400) {
+        if ($goal.css("font-weight") === 400) {
             used = true;
         }
         list.push(
