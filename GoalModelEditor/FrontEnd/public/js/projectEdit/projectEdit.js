@@ -248,10 +248,14 @@ function drop_zone(clusterNumber) {
         $(newNode).css("font-weight", "bold");
 
         newNode.classList.add("dd-handle");
-        newNode.classList.add("jakeissb");
+        newNode.classList.add("dd-handle-style");
 
-        $(newNode).html('<img src=' + PATH_EMOTIONAL + ' class="mr-1" style="height:100%;float:left">' +
-            '<div>' +
+        let type = getType($($(nowCopying).children("input")[0]));
+
+        let imagePath = getTypeIconPath(type);
+
+        $(newNode).html('<img src=' + imagePath + ' class="mr-1 typeIcon" >' +
+            '<div class="goal-content">' +
             $(nowCopying).children("input")[0].value) +'</div>';
 
         draggableWrapper += newNode.outerHTML;
@@ -312,8 +316,11 @@ $("#drag").hide();
 
 $("#edit").click(function() {
     $("#cluster")
-        .find("input")
+        .find(".dd-handle-style")
         .removeClass("dd-handle");
+
+    $("#cluster")
+        .find(".goal-content").attr("contenteditable","true");
 
     $("#edit").hide();
     $("#drag").show();
@@ -321,8 +328,11 @@ $("#edit").click(function() {
 
 $("#drag").click(function() {
     $("#cluster")
-        .find("input")
+        .find(".dd-handle-style")
         .addClass("dd-handle");
+
+    $("#cluster")
+        .find(".goal-content").attr("contenteditable","false");
 
     $("#drag").hide();
     $("#edit").show();
