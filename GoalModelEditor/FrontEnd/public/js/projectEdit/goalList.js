@@ -219,7 +219,7 @@ function parseClusterNode(node) {
         '"' +
         ">" +
         '<img src="' + iconPath +'" class="mr-1 typeIcon">' +
-        '<div>' + node.GoalContent + '</div>'
+        '<div class="goal-content">' + node.GoalContent + '</div>' +
         "</div>";
 
     // recursion to add sub goal
