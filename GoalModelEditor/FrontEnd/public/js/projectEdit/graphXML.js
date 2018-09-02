@@ -119,6 +119,7 @@ function exportImage() {
 }
 
 $("#Export").click(function (evt) {
+    saveJSON();
     exportImage();
 });
 

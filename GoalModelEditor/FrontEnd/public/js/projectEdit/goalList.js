@@ -241,6 +241,7 @@ function saveJSON() {
     let userId = secret.uid;
     let modelId = Cookies.get("MID");
     let url = "/goal_model/" + userId + "/" + modelId;
+    $("#saveJSONLoading").show();
     getData();
     // ajax starts
     $.ajax(url, {
@@ -250,13 +251,10 @@ function saveJSON() {
         contentType: "application/json",
         headers: { Authorization: "Bearer " + token },
         success: function(data) {
-            $("#success-alert").html("Successfully Saved.");
-            $("#success-alert")
-                .slideDown()
-                .delay(3000)
-                .slideUp();
+            $("#saveJSONLoading").hide();
         }
     }).fail(function(jqXHR) {
+        $("#saveJSONLoading").hide();
         $("#warning-alert").html("Save Failed.<br>Please try again.");
         $("#warning-alert")
             .slideDown()
