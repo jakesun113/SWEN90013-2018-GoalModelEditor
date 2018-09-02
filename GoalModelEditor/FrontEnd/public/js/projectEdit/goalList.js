@@ -206,20 +206,21 @@ function parseClusterNode(node) {
     let li = document.createElement("LI");
     li.setAttribute("class", "dd-item");
 
+    let iconPath = getTypeIconPath(node.GoalType);
+
     li.innerHTML =
-        '<input id= "' +
+        '<div id= "' +
         node.GoalID +
         '" class="' +
         node.GoalType +
-        " " +
-        "dd-handle" +
-        '" value = "' +
-        node.GoalContent +
-        '" placeholder="New goal" ' +
+        " dd-handle" + '"' +
         'note="' +
         node.GoalNote +
         '"' +
-        "/>";
+        ">" +
+        '<img src="' + iconPath +'" class="mr-1 typeIcon">' +
+        '<div>' + node.GoalContent + '</div>'
+        "</div>";
 
     // recursion to add sub goal
     if (node.SubGoals !== undefined && node.SubGoals.length > 0) {
@@ -335,7 +336,7 @@ function getData() {
             let $listItems = $(listItems);
             // iterate all list items and their subgoals if there is one
             for (let i = 0; i < $listItems.length; i++) {
-                let $goal = $($(listItems[i]).children("input")[0]);
+                let $goal = $($(listItems[i]).children("div")[0]);
                 let type = getType($goal);
                 let goals = [];
                 if ($($(listItems[i]).children("ol")).length !== 0) {
@@ -344,7 +345,7 @@ function getData() {
                     let innerClusterGoalJSON = clusterParseGoalToJSON(
                         $goal.attr("id"),
                         type,
-                        $goal.val(),
+                        $($goal.children("div")[0]).html(),
                         $goal.attr("note"),
                         []
                     );
@@ -461,13 +462,13 @@ function getType($goal) {
  * @param goals
  */
 function getAllSubgoals($goalList, goals) {
-    let $goal = $($goalList.children("input")[0]);
+    let $goal = $($goalList.children("div")[0]);
     let type = getType($goal);
     let newSubGoals = [];
     let innerClusterGoalJSON = clusterParseGoalToJSON(
         $goal.attr("id"),
         type,
-        $goal.val(),
+        $($goal.children("div")[0]).html(),
         $goal.attr("note"),
         newSubGoals
     );
@@ -490,4 +491,26 @@ function getAllSubgoals($goalList, goals) {
  */
 function changeFontWeight(e) {
     e.style.fontWeight = "bold";
+}
+
+/**
+ *
+ * @param {String} type of the goal
+ * @return {String} icon path of the corresponding type
+ */
+function getTypeIconPath(type) {
+    switch(type){
+        case "Functional":
+            return PATH_FUNCTIONAL;
+        case "Quality":
+            return PATH_EMOTIONAL;
+        case "Negative":
+            return PATH_NEGATIVE;
+        case "Emotional":
+            return PATH_EMOTIONAL;
+        case "Stakeholder":
+            return PATH_STAKEHOLDER;
+        default:
+            return "";
+    }
 }
