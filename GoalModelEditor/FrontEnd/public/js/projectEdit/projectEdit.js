@@ -19,10 +19,6 @@ $(document).on("mouseover", "#ul li input", function () {
     // alert($(this).val());
     $("#notedata").html("<p>" + $(this).attr("note") + "</p>");
 });
-//show loading
-$("#loadingModal").modal("show");
-//hide loading
-// $("#loadingModal").modal("hide");
 
 /*Add new cluster start*/
 /**
@@ -35,7 +31,7 @@ function addCluster() {
 
     // add cluster html
     cluster.append(
-        '<div class="dd" id=cluster_' +
+        '<div class="dd py-3" id=cluster_' +
         clusterNumber.toString() +
         ">" +
         "</div>"
@@ -358,7 +354,7 @@ function appendCluster() {
         let cluster = $("#cluster");
         clusterNumber++;
         cluster.append(
-            '<div class="dd" id=cluster_' +
+            '<div class="dd py-3" id=cluster_' +
             clusterNumber.toString() +
             ">" +
             "</div>"

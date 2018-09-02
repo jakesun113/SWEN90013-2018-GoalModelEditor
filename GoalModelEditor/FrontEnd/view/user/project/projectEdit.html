@@ -50,7 +50,7 @@
          id="warning-alert" role="alert">
     </div>
 
-<div class="modal fade" id="loadingModal">
+<div class="modal" id="loadingModal">
     <div style="width: 200px;height:20px; z-index: 20000; position: absolute; text-align: center; left: 50%; top: 50%;margin-left:-100px;margin-top:-10px">
         <img src="/img/loading1.gif" height="150" width="150"/>
         <h6>Loading...</h6>
@@ -70,8 +70,7 @@
     <!--style="background-color: rgb(236, 244, 244); "-->
     <!--&gt;-->
     <nav class="navbar navbar-expand-sm navbar-light navbar-fixed-top header" role="navigation"
-         style="background-image: url('/img/profile-background.jpg'); "
-    >
+         style="background-image: url('/img/profile-background.jpg'); ">
         <a class="navbar-brand" href="#" id="model_name" style="font-size: 35px"><strong>Goal Model</strong></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -221,7 +220,7 @@
                     <a id="Export" href="#">ExportSVG</a>
                 </div>
                 <!--show cluster data from JSON-->
-                <div class="dd" id="cluster_1">
+                <div class="dd py-3" id="cluster_1">
                      <!--style="background-color: white"-->
                 </div>
             </div>
@@ -258,16 +257,9 @@
     </div>
 </div>
 
-<!-- mxgraph basepath -->
-<script type="text/javascript">
-    mxBasePath ='/src';
-</script>
 
-<!-- load and initialise mxgraph library -->
-<script type="text/javascript" src="/src/js/mxClient.js"></script>
 
-<!-- script for rendering graph #currently a stub -->
-<script type="text/javascript" src="/js/projectEdit/graph.js"></script>
+
 
 <!-- Loads and initializes the Bootstrap javascript -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -277,6 +269,20 @@
         crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script>
+    //show loading
+    $("#loadingModal").modal("show");
+</script>
+<!-- mxgraph basepath -->
+<script type="text/javascript">
+    mxBasePath ='/src';
+</script>
+<!-- load and initialise mxgraph library -->
+<script type="text/javascript" src="/src/js/mxClient.js"></script>
+
+<!-- script for rendering graph #currently a stub -->
+<script type="text/javascript" src="/js/projectEdit/graph.js"></script>
+
 <!--add nestable library-->
 <script src="/js/projectEdit/jquery.nestable.js"></script>
 <script src="/js/projectEdit/image.js"></script>

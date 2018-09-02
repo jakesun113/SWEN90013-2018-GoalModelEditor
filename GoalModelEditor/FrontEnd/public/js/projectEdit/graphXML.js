@@ -46,8 +46,10 @@ function getXML() {
         headers: { Authorization: "Bearer " + token },
         success: function(xmlFile) {
             renderFromXML(xmlFile.xml);
+            $('#loadingModal').modal('toggle');
         }
     }).fail(function(jqXHR) {
+        $('#loadingModal').modal('toggle');
         $("#warning-alert").html(
             jqXHR.responseJSON.message + " <br>Please try again."
         );

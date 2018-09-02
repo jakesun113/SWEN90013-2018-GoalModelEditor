@@ -10,6 +10,7 @@
     padding: 3px;
     border-bottom-style: dashed;
     border-bottom-color: grey;
+    min-height: 25vh;
 }
 
 .dd-list {
@@ -110,11 +111,12 @@
     border: 1px dashed #b6bcbf;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
+    height: 100%;
 }
 
 .dd-empty {
     border: 1px dashed #bbb;
-    min-height: 100px;
+    min-height: 20vh;
     background-color: #e5e5e5;
     background-size: 60px 60px;
     background-position: 0 0, 30px 30px;
