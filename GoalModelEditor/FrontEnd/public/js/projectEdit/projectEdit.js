@@ -1,11 +1,11 @@
 "use strict";
 
 /*import photos start*/
-$(document).ready(function() {
+$(document).ready(function () {
     document
         .getElementById("pro-image")
         .addEventListener("change", readImage, false);
-    $(document).on("click", ".image-cancel", function() {
+    $(document).on("click", ".image-cancel", function () {
         let no = $(this).data("no");
         $(".preview-image.preview-show-" + no).remove();
     });
@@ -15,7 +15,7 @@ $(document).ready(function() {
         .html(Cookies.get("UIID"));
 });
 
-$(document).on("mouseover", "#ul li input", function() {
+$(document).on("mouseover", "#ul li input", function () {
     // alert($(this).val());
     $("#notedata").html("<p>" + $(this).attr("note") + "</p>");
 });
@@ -36,15 +36,15 @@ function addCluster() {
     // add cluster html
     cluster.append(
         '<div class="dd" id=cluster_' +
-            clusterNumber.toString() +
-            ">" +
-            "</div>"
+        clusterNumber.toString() +
+        ">" +
+        "</div>"
     );
 
     //activate drag and drop function
     drop_zone(clusterNumber);
     $(".dd").nestable({
-        callback: function(l, e) {
+        callback: function (l, e) {
             // l is the main container
             // e is the element that was moved
             appendCluster();
@@ -52,6 +52,7 @@ function addCluster() {
         scroll: true
     });
 }
+
 /*Add new cluster end*/
 
 /*Add new goal by pressing 'Enter' start*/
@@ -59,7 +60,7 @@ function addCluster() {
  * add new goal by pressing 'Enter'
  * @param event
  */
-document.onkeydown = function(event) {
+document.onkeydown = function (event) {
     let goalID;
     let goalType;
     //when the user press the 'enter' button
@@ -82,7 +83,7 @@ document.onkeydown = function(event) {
             '" class="' +
             goalType +
             " " +
-            '" placeholder="New goal" note="notes" value="" style="font-weight: bold"/></li>';
+            '" placeholder="New goal" note="notes" oninput="changeFontWeight(this)" value="" style="font-weight: bold"/></li>';
 
         // add new goal node to its parent node
         if ($(event.target).parent().length > 0) {
@@ -124,6 +125,7 @@ function getID(type) {
             return "S_" + StakeholderNum;
     }
 }
+
 /*Add new goal by pressing 'Enter' end*/
 
 /*Delete goal by pressing 'Backspace' when empty start*/
@@ -131,7 +133,7 @@ function getID(type) {
  * delete goal by pressing 'Backspace' when empty
  * @param event
  */
-document.onkeyup = function(event) {
+document.onkeyup = function (event) {
     let goalID;
     //when the user press the 'enter' button
     if (document.activeElement.tagName === "INPUT" && event.key === "Escape") {
@@ -139,8 +141,19 @@ document.onkeyup = function(event) {
         let parent = document.activeElement.parentNode;
         let grandparent = parent.parentNode;
         // if parent not null, delete child
-        if (parent.previousElementSibling != null) {
+        if (grandparent.childNodes.length > 1) {
             grandparent.removeChild(parent);
+            event.preventDefault();
+        }
+    }
+    if (document.activeElement.tagName === "DIV" && event.key === "Escape") {
+        //make the default enter invalid
+        let parent = document.activeElement.parentNode;
+        let grandparent = parent.parentNode;
+        let grandgrandparent = grandparent.parentNode;
+        // if parent not null, delete child
+        if (grandgrandparent.childNodes.length > 0) {
+            grandgrandparent.removeChild(grandparent);
             event.preventDefault();
         }
     }
@@ -204,7 +217,7 @@ function clusternext() {
         t.style.display = "none";
         c.setAttribute("class", "col-3 showborder scrollbar");
         c.style.display = "block";
-        r.style.display = "block";
+        r.style.display = "inline-block";
         g.style.display = "block";
         b.innerHTML = "Back";
         // renderGraph(document.getElementById("graphContainer"));
@@ -215,25 +228,25 @@ function clusternext() {
 let nowCopying;
 
 function drag() {
-    $(".dragger").on("dragstart", function(e) {
+    $(".dragger").on("dragstart", function (e) {
         nowCopying = e.target;
         //console.log(nowCopying);
     });
 }
 
 function drop_zone(clusterNumber) {
-    $("#cluster_" + clusterNumber).on("dragover", function(e) {
+    $("#cluster_" + clusterNumber).on("dragover", function (e) {
         e.preventDefault();
     });
 
-    $("#cluster_" + clusterNumber).on("drop", function(e) {
+    $("#cluster_" + clusterNumber).on("drop", function (e) {
         e.preventDefault();
         let fromGoallist = $(nowCopying.parentNode.parentNode).hasClass(
             "goal-list"
         );
 
         $(".dd").nestable({
-            callback: function(l, e) {
+            callback: function (l, e) {
                 // l is the main container
                 // e is the element that was moved
                 appendCluster();
@@ -243,13 +256,22 @@ function drop_zone(clusterNumber) {
 
         let draggableWrapper = '<ol class="dd-list">';
         draggableWrapper += '<li class="dd-item">';
-        let newNode = createElementFromHTML($(nowCopying).html());
+        let newNode = document.createElement("div");
+        newNode.className = $(nowCopying).children("input")[0].className;
+        $(newNode).attr("id", ($(nowCopying).attr("id")));
 
         $(newNode).css("font-weight", "bold");
 
         newNode.classList.add("dd-handle");
+        newNode.classList.add("dd-handle-style");
 
-        $(newNode).attr("value", $(nowCopying).children("input")[0].value);
+        let type = getType($($(nowCopying).children("input")[0]));
+
+        let imagePath = getTypeIconPath(type);
+
+        $(newNode).html('<img src=' + imagePath + ' class="mr-1 typeIcon" >' +
+            '<div class="goal-content">' +
+            $(nowCopying).children("input")[0].value) + '</div>';
 
         draggableWrapper += newNode.outerHTML;
         draggableWrapper += "</li></ol>";
@@ -289,7 +311,7 @@ drag();
 drop_zone(clusterNumber);
 
 $(".dd").nestable({
-    callback: function(l, e) {
+    callback: function (l, e) {
         // l is the main container
         // e is the element that was moved
         appendCluster();
@@ -307,19 +329,25 @@ function createElementFromHTML(htmlString) {
 
 $("#drag").hide();
 
-$("#edit").click(function() {
-    $("#cluster")
-        .find("input")
-        .removeClass("dd-handle");
+$("#edit").click(function () {
+
+    $(".dd-handle-style").removeClass("dd-handle");
+    $(".goal-content").attr("contenteditable", "true");
+    // when editing, cannot press "Enter"
+    $(".goal-content").keypress(function (e) {
+        return e.which !== 13;
+    });
+    $(".goal-content").css("font-weight", "normal");
 
     $("#edit").hide();
     $("#drag").show();
 });
 
-$("#drag").click(function() {
-    $("#cluster")
-        .find("input")
-        .addClass("dd-handle");
+$("#drag").click(function () {
+
+    $(".dd-handle-style").addClass("dd-handle");
+    $(".goal-content").attr("contenteditable", "false");
+    $(".goal-content").css("font-weight", "bold");
 
     $("#drag").hide();
     $("#edit").show();
@@ -331,14 +359,14 @@ function appendCluster() {
         clusterNumber++;
         cluster.append(
             '<div class="dd" id=cluster_' +
-                clusterNumber.toString() +
-                ">" +
-                "</div>"
+            clusterNumber.toString() +
+            ">" +
+            "</div>"
         );
 
         drop_zone(clusterNumber);
         $(".dd").nestable({
-            callback: function(l, e) {
+            callback: function (l, e) {
                 // l is the main container
                 // e is the element that was moved
                 appendCluster();
@@ -347,10 +375,11 @@ function appendCluster() {
         });
     }
 }
+
 /*drag and drop end*/
 
 // handle sign off button
-$("#signout").click(function(evt) {
+$("#signout").click(function (evt) {
     evt.preventDefault();
     Cookies.remove("LOKIDIED");
     Cookies.remove("UIID");

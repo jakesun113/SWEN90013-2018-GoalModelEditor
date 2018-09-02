@@ -14,6 +14,7 @@
 
     <!--add nestable library-->
     <link rel="stylesheet" href="/stylesheet/jquery.nestable.css">
+
     <!--<noscript>-->
     <!--<div style="display:inline;">-->
     <!--<img class="mb-4" src="/img/icon.ico" alt="icon" width="1" height="1">-->
@@ -90,47 +91,12 @@
                            id="signout">Sign out</a>
                     </div>
                 </div>
-                <button type="button" class="btn btn-success ml-2" id="save">Save</button>
+                <!--<button type="button" class="btn btn-success ml-2" id="save">Save</button>-->
                 <a class="btn btn-secondary ml-2" href="/dashboard">Return</a>
             </div>
         </div>
     </nav>
 </div>
-</div>
-<!--<div class="container-heading2" style="background-color: white">-->
-<!--<nav class="navbar navbar-expand-lg navbar-light showborder"-->
-<!--style="border-color: lightgrey; border-left: 0px; border-right:0px">-->
-<!--<div class="collapse navbar-collapse" id="navbarSupportedContent">-->
-<!--<ul class="navbar-nav mr-auto">-->
-<!--<li class="nav-item dropdown">-->
-<!--<a class="nav-link" href="/">Home</a>-->
-<!--</li>-->
-<!--<span class="border"></span>-->
-<!--&lt;!&ndash;<li class="nav-item dropdown">&ndash;&gt;-->
-<!--&lt;!&ndash;<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&ndash;&gt;-->
-<!--&lt;!&ndash;Files&ndash;&gt;-->
-<!--&lt;!&ndash;</a>&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="dropdown-menu" aria-labelledby="navbarDropdown">&ndash;&gt;-->
-<!--&lt;!&ndash;<a class="dropdown-item" href="#">New</a>&ndash;&gt;-->
-<!--&lt;!&ndash;<a class="dropdown-item" href="#">Open</a>&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="dropdown-divider"></div>&ndash;&gt;-->
-<!--&lt;!&ndash;<a class="dropdown-item" href="#">Something else here</a>&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--&lt;!&ndash;</li>&ndash;&gt;-->
-<!--<li class="nav-item dropdown">-->
-<!--<a class="nav-link" href="/dashboard">Dashboard</a>-->
-<!--</li>-->
-<!--<span class="border"></span>-->
-<!--&lt;!&ndash;<li class="nav-item dropdown">&ndash;&gt;-->
-<!--&lt;!&ndash;<a class="nav-link" href="#">Version 1</a>&ndash;&gt;-->
-<!--&lt;!&ndash;</li>&ndash;&gt;-->
-
-<!--</ul>-->
-
-<!--</div>-->
-<!--</nav>-->
-<!--</div>-->
-
 
 
 <!--the main section-->
@@ -248,11 +214,11 @@
             <div id="cluster" class="col-7 showborder scrollbar" style="display: none; background-color:rgba(35, 144, 231, 0.1);">
                 <div>
                     <h4>Cluster</h4>
-                    <button class="btn-sm btn-outline-primary" onclick="addCluster()">Add</button>
                     <button class="btn-sm btn-outline-primary" id="clusternextbtn" onclick="clusternext()">Next</button>
                     <button style="display: none" class="btn-sm btn-outline-primary" id="renderbtn" onclick="renderGraph(document.getElementById('graphContainer'))">Render</button>
                     <button type="button" class="btn-sm btn-outline-primary" id="edit">Edit All</button>
                     <button type="button" class="btn-sm btn-outline-primary" id="drag">Drag All</button>
+                    <a id="Export" href="#">ExportSVG</a>
                 </div>
                 <!--show cluster data from JSON-->
                 <div class="dd" id="cluster_1">
@@ -274,8 +240,13 @@
 
             <!--generate section start-->
             <div id="generator" class="col-sm showborder scrollbar" style="display: none; background-color: rgb(236, 244, 244)">
-                <div>
-                    <h3>Generate Your Goal Model</h3>
+                <div class="row">
+                    <div class="col-10 text-left my-1">
+                        <h3>Generate Your Goal Model</h3>
+                    </div>
+                    <div class="col-2 text-right my-1">
+                        <button type="button" class="btn-sm btn-outline-primary" id="saveXML">Save Graph</button>
+                    </div>
                 </div>
                 <div id="graphContainer"
                     style="position:relative;overflow:hidden;width:821px;height:641px;background:url('/src/images/grid.gif');cursor:default;">
@@ -286,7 +257,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- mxgraph basepath -->
 <script type="text/javascript">
@@ -309,9 +279,9 @@
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <!--add nestable library-->
 <script src="/js/projectEdit/jquery.nestable.js"></script>
-<script src="/js/projectEdit/projectedit.js"></script>
 <script src="/js/projectEdit/image.js"></script>
 <script src="/js/projectEdit/goalList.js"></script>
+<script src="/js/projectEdit/projectEdit.js"></script>
 <script src="/js/projectEdit/graphXML.js"></script>
 
 <footer>
