@@ -1,5 +1,29 @@
 /* End-point for Goal Model related HTTP requests in back-end REST API
  *
+ * Routes including:
+ *   GET    '/goal_mode/edit'
+ *              get the goalmodel edit page
+ *   POST   '/goal_mode/:userId/:projectId'
+ *              create a new goal model
+ *   POST   '/goal_model/images/:userId/:goalmodelId'
+ *              save the images on the server
+ *   POST   '/goal_model/xml/:userId/:goalmodelId'
+ *              save the xml file of the goal model on the server
+ *   GET    '/goal_model/xml/:userId/:goalmodelId'
+ *              get the xml file of the goal model from the server
+ *   PUT    '/goal_model/:userId/:goalmodelId'
+ *              update goal model content
+ *   PUT    '/goal_model/info/:userId/:goalmodelId'
+ *              update the goal model information
+ *   DELETE '/goal_model/:userId/:goalmodelId'
+ *              delete the goal model
+ *   GET    '/goal_model/:userId/:goalmodelId'
+ *              get the goal model content
+ *   GET    '/goal_model/images/:userId/:goalmodelId'
+ *              get the goal model images
+ *
+ * Method including:
+ *   createDirectoryPath(filepath)      create a directory under the path
  */
 "use strict";
 
@@ -562,7 +586,9 @@ router.get("/images/:userId/:goalmodelId", (req, res) => {
         })
 });
 
-/* Recursively creates the whole path to a directory */
+/** Recursively creates the whole path to a directory
+ * @param filepath : the full path of the directory that is to be created
+ */
 function createDirectoryPath(filepath) {
     if (fs.existsSync(filepath)) {
         return true;

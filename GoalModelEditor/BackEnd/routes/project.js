@@ -1,5 +1,10 @@
 /* End-point for project related HTTP requests in back-end REST API.
  *
+ * Routes including:
+ *   GET    '/project/list/:userId'        get the project list of a user
+ *   POST   '/project/:userId'             create a new project under the user
+ *   PUT    '/project/:userId/:projectId'  edit the project
+ *   DELETE '/project/:userId/:projectId'  delete a project
  */
 "use strict";
 
