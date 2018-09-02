@@ -45,6 +45,8 @@ function renderGraph(container) {
     // reset - remove any existing graph if render is called
     graph.destroy();
     graph = new mxGraph(container);
+    graph.setPanning(true);
+    graph.panningHandler.useLeftButtonForPanning = true;
 
     // check that browser is supported
     if (!mxClient.isBrowserSupported()) {
@@ -193,8 +195,8 @@ function renderNonFunction(descriptions, graph, source=null, type="None") {
             image = PATH_EMOTIONAL;
             break;
         case TYPE_NEGATIVE:
-            dX = 100;
-            dY = 20;
+            dX = 160;
+            dY = 10;
             image = PATH_NEGATIVE;
             break;
         case TYPE_QUALITY:
