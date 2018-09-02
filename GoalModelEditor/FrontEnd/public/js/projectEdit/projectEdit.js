@@ -241,13 +241,15 @@ function drop_zone(clusterNumber) {
 
         let draggableWrapper = '<ol class="dd-list">';
         draggableWrapper += '<li class="dd-item">';
-        let newNode = createElementFromHTML($(nowCopying).html());
+        let newNode = document.createElement("div");
+        newNode.className = $(nowCopying).children("input")[0].className;
+        $(newNode).attr("id", ($(nowCopying).attr("id")));
 
         $(newNode).css("font-weight", "bold");
 
         newNode.classList.add("dd-handle");
 
-        $(newNode).attr("value", $(nowCopying).children("input")[0].value);
+        $(newNode).html($(nowCopying).children("input")[0].value);
 
         draggableWrapper += newNode.outerHTML;
         draggableWrapper += "</li></ol>";

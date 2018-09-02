@@ -51,3 +51,34 @@ function getXML() {
             .slideUp();
     }); // end ajax
 }
+
+/**
+ * Parses the graph to XML, to be saved/loaded in a differenct session.
+ */
+function parseToXML(graph) {
+    let encoder = new mxCodec();
+    let node = encoder.encode(graph.getModel());
+    let xml = mxUtils.getPrettyXml(node);
+    return xml;
+}
+
+/**
+ * Renders the graph from a (saved) XML file.
+ */
+function renderFromXML(xml) {
+    console.log(xml);
+    let doc = mxUtils.parseXml(xml);
+    console.log(doc);
+    let codec = new mxCodec(doc);
+    let elt = doc.documentElement.firstChild;
+    let cells = [];
+
+    console.log(codec);
+    while (elt != null) {
+        console.log(elt);
+        cells.push(codec.decode(elt));
+        elt = elt.nextSibling;
+    }
+
+    graph.addCells(cells);
+}
