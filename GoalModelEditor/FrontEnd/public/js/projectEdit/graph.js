@@ -1,8 +1,8 @@
 "use strict";
 
 // default width/height of MM symbols
-const SYMBOL_WIDTH = 220;
-const SYMBOL_HEIGHT = 120;
+const SYMBOL_WIDTH = 110;
+const SYMBOL_HEIGHT = 60;
 
 // default x and y coord of the MM symbols
 const SYMBOL_X_COORD = 0;
@@ -30,6 +30,8 @@ const HORIZONTAL_SPACING = 100;
 // in the global scope - this is so that consecutive calls to render()
 // are able to access (and hence destroy) any existing graph
 var graph = new mxGraph(document.getElementById("graphContainer"));
+graph.setPanning(true);
+graph.panningHandler.useLeftButtonForPanning = true;
 var emotionsGlob = {};
 var negativesGlob = {};
 var qualitiesGlob = {};
@@ -60,6 +62,7 @@ function renderGraph(container) {
 
     // grab the clusters from window.jsonData
     var clusters = window.jsonData.GoalModelProject.Clusters;
+    console.log(clusters);
 
     // render the graph
     graph.getModel().beginUpdate(); // start transaction
@@ -178,7 +181,7 @@ function renderNonFunction(descriptions, graph, source=null, type="None") {
     if (source != null) {
         var geo = graph.getCellGeometry(source);
         var sourceX = geo.x;
-        var sourceY = geo.y
+        var sourceY = geo.y;
         var dX = 0;
         var dY = 0;
     } else {
@@ -190,23 +193,23 @@ function renderNonFunction(descriptions, graph, source=null, type="None") {
     let image = "";
     switch (type) {
         case TYPE_EMOTIONAL:
-            dX = 100;
+            dX = -50;
             dY = -20;
             image = PATH_EMOTIONAL;
             break;
         case TYPE_NEGATIVE:
-            dX = 160;
-            dY = 10;
+            dX = 50;
+            dY = -20;
             image = PATH_NEGATIVE;
             break;
         case TYPE_QUALITY:
-            dX = -100;
-            dY = -20;
+            dX = -50;
+            dY = 20;
             image = PATH_QUALITY;
             break;
         case TYPE_STAKEHOLDER:
-            dX = 100;
-            dY = 20;
+            dX = 50;
+            dY = 10;
             image = PATH_STAKEHOLDER;
             break;
     }
