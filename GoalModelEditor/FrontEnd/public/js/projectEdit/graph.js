@@ -77,16 +77,16 @@ function renderGoals(goals, graph, source = null) {
     console.log("Logging: renderGoals() called on list: " + goals);
 
     // accumulate non-functional goals to be rendered into a single symbol
-    var emotions = [];
-    var qualities = [];
-    var concerns = [];
-    var stakeholders = [];
+    let emotions = [];
+    let qualities = [];
+    let concerns = [];
+    let stakeholders = [];
 
     // run through each goal in the given array
-    for (var i = 0; i < goals.length; i++) {
-        var goal = goals[i];
-        var type = goal.GoalType;
-        var content = goal.GoalContent;
+    for (let i = 0; i < goals.length; i++) {
+        let goal = goals[i];
+        let type = goal.GoalType;
+        let content = goal.GoalContent;
 
         // recurse over functional goals
         if (type === TYPE_FUNCTIONAL) {
@@ -132,7 +132,7 @@ function renderFunction(goal, graph, source = null) {
     let image = PATH_FUNCTIONAL;
 
     // insert new vertex and edge into graph
-    var node = graph.insertVertex(
+    let node = graph.insertVertex(
         null,
         null,
         goal.GoalContent,
@@ -142,7 +142,7 @@ function renderFunction(goal, graph, source = null) {
         SYMBOL_HEIGHT,
         "shape=image;image=" + image
     );
-    var edge = graph.insertEdge(null, null, null, source, node);
+    let edge = graph.insertEdge(null, null, null, source, node);
 
     // then recurse over the goal's children
     renderGoals(goal.SubGoals, graph, node);
@@ -175,7 +175,7 @@ function renderNonFunction(descriptions, graph, source = null, type = "None") {
             image = PATH_STAKEHOLDER;
     }
     // insert new vertex and edge into graph
-    var node = graph.insertVertex(
+    let node = graph.insertVertex(
         null,
         null,
         descriptions.join(";\n"),
@@ -185,7 +185,7 @@ function renderNonFunction(descriptions, graph, source = null, type = "None") {
         SYMBOL_HEIGHT,
         "shape=image;image=" + image
     );
-    var edge = graph.insertEdge(null, null, null, source, node);
+    let edge = graph.insertEdge(null, null, null, source, node);
 
     // make the edge invisible - we still want to create the edge
     // the edge is needed when running the autolayout logic
@@ -196,7 +196,7 @@ function renderNonFunction(descriptions, graph, source = null, type = "None") {
  * Automatically lays out the graph.
  */
 function autolayout(graph) {
-    var layout = new mxHierarchicalLayout(graph, mxConstants.DIRECTION_NORTH);
+    let layout = new mxHierarchicalLayout(graph, mxConstants.DIRECTION_NORTH);
     layout.execute(graph.getDefaultParent());
 }
 
@@ -215,11 +215,11 @@ function parseToXML(graph) {
  */
 function renderFromXML(xml) {
     console.log(xml);
-    var doc = mxUtils.parseXml(xml);
+    let doc = mxUtils.parseXml(xml);
     console.log(doc);
-    var codec = new mxCodec(doc);
-    var elt = doc.documentElement.firstChild;
-    var cells = [];
+    let codec = new mxCodec(doc);
+    let elt = doc.documentElement.firstChild;
+    let cells = [];
 
     console.log(codec);
     while (elt != null) {
