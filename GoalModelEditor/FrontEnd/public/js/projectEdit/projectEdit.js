@@ -136,7 +136,7 @@ document.onkeyup = function(event) {
         let parent = document.activeElement.parentNode;
         let grandparent = parent.parentNode;
         // if parent not null, delete child
-        if (parent.previousElementSibling != null) {
+        if(grandparent.childNodes.length>1){
             grandparent.removeChild(parent);
             event.preventDefault();
         }
