@@ -143,6 +143,17 @@ document.onkeyup = function (event) {
             event.preventDefault();
         }
     }
+    if (document.activeElement.tagName === "DIV" && event.key === "Escape") {
+        //make the default enter invalid
+        let parent = document.activeElement.parentNode;
+        let grandparent = parent.parentNode;
+        let grandgrandparent = grandparent.parentNode;
+        // if parent not null, delete child
+        if (grandgrandparent.childNodes.length > 0) {
+            grandgrandparent.removeChild(grandparent);
+            event.preventDefault();
+        }
+    }
 };
 /*Delete goal by pressing 'Backspace' when empty end*/
 
@@ -203,7 +214,7 @@ function clusternext() {
         t.style.display = "none";
         c.setAttribute("class", "col-3 showborder scrollbar");
         c.style.display = "block";
-        r.style.display = "block";
+        r.style.display = "inline-block";
         g.style.display = "block";
         b.innerHTML = "Back";
         // renderGraph(document.getElementById("graphContainer"));
@@ -320,6 +331,10 @@ $("#edit").click(function () {
 
     $(".dd-handle-style").removeClass("dd-handle");
     $(".goal-content").attr("contenteditable", "true");
+    // when editing, cannot press "Enter"
+    $(".goal-content").keypress(function (e) {
+        return e.which !== 13;
+    });
     $(".goal-content").css("font-weight", "normal");
 
     $("#edit").hide();
