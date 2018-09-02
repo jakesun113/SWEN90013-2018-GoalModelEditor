@@ -19,6 +19,10 @@ $(document).on("mouseover", "#ul li input", function() {
     // alert($(this).val());
     $("#notedata").html("<p>" + $(this).attr("note") + "</p>");
 });
+//show loading
+$("#loadingModal").modal("show");
+//hide loading
+// $("#loadingModal").modal("hide");
 
 /*Add new cluster start*/
 /**
@@ -49,7 +53,6 @@ function addCluster() {
     });
 }
 /*Add new cluster end*/
-
 
 /*Add new goal by pressing 'Enter' start*/
 /**
@@ -208,7 +211,6 @@ function clusternext() {
     }
 }
 
-
 /*drag and drop start*/
 let nowCopying;
 
@@ -356,7 +358,6 @@ $("#signout").click(function(evt) {
     Cookies.remove("PID");
     window.location.href = "/";
 });
-
 
 /**
  * Auto save every 60 seconds
