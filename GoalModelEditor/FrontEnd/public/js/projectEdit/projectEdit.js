@@ -356,7 +356,7 @@ function appendCluster() {
         let cluster = $("#cluster");
         clusterNumber++;
         cluster.append(
-            '<div class="dd" id=cluster_' +
+            '<div class="dd py-3" id=cluster_' +
             clusterNumber.toString() +
             ">" +
             "</div>"
