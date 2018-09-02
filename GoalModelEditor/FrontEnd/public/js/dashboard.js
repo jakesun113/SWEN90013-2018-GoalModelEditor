@@ -2,19 +2,19 @@
  * JavaScript For Dashboard functions and eventListeners
  */
 
-'use strict';
+"use strict";
 
 /**
  * Define all variables and constants used accross functions
  */
 
 /* Constants */
-const SECRET = JSON.parse(Cookies.get('LOKIDIED'));
+const SECRET = JSON.parse(Cookies.get("LOKIDIED"));
 const TOKEN = SECRET.token;
 const UID = SECRET.uid;
-const UNAME = Cookies.get('UIID');
-const GET_PROJECT_URL = '/project/list/' + UID;
-const POST_PROJECT_URL = '/project/' + UID;
+const UNAME = Cookies.get("UIID");
+const GET_PROJECT_URL = "/project/list/" + UID;
+const POST_PROJECT_URL = "/project/" + UID;
 
 /**
  * Page onReady EventListener
@@ -29,13 +29,13 @@ $(document).ready(() => {
  *
  * @trigger {id:create-project|HTMLForm}
  */
-$('#create-project').submit( evt => {
+$("#create-project").submit(evt => {
     evt.preventDefault();
-    let formData = $('#create-project').serialize();
+    let formData = $("#create-project").serialize();
     createProject(formData);
 
     // Close the modal
-    $('#add-project').modal('toggle');
+    $("#add-project").modal("toggle");
 });
 
 /**
@@ -43,18 +43,18 @@ $('#create-project').submit( evt => {
  *
  * @trigger {id:creat-model|HTMLForm}
  */
-$('#create-model').submit( evt => {
+$("#create-model").submit(evt => {
     evt.preventDefault();
     const PID = getPID();
-    if (typeof PID === 'undefined') {
-        warningMessageSlide('Please choose a project');
+    if (typeof PID === "undefined") {
+        warningMessageSlide("Please choose a project");
     }
-    const CREATE_MODEL_URL = '/goal_model/' + UID + '/' + PID;
-    let formData = $('#create-model').serialize();
+    const CREATE_MODEL_URL = "/goal_model/" + UID + "/" + PID;
+    let formData = $("#create-model").serialize();
     createGoalModel(CREATE_MODEL_URL, PID, formData);
 
     // Close the modal
-    $('#add-model').modal('toggle');
+    $("#add-model").modal("toggle");
 });
 
 /**
@@ -62,20 +62,20 @@ $('#create-model').submit( evt => {
  *
  * @trigger {id:rename_project|HTMLForm}
  */
-$('#rename_project').submit( evt => {
+$("#rename_project").submit(evt => {
     evt.preventDefault();
     const PID = getPID();
-    if (typeof PID === 'undefined') {
-        warningMessageSlide('Please choose a project');
+    if (typeof PID === "undefined") {
+        warningMessageSlide("Please choose a project");
     }
     const RENAME_PROJECT_URL = "/project/" + UID + "/" + PID;
-    let formData = JSON.parse($('#rename_project').serializeJSON());
+    let formData = JSON.parse($("#rename_project").serializeJSON());
     formData.description = "";
     formData.size = 0;
     renameProject(RENAME_PROJECT_URL, PID, formData);
 
     // Close the modal
-    $('#rename-project').modal('toggle');
+    $("#rename-project").modal("toggle");
 });
 
 /**
@@ -83,18 +83,18 @@ $('#rename_project').submit( evt => {
  *
  * @trigger {id:delete_project|HTMLForm}
  */
-$('#delete_project').submit( evt => {
+$("#delete_project").submit(evt => {
     evt.preventDefault();
     const PID = getPID();
-    if (typeof PID === 'undefined') {
-        warningMessageSlide('Please choose a project');
+    if (typeof PID === "undefined") {
+        warningMessageSlide("Please choose a project");
     }
-    const DELETE_PROJECT_URL = '/project/' + UID + '/' + PID;
-    let formData = $('#delete_project').serialize();
+    const DELETE_PROJECT_URL = "/project/" + UID + "/" + PID;
+    let formData = $("#delete_project").serialize();
     deleteProject(DELETE_PROJECT_URL, PID, formData);
 
     // Close the modal
-    $('#delete-project').modal('toggle');
+    $("#delete-project").modal("toggle");
 });
 
 /**
@@ -107,31 +107,32 @@ $('#delete_project').submit( evt => {
  *
  * @trigger {id:projects-container|HTMLElement}
  */
-$('#projects-container').click( evt => {
-
+$("#projects-container").click(evt => {
     /* Handle click on the goal model, act on the clicked goal model only, set cookies for the clicked goal model */
-    if ($(evt.target).hasClass('goal-model')) {
+    if ($(evt.target).hasClass("goal-model")) {
         setMID(evt.target.id);
-        window.location.href = '/goal_model/edit';
-    } else if ($(event.target.parentNode).hasClass('goal-model')) {
+        window.location.href = "/goal_model/edit";
+    } else if ($(event.target.parentNode).hasClass("goal-model")) {
         setMID(evt.target.parentNode.id);
         window.location.href = "/goal_model/edit/";
-    }
-
-    /* Handle click on the create goal model button & on the delete the project button */
-    else if ($(evt.target).hasClass('new-model') || $(evt.target).hasClass('delete-project')) {
+    } else if (
+        /* Handle click on the create goal model button & on the delete the project button */
+        $(evt.target).hasClass("new-model") ||
+        $(evt.target).hasClass("delete-project")
+    ) {
         setPID($(evt.target.parentNode).parent()[0].id);
-    } else if ($(evt.target.parentNode).hasClass('new-model') || $(evt.target.parentNode).hasClass('delete-project')) {
+    } else if (
+        $(evt.target.parentNode).hasClass("new-model") ||
+        $(evt.target.parentNode).hasClass("delete-project")
+    ) {
         setPID($(evt.target.parentNode.parentNode).parent()[0].id);
-    }
-
-    /* Handle click on the rename the project button */
-    else if ($(evt.target).hasClass('rename-project')) {
+    } else if ($(evt.target).hasClass("rename-project")) {
+        /* Handle click on the rename the project button */
         setPID($(event.target.parentNode).parent()[0].id);
-        putNameInModal($('#' + getPID() + ' h6').html());
-    } else if ($(evt.target.parentNode).hasClass('rename-project')) {
+        putNameInModal($("#" + getPID() + " h6").html());
+    } else if ($(evt.target.parentNode).hasClass("rename-project")) {
         setPID($(evt.target.parentNode.parentNode).parent()[0].id);
-        putNameInModal($('#' + getPID() + ' h6').html());
+        putNameInModal($("#" + getPID() + " h6").html());
     }
 });
 
@@ -140,7 +141,7 @@ $('#projects-container').click( evt => {
  *
  * @trigger {id:signout|Button}
  */
-$('#signout').click( evt => {
+$("#signout").click(evt => {
     evt.preventDefault();
     signOut();
     window.location.href = "/";
@@ -153,53 +154,59 @@ $('#signout').click( evt => {
  * @return HTMLElement
  */
 function parseProject(project) {
-
     // Single project container
-    let projectHTML = '<div class="project text-center" id="' + project.project_id + '">';
+    let projectHTML =
+        '<div class="project text-center" id="' + project.project_id + '">';
 
     // Goal model list container
     projectHTML += '<div class="goal-list">';
 
     // Goal model list header
-    projectHTML = projectHTML +
+    projectHTML =
+        projectHTML +
         '<div class="row goal-model-nav py-2">' +
         '<div class="col-6 text-center text-color">Name</div>' +
         '<div class="col-6 text-center text-color">Last modified</div> </div>';
 
     // Goal models if any
-    if(project.models) {
+    if (project.models) {
         projectHTML = parseGoalModelList(project.models, projectHTML);
     }
 
     // Close the goal model list
-    projectHTML = projectHTML + '</div>';
+    projectHTML = projectHTML + "</div>";
 
     // Project file icon
-    projectHTML = projectHTML + '<img src="/img/buffer.svg" alt="project-icon" class="project-icon">';
+    projectHTML =
+        projectHTML +
+        '<img src="/img/buffer.svg" alt="project-icon" class="project-icon">';
 
     // Project name
     projectHTML = projectHTML + "<h6>" + project.project_name + "</h6>";
 
     // Project tools - add / rename / delete
     projectHTML = projectHTML + '<div class="text-center create-goal-model">';
-    projectHTML = projectHTML +
+    projectHTML =
+        projectHTML +
         '<button class="btn btn-sm mb-2 new-model" ' +
         'type="button" data-toggle="modal" data-target="#add-model" ' +
         'style="background-color: transparent">' +
         '<img src="/img/add-outline.svg" title="Add new goal model"></button>';
-    projectHTML = projectHTML +
+    projectHTML =
+        projectHTML +
         '<button class="btn btn-sm mb-2 rename-project" ' +
         'type="button" data-toggle="modal" data-target="#rename-project" ' +
         'style="background-color: transparent">' +
         '<img src="/img/compose.svg" title="Rename the project"></button>';
-    projectHTML = projectHTML +
+    projectHTML =
+        projectHTML +
         '<button class="btn btn-sm mb-2 delete-project" ' +
         'type="button" data-toggle="modal" data-target="#delete-project" ' +
         'style="background-color: transparent">' +
         '<img src="/img/close-outline.svg" title="Delete the project"></button>';
 
     // Close Project tools
-    projectHTML = projectHTML + '</div>';
+    projectHTML = projectHTML + "</div>";
 
     return projectHTML;
 }
@@ -211,10 +218,18 @@ function parseProject(project) {
  * @return {HTMLElement} modelHTML - after adding the model
  */
 function parseGoalModel(model) {
-    let modelHTML = '<div class="row goal-model py-1" id="' + model.model_id + '">';
-    modelHTML = modelHTML + '<div class="col-6 text-center model_name">' + model.model_name + '</div>';
-    modelHTML = modelHTML + '<div class="col-6 text-center text-color small model_time">' +
-        model.last_modified + '</div> </div>';
+    let modelHTML =
+        '<div class="row goal-model py-1" id="' + model.model_id + '">';
+    modelHTML =
+        modelHTML +
+        '<div class="col-6 text-center model_name">' +
+        model.model_name +
+        "</div>";
+    modelHTML =
+        modelHTML +
+        '<div class="col-6 text-center text-color small model_time">' +
+        model.last_modified +
+        "</div> </div>";
     return modelHTML;
 }
 
@@ -244,18 +259,19 @@ function retriveProjects() {
         type: "GET",
         headers: { Authorization: "Bearer " + TOKEN },
         success: projects => {
-
             // Set the username
             setUserName(UNAME);
 
             /* Append the projects to current UI */
             for (let i in projects.projects) {
                 let projectHTML = parseProject(projects.projects[i]);
-                $('#projects-container').append(projectHTML);
+                $("#projects-container").append(projectHTML);
             }
         }
     }).fail(function(jqXHR) {
-        warningMessageSlide(jqXHR.responseJSON.message + '<br>Please try again.');
+        warningMessageSlide(
+            jqXHR.responseJSON.message + "<br>Please try again."
+        );
     });
 }
 
@@ -267,18 +283,21 @@ function retriveProjects() {
 function createProject(project) {
     $.ajax(POST_PROJECT_URL, {
         data: project,
-        type: 'POST',
-        headers: { Authorization: 'Bearer ' + TOKEN },
+        type: "POST",
+        headers: { Authorization: "Bearer " + TOKEN },
         success: newProject => {
-
             /* Append the project to current UI */
             let projectHTML = parseProject(newProject);
-            $('#projects-container').append(projectHTML);
+            $("#projects-container").append(projectHTML);
 
-            successMessageSlide('Project: ' + newProject.project_name + ' successfully created.');
+            successMessageSlide(
+                "Project: " + newProject.project_name + " successfully created."
+            );
         }
     }).fail(function(jqXHR) {
-        warningMessageSlide(jqXHR.responseJSON.message + '<br>Please try again.');
+        warningMessageSlide(
+            jqXHR.responseJSON.message + "<br>Please try again."
+        );
     });
 }
 
@@ -295,15 +314,18 @@ function createGoalModel(url, pid, model) {
         type: "POST",
         headers: { Authorization: "Bearer " + TOKEN },
         success: function(model) {
-
             /* Append the new model to the UI */
             let modelHTML = parseGoalModel(model);
             appendToProject(modelHTML, pid);
 
-            successMessageSlide('Model: ' + model.model_name + ' successfully created.');
+            successMessageSlide(
+                "Model: " + model.model_name + " successfully created."
+            );
         }
     }).fail(function(jqXHR) {
-        warningMessageSlide(jqXHR.responseJSON.message + '<br>Please try again.');
+        warningMessageSlide(
+            jqXHR.responseJSON.message + "<br>Please try again."
+        );
     }); // end ajax
 }
 
@@ -317,20 +339,31 @@ function createGoalModel(url, pid, model) {
 function renameProject(url, pid, project) {
     $.ajax(url, {
         data: JSON.stringify(project),
-        type: 'PUT',
+        type: "PUT",
         headers: {
             "Content-Type": "application/json",
             Authorization: "Bearer " + TOKEN
         },
         success: () => {
-            successMessageSlide('Project:' + $('#' + pid + ' h6').eq(0).html() +
-                ' successfully renamed to ' + project.project_name + '.');
+            successMessageSlide(
+                "Project:" +
+                    $("#" + pid + " h6")
+                        .eq(0)
+                        .html() +
+                    " successfully renamed to " +
+                    project.project_name +
+                    "."
+            );
 
             // Make the new project name shown in UI
-            $('#' + pid + ' h6').eq(0).html(project.project_name);
+            $("#" + pid + " h6")
+                .eq(0)
+                .html(project.project_name);
         }
     }).fail(function(jqXHR) {
-        warningMessageSlide(jqXHR.responseJSON.message + '<br>Please try again.');
+        warningMessageSlide(
+            jqXHR.responseJSON.message + "<br>Please try again."
+        );
     });
 }
 
@@ -344,16 +377,24 @@ function renameProject(url, pid, project) {
 function deleteProject(url, pid, project) {
     $.ajax(url, {
         data: project,
-        type: 'DELETE',
-        headers: { Authorization: 'Bearer ' + TOKEN },
+        type: "DELETE",
+        headers: { Authorization: "Bearer " + TOKEN },
         success: () => {
-            successMessageSlide('Project: ' + $('#' + pid + ' h6').eq(0).html() + ' successfully deleted.');
+            successMessageSlide(
+                "Project: " +
+                    $("#" + pid + " h6")
+                        .eq(0)
+                        .html() +
+                    " successfully deleted."
+            );
 
             // Hide the corresponding HTML
-            $('#' + pid).hide();
+            $("#" + pid).hide();
         }
     }).fail(function(jqXHR) {
-        warningMessageSlide(jqXHR.responseJSON.message + '<br>Please try again.');
+        warningMessageSlide(
+            jqXHR.responseJSON.message + "<br>Please try again."
+        );
     });
 }
 
@@ -363,7 +404,7 @@ function deleteProject(url, pid, project) {
  * @param {String} pid - the project id to be saved in Cookies
  */
 function setPID(pid) {
-    Cookies.set('PID', pid);
+    Cookies.set("PID", pid);
 }
 
 /**
@@ -372,7 +413,7 @@ function setPID(pid) {
  * @param {String} mid - the model id to be saved in Cookies
  */
 function setMID(mid) {
-    Cookies.set('MID', mid);
+    Cookies.set("MID", mid);
 }
 
 /**
@@ -380,7 +421,7 @@ function setMID(mid) {
  * @return {String} project id
  */
 function getPID() {
-    return Cookies.get('PID');
+    return Cookies.get("PID");
 }
 
 /**
@@ -388,7 +429,7 @@ function getPID() {
  * @return {String} model id
  */
 function getMID() {
-    return Cookies.get('MID');
+    return Cookies.get("MID");
 }
 
 /**
@@ -397,7 +438,9 @@ function getMID() {
  * @param {String} username
  */
 function setUserName(username) {
-    $('#username').eq(0).html(username);
+    $("#username")
+        .eq(0)
+        .html(username);
 }
 
 /**
@@ -406,16 +449,15 @@ function setUserName(username) {
  * @param {String} projectName - the clicked project name
  */
 function putNameInModal(projectName) {
-
     // Set the modal input to the clicked project name
-    $('#rename_project .modal-body input').val(projectName);
+    $("#rename_project .modal-body input").val(projectName);
 
     /* Set time out so that the project name gets rendered in the modal */
-    let $target = $('#rename-project');
-    $target.data('triggered', true);
+    let $target = $("#rename-project");
+    $target.data("triggered", true);
     setTimeout(function() {
-        if ($target.data('triggered')) {
-            $target.modal('show').data('triggered', false);
+        if ($target.data("triggered")) {
+            $target.modal("show").data("triggered", false);
         }
     }, 300);
     return false;
@@ -426,10 +468,10 @@ function putNameInModal(projectName) {
  * Remove all Cookies
  */
 function signOut() {
-    Cookies.remove('LOKIDIED');
-    Cookies.remove('UIID');
-    Cookies.remove('MID');
-    Cookies.remove('PID');
+    Cookies.remove("LOKIDIED");
+    Cookies.remove("UIID");
+    Cookies.remove("MID");
+    Cookies.remove("PID");
 }
 
 /**
@@ -439,7 +481,9 @@ function signOut() {
  * @param {String} pid - id of the project appended to
  */
 function appendToProject(modelHTML, pid) {
-    $('#' + pid + ' .goal-list').eq(0).append(modelHTML);
+    $("#" + pid + " .goal-list")
+        .eq(0)
+        .append(modelHTML);
 }
 
 /**
@@ -448,8 +492,8 @@ function appendToProject(modelHTML, pid) {
  * @param {String} message
  */
 function successMessageSlide(message) {
-    $('#success-alert').html(message);
-    $('#success-alert')
+    $("#success-alert").html(message);
+    $("#success-alert")
         .slideDown()
         .delay(3000)
         .slideUp();
@@ -461,8 +505,8 @@ function successMessageSlide(message) {
  * @param {String} message
  */
 function warningMessageSlide(message) {
-    $('#warning-alert').html(message);
-    $('#warning-alert')
+    $("#warning-alert").html(message);
+    $("#warning-alert")
         .slideDown()
         .delay(3000)
         .slideUp();

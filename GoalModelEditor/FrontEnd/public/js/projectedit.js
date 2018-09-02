@@ -13,7 +13,6 @@ $(document).ready(function() {
     $("#username")
         .eq(0)
         .html(Cookies.get("UIID"));
-
 });
 
 $(document).on("mouseover", "#ul li input", function() {
@@ -534,7 +533,8 @@ function parseNode(node) {
         '" ' +
         'note="' +
         node.GoalNote +
-        '"' +
+        '" ' +
+        'oninput="changeFontWeight(this)"' +
         "/>";
 
     //countID(node.GoalType);
@@ -1213,7 +1213,7 @@ function sendXML() {
         // the API of upload pictures
         type: "POST",
         contentType: "application/json",
-        data: JSON.stringify({xml: xml}),
+        data: JSON.stringify({ xml: xml }),
         async: true,
         headers: { Authorization: "Bearer " + token },
         success: function() {}
@@ -1251,4 +1251,12 @@ function getXML() {
             .delay(3000)
             .slideUp();
     }); // end ajax
+}
+
+/**
+ * change font weight to bold when edit
+ * @param e
+ */
+function changeFontWeight(e) {
+    e.style.fontWeight = "bold";
 }

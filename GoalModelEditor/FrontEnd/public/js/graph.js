@@ -4,7 +4,7 @@
 const SYMBOL_WIDTH = 120;
 const SYMBOL_HEIGHT = 80;
 
-// default x and y coord of the MM symbols 
+// default x and y coord of the MM symbols
 const SYMBOL_X_COORD = 0;
 const SYMBOL_Y_COORD = 0;
 
@@ -29,7 +29,7 @@ const HORIZONTAL_SPACING = 100;
 // it is necessary to store the variable pointing to the graph object
 // in the global scope - this is so that consecutive calls to render()
 // are able to access (and hence destroy) any existing graph
-var graph = new mxGraph(document.getElementById('graphContainer'));
+var graph = new mxGraph(document.getElementById("graphContainer"));
 
 /**
  * Renders window.jsonData into a motivational model into graphContainer.
@@ -73,8 +73,7 @@ function renderGraph(container) {
  * : source, the parent goal of the given array, defaults to null
  */
 
-function renderGoals(goals, graph, source=null) {
-
+function renderGoals(goals, graph, source = null) {
     console.log("Logging: renderGoals() called on list: " + goals);
 
     // accumulate non-functional goals to be rendered into a single symbol
@@ -93,7 +92,7 @@ function renderGoals(goals, graph, source=null) {
         if (type === TYPE_FUNCTIONAL) {
             renderFunction(goal, graph, source);
 
-        // accumulate non-functional descriptions into buckets
+            // accumulate non-functional descriptions into buckets
         } else if (type === TYPE_EMOTIONAL) {
             emotions.push(content);
         } else if (type === TYPE_NEGATIVE) {
@@ -129,24 +128,24 @@ function renderGoals(goals, graph, source=null) {
  * : graph, the graph to render the goal into
  * : source, the parent of the goal
  */
-function renderFunction(goal, graph, source=null) {
+function renderFunction(goal, graph, source = null) {
     let image = PATH_FUNCTIONAL;
 
     // insert new vertex and edge into graph
     var node = graph.insertVertex(
-        null, null, 
+        null,
+        null,
         goal.GoalContent,
-        SYMBOL_X_COORD, SYMBOL_Y_COORD,
-        SYMBOL_WIDTH, SYMBOL_HEIGHT,
-        "shape=image;image="+image
+        SYMBOL_X_COORD,
+        SYMBOL_Y_COORD,
+        SYMBOL_WIDTH,
+        SYMBOL_HEIGHT,
+        "shape=image;image=" + image
     );
-    var edge = graph.insertEdge(
-        null, null, null,
-        source, node
-    );
+    var edge = graph.insertEdge(null, null, null, source, node);
 
     // then recurse over the goal's children
-    renderGoals(goal.SubGoals, graph, node)
+    renderGoals(goal.SubGoals, graph, node);
 }
 
 /**
@@ -160,8 +159,8 @@ function renderFunction(goal, graph, source=null) {
  *      because we need it to know which symbol we are going to render the
  *      goal into
  */
-function renderNonFunction(descriptions, graph, source=null, type="None") {
-    let image = '';
+function renderNonFunction(descriptions, graph, source = null, type = "None") {
+    let image = "";
     switch (type) {
         case TYPE_EMOTIONAL:
             image = PATH_EMOTIONAL;
@@ -177,16 +176,16 @@ function renderNonFunction(descriptions, graph, source=null, type="None") {
     }
     // insert new vertex and edge into graph
     var node = graph.insertVertex(
-        null, null, 
+        null,
+        null,
         descriptions.join(";\n"),
-        SYMBOL_X_COORD, SYMBOL_Y_COORD,
-        SYMBOL_WIDTH, SYMBOL_HEIGHT,
-        "shape=image;image="+image
+        SYMBOL_X_COORD,
+        SYMBOL_Y_COORD,
+        SYMBOL_WIDTH,
+        SYMBOL_HEIGHT,
+        "shape=image;image=" + image
     );
-    var edge = graph.insertEdge(
-        null, null, null,
-        source, node
-    );
+    var edge = graph.insertEdge(null, null, null, source, node);
 
     // make the edge invisible - we still want to create the edge
     // the edge is needed when running the autolayout logic
@@ -223,8 +222,7 @@ function renderFromXML(xml) {
     var cells = [];
 
     console.log(codec);
-    while (elt != null)
-    {
+    while (elt != null) {
         console.log(elt);
         cells.push(codec.decode(elt));
         elt = elt.nextSibling;
