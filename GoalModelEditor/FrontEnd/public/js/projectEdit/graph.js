@@ -1,8 +1,8 @@
 "use strict";
 
 // default width/height of MM symbols
-const SYMBOL_WIDTH = 120;
-const SYMBOL_HEIGHT = 80;
+const SYMBOL_WIDTH = 220;
+const SYMBOL_HEIGHT = 120;
 
 // default x and y coord of the MM symbols
 const SYMBOL_X_COORD = 0;
@@ -30,6 +30,10 @@ const HORIZONTAL_SPACING = 100;
 // in the global scope - this is so that consecutive calls to render()
 // are able to access (and hence destroy) any existing graph
 var graph = new mxGraph(document.getElementById("graphContainer"));
+var emotionsGlob = {};
+var negativesGlob = {};
+var qualitiesGlob = {};
+var stakeholdersGlob = {};
 
 /**
  * Renders window.jsonData into a motivational model into graphContainer.
@@ -62,7 +66,8 @@ function renderGraph(container) {
         // ... then call render
         renderGoals(goals, graph, null);
     }
-    autolayout(graph);
+    layoutFunctions(graph);
+    associateNonFunctions(graph);
     graph.getModel().endUpdate(); // end transaction
 }
 
@@ -92,7 +97,7 @@ function renderGoals(goals, graph, source = null) {
         if (type === TYPE_FUNCTIONAL) {
             renderFunction(goal, graph, source);
 
-            // accumulate non-functional descriptions into buckets
+        // accumulate non-functional descriptions into buckets
         } else if (type === TYPE_EMOTIONAL) {
             emotions.push(content);
         } else if (type === TYPE_NEGATIVE) {
@@ -108,16 +113,20 @@ function renderGoals(goals, graph, source = null) {
 
     // render each of the non-functional goals
     if (emotions.length) {
-        renderNonFunction(emotions, graph, source, TYPE_EMOTIONAL);
+        emotionsGlob[source.value] = emotions;
+        //renderNonFunction(emotions, graph, source, TYPE_EMOTIONAL);
     }
     if (qualities.length) {
-        renderNonFunction(qualities, graph, source, TYPE_QUALITY);
+        qualitiesGlob[source.value] = qualities;
+        //renderNonFunction(qualities, graph, source, TYPE_QUALITY);
     }
     if (concerns.length) {
-        renderNonFunction(concerns, graph, source, TYPE_NEGATIVE);
+        negativesGlob[source.value] = concerns;
+        //renderNonFunction(concerns, graph, source, TYPE_NEGATIVE);
     }
     if (stakeholders.length) {
-        renderNonFunction(stakeholders, graph, source, TYPE_STAKEHOLDER);
+        stakeholdersGlob[source.value] = stakeholders;
+        //renderNonFunction(stakeholders, graph, source, TYPE_STAKEHOLDER);
     }
 }
 
@@ -142,7 +151,8 @@ function renderFunction(goal, graph, source = null) {
         SYMBOL_HEIGHT,
         "shape=image;image=" + image
     );
-    let edge = graph.insertEdge(null, null, null, source, node);
+    let edge = graph.insertEdge(null, null, null, source, node,
+        "strokeColor=black");
 
     // then recurse over the goal's children
     renderGoals(goal.SubGoals, graph, node);
@@ -159,33 +169,57 @@ function renderFunction(goal, graph, source = null) {
  *      because we need it to know which symbol we are going to render the
  *      goal into
  */
-function renderNonFunction(descriptions, graph, source = null, type = "None") {
+function renderNonFunction(descriptions, graph, source=null, type="None") {
+    
+    // fetch parent coordinates
+    if (source != null) {
+        var geo = graph.getCellGeometry(source);
+        var sourceX = geo.x;
+        var sourceY = geo.y
+        var dX = 0;
+        var dY = 0;
+    } else {
+        var sourceX = 0;
+        var sourceY = 0;
+    }
+
+
     let image = "";
     switch (type) {
         case TYPE_EMOTIONAL:
+            dX = 100;
+            dY = -20;
             image = PATH_EMOTIONAL;
             break;
         case TYPE_NEGATIVE:
+            dX = 100;
+            dY = 20;
             image = PATH_NEGATIVE;
             break;
         case TYPE_QUALITY:
+            dX = -100;
+            dY = -20;
             image = PATH_QUALITY;
             break;
         case TYPE_STAKEHOLDER:
+            dX = 100;
+            dY = 20;
             image = PATH_STAKEHOLDER;
+            break;
     }
     // insert new vertex and edge into graph
     let node = graph.insertVertex(
         null,
         null,
         descriptions.join(";\n"),
-        SYMBOL_X_COORD,
-        SYMBOL_Y_COORD,
+        sourceX + dX,
+        sourceY + dY,
         SYMBOL_WIDTH,
         SYMBOL_HEIGHT,
         "shape=image;image=" + image
     );
     let edge = graph.insertEdge(null, null, null, source, node);
+    console.log(edge);
 
     // make the edge invisible - we still want to create the edge
     // the edge is needed when running the autolayout logic
@@ -193,11 +227,46 @@ function renderNonFunction(descriptions, graph, source = null, type = "None") {
 }
 
 /**
- * Automatically lays out the graph.
+ * Automatically lays-out the functional hierarchy of the graph.
  */
-function autolayout(graph) {
-    let layout = new mxHierarchicalLayout(graph, mxConstants.DIRECTION_NORTH);
+function layoutFunctions(graph) {
+    let layout = new mxGoalModelLayout(graph);
     layout.execute(graph.getDefaultParent());
+}
+
+/**
+ * Adds non-functional goals into the hierarchy next to their associated
+ * functional goals.
+ */
+function associateNonFunctions(graph) {
+
+    // fetch all the functional goals
+    var goals = graph.getChildVertices();
+
+    for (var i = 0; i < goals.length; i++) {
+        let goal = goals[i];
+        let value = goal.value;
+
+        // render all emotions
+        if (emotionsGlob[value]) {
+            renderNonFunction(emotionsGlob[goal.value], graph, goal, TYPE_EMOTIONAL);
+        }
+    
+        // render all qualities
+        if (qualitiesGlob[value]) {
+            renderNonFunction(qualitiesGlob[goal.value], graph, goal, TYPE_QUALITY);
+        }
+
+        // render all concerns
+        if (negativesGlob[value]) {
+            renderNonFunction(negativesGlob[goal.value], graph, goal, TYPE_NEGATIVE);
+        }
+
+        // render all stakeholders
+        if (stakeholdersGlob[value]) {
+            renderNonFunction(stakeholdersGlob[goal.value], graph, goal, TYPE_STAKEHOLDER);
+        }
+    }
 }
 
 /**
