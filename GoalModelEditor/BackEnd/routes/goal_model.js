@@ -146,7 +146,7 @@ router.post("/:userId/:projectId", (req, res, next) => {
 });
 
 /* POST Upload images */
-router.post("/images/:userId/:goalmodelId", (req, res, next) => {
+router.post("/images/:userId/:goalmodelId", (req, res) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
@@ -201,7 +201,7 @@ router.post("/images/:userId/:goalmodelId", (req, res, next) => {
  *  body: <xml graph file>
  *
  * =====================================================================*/
-router.post("/xml/:userId/:goalmodelId", (req, res, next) => {
+router.post("/xml/:userId/:goalmodelId", (req, res) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
@@ -242,7 +242,7 @@ router.post("/xml/:userId/:goalmodelId", (req, res, next) => {
  *  body: <xml graph file>
  *
  * =====================================================================*/
-router.get("/xml/:userId/:goalmodelId", (req, res, next) => {
+router.get("/xml/:userId/:goalmodelId", (req, res) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
@@ -275,7 +275,7 @@ router.get("/xml/:userId/:goalmodelId", (req, res, next) => {
 });
 
 /* PUT Edit Goal Model Content */
-router.put("/:userId/:goalmodelId", (req, res, next) => {
+router.put("/:userId/:goalmodelId", (req, res) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
@@ -351,7 +351,7 @@ router.put("/:userId/:goalmodelId", (req, res, next) => {
 });
 
 /* PUT Edit Goal Model Info */
-router.put("/info/:userId/:goalmodelId", (req, res, next) => {
+router.put("/info/:userId/:goalmodelId", (req, res) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
@@ -399,7 +399,7 @@ router.put("/info/:userId/:goalmodelId", (req, res, next) => {
 });
 
 /* DELETE Goal Model */
-router.delete("/:userId/:goalmodelId", (req, res, next) => {
+router.delete("/:userId/:goalmodelId", (req, res) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
@@ -425,7 +425,7 @@ router.delete("/:userId/:goalmodelId", (req, res, next) => {
 });
 
 /* Get Goal Model Content */
-router.get("/:userId/:goalmodelId", (req, res, next) => {
+router.get("/:userId/:goalmodelId", (req, res) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         //auth is not successful
@@ -497,7 +497,7 @@ router.get("/:userId/:goalmodelId", (req, res, next) => {
 });
 
 /* Get Goal Model images */
-router.get("/images/:userId/:goalmodelId", (req, res, next) => {
+router.get("/images/:userId/:goalmodelId", (req, res) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         //auth is not successful
@@ -528,25 +528,24 @@ router.get("/images/:userId/:goalmodelId", (req, res, next) => {
                 imagepath = result.DirPath + result.ModelId + "/images/";
                 let formData = new FormData();
                 fs.readdir(imagepath, function (err, items) {
+                    console.log("item length" +items.length+ "\n")
                     for (let i = 0; i < items.length; i++) {
-                        fs.readFile(
+                        let image = fs.readFileSync(
                             imagepath + items[i],
-                            "base64",
-                            function (err, image) {
-                                if (err) throw err;
-                                formData.append("image", image);
-                                if (i === (items.length - 1)) {
-                                    res.statusCode = 200;
-                                    res.format({
-                                        "multipart/form-data": function () {
-                                            res.send(formData);
-                                        }
-                                    });
-                                    console.log("get images");
-                                    return res.end();
-                                }
-                            }
+                            "base64"
                         );
+                        formData.append("image", image);
+                        console.log("appended item " + i );
+                        if (i === (items.length - 1)) {
+                            res.statusCode = 200;
+                            res.format({
+                                "multipart/form-data": function () {
+                                    res.send(formData);
+                                }
+                            });
+                            console.log("get images");
+                            return res.end();
+                        }
                     }
                 });
             }
