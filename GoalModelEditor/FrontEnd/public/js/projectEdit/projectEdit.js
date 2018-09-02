@@ -79,7 +79,7 @@ document.onkeydown = function(event) {
             '" class="' +
             goalType +
             " " +
-            '" placeholder="New goal" note="notes" value="" style="font-weight: bold"/></li>';
+            '" placeholder="New goal" note="notes" oninput="changeFontWeight(this)" value="" style="font-weight: bold"/></li>';
 
         // add new goal node to its parent node
         if ($(event.target).parent().length > 0) {
