@@ -169,6 +169,7 @@ function photonextbtn() {
     let c = document.getElementById("cluster");
     // let g = document.getElementById('generator');
     let b = document.getElementById("photonextbtn");
+    saveJSON();
 
     if (p.style.display === "none") {
         p.style.display = "block";
@@ -199,6 +200,7 @@ function clusternext() {
     let g = document.getElementById("generator");
     let b = document.getElementById("clusternextbtn");
     let r = document.getElementById("renderbtn");
+    saveJSON();
 
     if (t.style.display === "none") {
         p.style.display = "none";
@@ -326,7 +328,7 @@ function createElementFromHTML(htmlString) {
 $("#drag").hide();
 
 $("#edit").click(function () {
-
+    saveJSON();
     $(".dd-handle-style").removeClass("dd-handle");
     $(".goal-content").attr("contenteditable", "true");
     // when editing, cannot press "Enter"
@@ -385,6 +387,16 @@ $("#signout").click(function (evt) {
 });
 
 /**
- * Auto save every 60 seconds
+ * Auto save every 120 seconds
  */
-// setInterval("save()", "60000");
+setInterval("saveJSON()", "120000");
+
+/**
+ * save JSON before close or refresh this page
+ * @returns {string}
+ */
+window.onbeforeunload=function(event){
+    saveJSON();
+    // event.returnValue = "Auto save JSON";
+    return "Auto Save JSON";
+};

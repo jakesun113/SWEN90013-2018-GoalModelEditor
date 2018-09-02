@@ -39,6 +39,7 @@ var stakeholdersGlob = {};
  * Renders window.jsonData into a motivational model into graphContainer.
  */
 function renderGraph(container) {
+    saveJSON();
     console.log("Logging: renderGraph() called.");
 
     // reset - remove any existing graph if render is called
