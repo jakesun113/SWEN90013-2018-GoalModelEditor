@@ -26,7 +26,7 @@ const db = require(path.resolve(
  *      }
  *
  */
-router.get("/list/:userId", (req, res, next) => {
+router.get("/list/:userId", (req, res) => {
     // (1) authenticate request
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
@@ -35,8 +35,7 @@ router.get("/list/:userId", (req, res, next) => {
     }
 
     // (2) fetch project list
-    db
-        .getProjectGoalModelList(req.params.userId)
+    db.getProjectGoalModelList(req.params.userId)
         .then(result => {
             res.statusCode = 200;
             let projects = {};
@@ -76,7 +75,7 @@ router.get("/list/:userId", (req, res, next) => {
 });
 
 /* POST Create Project */
-router.post("/:userId", function(req, res, next) {
+router.post("/:userId", function(req, res) {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
@@ -85,8 +84,7 @@ router.post("/:userId", function(req, res, next) {
     }
 
     // create new project
-    db
-        .createProject(
+    db.createProject(
             req.body.project_name,
             req.body.description,
             0,
@@ -111,7 +109,7 @@ router.post("/:userId", function(req, res, next) {
 });
 
 /* PUT Edit Project */
-router.put("/:userId/:projectId", (req, res, next) => {
+router.put("/:userId/:projectId", (req, res) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
@@ -120,8 +118,7 @@ router.put("/:userId/:projectId", (req, res, next) => {
     }
 
     // get the old project info
-    db
-        .getProject(req.params.projectId)
+    db.getProject(req.params.projectId)
         .then(result => {
             if (result.OwnerId !== req.params.userId) {
                 res.statusCode = 403;
@@ -165,7 +162,7 @@ router.put("/:userId/:projectId", (req, res, next) => {
 });
 
 /* DELETE Delete Project */
-router.delete("/:userId/:projectId", (req, res, next) => {
+router.delete("/:userId/:projectId", (req, res) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
@@ -174,8 +171,7 @@ router.delete("/:userId/:projectId", (req, res, next) => {
     }
 
     // get the old project info
-    db
-        .getProject(req.params.projectId)
+    db.getProject(req.params.projectId)
         .then(result => {
             if (result.OwnerId !== req.params.userId) {
                 res.statusCode = 403;

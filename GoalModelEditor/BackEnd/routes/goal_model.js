@@ -40,8 +40,7 @@ router.post("/:userId/:projectId", (req, res, next) => {
     let dirpath = "./UserFiles/" + req.params.userId + "/";
 
     // create new goal model
-    db
-        .createGoalModel(
+    db.createGoalModel(
             req.body.model_name,
             req.body.description,
             dirpath,
@@ -284,8 +283,7 @@ router.put("/:userId/:goalmodelId", (req, res) => {
     }
 
     let dirpath = "";
-    db
-        .getGoalModel(req.params.goalmodelId)
+    db.getGoalModel(req.params.goalmodelId)
         .then(result => {
             dirpath = result.DirPath;
             if (dirpath === "") {
@@ -361,8 +359,7 @@ router.put("/info/:userId/:goalmodelId", (req, res) => {
 
     // update goal model
     let dirpath = "./UserFiles/" + req.params.userId + "/";
-    db
-        .updateGpalModel(
+    db.updateGpalModel(
             req.params.goalmodelId,
             req.body.model_name,
             req.body.description,
@@ -408,8 +405,7 @@ router.delete("/:userId/:goalmodelId", (req, res) => {
     }
 
     // delete goal model
-    db
-        .deleteGoalModel(req.params.userId, req.params.goalmodelId)
+    db.deleteGoalModel(req.params.userId, req.params.goalmodelId)
         .then(result => {
             console.log(result);
             res.statusCode = 204;
@@ -435,8 +431,7 @@ router.get("/:userId/:goalmodelId", (req, res) => {
     }
 
     var filepath = ""; //store the file path of goal model in this
-    db
-        .getGoalModel(req.params.goalmodelId)
+    db.getGoalModel(req.params.goalmodelId)
         .then(result => {
             //store the file path
             filepath =
@@ -507,8 +502,7 @@ router.get("/images/:userId/:goalmodelId", (req, res) => {
     }
 
     var imagepath = "";
-    db
-        .getGoalModel(req.params.goalmodelId)
+    db.getGoalModel(req.params.goalmodelId)
         .then(result => {
             //store the file path
             imagepath = result.DirPath + result.ModelId + "/images/";
@@ -569,13 +563,13 @@ router.get("/images/:userId/:goalmodelId", (req, res) => {
 });
 
 /* Recursively creates the whole path to a directory */
-function createDirectoryPath(filePath) {
-    if (fs.existsSync(filePath)) {
+function createDirectoryPath(filepath) {
+    if (fs.existsSync(filepath)) {
         return true;
     }
-    let dirname = path.dirname(filePath);
+    let dirname = path.dirname(filepath);
     createDirectoryPath(dirname);
-    fs.mkdirSync(filePath);
+    fs.mkdirSync(filepath);
 }
 
 module.exports = router;
