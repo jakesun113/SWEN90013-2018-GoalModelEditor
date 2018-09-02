@@ -160,7 +160,7 @@ router.post("/images/:userId/:goalmodelId", (req, res, next) => {
         if (err) {
             console.log(err);
         }
-        let dirpath = "./UserFiles/" + req.params.userId + "/images/";
+        let dirpath = "./UserFiles/" + req.params.userId + "/" + req.params.goalmodelId + "/images/";
         createDirectoryPath(dirpath);
 
         for (let i of files["image"]) {
@@ -528,29 +528,25 @@ router.get("/images/:userId/:goalmodelId", (req, res, next) => {
                 imagepath = result.DirPath + result.ModelId + "/images/";
                 let formData = new FormData();
                 fs.readdir(imagepath, function (err, items) {
-                    let j = 0;
-                    if (items.length) {
-                        for (let i = 0; i < items.length; i++) {
-                            fs.readFile(
-                                imagepath + items[i],
-                                "base64",
-                                function (err, image) {
-                                    if (err) throw err;
-                                    formData.append("image", image);
-                                    j++;
-                                    if (j === items.length) {
-                                        res.statusCode = 200;
-                                        res.format({
-                                            "multipart/form-data": function () {
-                                                res.send(formData);
-                                            }
-                                        });
-                                        console.log("get images");
-                                        return res.end();
-                                    }
+                    for (let i = 0; i < items.length; i++) {
+                        fs.readFile(
+                            imagepath + items[i],
+                            "base64",
+                            function (err, image) {
+                                if (err) throw err;
+                                formData.append("image", image);
+                                if (i === (items.length - 1)) {
+                                    res.statusCode = 200;
+                                    res.format({
+                                        "multipart/form-data": function () {
+                                            res.send(formData);
+                                        }
+                                    });
+                                    console.log("get images");
+                                    return res.end();
                                 }
-                            );
-                        }
+                            }
+                        );
                     }
                 });
             }
