@@ -213,7 +213,7 @@ function parseClusterNode(node) {
         node.GoalID +
         '" class="' +
         node.GoalType +
-        " dd-handle" + '"' +
+        " dd-handle dd-handle-style" + '"' +
         'note="' +
         node.GoalNote +
         '"' +
@@ -374,8 +374,7 @@ function listParseGoalsToJSON(data, list, type) {
     for (let i = 0; i < data.length; i++) {
         let $goal = $($(data).children("input")[i]);
         let used = false;
-        // alert($goal.css("font-weight"));
-        if ($goal.css("font-weight") === 400) {
+        if ($goal.css("font-weight") === "400") {
             used = true;
         }
         list.push(
@@ -503,7 +502,7 @@ function getTypeIconPath(type) {
         case "Functional":
             return PATH_FUNCTIONAL;
         case "Quality":
-            return PATH_EMOTIONAL;
+            return PATH_QUALITY;
         case "Negative":
             return PATH_NEGATIVE;
         case "Emotional":
