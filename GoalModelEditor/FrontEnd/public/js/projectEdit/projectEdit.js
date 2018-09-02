@@ -248,8 +248,11 @@ function drop_zone(clusterNumber) {
         $(newNode).css("font-weight", "bold");
 
         newNode.classList.add("dd-handle");
+        newNode.classList.add("jakeissb");
 
-        $(newNode).html($(nowCopying).children("input")[0].value);
+        $(newNode).html('<img src=' + PATH_EMOTIONAL + ' class="mr-1" style="height:100%;float:left">' +
+            '<div>' +
+            $(nowCopying).children("input")[0].value) +'</div>';
 
         draggableWrapper += newNode.outerHTML;
         draggableWrapper += "</li></ol>";

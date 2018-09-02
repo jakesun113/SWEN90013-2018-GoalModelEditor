@@ -15,6 +15,7 @@
     margin: 0;
     padding: 0;
     list-style: none;
+    width: 100%;
 }
 .dd-list .dd-list {
     padding-left: 30px;
@@ -45,6 +46,8 @@
     border-radius: 3px;
     box-sizing: border-box;
 }
+
+
 .dd-handle:hover {
     color: #2ea8e5;
     background: #fff;
