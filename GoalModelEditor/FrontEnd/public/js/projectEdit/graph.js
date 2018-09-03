@@ -62,7 +62,6 @@ function renderGraph(container) {
 
     // grab the clusters from window.jsonData
     var clusters = window.jsonData.GoalModelProject.Clusters;
-    console.log(clusters);
 
     // render the graph
     graph.getModel().beginUpdate(); // start transaction
@@ -225,7 +224,7 @@ function renderNonFunction(descriptions, graph, source=null, type="None") {
         "shape=image;image=" + image
     );
     let edge = graph.insertEdge(null, null, null, source, node);
-    console.log(edge);
+    // console.log(edge);
 
     // make the edge invisible - we still want to create the edge
     // the edge is needed when running the autolayout logic
@@ -273,35 +272,4 @@ function associateNonFunctions(graph) {
             renderNonFunction(stakeholdersGlob[goal.value], graph, goal, TYPE_STAKEHOLDER);
         }
     }
-}
-
-/**
- * Parses the graph to XML, to be saved/loaded in a differenct session.
- */
-function parseToXML(graph) {
-    let encoder = new mxCodec();
-    let node = encoder.encode(graph.getModel());
-    let xml = mxUtils.getPrettyXml(node);
-    return xml;
-}
-
-/**
- * Renders the graph from a (saved) XML file.
- */
-function renderFromXML(xml) {
-    console.log(xml);
-    let doc = mxUtils.parseXml(xml);
-    console.log(doc);
-    let codec = new mxCodec(doc);
-    let elt = doc.documentElement.firstChild;
-    let cells = [];
-
-    console.log(codec);
-    while (elt != null) {
-        console.log(elt);
-        cells.push(codec.decode(elt));
-        elt = elt.nextSibling;
-    }
-
-    graph.addCells(cells);
 }

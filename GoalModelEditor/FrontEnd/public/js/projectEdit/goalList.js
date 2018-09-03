@@ -321,7 +321,7 @@ function getData() {
             ClusterGoals: []
         };
         // if there're goals in the cluster
-        if ($cluster.children("ol")) {
+        if ($cluster.children("ol").length > 0) {
             let listItems = $($cluster.children("ol")).children("li");
             let $listItems = $(listItems);
             // iterate all list items and their subgoals if there is one
@@ -341,12 +341,13 @@ function getData() {
                     );
                     goals.push(innerClusterGoalJSON);
                 }
-                console.log(goals);
+                // console.log(goals);
                 clusterJSON.ClusterGoals.push(goals[0]);
             }
+            clusterList.push(clusterJSON);
         }
-        console.log(clusterJSON);
-        clusterList.push(clusterJSON);
+        // console.log(clusterJSON);
+
     }
     // change the cluster JSON data
     window.jsonData.GoalModelProject.Clusters = clusterList;
