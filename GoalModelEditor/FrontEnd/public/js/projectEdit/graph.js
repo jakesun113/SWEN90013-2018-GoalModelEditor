@@ -32,6 +32,7 @@ const HORIZONTAL_SPACING = 100;
 var graph = new mxGraph(document.getElementById("graphContainer"));
 graph.setPanning(true);
 graph.panningHandler.useLeftButtonForPanning = true;
+
 var emotionsGlob = {};
 var negativesGlob = {};
 var qualitiesGlob = {};
@@ -49,6 +50,12 @@ function renderGraph(container) {
     graph = new mxGraph(container);
     graph.setPanning(true);
     graph.panningHandler.useLeftButtonForPanning = true;
+
+    // reset the accumulators for non-functional goals
+    emotionsGlob = {};
+    negativesGlob = {};
+    qualitiesGlob = {};
+    stakeholdersGlob = {};
 
     // check that browser is supported
     if (!mxClient.isBrowserSupported()) {
