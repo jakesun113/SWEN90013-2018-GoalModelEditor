@@ -14,10 +14,6 @@ const bodyParser = require("body-parser");
 
 // helper modules from stdlib
 const logger = require("morgan");
-const path = require("path");
-
-// database connection
-const database = require("../Database/DBModule/DBModule.js");
 
 // routes to endpoints
 const indexRouter = require("./routes/index");
@@ -28,7 +24,7 @@ const goalModelRouter = require("./routes/goal_model");
 // server config
 let config = require("./config");
 
-var app = express();
+let app = express();
 
 // view engine setup
 app.set("views", config.FRONT_VIEW_DIR);

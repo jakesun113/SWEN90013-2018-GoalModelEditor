@@ -154,7 +154,7 @@ const SQL_CHECK_PRIORITY_ON_GOALMODEL =
     "INNER JOIN GoalModel ON User_Project.projectId = GoalModel.Project" +
     " where BINARY User_Project.UserId = ? AND BINARY GoalModel.ModelId = ?";
 
-const DBModule = function() {
+const DBModule = function () {
     let DBModule = {};
     DBModule.SUCCESS = 1;
     DBModule.ALREADY_EXIST = 0;
@@ -173,17 +173,15 @@ const DBModule = function() {
      * @param Size
      * @param UserId
      */
-    DBModule.createProject = function(
-        ProjectName,
-        ProjectDescription,
-        Size,
-        UserId
-    ) {
-        return new Promise(function(resolve, reject) {
+    DBModule.createProject = function (ProjectName,
+                                       ProjectDescription,
+                                       Size,
+                                       UserId) {
+        return new Promise(function (resolve, reject) {
             pool.query(
                 SQL_CREATE_PROJ,
                 [ProjectName, ProjectDescription, Size, UserId],
-                function(err, result) {
+                function (err, result) {
                     if (err) {
                         console.log(JSON.stringify(err));
                         if (err.errno === 1062) {
@@ -200,11 +198,12 @@ const DBModule = function() {
                             }); // unknown error
                         }
                     } else {
+                        console.log(result);
                         // success
                         pool.query(
                             SQL_RET_PROJECTID,
                             [ProjectName, UserId],
-                            function(err, result) {
+                            function (err, result) {
                                 if (err) {
                                     console.log(err);
                                     reject({
@@ -232,18 +231,16 @@ const DBModule = function() {
      * @param FirstName
      * @param LastName
      */
-    DBModule.insertUser = function(
-        username,
-        password,
-        Email,
-        FirstName,
-        LastName
-    ) {
-        return new Promise(function(resolve, reject) {
+    DBModule.insertUser = function (username,
+                                    password,
+                                    Email,
+                                    FirstName,
+                                    LastName) {
+        return new Promise(function (resolve, reject) {
             pool.query(
                 SQL_USER_REGISTER,
                 [username, password, Email, FirstName, LastName],
-                function(err, result) {
+                function (err, result) {
                     if (err) {
                         console.log(JSON.stringify(err));
                         // MYSQL error number for duplicate entry
@@ -272,12 +269,10 @@ const DBModule = function() {
      * @param username
      * @param password
      */
-    DBModule.login = function(username, password) {
-        return new Promise(function(resolve, reject) {
-            pool.query(SQL_USER_LOGIN, [username, password], function(
-                err,
-                result
-            ) {
+    DBModule.login = function (username, password) {
+        return new Promise(function (resolve, reject) {
+            pool.query(SQL_USER_LOGIN, [username, password], function (err,
+                                                                       result) {
                 if (err) {
                     return reject({
                         code: DBModule.UNKNOWN_ERROR,
@@ -286,10 +281,8 @@ const DBModule = function() {
                 }
                 if (result.affectedRows === 1) {
                     // success
-                    pool.query(SQL_RET_USERID, [username, password], function(
-                        err,
-                        result
-                    ) {
+                    pool.query(SQL_RET_USERID, [username, password], function (err,
+                                                                               result) {
                         if (err) {
                             return reject(err);
                         }
@@ -309,7 +302,7 @@ const DBModule = function() {
      * @return format(if error) : {code:<Error Code>, message:<Error Message>}
      * @param userid
      */
-    DBModule.getProjectGoalModelList = function(userid) {
+    DBModule.getProjectGoalModelList = function (userid) {
         return new Promise((resolve, reject) => {
             pool.query(SQL_GET_PROJ_GOALMODEL, [userid], (err, result) => {
                 if (err) {
@@ -329,17 +322,15 @@ const DBModule = function() {
      * @param filePath
      * @param ProjectId
      */
-    DBModule.createGoalModel = function(
-        modelName,
-        modelDescription,
-        filePath,
-        ProjectId
-    ) {
-        return new Promise(function(resolve, reject) {
+    DBModule.createGoalModel = function (modelName,
+                                         modelDescription,
+                                         filePath,
+                                         ProjectId) {
+        return new Promise(function (resolve, reject) {
             pool.query(
                 SQL_CREATE_GOALMODEL,
                 [modelName, modelDescription, filePath, ProjectId],
-                function(err, result) {
+                function (err, result) {
                     if (err) {
                         console.log(JSON.stringify(err));
                         // MYSQL error number for duplicate entry
@@ -359,7 +350,7 @@ const DBModule = function() {
                         pool.query(
                             SQL_RET_GOALMODEL,
                             [modelName, ProjectId],
-                            function(err, result) {
+                            function (err, result) {
                                 if (err) {
                                     console.log(err);
                                     reject({
@@ -394,9 +385,9 @@ const DBModule = function() {
      * @param UserId
      * @param ProjectId
      */
-    DBModule.getGoalModelList = function(UserId, ProjectId) {
+    DBModule.getGoalModelList = function (UserId, ProjectId) {
         return new Promise((resolve, reject) => {
-            pool.getConnection(function(err, connection) {
+            pool.getConnection(function (err, connection) {
                 connection.query(
                     SQL_CHECK_PRIORITY_ON_PROJECT,
                     [UserId, ProjectId],
@@ -420,7 +411,7 @@ const DBModule = function() {
                             connection.query(
                                 SQL_RET_GOALMODEL_OF_PROJ,
                                 [ProjectId],
-                                function(err, result) {
+                                function (err, result) {
                                     connection.release();
                                     if (err) {
                                         return reject({
@@ -444,7 +435,7 @@ const DBModule = function() {
      * @return format(if error) : {code:<Error Code>, message:<Error Message>}
      * @param projectId
      */
-    DBModule.getProject = function(projectId) {
+    DBModule.getProject = function (projectId) {
         return new Promise((resolve, reject) => {
             pool.query(SQL_GET_PROJECT, [projectId], (err, result) => {
                 if (err) {
@@ -464,7 +455,7 @@ const DBModule = function() {
      * @return format(if error) : {code:<Error Code>, message:<Error Message>}
      * @param ModelId
      */
-    DBModule.getGoalModel = function(ModelId) {
+    DBModule.getGoalModel = function (ModelId) {
         return new Promise((resolve, reject) => {
             pool.query(SQL_GET_GOALMODEL_BY_ID, [ModelId], (err, result) => {
                 if (err) {
@@ -488,15 +479,13 @@ const DBModule = function() {
      * @param projectDescription
      * @param size
      */
-    DBModule.updateProject = function(
-        userId,
-        projectId,
-        projectName,
-        projectDescription,
-        size
-    ) {
+    DBModule.updateProject = function (userId,
+                                       projectId,
+                                       projectName,
+                                       projectDescription,
+                                       size) {
         return new Promise((resolve, reject) => {
-            pool.getConnection(function(err, connection) {
+            pool.getConnection(function (err, connection) {
                 connection.query(
                     SQL_CHECK_PRIORITY_ON_PROJECT,
                     [userId, projectId],
@@ -571,15 +560,13 @@ const DBModule = function() {
      * @param modelDescription
      * @param dirPath
      */
-    DBModule.updateGoalModel = function(
-        userId,
-        modelId,
-        modelName,
-        modelDescription,
-        dirPath
-    ) {
+    DBModule.updateGoalModel = function (userId,
+                                         modelId,
+                                         modelName,
+                                         modelDescription,
+                                         dirPath) {
         return new Promise((resolve, reject) => {
-            pool.getConnection(function(err, connection) {
+            pool.getConnection(function (err, connection) {
                 connection.query(
                     SQL_CHECK_PRIORITY_ON_GOALMODEL,
                     [userId, modelId],
@@ -627,23 +614,23 @@ const DBModule = function() {
                                         connection.query(
                                             SQL_RET_MODEL,
                                             [modelId],
-                                            function(err, result) {
+                                            function (err, result) {
                                                 connection.release();
                                                 if (err) {
                                                     console.log(err);
                                                     return reject({
                                                         code:
-                                                            DBModule.UNKNOWN_ERROR,
+                                                        DBModule.UNKNOWN_ERROR,
                                                         message: err.sqlMessage
                                                     }); // unknown error
                                                 } else {
                                                     // success
                                                     return resolve({
                                                         model_name:
-                                                            result[0].ModelName,
+                                                        result[0].ModelName,
                                                         last_modified:
-                                                            result[0]
-                                                                .LastModified
+                                                        result[0]
+                                                            .LastModified
                                                     });
                                                 }
                                             }
@@ -668,7 +655,7 @@ const DBModule = function() {
      * Get the user profiles by id.
      * @param UserId
      */
-    DBModule.getUserProfile = function(UserId) {
+    DBModule.getUserProfile = function (UserId) {
         return new Promise((resolve, reject) => {
             pool.query(SQL_GET_USER_PROFILE, [UserId], (err, result) => {
                 if (err) {
@@ -690,7 +677,7 @@ const DBModule = function() {
      * @param OldPassword
      * @param NewPassword
      */
-    DBModule.changePassword = function(UserId, OldPassword, NewPassword) {
+    DBModule.changePassword = function (UserId, OldPassword, NewPassword) {
         return new Promise((resolve, reject) => {
             pool.query(
                 SQL_CHANGE_USER_PASSWORD,
@@ -725,7 +712,7 @@ const DBModule = function() {
      * @param LastName
      * @param Email
      */
-    DBModule.updateUserProfile = function(UserId, FirstName, LastName, Email) {
+    DBModule.updateUserProfile = function (UserId, FirstName, LastName, Email) {
         return new Promise((resolve, reject) => {
             pool.query(
                 SQL_UPDATE_USER_PROFILE,
@@ -763,9 +750,9 @@ const DBModule = function() {
      * @param userId
      * @param modelId
      */
-    DBModule.deleteGoalModel = function(userId, modelId) {
+    DBModule.deleteGoalModel = function (userId, modelId) {
         return new Promise((resolve, reject) => {
-            pool.getConnection(function(err, connection) {
+            pool.getConnection(function (err, connection) {
                 connection.query(
                     SQL_CHECK_PRIORITY_ON_GOALMODEL,
                     [userId, modelId],
@@ -827,9 +814,9 @@ const DBModule = function() {
      * @param userId
      * @param projectId
      */
-    DBModule.deleteProject = function(userId, projectId) {
+    DBModule.deleteProject = function (userId, projectId) {
         return new Promise((resolve, reject) => {
-            pool.getConnection(function(err, connection) {
+            pool.getConnection(function (err, connection) {
                 connection.query(
                     SQL_CHECK_PRIORITY_ON_PROJECT,
                     [userId, projectId],
