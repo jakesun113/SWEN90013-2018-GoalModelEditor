@@ -1,6 +1,6 @@
 /* Server Configuration File
  */
-
+"use strict";
 const path = require("path");
 
 module.exports = {

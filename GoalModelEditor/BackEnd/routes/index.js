@@ -33,8 +33,4 @@ router.get("/profile", function(req, res) {
     res.redirect("/login");
 });
 
-router.get("/edit", function(req, res) {
-    res.render("user/project/projectedit");
-});
-
 module.exports = router;
