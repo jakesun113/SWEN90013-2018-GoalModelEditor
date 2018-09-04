@@ -2,7 +2,7 @@
 const mysql = require("../../BackEnd/node_modules/mysql/index");
 const Promise = require("../../BackEnd/node_modules/bluebird/js/release/bluebird");
 
-const dbconfig = require("./dbconfig.json");
+const dbConfig = require("./dbConfig.json");
 
 let pool = null;
 
@@ -153,6 +153,11 @@ const SQL_CHECK_PRIORITY_ON_GOALMODEL =
     " User_Project " +
     "INNER JOIN GoalModel ON User_Project.projectId = GoalModel.Project" +
     " where BINARY User_Project.UserId = ? AND BINARY GoalModel.ModelId = ?";
+/**
+ *  Predefined MYSQL error number for duplicate entry
+ * @type {number}
+ */
+const DUP_ENTRY=1062;
 
 const DBModule = function () {
     let DBModule = {};
@@ -164,7 +169,7 @@ const DBModule = function () {
     DBModule.MESSAGE_ACCESS_DENIED =
         "You don't have the right to do so. Please contact your project manager.";
 
-    pool = mysql.createPool(dbconfig);
+    pool = mysql.createPool(dbConfig);
 
     /**
      * Store the information of a new project into the database
@@ -184,7 +189,7 @@ const DBModule = function () {
                 function (err, result) {
                     if (err) {
                         console.log(JSON.stringify(err));
-                        if (err.errno === 1062) {
+                        if (err.errno === DUP_ENTRY) {
                             // MYSQL error number for duplicate entry
                             // Username already exists.
                             reject({
@@ -244,7 +249,7 @@ const DBModule = function () {
                     if (err) {
                         console.log(JSON.stringify(err));
                         // MYSQL error number for duplicate entry
-                        if (err.errno === 1062) {
+                        if (err.errno === DUP_ENTRY) {
                             // Username already exists.
                             reject({
                                 code: DBModule.ALREADY_EXIST,
@@ -334,7 +339,7 @@ const DBModule = function () {
                     if (err) {
                         console.log(JSON.stringify(err));
                         // MYSQL error number for duplicate entry
-                        if (err.errno === 1062) {
+                        if (err.errno === DUP_ENTRY) {
                             // Username already exists.
                             reject({
                                 code: DBModule.ALREADY_EXIST,
@@ -518,7 +523,7 @@ const DBModule = function () {
                                     connection.release();
                                     if (err) {
                                         console.log(err);
-                                        if ((err.errno = 1062)) {
+                                        if ((err.errno = DUP_ENTRY)) {
                                             console.log("dup");
                                             return reject({
                                                 code: DBModule.ALREADY_EXIST,
@@ -594,7 +599,7 @@ const DBModule = function () {
                                     if (err) {
                                         connection.release();
                                         console.log(err);
-                                        if ((err.errno = 1062)) {
+                                        if ((err.errno = DUP_ENTRY)) {
                                             console.log("dup");
                                             return reject({
                                                 code: DBModule.ALREADY_EXIST,
