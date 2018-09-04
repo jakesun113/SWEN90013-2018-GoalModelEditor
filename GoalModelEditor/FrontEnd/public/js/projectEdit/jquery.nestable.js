@@ -55,14 +55,14 @@
         fixedDepth: false, //fixed item's depth
         fixed: false,
         includeContent: false,
-        scroll: false,
+        scroll: true,
         scrollSensitivity: 1,
-        scrollSpeed: 5,
+        scrollSpeed: 10,
         scrollTriggers: {
-            top: 40,
+            top: 200,
             left: 40,
             right: -40,
-            bottom: -40
+            bottom: -10
         },
         effect: {
             animation: "none",
@@ -999,6 +999,22 @@
                 mouse.moving = true;
                 return;
             }
+
+            window.jQuery.fn.scrollParent = function() {
+                var overflowRegex = /(auto|scroll)/,
+                    position = this.css( "position" ),
+                    excludeStaticParent = position === "absolute",
+                    scrollParent = this.parents().filter( function() {
+                        var parent = $( this );
+                        if ( excludeStaticParent && parent.css( "position" ) === "static" ) {
+                            return false;
+                        }
+                        var overflowState = parent.css(["overflow", "overflowX", "overflowY"]);
+                        return (overflowRegex).test( overflowState.overflow + overflowState.overflowX + overflowState.overflowY );
+                    }).eq( 0 );
+
+                return position === "fixed" || !scrollParent.length ? $( this[ 0 ].ownerDocument || document ) : scrollParent;
+            };
 
             // do scrolling if enable
             if (opt.scroll) {
