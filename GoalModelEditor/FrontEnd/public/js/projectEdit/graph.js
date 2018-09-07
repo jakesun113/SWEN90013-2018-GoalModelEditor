@@ -1,8 +1,8 @@
 "use strict";
 
 // default width/height of MM symbols
-const SYMBOL_WIDTH = 110;
-const SYMBOL_HEIGHT = 60;
+const SYMBOL_WIDTH = 120;
+const SYMBOL_HEIGHT = 100;
 
 // default x and y coord of the MM symbols
 const SYMBOL_X_COORD = 0;
@@ -199,22 +199,22 @@ function renderNonFunction(descriptions, graph, source=null, type="None") {
     let image = "";
     switch (type) {
         case TYPE_EMOTIONAL:
-            dX = -50;
+            dX = -70;
             dY = -20;
             image = PATH_EMOTIONAL;
             break;
         case TYPE_NEGATIVE:
-            dX = 50;
+            dX = 70;
             dY = -20;
             image = PATH_NEGATIVE;
             break;
         case TYPE_QUALITY:
-            dX = -50;
+            dX = -70;
             dY = 20;
             image = PATH_QUALITY;
             break;
         case TYPE_STAKEHOLDER:
-            dX = 50;
+            dX = 70;
             dY = 10;
             image = PATH_STAKEHOLDER;
             break;
