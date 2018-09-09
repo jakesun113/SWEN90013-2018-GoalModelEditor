@@ -1,13 +1,23 @@
-// Setup form validation on all forms
+/***
+ * JavaScript For Registration and eventListeners
+ * @author SICHENG LIU
+ */
+
+/**
+ * Setup form validation on the registration form
+ */
 $.validate({
     modules : 'security',
     reCaptchaSiteKey: '...',
     reCaptchaTheme: 'light'
 });
 
-// Register submit
-// send the request to front-end server with {username, firstname, lastname, email, password}
-// if successful redirect the user to home page
+/**
+ * Register submit (click) EventListener
+ * send the request to front-end server with {username, firstname, lastname, email, password}
+ * if successful redirect the user to home page
+ * @trigger {id:register|HTMLForm}
+ */
 $("#register").submit(function(evt) {
     evt.preventDefault();
     let url = "/user/register";
@@ -22,7 +32,21 @@ $("#register").submit(function(evt) {
         if (jqXHR.statusText === "OK") {
             window.location.href = "/login";
         } else {
-            alert(jqXHR.responseJSON.message);
+            warningMessageSlide(jqXHR.responseJSON.message);
         }
     }); // end ajax
 }); // end submit
+
+
+/**
+ * Function for warning notifications to show with given message
+ *
+ * @param {String} message
+ */
+function warningMessageSlide(message) {
+    $("#warning-alert").html(message);
+    $("#warning-alert")
+        .slideDown()
+        .delay(3000)
+        .slideUp();
+}
