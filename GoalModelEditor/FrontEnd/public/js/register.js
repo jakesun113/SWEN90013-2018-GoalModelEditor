@@ -3,9 +3,19 @@
  * @author SICHENG LIU
  */
 
+// Variable for username Exist validator
+let username = "";
+
 /**
  * Setup form validation on the registration form
  */
+$.formUtils.addValidator({
+    name : 'usernameExist',
+    validatorFunction : function(value, $el, config, language, $form) {
+        return value !== username;
+    },
+});
+
 $.validate({
     modules : 'security',
     reCaptchaSiteKey: '...',
@@ -29,8 +39,10 @@ $("#register").submit(function(evt) {
             window.location.href = "/login";
         }
     }).fail(function(jqXHR) {
-        if (jqXHR.statusText === "OK") {
+        if (jqXHR.status === 200) {
             window.location.href = "/login";
+        } else if (jqXHR.status === 409){
+            usernameExistHandler();
         } else {
             warningMessageSlide(jqXHR.responseJSON.message);
         }
@@ -49,4 +61,17 @@ function warningMessageSlide(message) {
         .slideDown()
         .delay(3000)
         .slideUp();
+}
+
+/**
+ * Function for error message customization when username exists
+ *
+ */
+function usernameExistHandler() {
+    username = $("#username").val();
+    $("#username").attr("data-validation-error-msg", "User name already exists. Please choose another one");
+    $("#username").focus();
+    $("#password").focus();
+    $("#username").focus();
+    $("#username").attr("data-validation-error-msg", "Please enter an alphanumeric value (3-12 characters)");
 }

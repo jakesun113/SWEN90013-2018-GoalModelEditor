@@ -1,40 +1,27 @@
-// function validate(){
-//     var username = document.getElementById("username").value;
-//     var password = document.getElementById("password").value;
-//     if ( username == "Formget" && password == "formget#123"){
-//         alert ("Login successfully");
-//         window.location = "filesystem.html";
-//         return false;
-//     }
-//     else {
-//         if (username == null || username == "") {
-//             alert("Please enter the username.");
-//             return false;
-//         }
-//         if (password == null || password == "") {
-//             alert("Please enter the password.");
-//             return false;
-//         }
-//         else{
-//             alert("Error Password or Username");/*displays error message*/
-//             }
-//     }
-// }
+/***
+ * JavaScript For Login and eventListeners
+ * @author SICHENG LIU
+ */
 
-// Login submit
-// send the request to front-end server with {username, password}
-// store the response (id) into cookies - Name: UID
+/**
+ * Login submit (click) EventListener
+ * send the request to the server with {username, password}
+ * store the response (username) into cookies - Name: UID
+ * store the response (token) into cookies - Name: LOKIDIED
+ *
+ * @trigger {id:register|HTMLForm}
+ */
 $("#login").submit(function(evt) {
     evt.preventDefault();
-    var url = "/user/login";
-    var formData = $(this).serialize();
+    let url = "/user/login";
+    let formData = $(this).serialize();
     $.ajax(url, {
         data: formData,
         type: "POST",
         success: function(res) {
-            var tokenP = JSON.parse(JSON.stringify(res));
+            let tokenP = JSON.parse(JSON.stringify(res));
             console.log(tokenP);
-            var cookie = { token: tokenP.token, uid: tokenP.user_id };
+            let cookie = { token: tokenP.token, uid: tokenP.user_id };
             Cookies.set("LOKIDIED", JSON.stringify(cookie), {
                 expires: 1,
                 path: "/"
@@ -48,11 +35,11 @@ $("#login").submit(function(evt) {
         }
     }).fail(function(jqXHR) {
         $("#login-error").html(
-            jqXHR.responseJSON.message + " <br>Please try again."
+            "You have entered an invalid username or password.<br>Please try again."
         );
         $("#login-error")
             .slideDown()
             .delay(3000)
             .slideUp();
-    }); // end ajax
-}); // end submit
+    });
+});
