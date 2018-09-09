@@ -454,8 +454,20 @@ setInterval("saveJSON()", "120000");
  * save JSON before close or refresh this page
  * @returns {string}
  */
-window.onbeforeunload = function (event) {
+window.onbeforeunload = function checkLeave(event) {
+    event.preventDefault();
     saveJSON();
-    // event.returnValue = "Auto save JSON";
-    return "Auto Save JSON";
+    sendXML();
+    console.log("Auto Saved!");
 };
+
+/**
+ * render warning
+ */
+$("#renderbtn").click(function () {
+    if(isXMLExisted){
+        $("#renderWarning").modal();
+    }else{
+        renderGraph(document.getElementById('graphContainer'));
+    }
+});

@@ -31,6 +31,8 @@ function sendXML() {
     }); // end ajax
 }
 
+let isXMLExisted = false;
+
 function getXML() {
     let secret = JSON.parse(Cookies.get("LOKIDIED"));
     let token = secret.token;
@@ -43,6 +45,7 @@ function getXML() {
         type: "GET",
         headers: { Authorization: "Bearer " + token },
         success: function(xmlFile) {
+            isXMLExisted = true;
             renderFromXML(xmlFile.xml);
             $('#loadingModal').modal('toggle');
         }

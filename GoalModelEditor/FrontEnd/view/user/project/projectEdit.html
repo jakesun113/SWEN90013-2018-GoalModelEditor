@@ -33,7 +33,6 @@
     <!--&lt;!&ndash; script for rendering graph #currently a stub &ndash;&gt;-->
     <!--<script type="text/javascript" src="/js/graph.js">-->
     <!--</script>-->
-
 </head>
 
 
@@ -218,7 +217,7 @@
                 <div>
                     <h4>Cluster</h4>
                     <button class="btn-sm btn-outline-primary" id="clusterNextBtn" onclick="handleNextToRender()">Next</button>
-                    <button style="display: none" class="btn-sm btn-outline-primary" id="renderbtn" onclick="renderGraph(document.getElementById('graphContainer'))">Render</button>
+                    <button style="display: none" class="btn-sm btn-outline-primary" id="renderbtn">Render</button>
                     <button type="button" class="btn-sm btn-outline-primary" id="edit">Edit All</button>
                     <button type="button" class="btn-sm btn-outline-primary" id="drag">Drag All</button>
                     <button type="button" class="btn-sm btn-outline-primary" id="Export">ExportSVG</button>
@@ -262,9 +261,31 @@
     </div>
 </div>
 
-
-
-
+<!-- Render warning project modal start -->
+<div class="modal fade" id="renderWarning" tabindex="-1" role="dialog"
+     aria-labelledby="new-model" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Warning</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" id="delete_project">
+                <div class="modal-body">
+                    <lable type="text">Do you want to overwrite current symbolic goal model?</lable>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" style="background-color: transparent"
+                            data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="renderGraph(document.getElementById('graphContainer'))">Confirm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Render warning modal end -->
 
 <!-- Loads and initializes the Bootstrap javascript -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -290,7 +311,6 @@
 
 
 
-
 <!--add nestable library-->
 <script src="/js/projectEdit/jquery.nestable.js"></script>
 <script src="/js/projectEdit/image.js"></script>
@@ -298,11 +318,13 @@
 <script src="/js/projectEdit/projectEdit.js"></script>
 <script src="/js/projectEdit/graphXML.js"></script>
 
+
 <footer>
     <p class="text-center">&copy;<em>&nbsp;2018 The University of Melbourne</em></p>
 </footer>
 
 <!--</div>-->
 </body>
+
 
 </html>
