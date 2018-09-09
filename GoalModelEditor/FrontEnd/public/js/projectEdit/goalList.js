@@ -10,8 +10,8 @@ function getJSONFile() {
     $.ajax(url, {
         // the API of upload pictures
         type: "GET",
-        headers: { Authorization: "Bearer " + token },
-        success: function(data) {
+        headers: {Authorization: "Bearer " + token},
+        success: function (data) {
             window.jsonData = JSON.parse(JSON.parse(JSON.stringify(data)));
             $("#model_name strong").html(
                 jsonData.GoalModelProject.ProjectName +
@@ -24,7 +24,7 @@ function getJSONFile() {
             getDraggingElement();
 
             $(".dd").nestable({
-                callback: function(l, e) {
+                callback: function (l, e) {
                     // l is the main container
                     // e is the element that was moved
                     appendCluster();
@@ -34,7 +34,7 @@ function getJSONFile() {
             });
             getXML();
         }
-    }).fail(function(jqXHR) {
+    }).fail(function (jqXHR) {
         $("#warning-alert").html(
             jqXHR.responseJSON.message + " <br>Please try again."
         );
@@ -85,6 +85,7 @@ function loadData() {
     loadCluster();
     appendCluster();
 }
+
 /*Load data end*/
 
 /*Add new cluster start*/
@@ -102,7 +103,7 @@ function loadCluster() {
 
     // add goals to clusters
     for (let i = 0; i < clusterNum; i++) {
-        let clusterID = "cluster_"+(i+1);
+        let clusterID = "cluster_" + (i + 1);
         if (
             jsonData.GoalModelProject.Clusters[i].ClusterGoals !== undefined &&
             jsonData.GoalModelProject.Clusters[i].ClusterGoals.length > 0
@@ -153,6 +154,7 @@ function parseClusterNodes(nodes) {
     }
     return ol;
 }
+
 /*parse Cluster nodes end*/
 
 /**
@@ -170,6 +172,7 @@ function parseNode(node) {
     if (node.Used) {
         fontWeight = "normal";
     }
+    let placeholderText = getPlaceholder(node.GoalType);
     // li.setAttribute('id', node.GoalID);
     li.innerHTML =
         '<input id= "' +
@@ -179,7 +182,7 @@ function parseNode(node) {
         " " +
         '" value = "' +
         node.GoalContent +
-        '" placeholder="New goal" style="font-weight: ' +
+        '" placeholder="' + placeholderText + '" style="font-weight: ' +
         fontWeight +
         '" ' +
         'note="' +
@@ -195,6 +198,7 @@ function parseNode(node) {
         li.appendChild(parseNodes(node.SubGoals));
     return li;
 }
+
 /*Show JSON data on edit page end*/
 
 /*parse Cluster node start*/
@@ -219,7 +223,7 @@ function parseClusterNode(node) {
         node.GoalNote +
         '"' +
         ">" +
-        '<img src="' + iconPath +'" class="mr-1 typeIcon">' +
+        '<img src="' + iconPath + '" class="mr-1 typeIcon">' +
         '<div class="goal-content">' + node.GoalContent + '</div>' +
         "</div>";
 
@@ -230,6 +234,7 @@ function parseClusterNode(node) {
 
     return li;
 }
+
 /*parse Cluster node end*/
 
 /**
@@ -250,11 +255,11 @@ function saveJSON() {
         data: JSON.stringify(model),
         dataType: "json",
         contentType: "application/json",
-        headers: { Authorization: "Bearer " + token },
-        success: function(data) {
+        headers: {Authorization: "Bearer " + token},
+        success: function (data) {
             $("#saveJSONLoading").hide();
         }
-    }).fail(function(jqXHR) {
+    }).fail(function (jqXHR) {
         $("#saveJSONLoading").hide();
         $("#warning-alert").html("Save Failed.<br>Please try again.");
         $("#warning-alert")
@@ -263,6 +268,7 @@ function saveJSON() {
             .slideUp();
     }); // end ajax
 }
+
 /*Send data to backend end*/
 
 /*Get data from HTML to JSON start */
@@ -353,6 +359,7 @@ function getData() {
     // change the cluster JSON data
     window.jsonData.GoalModelProject.Clusters = clusterList;
 }
+
 /* Get data from HTML to JSON end */
 
 /* Parse all goals for a certain type in goal list start */
@@ -380,6 +387,7 @@ function listParseGoalsToJSON(data, list, type) {
         );
     }
 }
+
 /* Parse all goals for a certain type in goal list end */
 
 /* Parse a single goal to JSON in goal list start */
@@ -401,6 +409,7 @@ function listParseGoalToJSON(id, type, content, note, used) {
     };
     return resultJSON;
 }
+
 /* Parse a single goal in goal list to JSON end */
 
 /* Parse a single goal in clusters to JSON start */
@@ -423,6 +432,7 @@ function clusterParseGoalToJSON(id, type, content, note, subGoals) {
     };
     return resultJSON;
 }
+
 /* Parse a single goal in clusters to JSON end */
 
 /* Find type of the goal start*/
@@ -444,7 +454,30 @@ function getType($goal) {
         return "Stakeholder";
     }
 }
+
 /* Find type of the goal end*/
+
+/**
+ * based on the goal type, set different placeholder
+ * @param {string} type of the goal
+ * @returns {string} corresponding placeholder
+ */
+function getPlaceholder(type) {
+    switch (type) {
+        case "Functional":
+            return "New Functional Goal";
+        case "Quality":
+            return "New Quality Goal";
+        case "Negative":
+            return "New Negative Goal";
+        case "Emotional":
+            return "New Emotional Goal";
+        case "Stakeholder":
+            return "New Stakeholder";
+        default:
+            return "";
+    }
+}
 
 /* Get all sub goals of a goal in the cluster start*/
 /**
@@ -474,6 +507,7 @@ function getAllSubgoals($goalList, goals) {
         goals.push(innerClusterGoalJSON);
     }
 }
+
 /* Get all sub goals of a goal in the cluster end*/
 
 /**
@@ -490,7 +524,7 @@ function changeFontWeight(e) {
  * @return {String} icon path of the corresponding type
  */
 function getTypeIconPath(type) {
-    switch(type){
+    switch (type) {
         case "Functional":
             return PATH_FUNCTIONAL;
         case "Quality":

@@ -74,6 +74,7 @@ document.onkeydown = function (event) {
         goalID = getID(goalType);
         event.preventDefault();
 
+        let placeholderText = getPlaceholder(goalType);
         // new goal html
         let newlist =
             '<li draggable="true" class="dragger"><input id="' +
@@ -81,7 +82,7 @@ document.onkeydown = function (event) {
             '" class="' +
             goalType +
             " " +
-            '" placeholder="New goal" note="notes" oninput="changeFontWeight(this)" value="" style="font-weight: bold"/></li>';
+            '" placeholder="' + placeholderText + '" note="notes" oninput="changeFontWeight(this)" value="" style="font-weight: bold"/></li>';
 
         // add new goal node to its parent node
         if ($(event.target).parent().length > 0) {
