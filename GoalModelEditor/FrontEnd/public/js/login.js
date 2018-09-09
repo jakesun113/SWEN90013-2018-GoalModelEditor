@@ -3,6 +3,8 @@
  * @author SICHENG LIU
  */
 
+"use strict";
+
 /**
  * Login submit (click) EventListener
  * send the request to the server with {username, password}

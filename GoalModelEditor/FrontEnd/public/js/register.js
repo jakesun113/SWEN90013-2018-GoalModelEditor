@@ -3,6 +3,8 @@
  * @author SICHENG LIU
  */
 
+"use strict";
+
 // Variable for username Exist validator
 let username = "";
 

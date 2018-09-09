@@ -1,5 +1,6 @@
 /***
  * JavaScript For Dashboard functions and eventListeners
+ * @author SICHENG LIU
  */
 
 "use strict";
