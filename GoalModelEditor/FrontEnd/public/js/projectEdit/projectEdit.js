@@ -45,6 +45,7 @@ function addCluster() {
             // l is the main container
             // e is the element that was moved
             appendCluster();
+            removeCluster();
         },
         scroll: true
     });
@@ -145,12 +146,20 @@ document.onkeyup = function (event) {
     //when the user press the 'ESC' button in the cluster
     if (document.activeElement.tagName === "DIV" && event.key === "Escape") {
         //make the default enter invalid
-        let parent = document.activeElement.parentNode;
-        let grandparent = parent.parentNode;
-        let grandgrandparent = grandparent.parentNode;
+        let ddHandleDiv = document.activeElement.parentNode;
+        let ddItemLi = ddHandleDiv.parentNode;
+        let ddListOl = ddItemLi.parentNode;
         // if parent not null, delete child
-        if (grandgrandparent.childNodes.length > 0) {
-            grandgrandparent.removeChild(grandparent);
+        if (ddListOl.childNodes.length > 0) {
+            ddListOl.removeChild(ddItemLi);
+            event.preventDefault();
+        }
+        //if ol is empty, remove the cluster
+        if (ddListOl.childNodes.length === 0) {
+            let clusterNumDiv = ddListOl.parentNode;
+            let cluster = clusterNumDiv.parentNode;
+            cluster.removeChild(clusterNumDiv);
+            clusterNumber--;
             event.preventDefault();
         }
     }
@@ -255,6 +264,7 @@ function drop_zone(clusterNumber) {
                 // l is the main container
                 // e is the element that was moved
                 appendCluster();
+                removeCluster();
             },
             scroll: true
         });
@@ -324,6 +334,7 @@ $(".dd").nestable({
         // l is the main container
         // e is the element that was moved
         appendCluster();
+        removeCluster();
     },
     scroll: true
 });
@@ -385,6 +396,26 @@ function appendCluster() {
                 // l is the main container
                 // e is the element that was moved
                 appendCluster();
+                removeCluster();
+            },
+            scroll: true
+        });
+    }
+}
+
+//if "dd-empty" is more than one in the cluster, remove one
+//to make sure there is at most one "dd-empty" cluster
+function removeCluster() {
+    if ($(".dd-empty").length > 1) {
+        $(".dd-empty").parent()[1].remove();
+        clusterNumber--;
+
+        //activate nestable2 function
+        $(".dd").nestable({
+            callback: function (l, e) {
+                // l is the main container
+                // e is the element that was moved
+                removeCluster();
             },
             scroll: true
         });
@@ -412,7 +443,7 @@ setInterval("saveJSON()", "120000");
  * save JSON before close or refresh this page
  * @returns {string}
  */
-window.onbeforeunload=function(event){
+window.onbeforeunload = function (event) {
     saveJSON();
     // event.returnValue = "Auto save JSON";
     return "Auto Save JSON";

@@ -28,6 +28,7 @@ function getJSONFile() {
                     // l is the main container
                     // e is the element that was moved
                     appendCluster();
+                    removeCluster();
                 },
                 scroll: true
             });
