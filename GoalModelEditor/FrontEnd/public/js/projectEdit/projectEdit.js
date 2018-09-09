@@ -15,6 +15,7 @@ $(document).ready(function () {
         .html(Cookies.get("UIID"));
 });
 
+//when mouse over the specific goals, show corresponding notes
 $(document).on("mouseover", "#ul li input", function () {
     // alert($(this).val());
     $("#notedata").html("<p>" + $(this).attr("note") + "</p>");
@@ -93,7 +94,7 @@ document.onkeydown = function (event) {
         $("#" + goalID).focus();
 
         //activate drag and drop
-        drag();
+        getDraggingElement();
     }
 };
 
@@ -124,14 +125,13 @@ function getID(type) {
 
 /*Add new goal by pressing 'Enter' end*/
 
-/*Delete goal by pressing 'Backspace' when empty start*/
+/*Delete goal by pressing 'Escape' when empty start*/
 /**
- * delete goal by pressing 'Backspace' when empty
+ * delete goal by pressing 'Escape' when empty
  * @param event
  */
 document.onkeyup = function (event) {
-    let goalID;
-    //when the user press the 'enter' button
+    //when the user press the 'ESC' button in the goal list
     if (document.activeElement.tagName === "INPUT" && event.key === "Escape") {
         //make the default enter invalid
         let parent = document.activeElement.parentNode;
@@ -142,6 +142,7 @@ document.onkeyup = function (event) {
             event.preventDefault();
         }
     }
+    //when the user press the 'ESC' button in the cluster
     if (document.activeElement.tagName === "DIV" && event.key === "Escape") {
         //make the default enter invalid
         let parent = document.activeElement.parentNode;
@@ -154,7 +155,7 @@ document.onkeyup = function (event) {
         }
     }
 };
-/*Delete goal by pressing 'Backspace' when empty end*/
+/*Delete goal by pressing 'Escape' when empty end*/
 
 /*Hide and show section start*/
 /**
@@ -162,13 +163,13 @@ document.onkeyup = function (event) {
  * [image section hide]
  * [cluster section show]
  */
-function photonextbtn() {
+function handleNextToCluster() {
     let p = document.getElementById("photo");
-    let goal = document.getElementById("goals");
     let n = document.getElementById("notes");
     let c = document.getElementById("cluster");
     // let g = document.getElementById('generator');
-    let b = document.getElementById("photonextbtn");
+    let b = document.getElementById("photoNextBtn");
+    //when clicking "next" button, save current work
     saveJSON();
 
     if (p.style.display === "none") {
@@ -193,13 +194,14 @@ function photonextbtn() {
  * [goal list section hide]
  * [mxgraph section show]
  */
-function clusternext() {
+function handleNextToRender() {
     let p = document.getElementById("photo");
     let t = document.getElementById("todolist");
     let c = document.getElementById("cluster");
     let g = document.getElementById("generator");
-    let b = document.getElementById("clusternextbtn");
+    let b = document.getElementById("clusterNextBtn");
     let r = document.getElementById("renderbtn");
+    //when clicking "next" button, save current work
     saveJSON();
 
     if (t.style.display === "none") {
@@ -225,24 +227,29 @@ function clusternext() {
 /*drag and drop start*/
 let nowCopying;
 
-function drag() {
+//get the dragging element
+function getDraggingElement() {
     $(".dragger").on("dragstart", function (e) {
         nowCopying = e.target;
         //console.log(nowCopying);
     });
 }
 
+//deal with the operation after dropping the element
 function drop_zone(clusterNumber) {
+    //when drag is over, prevent default event
     $("#cluster_" + clusterNumber).on("dragover", function (e) {
         e.preventDefault();
     });
 
     $("#cluster_" + clusterNumber).on("drop", function (e) {
         e.preventDefault();
-        let fromGoallist = $(nowCopying.parentNode.parentNode).hasClass(
+        //whether the dropping element is from the goal list or the cluster
+        let fromGoalList = $(nowCopying.parentNode.parentNode).hasClass(
             "goal-list"
         );
 
+        //activate nestable2 function
         $(".dd").nestable({
             callback: function (l, e) {
                 // l is the main container
@@ -254,15 +261,18 @@ function drop_zone(clusterNumber) {
 
         let draggableWrapper = '<ol class="dd-list">';
         draggableWrapper += '<li class="dd-item">';
+        //copy the id, class, and value from the original dragged goal
         let newNode = document.createElement("div");
         newNode.className = $(nowCopying).children("input")[0].className;
         $(newNode).attr("id", ($(nowCopying).attr("id")));
 
+        //add font weight, class name to the new goal element
         $(newNode).css("font-weight", "bold");
 
         newNode.classList.add("dd-handle");
         newNode.classList.add("dd-handle-style");
 
+        //based on the type of the goal, show different images
         let type = getType($($(nowCopying).children("input")[0]));
 
         let imagePath = getTypeIconPath(type);
@@ -276,16 +286,17 @@ function drop_zone(clusterNumber) {
         let node = createElementFromHTML(draggableWrapper);
 
         //if the drag element comes from the goal list
-        if (fromGoallist) {
+        if (fromGoalList) {
             //if there is dd-empty (first time drag to here)
             if ($(this).children(".dd-empty")[0]) {
                 $(this)
                     .children(".dd-empty")[0]
                     .replaceWith(node);
 
+                //adding one new cluster after dropping
                 appendCluster();
             }
-            //if no dd-empty, already not first time to drag here, there is ol (alrady has one element)
+            //if no dd-empty, already not first time to drag here, there is ol (already has one element)
             else {
                 $(this)
                     .children("ol")[0]
@@ -297,17 +308,17 @@ function drop_zone(clusterNumber) {
             }
         }
 
-        $(nowCopying)
-            .children("input")
-            .css("font-weight", "normal");
+        //after dropping finished, change font style of the dragged element
+        $(nowCopying).children("input").css("font-weight", "normal");
     });
 }
 
 //activate drag function
-drag();
-
+getDraggingElement();
+//activate the drop function
 drop_zone(clusterNumber);
 
+//activate nestable2 function
 $(".dd").nestable({
     callback: function (l, e) {
         // l is the main container
@@ -325,8 +336,10 @@ function createElementFromHTML(htmlString) {
     return div.firstChild;
 }
 
+//at first, hide the "dragAll" button
 $("#drag").hide();
 
+//handle operation of clicking "editAll"
 $("#edit").click(function () {
     saveJSON();
     $(".dd-handle-style").removeClass("dd-handle");
@@ -341,6 +354,7 @@ $("#edit").click(function () {
     $("#drag").show();
 });
 
+//handle operation of clicking "dragAll"
 $("#drag").click(function () {
 
     $(".dd-handle-style").addClass("dd-handle");
@@ -351,6 +365,8 @@ $("#drag").click(function () {
     $("#edit").show();
 });
 
+//if no "dd-empty" is existed, append new cluster
+// to make sure there is always at least one "new" cluster
 function appendCluster() {
     if (!$(".dd-empty").length) {
         let cluster = $("#cluster");
@@ -362,6 +378,7 @@ function appendCluster() {
             "</div>"
         );
 
+        //activate nestable2 function
         drop_zone(clusterNumber);
         $(".dd").nestable({
             callback: function (l, e) {

@@ -21,7 +21,7 @@ function getJSONFile() {
             loadData();
             loadImages();
             //activate drag function
-            drag();
+            getDraggingElement();
 
             $(".dd").nestable({
                 callback: function(l, e) {
@@ -270,15 +270,15 @@ function saveJSON() {
  */
 function getData() {
     // get all data from HTML (in goal list)
-    const functionalData = $($("#functionaldata").children("ul")[0]).children(
+    let functionalData = $($("#functionaldata").children("ul")[0]).children(
         "li"
     );
-    const qualityData = $($("#qualitydata").children("ul")[0]).children("li");
-    const emotionalData = $($("#emotionaldata").children("ul")[0]).children(
+    let qualityData = $($("#qualitydata").children("ul")[0]).children("li");
+    let emotionalData = $($("#emotionaldata").children("ul")[0]).children(
         "li"
     );
-    const negetiveData = $($("#negativedata").children("ul")[0]).children("li");
-    const stakeholderData = $($("#stakeholderdata").children("ul")[0]).children(
+    let negativeData = $($("#negativedata").children("ul")[0]).children("li");
+    let stakeholderData = $($("#stakeholderdata").children("ul")[0]).children(
         "li"
     );
 
@@ -291,7 +291,7 @@ function getData() {
     listParseGoalsToJSON(functionalData, functionalList, "Functional");
     listParseGoalsToJSON(qualityData, qualityList, "Quality");
     listParseGoalsToJSON(emotionalData, emotionalList, "Emotional");
-    listParseGoalsToJSON(negetiveData, negativeList, "Negative");
+    listParseGoalsToJSON(negativeData, negativeList, "Negative");
     listParseGoalsToJSON(stakeholderData, stakeholderList, "Stakeholder");
 
     // change the json data for storing

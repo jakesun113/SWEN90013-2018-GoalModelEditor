@@ -124,7 +124,7 @@
                 <!-- Nav tabs -->
                 <fieldset class="form-group py-0 my-0">
                     <div class="text-right my-1">
-                        <button id="photonextbtn" class="btn-sm btn-outline-primary" onclick="photonextbtn()">Next</button>
+                        <button id="photoNextBtn" class="btn-sm btn-outline-primary" onclick="handleNextToCluster()">Next</button>
                     </div>
                     <ul class="nav nav-tabs nav-justified indigo" role="tablist">
                         <li class="nav-item">
@@ -217,7 +217,7 @@
             <div id="cluster" class="col-7 showborder scrollbar" style="display: none; background-color:rgba(35, 144, 231, 0.1);">
                 <div>
                     <h4>Cluster</h4>
-                    <button class="btn-sm btn-outline-primary" id="clusternextbtn" onclick="clusternext()">Next</button>
+                    <button class="btn-sm btn-outline-primary" id="clusterNextBtn" onclick="handleNextToRender()">Next</button>
                     <button style="display: none" class="btn-sm btn-outline-primary" id="renderbtn" onclick="renderGraph(document.getElementById('graphContainer'))">Render</button>
                     <button type="button" class="btn-sm btn-outline-primary" id="edit">Edit All</button>
                     <button type="button" class="btn-sm btn-outline-primary" id="drag">Drag All</button>
