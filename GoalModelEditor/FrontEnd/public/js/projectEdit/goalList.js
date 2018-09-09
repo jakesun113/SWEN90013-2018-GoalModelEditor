@@ -102,7 +102,7 @@ function loadCluster() {
 
     // add goals to clusters
     for (let i = 0; i < clusterNum; i++) {
-        let clusterID = jsonData.GoalModelProject.Clusters[i].ClusterID;
+        let clusterID = "cluster_"+(i+1);
         if (
             jsonData.GoalModelProject.Clusters[i].ClusterGoals !== undefined &&
             jsonData.GoalModelProject.Clusters[i].ClusterGoals.length > 0
