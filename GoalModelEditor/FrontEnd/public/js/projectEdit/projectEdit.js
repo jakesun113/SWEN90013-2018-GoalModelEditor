@@ -239,8 +239,17 @@ let nowCopying;
 //get the dragging element
 function getDraggingElement() {
     $(".dragger").on("dragstart", function (e) {
-        nowCopying = e.target;
-        //console.log(nowCopying);
+
+        //if input has value
+        if ($(e.target).children("input")[0].value) {
+            nowCopying = e.target;
+            //console.log(nowCopying);
+        }
+        //fixme: still can drag empty goal if already drag another valid goal
+        else{
+            e.setAttribute("draggable", "false");
+        }
+
     });
 }
 
