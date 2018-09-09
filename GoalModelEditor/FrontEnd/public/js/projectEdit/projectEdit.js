@@ -74,6 +74,7 @@ document.onkeydown = function (event) {
         goalID = getID(goalType);
         event.preventDefault();
 
+        let placeholderText = getPlaceholder(goalType);
         // new goal html
         let newlist =
             '<li draggable="true" class="dragger"><input id="' +
@@ -81,7 +82,7 @@ document.onkeydown = function (event) {
             '" class="' +
             goalType +
             " " +
-            '" placeholder="New goal" note="notes" oninput="changeFontWeight(this)" value="" style="font-weight: bold"/></li>';
+            '" placeholder="' + placeholderText + '" note="notes" oninput="changeFontWeight(this)" value="" style="font-weight: bold"/></li>';
 
         // add new goal node to its parent node
         if ($(event.target).parent().length > 0) {
@@ -159,7 +160,6 @@ document.onkeyup = function (event) {
             let clusterNumDiv = ddListOl.parentNode;
             let cluster = clusterNumDiv.parentNode;
             cluster.removeChild(clusterNumDiv);
-            clusterNumber--;
             event.preventDefault();
         }
     }
@@ -239,8 +239,16 @@ let nowCopying;
 //get the dragging element
 function getDraggingElement() {
     $(".dragger").on("dragstart", function (e) {
-        nowCopying = e.target;
-        //console.log(nowCopying);
+
+        //if input has value
+        if ($(e.target).children("input")[0].value) {
+            nowCopying = e.target;
+            //console.log(nowCopying);
+        }
+        else {
+            nowCopying = "";
+        }
+
     });
 }
 
@@ -252,75 +260,79 @@ function drop_zone(clusterNumber) {
     });
 
     $("#cluster_" + clusterNumber).on("drop", function (e) {
-        e.preventDefault();
-        //whether the dropping element is from the goal list or the cluster
-        let fromGoalList = $(nowCopying.parentNode.parentNode).hasClass(
-            "goal-list"
-        );
+            e.preventDefault();
 
-        //activate nestable2 function
-        $(".dd").nestable({
-            callback: function (l, e) {
-                // l is the main container
-                // e is the element that was moved
-                appendCluster();
-                removeCluster();
-            },
-            scroll: true
+            //activate nestable2 function
+            $(".dd").nestable({
+                callback: function (l, e) {
+                    // l is the main container
+                    // e is the element that was moved
+                    appendCluster();
+                    removeCluster();
+                },
+                scroll: true
+            });
+
+            //only when the input of the goal is not empty
+            if (nowCopying) {
+                //whether the dropping element is from the goal list or the cluster
+                let fromGoalList = $(nowCopying.parentNode.parentNode).hasClass(
+                    "goal-list"
+                );
+
+                let draggableWrapper = '<ol class="dd-list">';
+                draggableWrapper += '<li class="dd-item">';
+                //copy the id, class, and value from the original dragged goal
+                let newNode = document.createElement("div");
+                newNode.className = $(nowCopying).children("input")[0].className;
+                $(newNode).attr("id", ($(nowCopying).attr("id")));
+
+                //add font weight, class name to the new goal element
+                $(newNode).css("font-weight", "bold");
+
+                newNode.classList.add("dd-handle");
+                newNode.classList.add("dd-handle-style");
+
+                //based on the type of the goal, show different images
+                let type = getType($($(nowCopying).children("input")[0]));
+
+                let imagePath = getTypeIconPath(type);
+
+                $(newNode).html('<img src=' + imagePath + ' class="mr-1 typeIcon" >' +
+                    '<div class="goal-content">' +
+                    $(nowCopying).children("input")[0].value) + '</div>';
+
+                draggableWrapper += newNode.outerHTML;
+                draggableWrapper += "</li></ol>";
+                let node = createElementFromHTML(draggableWrapper);
+
+                //if the drag element comes from the goal list
+                if (fromGoalList) {
+                    //if there is dd-empty (first time drag to here)
+                    if ($(this).children(".dd-empty")[0]) {
+                        $(this)
+                            .children(".dd-empty")[0]
+                            .replaceWith(node);
+
+                        //adding one new cluster after dropping
+                        appendCluster();
+                    }
+                    //if no dd-empty, already not first time to drag here, there is ol (already has one element)
+                    else {
+                        $(this)
+                            .children("ol")[0]
+                            .appendChild(
+                                createElementFromHTML(
+                                    '<li class="dd-item">' + newNode.outerHTML + "</li>"
+                                )
+                            );
+                    }
+                }
+
+                //after dropping finished, change font style of the dragged element
+                $(nowCopying).children("input").css("font-weight", "normal");
+            }
         });
-
-        let draggableWrapper = '<ol class="dd-list">';
-        draggableWrapper += '<li class="dd-item">';
-        //copy the id, class, and value from the original dragged goal
-        let newNode = document.createElement("div");
-        newNode.className = $(nowCopying).children("input")[0].className;
-        $(newNode).attr("id", ($(nowCopying).attr("id")));
-
-        //add font weight, class name to the new goal element
-        $(newNode).css("font-weight", "bold");
-
-        newNode.classList.add("dd-handle");
-        newNode.classList.add("dd-handle-style");
-
-        //based on the type of the goal, show different images
-        let type = getType($($(nowCopying).children("input")[0]));
-
-        let imagePath = getTypeIconPath(type);
-
-        $(newNode).html('<img src=' + imagePath + ' class="mr-1 typeIcon" >' +
-            '<div class="goal-content">' +
-            $(nowCopying).children("input")[0].value) + '</div>';
-
-        draggableWrapper += newNode.outerHTML;
-        draggableWrapper += "</li></ol>";
-        let node = createElementFromHTML(draggableWrapper);
-
-        //if the drag element comes from the goal list
-        if (fromGoalList) {
-            //if there is dd-empty (first time drag to here)
-            if ($(this).children(".dd-empty")[0]) {
-                $(this)
-                    .children(".dd-empty")[0]
-                    .replaceWith(node);
-
-                //adding one new cluster after dropping
-                appendCluster();
-            }
-            //if no dd-empty, already not first time to drag here, there is ol (already has one element)
-            else {
-                $(this)
-                    .children("ol")[0]
-                    .appendChild(
-                        createElementFromHTML(
-                            '<li class="dd-item">' + newNode.outerHTML + "</li>"
-                        )
-                    );
-            }
-        }
-
-        //after dropping finished, change font style of the dragged element
-        $(nowCopying).children("input").css("font-weight", "normal");
-    });
 }
 
 //activate drag function
@@ -408,7 +420,6 @@ function appendCluster() {
 function removeCluster() {
     if ($(".dd-empty").length > 1) {
         $(".dd-empty").parent()[1].remove();
-        clusterNumber--;
 
         //activate nestable2 function
         $(".dd").nestable({
