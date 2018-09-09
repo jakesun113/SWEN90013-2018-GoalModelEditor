@@ -159,7 +159,6 @@ document.onkeyup = function (event) {
             let clusterNumDiv = ddListOl.parentNode;
             let cluster = clusterNumDiv.parentNode;
             cluster.removeChild(clusterNumDiv);
-            clusterNumber--;
             event.preventDefault();
         }
     }
@@ -408,7 +407,6 @@ function appendCluster() {
 function removeCluster() {
     if ($(".dd-empty").length > 1) {
         $(".dd-empty").parent()[1].remove();
-        clusterNumber--;
 
         //activate nestable2 function
         $(".dd").nestable({
