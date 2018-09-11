@@ -47,8 +47,9 @@ $("#create-project").submit(evt => {
 $("#create-model").submit(evt => {
     evt.preventDefault();
     const PID = getPID();
-    if (typeof PID === "undefined") {
+    if (typeof PID === undefined) {
         warningMessageSlide("Please choose a project");
+        return;
     }
     const CREATE_MODEL_URL = "/goal_model/" + UID + "/" + PID;
     let formData = $("#create-model").serialize();
@@ -66,8 +67,9 @@ $("#create-model").submit(evt => {
 $("#rename_project").submit(evt => {
     evt.preventDefault();
     const PID = getPID();
-    if (typeof PID === "undefined") {
+    if (typeof PID === undefined) {
         warningMessageSlide("Please choose a project");
+        return;
     }
     const RENAME_PROJECT_URL = "/project/" + UID + "/" + PID;
     let formData = JSON.parse($("#rename_project").serializeJSON());
@@ -87,8 +89,9 @@ $("#rename_project").submit(evt => {
 $("#delete_project").submit(evt => {
     evt.preventDefault();
     const PID = getPID();
-    if (typeof PID === "undefined") {
+    if (typeof PID === undefined) {
         warningMessageSlide("Please choose a project");
+        return;
     }
     const DELETE_PROJECT_URL = "/project/" + UID + "/" + PID;
     let formData = $("#delete_project").serialize();
@@ -99,43 +102,70 @@ $("#delete_project").submit(evt => {
 });
 
 /**
- * Handle all click events in {id:projects-container|HTMLElement}
- * 1.Handle click on the goal model item, redirect the user to the edit page, set a session cookie for goal model
- * 2.Handle click on the create goal model button, set a session cookie for project
- * 3.Handle click on the delete project button, set a session cookie for the project
+ * Rename-model submit (click) EventListener
  *
- * The EventListener is set to the parent node of all targets - to make sure all new HTMLElements added work
- *
- * @trigger {id:projects-container|HTMLElement}
+ * @trigger {id:rename_model|HEMLForm}
  */
-$("#projects-container").click(evt => {
-    /* Handle click on the goal model, act on the clicked goal model only, set cookies for the clicked goal model */
-    if ($(evt.target).hasClass("goal-model")) {
-        setMID(evt.target.id);
-        window.location.href = "/goal_model/edit";
-    } else if ($(event.target.parentNode).hasClass("goal-model")) {
-        setMID(evt.target.parentNode.id);
-        window.location.href = "/goal_model/edit/";
-    } else if (
-        /* Handle click on the create goal model button & on the delete the project button */
-        $(evt.target).hasClass("new-model") ||
-        $(evt.target).hasClass("delete-project")
-    ) {
-        setPID($(evt.target.parentNode).parent()[0].id);
-    } else if (
-        $(evt.target.parentNode).hasClass("new-model") ||
-        $(evt.target.parentNode).hasClass("delete-project")
-    ) {
-        setPID($(evt.target.parentNode.parentNode).parent()[0].id);
-    } else if ($(evt.target).hasClass("rename-project")) {
-        /* Handle click on the rename the project button */
-        setPID($(event.target.parentNode).parent()[0].id);
-        putNameInModal($("#" + getPID() + " h6").html());
-    } else if ($(evt.target.parentNode).hasClass("rename-project")) {
-        setPID($(evt.target.parentNode.parentNode).parent()[0].id);
-        putNameInModal($("#" + getPID() + " h6").html());
+$("#rename_model").submit(evt => {
+    evt.preventDefault();
+    const MID = getMID();
+    if (typeof MID === undefined) {
+        warningMessageSlide("Please choose a model");
+        return;
     }
+    const RENAME_MODEL_URL = "/goal_model/info/" + UID + "/" + MID;
+    let formData = $("#rename_model").serialize();
+    renameModel(RENAME_MODEL_URL, MID, formData);
+
+    // Close the modal
+    $("#rename-model").modal("toggle");
 });
+
+/**
+ * Delete-model submit (click) EventListener
+ *
+ * @trigger {id:delete_model|HTMLForm}
+ */
+$("#delete_model").submit(evt => {
+    evt.preventDefault();
+    const MID = getMID();
+    if (typeof MID === undefined) {
+        warningMessageSlide("Please choose a model");
+        return;
+    }
+    const RENAME_MODEL_URL = "/goal_model/" + UID + "/" + MID;
+    let formData = $("#delete_model").serialize();
+    deleteModel(RENAME_MODEL_URL, MID, formData);
+
+    // Close the modal
+    $("#delete-model").modal("toggle");
+});
+
+
+/**
+ * Add click EventListener for 'projects' nav
+ *
+ * @trigger {id:v-pills-projects-tab|HTML:a}
+ */
+$("#v-pills-projects-tab").click(evt => {
+    $("#new-project-button").show();
+    $("#new-template-button").hide();
+    $("#v-pills-templates").hide();
+    $("#v-pills-projects").show();
+});
+
+/**
+ * Add click EventListener for 'templates' nav
+ *
+ * @trigger {id:v-pills-templates-tab|HTML:a}
+ */
+$("#v-pills-templates-tab").click(evt => {
+    $("#new-project-button").hide();
+    $("#new-template-button").show();
+    $("#v-pills-templates").show();
+    $("#v-pills-projects").hide();
+});
+
 
 /**
  * Handle click EventListener on {id:signout|Button}
@@ -155,19 +185,63 @@ $("#signout").click(evt => {
  * @return HTMLElement
  */
 function parseProject(project) {
+
     // Single project container
     let projectHTML =
-        '<div class="project text-center" id="' + project.project_id + '">';
+        '<div class="project" id="' + project.project_id + '">';
 
-    // Goal model list container
-    projectHTML += '<div class="goal-list">';
+    // Project-header
+    projectHTML += '<div class="project_header">';
 
-    // Goal model list header
+    // Collapse button
     projectHTML =
         projectHTML +
-        '<div class="row goal-model-nav py-2">' +
-        '<div class="col-6 text-center text-color">Name</div>' +
-        '<div class="col-6 text-center text-color">Last modified</div> </div>';
+        '<div class="row border-bottom py-3">' +
+        '<div class="col-1">' +
+        '<button class="btn btn-sm collapse-btn fas fa-plus-square" type="button">' +
+        '</button>' +
+        '</div>';
+
+    // Project name
+    projectHTML =
+        projectHTML +
+        '<div class="col-3">' +
+        '<div class="row">' +
+        '<div class="col-2 text-right"><i class="far fa-folder"></i></div>' +
+        '<div class="project_name col-8">' + project.project_name + '</div></div></div>';
+
+    // Last modified
+    projectHTML =
+        projectHTML +
+        '<div class="col-4 text-center text-color project_last_modified"></div>';
+
+    // To make the view better
+    projectHTML = projectHTML + '<div class="col-2 text-center text-color"></div>';
+
+    // Add new model button
+    projectHTML =
+        projectHTML +
+        '<div class="col-1 text-center new-model" data-toggle="modal"' +
+        'data-target="#add-model" title="Add a new model">' +
+        '<i class="fas fa-plus"></i>' +
+        '</div>';
+
+    // More options - rename/delete
+    projectHTML =
+        projectHTML +
+        '<div class="col-1 text-center more">' +
+        '<a class="dropdown" data-toggle="dropdown" aria-haspopup="true"' +
+        'aria-expanded="false"><i class="fas fa-align-justify"></i></a>' +
+        '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">\n' +
+        '<a class="dropdown-item rename-project"><i class="fas fa-edit"></i>Rename</a>' +
+        '<a class="dropdown-item delete-project"><i class="fas fa-trash"></i>Delete</a>' +
+        '</div></div>';
+
+    // Close the row and header div
+    projectHTML = projectHTML + '</div></div>';
+
+    // Goal model list
+    projectHTML = projectHTML + '<div id="models_'+ project.project_id +'" class="collapse model-list">';
 
     // Goal models if any
     if (project.models) {
@@ -175,38 +249,6 @@ function parseProject(project) {
     }
 
     // Close the goal model list
-    projectHTML = projectHTML + "</div>";
-
-    // Project file icon
-    projectHTML =
-        projectHTML +
-        '<img src="/img/buffer.svg" alt="project-icon" class="project-icon">';
-
-    // Project name
-    projectHTML = projectHTML + "<h6>" + project.project_name + "</h6>";
-
-    // Project tools - add / rename / delete
-    projectHTML = projectHTML + '<div class="text-center create-goal-model">';
-    projectHTML =
-        projectHTML +
-        '<button class="btn btn-sm mb-2 new-model" ' +
-        'type="button" data-toggle="modal" data-target="#add-model" ' +
-        'style="background-color: transparent">' +
-        '<img src="/img/add-outline.svg" title="Add new goal model"></button>';
-    projectHTML =
-        projectHTML +
-        '<button class="btn btn-sm mb-2 rename-project" ' +
-        'type="button" data-toggle="modal" data-target="#rename-project" ' +
-        'style="background-color: transparent">' +
-        '<img src="/img/compose.svg" title="Rename the project"></button>';
-    projectHTML =
-        projectHTML +
-        '<button class="btn btn-sm mb-2 delete-project" ' +
-        'type="button" data-toggle="modal" data-target="#delete-project" ' +
-        'style="background-color: transparent">' +
-        '<img src="/img/close-outline.svg" title="Delete the project"></button>';
-
-    // Close Project tools
     projectHTML = projectHTML + "</div>";
 
     return projectHTML;
@@ -219,18 +261,46 @@ function parseProject(project) {
  * @return {HTMLElement} modelHTML - after adding the model
  */
 function parseGoalModel(model) {
+
+    // The model div
     let modelHTML =
-        '<div class="row goal-model py-1" id="' + model.model_id + '">';
-    modelHTML =
-        modelHTML +
-        '<div class="col-6 text-center model_name">' +
-        model.model_name +
-        "</div>";
-    modelHTML =
-        modelHTML +
-        '<div class="col-6 text-center text-color small model_time">' +
-        model.last_modified +
-        "</div> </div>";
+        '<div class="row model py-3 border-bottom" id="'+ model.model_id +'">';
+
+    // To make the view better
+    modelHTML = modelHTML + '<div class="col-1"></div>';
+
+    // Model name
+    modelHTML = modelHTML +
+        '<div class="col-3">' +
+        '<div class="row">' +
+        '<div class="col-2 text-right"><i class="far fa-image"></i></div>' +
+        '<div class="model_name col-8">' + model.model_name + '</div></div></div>';
+
+    // Model last modified
+    modelHTML = modelHTML +
+        '<div class="col-4 text-center text-color model_last_modified">' + model.last_modified + '</div>';
+
+    // Model type
+    modelHTML = modelHTML + '<div class="col-2 text-center model_type"></div>'
+
+    // To make the view better
+    modelHTML = modelHTML + '<div class="col-1"></div>';
+
+    // More options - rename/delete
+    modelHTML = modelHTML +
+        '<div class="col-1 text-center more">' +
+        '<a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+        '<i class="fas fa-align-justify"></i></a>' +
+        '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">' +
+        '<a class="dropdown-item rename-model">' +
+        '<i class="fas fa-edit"></i>Rename</a>' +
+        '<a class="dropdown-item delete-model">' +
+        '<i class="fas fa-trash"></i>Delete</a>' +
+        '</div></div>';
+
+    // Close the model div
+    modelHTML = modelHTML + '</div>';
+
     return modelHTML;
 }
 
@@ -260,14 +330,18 @@ function retriveProjects() {
         type: "GET",
         headers: { Authorization: "Bearer " + TOKEN },
         success: projects => {
+            console.log(projects);
             // Set the username
             setUserName(UNAME);
 
-            /* Append the projects to current UI */
+            // Append the projects to current UI
             for (let i in projects.projects) {
                 let projectHTML = parseProject(projects.projects[i]);
                 $("#projects-container").append(projectHTML);
             }
+
+            // Add listeners
+            addListenersToNewItem();
         }
     }).fail(function(jqXHR) {
         warningMessageSlide(
@@ -287,18 +361,18 @@ function createProject(project) {
         type: "POST",
         headers: { Authorization: "Bearer " + TOKEN },
         success: newProject => {
-            /* Append the project to current UI */
+
+            // Append the project to current UI
             let projectHTML = parseProject(newProject);
             $("#projects-container").append(projectHTML);
+            successMessageSlide("Project: " + newProject.project_name + " successfully created.");
 
-            successMessageSlide(
-                "Project: " + newProject.project_name + " successfully created."
-            );
+            // add Listeners
+            removeCustomizedEventListeners();
+            addListenersToNewItem();
         }
     }).fail(function(jqXHR) {
-        warningMessageSlide(
-            jqXHR.responseJSON.message + "<br>Please try again."
-        );
+        warningMessageSlide(jqXHR.responseJSON.message + "<br>Please try again.");
     });
 }
 
@@ -315,18 +389,19 @@ function createGoalModel(url, pid, model) {
         type: "POST",
         headers: { Authorization: "Bearer " + TOKEN },
         success: function(model) {
-            /* Append the new model to the UI */
+
+            // Append the new model to the UI
             let modelHTML = parseGoalModel(model);
             appendToProject(modelHTML, pid);
 
-            successMessageSlide(
-                "Model: " + model.model_name + " successfully created."
-            );
+            successMessageSlide("Model: " + model.model_name + " successfully created.");
+
+            // add listeners
+            removeCustomizedEventListeners();
+            addListenersToNewItem();
         }
     }).fail(function(jqXHR) {
-        warningMessageSlide(
-            jqXHR.responseJSON.message + "<br>Please try again."
-        );
+        warningMessageSlide(jqXHR.responseJSON.message + "<br>Please try again.");
     }); // end ajax
 }
 
@@ -348,18 +423,12 @@ function renameProject(url, pid, project) {
         success: () => {
             successMessageSlide(
                 "Project:" +
-                    $("#" + pid + " h6")
-                        .eq(0)
-                        .html() +
-                    " successfully renamed to " +
-                    project.project_name +
-                    "."
+                    $("#" + pid).find(".project_name").eq(0).html() +
+                    " successfully renamed to " + project.project_name + "."
             );
 
             // Make the new project name shown in UI
-            $("#" + pid + " h6")
-                .eq(0)
-                .html(project.project_name);
+            $("#" + pid).find(".project_name").eq(0).html(project.project_name);
         }
     }).fail(function(jqXHR) {
         warningMessageSlide(
@@ -383,9 +452,7 @@ function deleteProject(url, pid, project) {
         success: () => {
             successMessageSlide(
                 "Project: " +
-                    $("#" + pid + " h6")
-                        .eq(0)
-                        .html() +
+                $("#" + pid).find(".project_name").eq(0).html() +
                     " successfully deleted."
             );
 
@@ -393,10 +460,60 @@ function deleteProject(url, pid, project) {
             $("#" + pid).hide();
         }
     }).fail(function(jqXHR) {
-        warningMessageSlide(
-            jqXHR.responseJSON.message + "<br>Please try again."
-        );
+        warningMessageSlide(jqXHR.responseJSON.message + "<br>Please try again.");
     });
+}
+
+/**
+ * Ajax function for renaming a model
+ *
+ * @param {url} url - to specify the user & model
+ * @param {String} mid - modelID - to help rename the model in HTML
+ * @param {formData} model - formData with encapsulated model to be renamed
+ */
+function renameModel(url, mid, model) {
+    $.ajax(url, {
+        data: model,
+        type: "PUT",
+        headers: { Authorization: "Bearer" + TOKEN },
+        success: () => {
+            successMessageSlide(
+                "Model:" +
+                $("#" + mid).find(".model_name").eq(0).html() +
+                " successfully deleted. " +
+                model.model_name +
+                "."
+            );
+
+            // Make the new model name shown in UI
+            $("#" + mid).find(".model_name").eq(0).html(model.model_name);
+        }
+    })
+}
+
+/**
+ * Ajax function for deleting a model
+ *
+ * @param {url} url - to specify the user & model
+ * @param {String} mid - modelID - to help delete the model in HTML
+ * @param {formData} model - formData with encapsulated model to be deleted
+ */
+function deleteModel(url, mid, model) {
+    $.ajax(url, {
+        data: model,
+        type: "PUT",
+        headers: { Authorization: "Bearer" + TOKEN },
+        success: () => {
+            successMessageSlide(
+                "Model:" +
+                $("#" + mid).find(".model_name").eq(0).html() +
+                " successfully deleted."
+            );
+
+            // Hide the corresponding HTML
+            $("#" + mid).hide();
+        }
+    })
 }
 
 /**
@@ -449,12 +566,32 @@ function setUserName(username) {
  *
  * @param {String} projectName - the clicked project name
  */
-function putNameInModal(projectName) {
+function putProjectNameInModal(projectName) {
     // Set the modal input to the clicked project name
     $("#rename_project .modal-body input").val(projectName);
 
     /* Set time out so that the project name gets rendered in the modal */
     let $target = $("#rename-project");
+    $target.data("triggered", true);
+    setTimeout(function() {
+        if ($target.data("triggered")) {
+            $target.modal("show").data("triggered", false);
+        }
+    }, 300);
+    return false;
+}
+
+/**
+ * Helper Function for renaming the model - put the clicked model name in the modal
+ *
+ * @param {String} modelName -the clicked model name
+ */
+function putModelNameInModal(modelName) {
+    // Set the modal input to the clicked project name
+    $("#rename-model .modal-body input").val(modelName);
+
+    /* Set time out so that the project name gets rendered in the modal */
+    let $target = $("#rename-model");
     $target.data("triggered", true);
     setTimeout(function() {
         if ($target.data("triggered")) {
@@ -482,7 +619,7 @@ function signOut() {
  * @param {String} pid - id of the project appended to
  */
 function appendToProject(modelHTML, pid) {
-    $("#" + pid + " .goal-list")
+    $("#" + pid + " #models_" + pid)
         .eq(0)
         .append(modelHTML);
 }
@@ -511,4 +648,204 @@ function warningMessageSlide(message) {
         .slideDown()
         .delay(3000)
         .slideUp();
+}
+
+/**
+ * Helper function to be called every time after any change has been made to the page
+ * To make sure all newly added items have the right eventListeners
+ */
+function addListenersToNewItem() {
+    addClickOnProject();
+    addClickOnNewModel();
+    addClickOnModel();
+    addClickOnRenameProject();
+    addClickOnDeleteProject();
+    addClickOnMore();
+    addClickOnRenameModel();
+    addClickOnDeleteModel();
+    addDbClickOnModel();
+}
+
+/**
+ * Function to add click eventListener to 'project' class
+ * To show all the models and change the collapse button style
+ */
+function addClickOnProject() {
+    $(".project").click(evt => {
+        let parentNode = null;
+        if($(evt.target).hasClass("project")) {
+            parentNode = evt.target;
+        } else {
+            parentNode = $(evt.target).parents(".project")[0];
+        }
+        setPID($(parentNode).attr("id"));
+        let collapseBtn = $(parentNode).find(".collapse-btn")[0];
+        changeCollapseStyle(collapseBtn);
+        // show/unfold the model list
+        $("#models_" + getPID()).collapse('toggle');
+    });
+}
+
+/**
+ * Function to add click eventListener to 'new-model' class
+ *
+ */
+function addClickOnNewModel() {
+    $(".new-model").click(evt => {
+        evt.stopImmediatePropagation();
+        let parentNode = $(evt.target).parents(".project")[0];
+        setPID($(parentNode).attr("id"));
+        $("#add-model").modal("toggle");
+    });
+}
+
+/**
+ * Function to add click eventListener to 'rename-project' class
+ *
+ */
+function addClickOnRenameProject() {
+    $(".rename-project").click(evt => {
+        evt.stopImmediatePropagation();
+        let parentNode = $(evt.target).parents(".project")[0];
+        setPID($(parentNode).attr("id"));
+        let projectName = $(parentNode).find(".project_name").eq(0).html();
+        console.log(projectName);
+        putProjectNameInModal(projectName);
+    });
+}
+
+/**
+ * Function to add click eventListener to 'delete-project' class
+ *
+ */
+function addClickOnDeleteProject() {
+    $(".delete-project").click(evt => {
+        evt.stopImmediatePropagation();
+        let parentNode = $(evt.target).parents(".project")[0];
+        setPID($(parentNode).attr("id"));
+        $("#delete-project").modal("toggle");
+    });
+}
+
+
+/**
+ * Function to add click eventListener to 'model' class
+ *
+ */
+function addClickOnModel() {
+    $(".model").click(evt => {
+        evt.stopImmediatePropagation();
+        $(".model").removeClass("model_clicked");
+        let parentNode = null;
+        if($(evt.target).hasClass("model")) {
+            parentNode = evt.target;
+        } else {
+            parentNode = $(evt.target).parents(".model")[0];
+        }
+        $(parentNode).addClass("model_clicked");
+    })
+}
+
+/**
+ * Function to add click eventListener to 'more' class -- not collapsing the model list
+ */
+function addClickOnMore() {
+    $(".more").click(evt => {
+       evt.stopPropagation();
+       let toggleNode = null;
+       if($(evt.target).hasClass("dropdown")) {
+           toggleNode = evt.target;
+       } else if($(evt.target).parents(".dropdown")[0]){
+           toggleNode = $(evt.target).parents(".dropdown")[0];
+       } else {
+           toggleNode = $(evt.target).children(".dropdown")[0];
+       }
+       $(toggleNode).dropdown("toggle");
+    });
+}
+
+/**
+ * Function to add click eventListener to 'rename-model' class
+ *
+ */
+function addClickOnRenameModel() {
+    $(".rename-model").click(evt => {
+        evt.stopImmediatePropagation();
+        let parentNode = null;
+        if($(evt.target).hasClass("model")) {
+            parentNode = evt.target;
+        } else {
+            parentNode = $(evt.target).parents(".model")[0];
+        }
+        setMID($(parentNode).attr("id"));
+        let modelName = $(parentNode).find(".model_name").eq(0).html();
+        putModelNameInModal(modelName);
+    })
+}
+
+/**
+ * Function to add click eventListener to 'delete-model' class
+ *
+ */
+function addClickOnDeleteModel() {
+    $(".delete-model").click(evt => {
+        evt.stopImmediatePropagation();
+        let parentNode = null;
+        if($(evt.target).hasClass("model")) {
+            parentNode = evt.target;
+        } else {
+            parentNode = $(evt.target).parents(".model")[0];
+        }
+        setMID($(parentNode).attr("id"));
+        $("#delete-model").modal("toggle");
+    })
+}
+
+/**
+ * Function to add dbclick eventListener to 'model' class
+ *
+ */
+function addDbClickOnModel() {
+    $(".model").dblclick(evt => {
+        evt.stopImmediatePropagation();
+        let parentNode = null;
+        if($(evt.target).hasClass("model")) {
+            parentNode = evt.target;
+        } else {
+            parentNode = $(evt.target).parents(".model")[0];
+        }
+        setMID($(parentNode).attr("id"));
+        window.location.href = "/goal_model/edit";
+    });
+}
+
+/**
+ * Helper function to change style of collapse-button
+ *
+ * @param {HTMLElement} collapseBtn
+ */
+function changeCollapseStyle(collapseBtn) {
+    if($(collapseBtn).hasClass("fa-plus-square")) {
+        $(collapseBtn).addClass("fa-minus-square");
+        $(collapseBtn).removeClass("fa-plus-square");
+    } else if($(collapseBtn).hasClass("fa-minus-square")) {
+        $(collapseBtn).removeClass("fa-minus-square");
+        $(collapseBtn).addClass("fa-plus-square");
+    }
+}
+
+/**
+ * Helper function to remove customized eventListeners so that there would be duplicates
+ *
+ */
+function removeCustomizedEventListeners() {
+    $(".project").off("click");
+    $(".new-model").off("click");
+    $(".model").off("click");
+    $(".rename-project").off("click");
+    $(".delete-project").off("click");
+    $(".more").off("click");
+    $(".rename-model").off("click");
+    $(".delete-model").off("click");
+    $(".mode").off("dblclick");
 }

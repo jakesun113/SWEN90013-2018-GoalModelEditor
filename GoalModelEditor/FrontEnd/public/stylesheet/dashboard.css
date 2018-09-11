@@ -26,103 +26,112 @@ header {
 /* main style */
 main {
     background-color: #f5f5f5;
-    height: 80vh;
+    height: 75vh;
     display: block;
 }
 
 /* project container style */
 #projects-container {
-    height: 75vh;
+    height: 65vh;
     display: block;
     overflow: scroll;
 }
 
-/* project img */
-.project-icon {
-    height: 60%;
-    max-height: 30vh;
-    width: auto;
-    max-width: 25vw;
-    margin: 1.25rem;
-    opacity: 1;
-}
+/***
+ For dashboard v2 starts
+ */
 
-/* project block */
-.project {
-    padding: 0 10px 0 0;
-    display: inline-block;
-    height: 300px;
-    max-height: 30vh;
-    width: 33%;
-    max-width: 30vw;
-    overflow-y: hidden;
-    position: relative;
-}
+/*!* project img *!*/
+/*.project-icon {*/
+    /*height: 60%;*/
+    /*max-height: 30vh;*/
+    /*width: auto;*/
+    /*max-width: 25vw;*/
+    /*margin: 1.25rem;*/
+    /*opacity: 1;*/
+/*}*/
 
-/* hide goal list*/
-.project .goal-list {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 65%;
-    width: 100%;
-    opacity: 0;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    border-bottom: 1px solid white;
-    padding: 0;
-}
+/*!* project block *!*/
+/*.project {*/
+    /*padding: 0 10px 0 0;*/
+    /*display: inline-block;*/
+    /*height: 300px;*/
+    /*max-height: 30vh;*/
+    /*width: 33%;*/
+    /*max-width: 30vw;*/
+    /*overflow-y: hidden;*/
+    /*position: relative;*/
+/*}*/
 
-/* hover on project
-   show goal list */
-.project:hover {
-    background-image: -webkit-radial-gradient(80% 10%, skyblue, transparent),
-        -webkit-radial-gradient(80% 50%, blue, transparent),
-        -webkit-radial-gradient(20% 80%, lightblue, transparent),
-        -webkit-radial-gradient(10% 10%, darkblue, transparent);
-    color: #fff;
-    display: inline-block;
-    border-radius: 20px;
-    padding: 0;
-}
+/*!* hide goal list*!*/
+/*.project .goal-list {*/
+    /*position: absolute;*/
+    /*top: 0;*/
+    /*bottom: 0;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*height: 65%;*/
+    /*width: 100%;*/
+    /*opacity: 0;*/
+    /*overflow-y: scroll;*/
+    /*overflow-x: hidden;*/
+    /*border-bottom: 1px solid white;*/
+    /*padding: 0;*/
+/*}*/
 
-.project:hover .project-icon {
-    opacity: 0;
-    margin-bottom: 0;
-}
+/*!* hover on project*/
+   /*show goal list *!*/
+/*.project:hover {*/
+    /*background-image: -webkit-radial-gradient(80% 10%, skyblue, transparent),*/
+        /*-webkit-radial-gradient(80% 50%, blue, transparent),*/
+        /*-webkit-radial-gradient(20% 80%, lightblue, transparent),*/
+        /*-webkit-radial-gradient(10% 10%, darkblue, transparent);*/
+    /*color: #fff;*/
+    /*display: inline-block;*/
+    /*border-radius: 20px;*/
+    /*padding: 0;*/
+/*}*/
 
-.project:hover .goal-list {
-    opacity: 1;
-    display: inline-block;
-}
+/*.project:hover .project-icon {*/
+    /*opacity: 0;*/
+    /*margin-bottom: 0;*/
+/*}*/
 
-.project .goal-model {
-    border-bottom: 1px solid white;
-}
+/*.project:hover .goal-list {*/
+    /*opacity: 1;*/
+    /*display: inline-block;*/
+/*}*/
 
-.project .goal-model-nav {
-    border-bottom: 3px solid white;
-}
+/*.project .goal-model {*/
+    /*border-bottom: 1px solid white;*/
+/*}*/
 
-.project .create-goal-model {
-    opacity: 0;
-}
+/*.project .goal-model-nav {*/
+    /*border-bottom: 3px solid white;*/
+/*}*/
 
-.project:hover h6 {
-    height: 10%;
-    margin-bottom: 0;
-}
+/*.project .create-goal-model {*/
+    /*opacity: 0;*/
+/*}*/
 
-.project:hover .create-goal-model {
-    height: 10%;
-    opacity: 1;
-}
+/*.project:hover h6 {*/
+    /*height: 10%;*/
+    /*margin-bottom: 0;*/
+/*}*/
 
-.goal-model:hover {
-    background: linear-gradient(to right, #69c, #069, #69c);
-}
+/*.project:hover .create-goal-model {*/
+    /*height: 10%;*/
+    /*opacity: 1;*/
+/*}*/
+
+/*.goal-model:hover {*/
+    /*background: linear-gradient(to right, #69c, #069, #69c);*/
+/*}*/
+
+
+/**
+For dashboard v2 ends
+ */
 
 .notification {
     position: absolute;
@@ -134,4 +143,51 @@ main {
     -webkit-box-shadow: 0 0 5px black;
     -moz-box-shadow: 0 0 5px black;
     box-shadow: 0 0 5px black;
+}
+
+.nav-pills .nav-link.active {
+    background-color: #e8f0fe;
+    border-radius: 0 66px 66px 0;
+    color: #007bff;
+}
+
+a {
+    color: #5f6368;
+}
+
+.nav-link {
+    height: 40px;
+}
+
+.isDisabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.isDisabled > a {
+    color: currentColor;
+    display: inline-block;  /* For IE11/ MS Edge bug */
+    pointer-events: none;
+    text-decoration: none;
+}
+
+.collapse-btn {
+    padding: .1rem;
+}
+
+.new-model {
+    cursor: pointer;
+}
+
+.more {
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    min-width: 5rem;
+}
+
+.model_clicked {
+    background-color: #e8f0fe;
+    color: #1967d2;
 }

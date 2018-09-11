@@ -8,7 +8,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
           crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+          crossorigin="anonymous">
     <link rel="stylesheet" href="/stylesheet/dashboard.css">
+
 </head>
 <body>
     <div> <!-- Start wrapper div -->
@@ -24,17 +28,18 @@
         <!-- End alert div -->
         <!-- Header part of the page -->
         <header class="bg-white mb-2 py-3">
-            <div class="pt-4 container-fluid">
-                <div class="row align-middle">
-                    <div class="col-2">
+            <div class="pt-3 container-fluid">
+                <div class="row">
+                    <div class="col-4" style="font-size: 35px">
+                        <strong>&nbsp;&nbsp;&nbsp;Motivational Model</strong>
                         <!-- Add new file button-->
-                        <button type="button" class="btn btn-primary mb-3 ml-5"
-                                data-toggle="modal" data-target="#add-project"
-                                id="new-project-button">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New Project
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                        <!--<button type="button" class="btn btn-primary mb-3 ml-5"-->
+                                <!--data-toggle="modal" data-target="#add-project"-->
+                                <!--id="new-project-button">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New Project-->
+                            <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>-->
                     </div>
                     <!-- Search div -->
-                    <div class="col-8">
+                    <div class="col-6">
                     </div>
                     <!--<div class="col-8">-->
                         <!--<div class="input-group mb-3">-->
@@ -50,15 +55,15 @@
                     <!--</div>-->
                     <!-- User div -->
                     <div class="col-2">
-                        <div class="row text-center">
+                        <div class="row text-center pt-2">
                             <div class="dropdown">
-                                <button class="btn dropdown-toggle" type="button" id="user-dropdown"
+                                <button class="btn" type="button" id="user-dropdown"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <a id="username">username</a>
+                                    <i class="fas fa-user"></i>&nbsp;&nbsp;<a id="username"> username</a>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user-dropdown">
                                     <a class="dropdown-item" href="/profile" method="get">Profile</a>
-                                    <a class="dropdown-item" method="post"
+                                    <a class="dropdown-item" method="post" href="/"
                                        id="signout">Sign out</a>
                                 </div>
                             </div>
@@ -81,9 +86,35 @@
                     </div>
                     <form method="post" id="create-project">
                         <div class="modal-body">
-                            <label class="my-2">Project Name:</label>
                             <input name="project_name" type="text" class="form-control"
                                    placeholder="Project Name" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn" style="background-color: transparent"
+                                    data-dismiss="modal">CANCEL</button>
+                            <button type="submit" class="btn btn-primary">CREATE</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Modal ends -->
+
+        <!-- Create template modal starts-->
+        <div class="modal fade" id="add-template" tabindex="-1" role="dialog"
+             aria-labelledby="new-project" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="new-template">New Project</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="post" id="create-template">
+                        <div class="modal-body">
+                            <input name="template_name" type="text" class="form-control"
+                                   placeholder="Template Name" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn" style="background-color: transparent"
@@ -130,14 +161,178 @@
             <!--</div>-->
 
             <!-- second version of project system -->
-            <div class="container-fluid bg-white rounded my-3" id="projects-container">
+            <!--<div class="container-fluid bg-white rounded my-3" id="projects-container">-->
 
 
+            <!--</div>-->
+
+            <!-- third version of project system -->
+            <div class="row">
+                <div class="col-3 container-fluid">
+
+                    <!-- Add new project/template button-->
+                    <div class="text-center">
+                        <button type="button" class="btn btn-primary mt-3 mb-2"
+                                data-toggle="modal" data-target="#add-project"
+                                id="new-project-button">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New Project
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                        <button type="button" class="btn btn-primary mt-3 mb-2" data-toggle="modal" style="display: none"
+                                data-target="#add-template" id="new-template-button">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New Template
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+
+                        </button>
+                    </div>
+                    <hr>
+                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                        <a class="nav-link active" id="v-pills-projects-tab" data-toggle="pill" href="#v-pills-projects"
+                           role="tab" aria-controls="v-pills-projects" aria-selected="true">
+                            <div class="row">
+                                <div class="col-2"></div>
+                                <div class="col-2">
+                                    <i class="fas fa-folder"></i>
+                                </div>
+                                <div class="col-8">
+                                    Projects
+                                </div>
+                            </div>
+                        </a>
+                        <a class="nav-link" id="v-pills-templates-tab" data-toggle="pill" href="#v-pills-templates"
+                           role="tab" aria-controls="v-pills-templates" aria-selected="false">
+                            <div class="row">
+                                <div class="col-2"></div>
+                                <div class="col-2">
+                                    <i class="fas fa-clone"></i>
+                                </div>
+                                <div class="col-8">
+                                    Templates
+                                </div>
+                            </div>
+                        </a>
+                        <!-- TODO: remove class "disabled" and add href="#v-pills-share" to make it available -->
+                        <a class="nav-link isDisabled" id="v-pills-share-tab" data-toggle="pill"
+                           role="tab" aria-controls="v-pills-share" aria-selected="false">
+                            <div class="row">
+                                <div class="col-2"></div>
+                                <div class="col-2">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="col-8">
+                                    Shared with me
+                                </div>
+                            </div>
+                        </a>
+                        <!-- TODO: remove class "disabled" and add href="#v-pills-trash" to make it available -->
+                        <a class="nav-link isDisabled" id="v-pills-trash-tab" data-toggle="pill"
+                           role="tab" aria-controls="v-pills-trash" aria-selected="false">
+                            <div class="row">
+                                <div class="col-2"></div>
+                                <div class="col-2">
+                                    <i class="fas fa-trash"></i>
+                                </div>
+                                <div class="col-8">
+                                    Trash
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-9 container-fluid">
+                    <div class="tab-content" id="v-pills-tabContent">
+                        <div class="tab-pane fade show active" id="v-pills-projects" role="tabpanel"
+                             aria-labelledby="v-pills-projects-tab-tab">
+                            <div class="container-fluid">
+                                <div class="py-2 container-fluid"> <!-- Header div for the file list -->
+                                    <div class="row">
+                                        <div class="col-4 text-center text-color">Name</div>
+                                        <div class="col-4 text-center text-color">Last modified</div>
+                                        <div class="col-2 text-center text-color">Type</div>
+                                        <div class="col-2 text-center text-color"></div>
+                                    </div>
+                                </div>
+                                <div id="projects-container" class="container-fluid bg-white rounded">
+                                    <!--<div class="project" id="123456">-->
+                                        <!--<div class="project_header">-->
+                                            <!--<div class="row border-bottom py-3">-->
+                                                <!--<div class="col-1">-->
+                                                    <!--<button class="btn btn-sm collapse-btn fas fa-plus-square" type="button">-->
+                                                    <!--</button>-->
+                                                <!--</div>-->
+                                                <!--<div class="col-3">-->
+                                                    <!--<div class="row">-->
+                                                        <!--<div class="col-2 text-right"><i class="far fa-folder"></i></div>-->
+                                                        <!--<div class="project_name col-8">Project_1</div>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                                <!--<div class="col-4 text-center text-color project_last_modified">May 8, 2017</div>-->
+                                                <!--<div class="col-2 text-center text-color"></div>-->
+                                                <!--<div class="col-1 text-center new-model" data-toggle="modal"-->
+                                                     <!--data-target="#add-model" title="Add a new model">-->
+                                                    <!--<i class="fas fa-plus"></i>-->
+                                                <!--</div>-->
+                                                <!--<div class="col-1 text-center more">-->
+                                                    <!--<a class="dropdown" data-toggle="dropdown" aria-haspopup="true"-->
+                                                       <!--aria-expanded="false"-->
+                                                    <!--&gt;<i class="fas fa-align-justify"></i></a>-->
+                                                    <!--<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">-->
+                                                        <!--<a class="dropdown-item rename-project"><i class="fas fa-edit"></i>-->
+                                                            <!--Rename</a>-->
+                                                        <!--<a class="dropdown-item delete-project"><i class="fas fa-trash"></i>-->
+                                                            <!--Delete</a>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                        <!--<div id="models_123456" class="collapse model-list">-->
+                                            <!--<div class="row model model_clicked py-3 border-bottom">-->
+                                                <!--<div class="col-1">-->
+                                                <!--</div>-->
+                                                <!--<div class="col-3">-->
+                                                    <!--<div class="row">-->
+                                                        <!--<div class="col-2 text-right"><i class="far fa-image"></i></div>-->
+                                                        <!--<div class="model_name col-8">GoalModel_1</div>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                                <!--<div class="col-4 text-center text-color model_last_modified">May 8, 2017</div>-->
+                                                <!--<div class="col-2 text-center model_type"></div>-->
+                                                <!--<div class="col-1"></div>-->
+                                                <!--<div class="col-1 text-center more">-->
+                                                    <!--<a class="dropdown" data-toggle="dropdown"-->
+                                                       <!--aria-haspopup="true" aria-expanded="false"-->
+                                                    <!--&gt;<i class="fas fa-align-justify"></i></a>-->
+                                                    <!--<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">-->
+                                                        <!--<a class="dropdown-item rename-model">-->
+                                                            <!--<i class="fas fa-edit"></i>Rename</a>-->
+                                                        <!--<a class="dropdown-item delete-model">-->
+                                                            <!--<i class="fas fa-trash"></i>Delete</a>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-templates" role="tabpanel"
+                             aria-labelledby="v-pills-templates-tab">
+                        TO BE IMPLEMENTED
+                    </div>
+                        <!-- TODO: add shared with me html here -->
+                    <div class="tab-pane fade" id="v-pills-share" role="tabpanel"
+                         aria-labelledby="v-pills-share-tab">...</div>
+                        <!-- TODO: add trash html here -->
+                    <div class="tab-pane fade" id="v-pills-trash"
+                         role="tabpanel" aria-labelledby="v-pills-trash-tab">...</div>
+
+                </div>
             </div>
-
         </main>
 
-        <!-- Create goal model modal starts-->
+        <div class="inner mt-3">
+            <p class="text-center">&copy;<em>2018 The University of Melbourne</em></p>
+        </div>
+
+        <!-- Create goal model modal-->
         <div class="modal fade" id="add-model" tabindex="-1" role="dialog"
              aria-labelledby="new-model" aria-hidden="true">
             <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
@@ -151,7 +346,7 @@
                     <form method="post" id="create-model">
                         <div class="modal-body">
                             <input name="model_name" type="text" class="form-control"
-                                   placeholder="Untitled">
+                                   placeholder="Untitled" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn" style="background-color: transparent"
@@ -162,7 +357,7 @@
                 </div>
             </div>
         </div>
-        <!-- Modal ends -->
+        <!-- end modal -->
 
         <!-- Rename project modal -->
         <div class="modal fade" id="rename-project" tabindex="-1" role="dialog"
@@ -177,7 +372,7 @@
                     </div>
                     <form method="post" id="rename_project">
                         <div class="modal-body">
-                            <input name="project_name" type="text" class="form-control">
+                            <input name="project_name" type="text" class="form-control" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn" style="background-color: transparent"
@@ -205,6 +400,58 @@
                         <div class="modal-body">
                             <lable type="text">You would lose all goal models attached to the project.
                                 Are you sure?</lable>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn" style="background-color: transparent"
+                                    data-dismiss="modal">CANCEL</button>
+                            <button type="submit" class="btn btn-primary">Confirm</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- end modal -->
+
+        <!-- Rename model modal -->
+        <div class="modal fade" id="rename-model" tabindex="-1" role="dialog"
+             aria-labelledby="new-model" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Model Rename</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="post" id="rename_model">
+                        <div class="modal-body">
+                            <input name="model_name" type="text" class="form-control" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn" style="background-color: transparent"
+                                    data-dismiss="modal">CANCEL</button>
+                            <button type="submit" class="btn btn-primary">Confirm</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- end modal -->
+
+        <!-- Delete model modal -->
+        <div class="modal fade" id="delete-model" tabindex="-1" role="dialog"
+             aria-labelledby="new-model" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Warning</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="post" id="delete_model">
+                        <div class="modal-body">
+                            <lable type="text">Are you sure to delete the model?</lable>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn" style="background-color: transparent"
