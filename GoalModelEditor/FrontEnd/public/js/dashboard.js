@@ -230,8 +230,8 @@ function parseProject(project) {
     projectHTML =
         projectHTML +
         '<div class="col-1 text-center more">' +
-        '<a class="dropdown" data-toggle="dropdown" aria-haspopup="true"' +
-        'aria-expanded="false"><i class="fas fa-align-justify"></i></a>' +
+        '<a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+        '<i class="fas fa-align-justify"></i></a>' +
         '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">\n' +
         '<a class="dropdown-item rename-project"><i class="fas fa-edit"></i>Rename</a>' +
         '<a class="dropdown-item delete-project"><i class="fas fa-trash"></i>Delete</a>' +
@@ -664,14 +664,19 @@ function addListenersToNewItem() {
     addClickOnRenameModel();
     addClickOnDeleteModel();
     addDbClickOnModel();
+    addClickOnDropdown();
+    removeDblclickOnMore();
+    removeClickOnModelFromProject();
 }
 
 /**
- * Function to add click eventListener to 'project' class
+ * Function to add click eventListener to 'project_header' class
  * To show all the models and change the collapse button style
  */
 function addClickOnProject() {
-    $(".project").click(evt => {
+    $(".project_header").click(evt => {
+        // only on project item but
+        $(".model").removeClass("model_clicked");
         let parentNode = null;
         if($(evt.target).hasClass("project")) {
             parentNode = evt.target;
@@ -693,6 +698,7 @@ function addClickOnProject() {
 function addClickOnNewModel() {
     $(".new-model").click(evt => {
         evt.stopImmediatePropagation();
+        $(".model").removeClass("model_clicked");
         let parentNode = $(evt.target).parents(".project")[0];
         setPID($(parentNode).attr("id"));
         $("#add-model").modal("toggle");
@@ -706,6 +712,7 @@ function addClickOnNewModel() {
 function addClickOnRenameProject() {
     $(".rename-project").click(evt => {
         evt.stopImmediatePropagation();
+        $(".model").removeClass("model_clicked");
         let parentNode = $(evt.target).parents(".project")[0];
         setPID($(parentNode).attr("id"));
         let projectName = $(parentNode).find(".project_name").eq(0).html();
@@ -734,7 +741,6 @@ function addClickOnDeleteProject() {
  */
 function addClickOnModel() {
     $(".model").click(evt => {
-        evt.stopImmediatePropagation();
         $(".model").removeClass("model_clicked");
         let parentNode = null;
         if($(evt.target).hasClass("model")) {
@@ -751,16 +757,34 @@ function addClickOnModel() {
  */
 function addClickOnMore() {
     $(".more").click(evt => {
-       evt.stopPropagation();
-       let toggleNode = null;
-       if($(evt.target).hasClass("dropdown")) {
-           toggleNode = evt.target;
-       } else if($(evt.target).parents(".dropdown")[0]){
-           toggleNode = $(evt.target).parents(".dropdown")[0];
-       } else {
-           toggleNode = $(evt.target).children(".dropdown")[0];
-       }
-       $(toggleNode).dropdown("toggle");
+        evt.stopPropagation();
+        $(".model").removeClass("model_clicked");
+        let toggleNode = null;
+        if($(evt.target).hasClass("dropdown")) {
+            toggleNode = evt.target;
+        } else if($(evt.target).parents(".dropdown")[0]){
+            toggleNode = $(evt.target).parents(".dropdown")[0];
+        } else {
+            toggleNode = $(evt.target).children(".dropdown")[0];
+        }
+        if($(evt.target).parents(".model")[0]) {
+            $(evt.target).parents(".model").eq(0).addClass("model_clicked");
+        }
+        $(toggleNode).dropdown("toggle");
+    });
+}
+
+/**
+ * Function to add click eventListener to 'dropdown' class
+ * remove "model_clicked" and add it to the currently clicked model
+ *
+ */
+function addClickOnDropdown() {
+    $(".dropdown").click(evt => {
+        $(".model").removeClass("model_clicked");
+        if($(evt.target).parents(".model")[0]) {
+            $(evt.target).parents(".model").eq(0).addClass("model_clicked");
+        }
     });
 }
 
@@ -802,7 +826,7 @@ function addClickOnDeleteModel() {
 }
 
 /**
- * Function to add dbclick eventListener to 'model' class
+ * Function to add dblclick eventListener to 'model' class
  *
  */
 function addDbClickOnModel() {
@@ -817,6 +841,24 @@ function addDbClickOnModel() {
         setMID($(parentNode).attr("id"));
         window.location.href = "/goal_model/edit";
     });
+}
+
+/**
+ * Helper function to mute dblclick on 'more' class
+ *
+ */
+function removeDblclickOnMore() {
+    $(".more").dblclick(evt => {
+        evt.stopImmediatePropagation();
+    });
+}
+
+/**
+ * Helper function to remove click -- on 'project' for 'model class'
+ *
+ */
+function removeClickOnModelFromProject() {
+    $(".model").off("click", "**", false);
 }
 
 /**
