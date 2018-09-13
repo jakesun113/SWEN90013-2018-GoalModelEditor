@@ -22,9 +22,15 @@ const PATH_NEGATIVE = "/src/images/Risk.png";
 const PATH_QUALITY = "/src/images/Cloud.png";
 const PATH_STAKEHOLDER = "/src/images/Stakeholder.png";
 
-// default spacing for auto-layout algorithm
-const VERTICAL_SPACING = 100;
-const HORIZONTAL_SPACING = 100;
+// offset for non-emotional goals
+const DX_EMOTIONAL = -SYMBOL_WIDTH * 0.8;
+const DY_EMOTIONAL = -SYMBOL_HEIGHT * 0.3;
+const DX_QUALITY = -SYMBOL_WIDTH * 0.9;
+const DY_QUALITY = SYMBOL_HEIGHT * 0.3;
+const DX_NEGATIVE = SYMBOL_WIDTH * 1.0;
+const DY_NEGATIVE = -SYMBOL_HEIGHT * 0.25;
+const DX_STAKEHOLDER = SYMBOL_WIDTH * 0.6;
+const DY_STAKEHOLDER = SYMBOL_HEIGHT * 0.25;
 
 // it is necessary to store the variable pointing to the graph object
 // in the global scope - this is so that consecutive calls to render()
@@ -199,23 +205,23 @@ function renderNonFunction(descriptions, graph, source=null, type="None") {
     let image = "";
     switch (type) {
         case TYPE_EMOTIONAL:
-            dX = -70;
-            dY = -20;
+            dX = DX_EMOTIONAL;
+            dY = DY_EMOTIONAL;
             image = PATH_EMOTIONAL;
             break;
         case TYPE_NEGATIVE:
-            dX = 70;
-            dY = -20;
+            dX = DX_NEGATIVE;
+            dY = DY_NEGATIVE;
             image = PATH_NEGATIVE;
             break;
         case TYPE_QUALITY:
-            dX = -70;
-            dY = 20;
+            dX = DX_QUALITY;
+            dY = DY_QUALITY;
             image = PATH_QUALITY;
             break;
         case TYPE_STAKEHOLDER:
-            dX = 70;
-            dY = 10;
+            dX = DX_STAKEHOLDER;
+            dY = DY_STAKEHOLDER;
             image = PATH_STAKEHOLDER;
             break;
     }
