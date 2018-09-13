@@ -44,6 +44,16 @@ var negativesGlob = {};
 var qualitiesGlob = {};
 var stakeholdersGlob = {};
 
+var zoomInBtn = mxUtils.button('+', function() {
+    graph.zoomIn();
+});
+document.getElementById("zoomButtons").append(zoomInBtn);
+
+var zoomOutBtn = mxUtils.button('-', function() {
+    graph.zoomOut();
+});
+document.getElementById("zoomButtons").append(zoomOutBtn);
+
 /**
  * Renders window.jsonData into a motivational model into graphContainer.
  */
