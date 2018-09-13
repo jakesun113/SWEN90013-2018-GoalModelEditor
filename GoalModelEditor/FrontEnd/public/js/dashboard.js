@@ -141,6 +141,17 @@ $("#delete_model").submit(evt => {
     $("#delete-model").modal("toggle");
 });
 
+/**
+ * Add click on window (except for "id: view_container")to remove "clicked" effect
+ *
+ */
+$(document).click(evt => {
+    if($(evt.target).attr("id") === "view_container" ||
+        $(evt.target).parents("#view_container")[0]) {
+        return;
+    }
+    removeAllClicked();
+});
 
 /**
  * Add click EventListener for 'projects' nav
