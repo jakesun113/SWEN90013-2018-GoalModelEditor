@@ -1,8 +1,8 @@
 "use strict";
 
 // default width/height of MM symbols
-const SYMBOL_WIDTH = 120;
-const SYMBOL_HEIGHT = 90;
+const SYMBOL_WIDTH = 145;
+const SYMBOL_HEIGHT = 110;
 
 // default x and y coord of the MM symbols
 const SYMBOL_X_COORD = 0;
@@ -221,7 +221,16 @@ function renderNonFunction(descriptions, graph, source=null, type="None") {
             image = PATH_STAKEHOLDER;
             break;
     }
-    // insert new vertex and edge into graph
+
+    // customize vertex style
+    let style = "fontSize=16;fontColor=black;shape=image;image=" + image;
+
+    // if stakeholder, text goes at bottom
+    if (type === TYPE_STAKEHOLDER) {
+        style = style + ";verticalAlign=top;verticalLabelPosition=bottom";
+    }
+
+    // insert the vertex
     let node = graph.insertVertex(
         null,
         null,
@@ -230,7 +239,7 @@ function renderNonFunction(descriptions, graph, source=null, type="None") {
         sourceY + dY,
         SYMBOL_WIDTH,
         SYMBOL_HEIGHT,
-        "fontSize=16;fontColor=black;shape=image;image=" + image
+        style
     );
     let edge = graph.insertEdge(null, null, null, source, node);
     // console.log(edge);
