@@ -1,9 +1,6 @@
 /**
- * Class: mxGoalModelLayout
-*
  * Extends <mxGraphLayout> to implement auto-layout for Motivaitonal
  * Models.
- *
  */
 function mxGoalModelLayout(graph) {
     mxGraphLayout.call(this, graph);
@@ -13,189 +10,35 @@ mxGoalModelLayout.prototype = new mxGraphLayout();
 mxGoalModelLayout.prototype.constructor = mxGoalModelLayout;
 
 
-/**
- * Variable: resizeParent
- *
- * If the parents should be resized to match the width/height of the
- * children. Default is true.
- */
-mxGoalModelLayout.prototype.resizeParent = false;
-
-/**
- * Variable: maintainParentLocation
- *
- * Specifies if the parent location should be maintained, so that the
- * top, left corner stays the same before and after execution of
- * the layout. Default is false for backwards compatibility.
- */
-mxGoalModelLayout.prototype.maintainParentLocation = false;
-
-/**
- * Variable: groupPadding
- *
- * Padding added to resized parents. Default is 10.
- */
-mxGoalModelLayout.prototype.groupPadding = 10;
-
-/**
- * Variable: groupPaddingTop
- *
- * Top padding added to resized parents. Default is 0.
- */
-mxGoalModelLayout.prototype.groupPaddingTop = 0;
-
-/**
- * Variable: groupPaddingRight
- *
- * Right padding added to resized parents. Default is 0.
- */
-mxGoalModelLayout.prototype.groupPaddingRight = 0;
-
-/**
- * Variable: groupPaddingBottom
- *
- * Bottom padding added to resized parents. Default is 0.
- */
-mxGoalModelLayout.prototype.groupPaddingBottom = 0;
-
-/**
- * Variable: groupPaddingLeft
- *
- * Left padding added to resized parents. Default is 0.
- */
-mxGoalModelLayout.prototype.groupPaddingLeft = 0;
-
-/**
- * Variable: parentsChanged
- *
- * A set of the parents that need updating based on children
- * process as part of the layout.
- */
+// tracks parents that need to be updated if children are updated
 mxGoalModelLayout.prototype.parentsChanged = null;
 
-/**
- * Variable: moveTree
- *
- * Specifies if the tree should be moved to the top, left corner
- * if it is inside a top-level layer. Default is false.
- */
-mxGoalModelLayout.prototype.moveTree = false;
-
-/**
- * Variable: visited
- *
- * Specifies if the tree should be moved to the top, left corner
- * if it is inside a top-level layer. Default is false.
- */
+// tracks cells that have already been visited by the DFS autolayout
 mxGoalModelLayout.prototype.visited = null;
 
-/**
- * Variable: levelDistance
- *
- * Holds the levelDistance. Default is 10.
- */
+// default vertical separation between nodes on adjacent ranks
 mxGoalModelLayout.prototype.levelDistance = 10;
 
-/**
- * Variable: nodeDistance
- *
- * Holds the nodeDistance. Default is 20.
- */
+// default horizontal separation between nodes on the same rank
 mxGoalModelLayout.prototype.nodeDistance = 20;
 
-/**
- * Variable: resetEdges
- *
- * Specifies if all edge points of traversed edges should be removed.
- * Default is true.
- */
-mxGoalModelLayout.prototype.resetEdges = true;
-
-/**
- * Variable: prefHozEdgeSep
- *
- * The preferred horizontal distance between edges exiting a vertex.
- */
+// default horiztonal distance between edges exiting a vertex
 mxGoalModelLayout.prototype.prefHozEdgeSep = 5;
 
-/**
- * Variable: prefVertEdgeOff
- *
- * The preferred vertical offset between edges exiting a vertex.
- */
+// default vertical offset between edges exiting a vertex
 mxGoalModelLayout.prototype.prefVertEdgeOff = 4;
 
-/**
- * Variable: minEdgeJetty
- *
- * The minimum distance for an edge jetty from a vertex.
- */
-mxGoalModelLayout.prototype.minEdgeJetty = 20; // how far down the corner should be
-
-/**
- * Variable: channelBuffer
- *
- * The size of the vertical buffer in the center of inter-rank channels
- * where edge control points should not be placed.
- */
-mxGoalModelLayout.prototype.channelBuffer = 4;
-
-/**
- * Variable: edgeRouting
- *
- * Whether or not to apply the internal tree edge routing.
- */
-mxGoalModelLayout.prototype.edgeRouting = true;
-
-/**
- * Variable: sortEdges
- *
- * Specifies if edges should be sorted according to the order of their
- * opposite terminal cell in the model.
- */
-mxGoalModelLayout.prototype.sortEdges = false;
-
-/**
- * Variable: alignRanks
- *
- * Whether or not the tops of cells in each rank should be aligned
- * across the rank
- */
-mxGoalModelLayout.prototype.alignRanks = false;
-
-/**
- * Variable: maxRankHeight
- *
- * An array of the maximum height of cells (relative to the layout direction)
- * per rank
- */
-mxGoalModelLayout.prototype.maxRankHeight = null;
-
-/**
- * Variable: root
- *
- * The cell to use as the root of the tree
- */
+// root of the tree - this is automatically determined unless passed
+// explicitly
 mxGoalModelLayout.prototype.root = null;
 
-/**
- * Variable: node
- *
- * The internal node representation of the root cell. Do not set directly
- * , this value is only exposed to assist with post-processing functionality
- */
+// internal representation of root cell - DO NOT TOUCH THIS
 mxGoalModelLayout.prototype.node = null;
 
 
 /**
- * Function: isVertexIgnored
- *
- * Checks of a node should be ignored by the auto-layout algorithm. This is
- * the case if the cell has no visible connections.
- *
- * Parameters:
- *
- * vertex - <mxCell> whose ignored state should be returned.
+ * Determine whether vertex should be ignored for the purposes of
+ * the autolayout algorithm.
  */
 mxGoalModelLayout.prototype.isVertexIgnored = function(vertex) {
     return (
@@ -205,9 +48,7 @@ mxGoalModelLayout.prototype.isVertexIgnored = function(vertex) {
 };
 
 /**
- * Function: execute
- *
- * Implements <mxGraphLayout.execute>.
+ * Executes the autolayout algorithm
  *
  * If the parent has any connected edges, then it is used as the root of
  * the tree. Else, <mxGraph.findTreeRoots> will be used to find a suitable
@@ -252,29 +93,11 @@ mxGoalModelLayout.prototype.execute = function(parent, root) {
 
     // check if we need to resize or change the parent's location
     if (this.root != null) {
-        if (this.resizeParent) {
-            this.parentsChanged = new Object();
-        } else {
-            this.parentsChanged = null;
-        }
+        this.parentsChanged = null;
 
         //  Maintaining parent location
         this.parentX = null;
         this.parentY = null;
-
-        if (
-            parent != this.root &&
-            model.isVertex(parent) != null &&
-            this.maintainParentLocation
-        ) {
-            var geo = this.graph.getCellGeometry(parent);
-
-            if (geo != null) {
-                this.parentX = geo.x;
-                this.parentY = geo.y;
-            }
-        }
-
 
         model.beginUpdate(); // start transaction
 
@@ -282,25 +105,10 @@ mxGoalModelLayout.prototype.execute = function(parent, root) {
             this.visited = new Object();
             this.node = this.dfs(this.root, parent);
 
-            if (this.alignRanks) {
-                this.maxRankHeight = [];
-                this.findRankHeights(this.node, 0);
-                this.setCellHeights(this.node, 0);
-            }
-
             if (this.node != null) {
                 this.layout(this.node);
                 var x0 = this.graph.gridSize;
                 var y0 = x0;
-
-                if (!this.moveTree) {
-                    var g = this.getVertexBounds(this.root);
-
-                    if (g != null) {
-                        x0 = g.x;
-                        y0 = g.y;
-                    }
-                }
 
                 var bounds = this.verticalLayout(this.node, null, x0, y0);
 
@@ -319,15 +127,6 @@ mxGoalModelLayout.prototype.execute = function(parent, root) {
                     if (dx != 0 || dy != 0) {
                         this.moveNode(this.node, dx, dy);
                     }
-
-                    if (this.resizeParent) {
-                        this.adjustParents();
-                    }
-
-                    if (this.edgeRouting) {
-                        // Iterate through all edges setting their positions
-                        this.localEdgeProcessing(this.node);
-                    }
                 }
 
                 // Maintaining parent location
@@ -343,14 +142,12 @@ mxGoalModelLayout.prototype.execute = function(parent, root) {
                 }
             }
         } finally {
-            model.endUpdate();
+            model.endUpdate(); // end transaction
         }
     }
 };
 
 /**
- * Function: moveNode
- *
  * Moves the specified node and all of its children by the given amount.
  */
 mxGoalModelLayout.prototype.moveNode = function(node, dx, dy) {
@@ -367,81 +164,6 @@ mxGoalModelLayout.prototype.moveNode = function(node, dx, dy) {
 };
 
 /**
- * Function: sortOutgoingEdges
- *
- * Called if <sortEdges> is true to sort the array of outgoing edges in place.
- */
-mxGoalModelLayout.prototype.sortOutgoingEdges = function(source, edges) {
-    var lookup = new mxDictionary();
-
-    edges.sort(function(e1, e2) {
-        var end1 = e1.getTerminal(e1.getTerminal(false) == source);
-        var p1 = lookup.get(end1);
-
-        if (p1 == null) {
-            p1 = mxCellPath.create(end1).split(mxCellPath.PATH_SEPARATOR);
-            lookup.put(end1, p1);
-        }
-
-        var end2 = e2.getTerminal(e2.getTerminal(false) == source);
-        var p2 = lookup.get(end2);
-
-        if (p2 == null) {
-            p2 = mxCellPath.create(end2).split(mxCellPath.PATH_SEPARATOR);
-            lookup.put(end2, p2);
-        }
-
-        return mxCellPath.compare(p1, p2);
-    });
-};
-
-/**
- * Function: findRankHeights
- *
- * Stores the maximum height (relative to the layout
- * direction) of cells in each rank
- */
-mxGoalModelLayout.prototype.findRankHeights = function(node, rank) {
-    if (
-        this.maxRankHeight[rank] == null ||
-        this.maxRankHeight[rank] < node.height
-    ) {
-        this.maxRankHeight[rank] = node.height;
-    }
-
-    var child = node.child;
-
-    while (child != null) {
-        this.findRankHeights(child, rank + 1);
-        child = child.next;
-    }
-};
-
-/**
- * Function: setCellHeights
- *
- * Set the cells heights (relative to the layout
- * direction) when the tops of each rank are to be aligned
- */
-mxGoalModelLayout.prototype.setCellHeights = function(node, rank) {
-    if (
-        this.maxRankHeight[rank] != null &&
-        this.maxRankHeight[rank] > node.height
-    ) {
-        node.height = this.maxRankHeight[rank];
-    }
-
-    var child = node.child;
-
-    while (child != null) {
-        this.setCellHeights(child, rank + 1);
-        child = child.next;
-    }
-};
-
-/**
- * Function: dfs
- *
  * Does a depth first search starting at the specified cell.
  * Makes sure the specified parent is never left by the
  * algorithm.
@@ -470,23 +192,10 @@ mxGoalModelLayout.prototype.dfs = function(cell, parent) {
         );
         var view = this.graph.getView();
 
-        if (this.sortEdges) {
-            this.sortOutgoingEdges(cell, out);
-        }
-
         for (var i = 0; i < out.length; i++) {
             var edge = out[i];
 
             if (!this.isEdgeIgnored(edge)) {
-                // Resets the points on the traversed edge
-                if (this.resetEdges) {
-                    this.setEdgePoints(edge, null);
-                }
-
-                if (this.edgeRouting) {
-                    this.setEdgeStyleEnabled(edge, false);
-                    this.setEdgePoints(edge, null);
-                }
 
                 // Checks if terminal in same swimlane
                 var state = view.getState(edge);
@@ -505,30 +214,7 @@ mxGoalModelLayout.prototype.dfs = function(cell, parent) {
 
                     prev = tmp;
                 }
-            // else if we have a non-functional goal
             } 
-
-            /*
-            else if (this.isEdgeIgnored(edge)) {
-                var target = edge.target;
-                var source = edge.source;
-                console.log(source);
-
-                var srcGeo = this.graph.getCellGeometry(source);
-                if (srcGeo != null) {
-                    srcGeo = srcGeo.clone();
-                    console.log(srcGeo);
-                }
-
-                var geo = this.graph.getCellGeometry(target);
-                if (geo != null) {
-                    geo = geo.clone();
-                    geo.x = srcGeo.x;
-                    geo.y = srcGeo.y;
-                    model.setGeometry(target, geo);
-                }
-            }
-            */
         }
     }
 
@@ -536,10 +222,7 @@ mxGoalModelLayout.prototype.dfs = function(cell, parent) {
 };
 
 /**
- * Function: layout
- *
- * Starts the actual compact tree layout algorithm
- * at the given node.
+ * Executes compact tree layout algorithm  at the given node.
  */
 mxGoalModelLayout.prototype.layout = function(node) {
     if (node != null) {
@@ -797,16 +480,6 @@ mxGoalModelLayout.prototype.apply = function(node, bounds) {
     if (cell != null && g != null) {
         if (this.isVertexMovable(cell)) {
             g = this.setVertexLocation(cell, node.x, node.y);
-
-            if (this.resizeParent) {
-                var parent = model.getParent(cell);
-                var id = mxCellPath.create(parent);
-
-                // Implements set semantic
-                if (this.parentsChanged[id] == null) {
-                    this.parentsChanged[id] = parent;
-                }
-            }
         }
 
         if (bounds == null) {
@@ -835,128 +508,3 @@ mxGoalModelLayout.prototype.createLine = function(dx, dy, next) {
 
     return line;
 };
-
-/**
- * Function: adjustParents
- *
- * Adjust parent cells whose child geometries have changed. The default
- * implementation adjusts the group to just fit around the children with
- * a padding.
- */
-mxGoalModelLayout.prototype.adjustParents = function() {
-    var tmp = [];
-
-    for (var id in this.parentsChanged) {
-        tmp.push(this.parentsChanged[id]);
-    }
-
-    this.arrangeGroups(
-        mxUtils.sortCells(tmp, true),
-        this.groupPadding,
-        this.groupPaddingTop,
-        this.groupPaddingRight,
-        this.groupPaddingBottom,
-        this.groupPaddingLeft
-    );
-};
-
-/**
- * Function: localEdgeProcessing
- *
- * Moves the specified node and all of its children by the given amount.
- */
-mxGoalModelLayout.prototype.localEdgeProcessing = function(node) {
-    this.processNodeOutgoing(node);
-    var child = node.child;
-
-    while (child != null) {
-        this.localEdgeProcessing(child);
-        child = child.next;
-    }
-};
-
-/**
- * Function: localEdgeProcessing
- *
- * Separates the x position of edges as they connect to vertices
- */
-mxGoalModelLayout.prototype.processNodeOutgoing = function(node) {
-    var child = node.child;
-    var parentCell = node.cell;
-
-    var childCount = 0;
-    var sortedCells = [];
-
-    while (child != null) {
-        childCount++;
-
-        var sortingCriterion = child.x;
-
-        sortedCells.push(new WeightedCellSorter(child, sortingCriterion));
-        child = child.next;
-    }
-
-    sortedCells.sort(WeightedCellSorter.prototype.compare);
-
-    var availableWidth = node.width;
-
-    var requiredWidth = (childCount + 1) * this.prefHozEdgeSep;
-
-    // Add a buffer on the edges of the vertex if the edge count allows
-    if (availableWidth > requiredWidth + 2 * this.prefHozEdgeSep) {
-        availableWidth -= 2 * this.prefHozEdgeSep;
-    }
-
-    var edgeSpacing = availableWidth / childCount;
-
-    var currentXOffset = edgeSpacing / 2.0;
-
-    if (availableWidth > requiredWidth + 2 * this.prefHozEdgeSep) {
-        currentXOffset += this.prefHozEdgeSep;
-    }
-
-    var currentYOffset = this.minEdgeJetty - this.prefVertEdgeOff;
-    var maxYOffset = 0;
-
-    var parentBounds = this.getVertexBounds(parentCell);
-    child = node.child;
-
-    for (var j = 0; j < sortedCells.length; j++) {
-        var childCell = sortedCells[j].cell.cell;
-        var childBounds = this.getVertexBounds(childCell);
-
-        var edges = this.graph.getEdgesBetween(parentCell, childCell, false);
-
-        var newPoints = [];
-        var x = 0;
-        var y = 0;
-
-        for (var i = 0; i < edges.length; i++) {
-            x = parentBounds.x + currentXOffset;
-            y = parentBounds.y + parentBounds.height;
-            newPoints.push(new mxPoint(x, y));
-            y = parentBounds.y + parentBounds.height + currentYOffset;
-            newPoints.push(new mxPoint(x, y));
-            x = childBounds.x + childBounds.width / 2.0;
-            newPoints.push(new mxPoint(x, y));
-            //this.setEdgePoints(edges[i], newPoints);
-        }
-
-        if (j < childCount / 2) {
-            currentYOffset += this.prefVertEdgeOff;
-        } else if (j > childCount / 2) {
-            currentYOffset -= this.prefVertEdgeOff;
-        }
-        // Ignore the case if equals, this means the second of 2
-        // jettys with the same y (even number of edges)
-
-        //								pos[k * 2] = currentX;
-        currentXOffset += edgeSpacing;
-        //								pos[k * 2 + 1] = currentYOffset;
-
-        maxYOffset = Math.max(maxYOffset, currentYOffset);
-    }
-};
-
-
-

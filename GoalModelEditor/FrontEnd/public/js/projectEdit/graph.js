@@ -2,7 +2,7 @@
 
 // default width/height of MM symbols
 const SYMBOL_WIDTH = 120;
-const SYMBOL_HEIGHT = 100;
+const SYMBOL_HEIGHT = 90;
 
 // default x and y coord of the MM symbols
 const SYMBOL_X_COORD = 0;
@@ -132,19 +132,15 @@ function renderGoals(goals, graph, source = null) {
     // render each of the non-functional goals
     if (emotions.length) {
         emotionsGlob[source.value] = emotions;
-        //renderNonFunction(emotions, graph, source, TYPE_EMOTIONAL);
     }
     if (qualities.length) {
         qualitiesGlob[source.value] = qualities;
-        //renderNonFunction(qualities, graph, source, TYPE_QUALITY);
     }
     if (concerns.length) {
         negativesGlob[source.value] = concerns;
-        //renderNonFunction(concerns, graph, source, TYPE_NEGATIVE);
     }
     if (stakeholders.length) {
         stakeholdersGlob[source.value] = stakeholders;
-        //renderNonFunction(stakeholders, graph, source, TYPE_STAKEHOLDER);
     }
 }
 
@@ -170,7 +166,7 @@ function renderFunction(goal, graph, source = null) {
         "shape=image;image=" + image
     );
     let edge = graph.insertEdge(null, null, null, source, node,
-        "strokeColor=black");
+        "strokeColor=black;endArrow=none;strokeWidth=2");
 
     // then recurse over the goal's children
     renderGoals(goal.SubGoals, graph, node);
@@ -267,22 +263,32 @@ function associateNonFunctions(graph) {
 
         // render all emotions
         if (emotionsGlob[value]) {
-            renderNonFunction(emotionsGlob[goal.value], graph, goal, TYPE_EMOTIONAL);
+            renderNonFunction(
+                emotionsGlob[goal.value], graph, goal, TYPE_EMOTIONAL
+            );
         }
     
         // render all qualities
         if (qualitiesGlob[value]) {
-            renderNonFunction(qualitiesGlob[goal.value], graph, goal, TYPE_QUALITY);
+            renderNonFunction(
+                qualitiesGlob[goal.value], graph, goal, TYPE_QUALITY
+            );
         }
 
         // render all concerns
         if (negativesGlob[value]) {
-            renderNonFunction(negativesGlob[goal.value], graph, goal, TYPE_NEGATIVE);
+            renderNonFunction(
+                negativesGlob[goal.value],
+                graph, goal, TYPE_NEGATIVE
+            );
         }
 
         // render all stakeholders
         if (stakeholdersGlob[value]) {
-            renderNonFunction(stakeholdersGlob[goal.value], graph, goal, TYPE_STAKEHOLDER);
+            renderNonFunction(
+                stakeholdersGlob[goal.value],
+                graph, goal, TYPE_STAKEHOLDER
+            );
         }
     }
 }
