@@ -4,15 +4,6 @@ header {
     background-image: url("/img/profile-background.jpg");
 }
 
-/* color of the text */
-.text-color {
-    color: rgba(0, 0, 0, .72);
-}
-
-.header-color {
-    color: rgba(0, 0, 0, .54);
-}
-
 
 /* for v1 */
 /*!* file list block *!*/
@@ -36,7 +27,7 @@ main {
 }
 
 /* project container style */
-#projects-container {
+#projects-container, #templates-container {
     height: 65vh;
     display: block;
     overflow: scroll;
@@ -192,7 +183,23 @@ a {
     min-width: 5rem;
 }
 
+/* color of the text */
+.text-color {
+    color: rgba(0, 0, 0, .72);
+}
+
+.header-color {
+    color: rgba(0, 0, 0, .54);
+}
+
 .model_clicked {
-    background-color: #e8f0fe;
+    background-color: rgba(232, 240, 254, .54);
     color: #1967d2;
 }
+
+.project_clicked {
+    background-color: rgba(220, 220, 220, .54);
+    color: #1967d2;
+}
+
+

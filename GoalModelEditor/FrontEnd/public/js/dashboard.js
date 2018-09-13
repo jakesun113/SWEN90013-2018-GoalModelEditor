@@ -191,15 +191,12 @@ function parseProject(project) {
         '<div class="project" id="' + project.project_id + '">';
 
     // Project-header
-    projectHTML += '<div class="project_header">';
+    projectHTML += '<div class="row border-bottom py-3 project_header text-color">';
 
     // Collapse button
     projectHTML =
         projectHTML +
-        '<div class="row border-bottom py-3">' +
-        '<div class="col-1">' +
-        '<button class="btn btn-sm collapse-btn fas fa-plus-square" type="button">' +
-        '</button>' +
+        '<div class="col-1 btn btn-sm collapse-btn fas fa-plus-square mt-1">' +
         '</div>';
 
     // Project name
@@ -208,20 +205,20 @@ function parseProject(project) {
         '<div class="col-3">' +
         '<div class="row">' +
         '<div class="col-2 text-right"><i class="far fa-folder"></i></div>' +
-        '<div class="project_name col-8 text-color">' + project.project_name + '</div></div></div>';
+        '<div class="project_name col-8">' + project.project_name + '</div></div></div>';
 
     // Last modified
     projectHTML =
         projectHTML +
-        '<div class="col-4 text-center text-color project_last_modified"></div>';
+        '<div class="col-4 text-center project_last_modified"></div>';
 
     // To make the view better
-    projectHTML = projectHTML + '<div class="col-2 text-center text-color"></div>';
+    projectHTML = projectHTML + '<div class="col-2 text-center"></div>';
 
     // Add new model button
     projectHTML =
         projectHTML +
-        '<div class="col-1 text-center new-model" data-toggle="modal"' +
+        '<div class="col-1 new-model" data-toggle="modal"' +
         'data-target="#add-model" title="Add a new model">' +
         '<i class="fas fa-plus"></i>' +
         '</div>';
@@ -238,7 +235,7 @@ function parseProject(project) {
         '</div></div>';
 
     // Close the row and header div
-    projectHTML = projectHTML + '</div></div>';
+    projectHTML = projectHTML + '</div>';
 
     // Goal model list
     projectHTML = projectHTML + '<div id="models_'+ project.project_id +'" class="collapse model-list">';
@@ -264,7 +261,7 @@ function parseGoalModel(model) {
 
     // The model div
     let modelHTML =
-        '<div class="row model py-3 border-bottom" id="'+ model.model_id +'">';
+        '<div class="row model py-3 border-bottom text-color" id="'+ model.model_id +'">';
 
     // To make the view better
     modelHTML = modelHTML + '<div class="col-1"></div>';
@@ -274,11 +271,11 @@ function parseGoalModel(model) {
         '<div class="col-3">' +
         '<div class="row">' +
         '<div class="col-2 text-right"><i class="far fa-image"></i></div>' +
-        '<div class="model_name col-8 text-color">' + model.model_name + '</div></div></div>';
+        '<div class="model_name col-8">' + model.model_name + '</div></div></div>';
 
     // Model last modified
     modelHTML = modelHTML +
-        '<div class="col-4 text-center text-color model_last_modified">' +
+        '<div class="col-4 text-center model_last_modified">' +
         parseDateFormat(model.last_modified.substring(0,10)) + '</div>';
 
     // Model type
@@ -331,7 +328,6 @@ function retriveProjects() {
         type: "GET",
         headers: { Authorization: "Bearer " + TOKEN },
         success: projects => {
-            console.log(projects);
             // Set the username
             setUserName(UNAME);
 
@@ -371,6 +367,9 @@ function createProject(project) {
             // add Listeners
             removeCustomizedEventListeners();
             addListenersToNewItem();
+
+            // Re-initialize the input for the modal
+            $("#add-project .modal-body input").val("");
         }
     }).fail(function(jqXHR) {
         warningMessageSlide(jqXHR.responseJSON.message + "<br>Please try again.");
@@ -397,9 +396,12 @@ function createGoalModel(url, pid, model) {
 
             successMessageSlide("Model: " + model.model_name + " successfully created.");
 
-            // add listeners
+            // Add listeners
             removeCustomizedEventListeners();
             addListenersToNewItem();
+
+            // Re-initialize the input for the modal
+            $("#add-model .modal-body input").val("");
         }
     }).fail(function(jqXHR) {
         warningMessageSlide(jqXHR.responseJSON.message + "<br>Please try again.");
@@ -654,6 +656,7 @@ function warningMessageSlide(message) {
 /**
  * Helper function to be called every time after any change has been made to the page
  * To make sure all newly added items have the right eventListeners
+ *
  */
 function addListenersToNewItem() {
     addClickOnProject();
@@ -676,8 +679,7 @@ function addListenersToNewItem() {
  */
 function addClickOnProject() {
     $(".project_header").click(evt => {
-        // only on project item but
-        $(".model").removeClass("model_clicked");
+        removeAllClicked();
         let parentNode = null;
         if($(evt.target).hasClass("project")) {
             parentNode = evt.target;
@@ -687,7 +689,9 @@ function addClickOnProject() {
         setPID($(parentNode).attr("id"));
         let collapseBtn = $(parentNode).find(".collapse-btn")[0];
         changeCollapseStyle(collapseBtn);
-        // show/unfold the model list
+        addProjectClicked($(parentNode).find(".project_header")[0]);
+
+        // Show/unfold the model list
         $("#models_" + getPID()).collapse('toggle');
     });
 }
@@ -699,9 +703,10 @@ function addClickOnProject() {
 function addClickOnNewModel() {
     $(".new-model").click(evt => {
         evt.stopImmediatePropagation();
-        $(".model").removeClass("model_clicked");
+        removeAllClicked();
         let parentNode = $(evt.target).parents(".project")[0];
         setPID($(parentNode).attr("id"));
+        addProjectClicked($(parentNode).find(".project_header")[0]);
         $("#add-model").modal("toggle");
     });
 }
@@ -713,11 +718,11 @@ function addClickOnNewModel() {
 function addClickOnRenameProject() {
     $(".rename-project").click(evt => {
         evt.stopImmediatePropagation();
-        $(".model").removeClass("model_clicked");
+        removeAllClicked();
         let parentNode = $(evt.target).parents(".project")[0];
         setPID($(parentNode).attr("id"));
         let projectName = $(parentNode).find(".project_name").eq(0).html();
-        console.log(projectName);
+        addProjectClicked($(parentNode).find(".project_header")[0]);
         putProjectNameInModal(projectName);
     });
 }
@@ -729,8 +734,10 @@ function addClickOnRenameProject() {
 function addClickOnDeleteProject() {
     $(".delete-project").click(evt => {
         evt.stopImmediatePropagation();
+        removeAllClicked();
         let parentNode = $(evt.target).parents(".project")[0];
         setPID($(parentNode).attr("id"));
+        addProjectClicked($(parentNode).find(".project_header")[0]);
         $("#delete-project").modal("toggle");
     });
 }
@@ -742,14 +749,14 @@ function addClickOnDeleteProject() {
  */
 function addClickOnModel() {
     $(".model").click(evt => {
-        $(".model").removeClass("model_clicked");
+        removeAllClicked();
         let parentNode = null;
         if($(evt.target).hasClass("model")) {
             parentNode = evt.target;
         } else {
             parentNode = $(evt.target).parents(".model")[0];
         }
-        $(parentNode).addClass("model_clicked");
+        addModelClicked(parentNode);
     })
 }
 
@@ -759,7 +766,7 @@ function addClickOnModel() {
 function addClickOnMore() {
     $(".more").click(evt => {
         evt.stopPropagation();
-        $(".model").removeClass("model_clicked");
+        removeAllClicked();
         let toggleNode = null;
         if($(evt.target).hasClass("dropdown")) {
             toggleNode = evt.target;
@@ -769,7 +776,9 @@ function addClickOnMore() {
             toggleNode = $(evt.target).children(".dropdown")[0];
         }
         if($(evt.target).parents(".model")[0]) {
-            $(evt.target).parents(".model").eq(0).addClass("model_clicked");
+            addModelClicked($(evt.target).parents(".model")[0]);
+        } else if($(evt.target).parents(".project_header")[0]) {
+            addProjectClicked($(evt.target).parents(".project_header")[0]);
         }
         $(toggleNode).dropdown("toggle");
     });
@@ -782,9 +791,11 @@ function addClickOnMore() {
  */
 function addClickOnDropdown() {
     $(".dropdown").click(evt => {
-        $(".model").removeClass("model_clicked");
+        removeAllClicked();
         if($(evt.target).parents(".model")[0]) {
-            $(evt.target).parents(".model").eq(0).addClass("model_clicked");
+            addModelClicked($(evt.target).parents(".model")[0]);
+        } else if($(evt.target).parents(".project_header")[0]) {
+            addProjectClicked($(evt.target).parents(".project_header")[0]);
         }
     });
 }
@@ -890,7 +901,7 @@ function removeCustomizedEventListeners() {
     $(".more").off("click");
     $(".rename-model").off("click");
     $(".delete-model").off("click");
-    $(".mode").off("dblclick");
+    $(".model").off("dblclick");
 }
 
 /**
@@ -905,4 +916,31 @@ function parseDateFormat(dateString) {
         "July", "August", "September", "October", "November", "December"][mydate.getMonth()];
     let str = month + " " + mydate.getDay() + ", " + mydate.getFullYear();
     return str;
+}
+
+/**
+ * Helper function to remove all "model_clicked" and "project_clicked" class
+ *
+ */
+function removeAllClicked() {
+    $(".model").removeClass("model_clicked");
+    $(".project_header").removeClass("project_clicked");
+}
+
+/**
+ * Helper function to add "project_clicked" class to the specified element
+ *
+ * @param {HTMLElement|div} project_header
+ */
+function addProjectClicked(project_header) {
+    $(project_header).addClass("project_clicked");
+}
+
+/**
+ * Helper function to add "model_clicked" class to the specified element
+ *
+ * @param {HTMLElement|div} model
+ */
+function addModelClicked(model) {
+    $(model).addClass("model_clicked");
 }

@@ -73,60 +73,6 @@
             </div>
         </header>
 
-        <!-- Create project modal starts-->
-        <div class="modal fade" id="add-project" tabindex="-1" role="dialog"
-             aria-labelledby="new-project" aria-hidden="true">
-            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="new-project">New Project</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form method="post" id="create-project">
-                        <div class="modal-body">
-                            <input name="project_name" type="text" class="form-control"
-                                   placeholder="Project Name" required>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn" style="background-color: transparent"
-                                    data-dismiss="modal">CANCEL</button>
-                            <button type="submit" class="btn btn-primary">CREATE</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!-- Modal ends -->
-
-        <!-- Create template modal starts-->
-        <div class="modal fade" id="add-template" tabindex="-1" role="dialog"
-             aria-labelledby="new-project" aria-hidden="true">
-            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="new-template">New Project</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form method="post" id="create-template">
-                        <div class="modal-body">
-                            <input name="template_name" type="text" class="form-control"
-                                   placeholder="Template Name" required>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn" style="background-color: transparent"
-                                    data-dismiss="modal">CANCEL</button>
-                            <button type="submit" class="btn btn-primary">CREATE</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!-- Modal ends -->
-
         <!-- Main part of the page -->
         <main role="main" class="border-bottom container-fluid pt-2">
             <!-- first version of project system -->
@@ -179,7 +125,6 @@
                         <button type="button" class="btn btn-primary mt-3 mb-2" data-toggle="modal" style="display: none"
                                 data-target="#add-template" id="new-template-button">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New Template
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
-
                         </button>
                     </div>
                     <hr>
@@ -256,7 +201,18 @@
                     </div>
                     <div class="tab-pane fade" id="v-pills-templates" role="tabpanel"
                              aria-labelledby="v-pills-templates-tab">
-                        TO BE IMPLEMENTED
+                        <div class="container-fluid">
+                            <div class="py-2 container-fluid"> <!-- Header div for the file list -->
+                                <div class="row text-color">
+                                    <div class="col-4 header-color">Name</div>
+                                    <div class="col-4 header-color">Last modified</div>
+                                    <div class="col-2 header-color"></div>
+                                    <div class="col-2 header-color"></div>
+                                </div>
+                            </div>
+                            <div id="templates-container" class="container-fluid bg-white rounded">
+                            </div>
+                        </div>
                     </div>
                         <!-- TODO: add shared with me html here -->
                     <div class="tab-pane fade" id="v-pills-share" role="tabpanel"
@@ -286,8 +242,26 @@
                     </div>
                     <form method="post" id="create-model">
                         <div class="modal-body">
-                            <input name="model_name" type="text" class="form-control"
-                                   placeholder="Untitled" required>
+                            <div class="row">
+                                <div class="col-3 text-center">
+                                    <label class="mt-2 ml-1">Name</label>
+                                </div>
+                                <div class="col-9 text-center">
+                                    <input name="model_name" type="text" class="form-control"
+                                           placeholder="Untitled" required>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-5 text-center">
+                                    <label class="mt-2">Create From</label>
+                                </div>
+                                <div class="col-7 text-center">
+                                    <select name="model_type" class="custom-select" required>
+                                        <option value="list" selected>Goal Lists</option>
+                                        <option value="template">Templates</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn" style="background-color: transparent"
@@ -339,7 +313,7 @@
                     </div>
                     <form method="post" id="delete_project">
                         <div class="modal-body">
-                            <lable type="text">You would lose all goal models attached to the project.
+                            <lable type="text">You would lose all motivational models attached to the project.
                                 Are you sure?</lable>
                         </div>
                         <div class="modal-footer">
@@ -404,6 +378,115 @@
             </div>
         </div>
         <!-- end modal -->
+
+        <!-- Create project modal starts-->
+        <div class="modal fade" id="add-project" tabindex="-1" role="dialog"
+             aria-labelledby="new-project" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="new-project">New Project</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="post" id="create-project">
+                        <div class="modal-body">
+                            <input name="project_name" type="text" class="form-control"
+                                   placeholder="Project Name" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn" style="background-color: transparent"
+                                    data-dismiss="modal">CANCEL</button>
+                            <button type="submit" class="btn btn-primary">CREATE</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Modal ends -->
+
+        <!-- Create template modal starts-->
+        <div class="modal fade" id="add-template" tabindex="-1" role="dialog"
+             aria-labelledby="new-project" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="template-title" id="new-template">New Template</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="post" id="create-template">
+                        <div class="modal-body">
+                            <input name="template_name" type="text" class="form-control"
+                                   placeholder="Template Name" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn" style="background-color: transparent"
+                                    data-dismiss="modal">CANCEL</button>
+                            <button type="submit" class="btn btn-primary">CREATE</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Modal ends -->
+
+        <!-- Rename template modal starts-->
+        <div class="modal fade" id="rename-template" tabindex="-1" role="dialog"
+             aria-labelledby="new-project" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="template-title">Rename Template</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="post" id="rename_template">
+                        <div class="modal-body">
+                            <input name="template_name" type="text" class="form-control"
+                                   placeholder="Template Name" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn" style="background-color: transparent"
+                                    data-dismiss="modal">CANCEL</button>
+                            <button type="submit" class="btn btn-primary">CREATE</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Modal ends -->
+
+        <!-- Delete template modal -->
+        <div class="modal fade" id="delete-template" tabindex="-1" role="dialog"
+             aria-labelledby="new-model" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Warning</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="post" id="delete_template">
+                        <div class="modal-body">
+                            <lable type="text">Are you sure to delete the template?</lable>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn" style="background-color: transparent"
+                                    data-dismiss="modal">CANCEL</button>
+                            <button type="submit" class="btn btn-primary">Confirm</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Modal ends -->
+
+
 
         
 
