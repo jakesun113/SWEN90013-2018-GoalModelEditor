@@ -208,7 +208,7 @@ function parseProject(project) {
         '<div class="col-3">' +
         '<div class="row">' +
         '<div class="col-2 text-right"><i class="far fa-folder"></i></div>' +
-        '<div class="project_name col-8">' + project.project_name + '</div></div></div>';
+        '<div class="project_name col-8 text-color">' + project.project_name + '</div></div></div>';
 
     // Last modified
     projectHTML =
@@ -232,7 +232,7 @@ function parseProject(project) {
         '<div class="col-1 text-center more">' +
         '<a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
         '<i class="fas fa-align-justify"></i></a>' +
-        '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">\n' +
+        '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">' +
         '<a class="dropdown-item rename-project"><i class="fas fa-edit"></i>Rename</a>' +
         '<a class="dropdown-item delete-project"><i class="fas fa-trash"></i>Delete</a>' +
         '</div></div>';
@@ -274,11 +274,12 @@ function parseGoalModel(model) {
         '<div class="col-3">' +
         '<div class="row">' +
         '<div class="col-2 text-right"><i class="far fa-image"></i></div>' +
-        '<div class="model_name col-8">' + model.model_name + '</div></div></div>';
+        '<div class="model_name col-8 text-color">' + model.model_name + '</div></div></div>';
 
     // Model last modified
     modelHTML = modelHTML +
-        '<div class="col-4 text-center text-color model_last_modified">' + model.last_modified + '</div>';
+        '<div class="col-4 text-center text-color model_last_modified">' +
+        parseDateFormat(model.last_modified.substring(0,10)) + '</div>';
 
     // Model type
     modelHTML = modelHTML + '<div class="col-2 text-center model_type"></div>'
@@ -890,4 +891,18 @@ function removeCustomizedEventListeners() {
     $(".rename-model").off("click");
     $(".delete-model").off("click");
     $(".mode").off("dblclick");
+}
+
+/**
+ * Helper function to convert database date String to our required format Month Day, Year
+ *
+ * @param {String} dateString
+ * @return {String} date
+ */
+function parseDateFormat(dateString) {
+    let mydate = new Date(dateString);
+    let month = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"][mydate.getMonth()];
+    let str = month + " " + mydate.getDay() + ", " + mydate.getFullYear();
+    return str;
 }

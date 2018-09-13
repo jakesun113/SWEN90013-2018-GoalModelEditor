@@ -6,8 +6,13 @@ header {
 
 /* color of the text */
 .text-color {
-    color: rgba(0, 0, 0, 0.54);
+    color: rgba(0, 0, 0, .72);
 }
+
+.header-color {
+    color: rgba(0, 0, 0, .54);
+}
+
 
 /* for v1 */
 /*!* file list block *!*/
