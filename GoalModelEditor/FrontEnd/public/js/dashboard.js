@@ -215,7 +215,7 @@ function parseProject(project) {
         projectHTML +
         '<div class="col-3">' +
         '<div class="row">' +
-        '<div class="col-2 text-right"><i class="far fa-folder"></i></div>' +
+        '<div class="col-2 folder-icon text-right"><i class="far fa-folder"></i></div>' +
         '<div class="project_name col-8">' + project.project_name + '</div></div></div>';
 
     // Last modified
@@ -900,6 +900,19 @@ function changeCollapseStyle(collapseBtn) {
 }
 
 /**
+ * Helper function to change style of folder-icon
+ *
+ * @param {HTMLElement} iconDiv
+ */
+function changeFolderStyle(iconDiv) {
+    if($(iconDiv).html() === '<i class="far fa-folder"></i>') {
+        $(iconDiv).html('<i class="far fa-folder-open"></i>');
+    } else {
+        $(iconDiv).html('<i class="far fa-folder"></i>');
+    }
+}
+
+/**
  * Helper function to remove customized eventListeners so that there would be duplicates
  *
  */
@@ -945,6 +958,7 @@ function removeAllClicked() {
  */
 function addProjectClicked(project_header) {
     $(project_header).addClass("project_clicked");
+    changeFolderStyle($(project_header).parents(".project").eq(0).find(".folder-icon")[0]);
 }
 
 /**
