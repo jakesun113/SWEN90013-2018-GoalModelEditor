@@ -163,7 +163,7 @@ function renderFunction(goal, graph, source = null) {
         SYMBOL_Y_COORD,
         SYMBOL_WIDTH,
         SYMBOL_HEIGHT,
-        "shape=image;image=" + image
+        "fontSize=16;fontColor=black;shape=image;image=" + image
     );
     let edge = graph.insertEdge(null, null, null, source, node,
         "strokeColor=black;endArrow=none;strokeWidth=2");
@@ -230,7 +230,7 @@ function renderNonFunction(descriptions, graph, source=null, type="None") {
         sourceY + dY,
         SYMBOL_WIDTH,
         SYMBOL_HEIGHT,
-        "shape=image;image=" + image
+        "fontSize=16;fontColor=black;shape=image;image=" + image
     );
     let edge = graph.insertEdge(null, null, null, source, node);
     // console.log(edge);
