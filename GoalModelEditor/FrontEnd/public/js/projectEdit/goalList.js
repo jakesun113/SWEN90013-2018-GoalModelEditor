@@ -33,6 +33,9 @@ function getJSONFile() {
                 scroll: true
             });
             getXML();
+            setTitle(jsonData.GoalModelProject.ProjectName +
+                " - " +
+                jsonData.GoalModelProject.ModelName);
         }
     }).fail(function (jqXHR) {
         $("#warning-alert").html(
@@ -538,4 +541,13 @@ function getTypeIconPath(type) {
         default:
             return "";
     }
+}
+
+/**
+ * Helper function to set the title of the page
+ *
+ * @param {String} title
+ */
+function setTitle(title) {
+    $("title").eq(0).html(title);
 }
