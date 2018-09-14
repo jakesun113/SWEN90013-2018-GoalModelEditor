@@ -6,6 +6,7 @@
  *   GET '/register'  get the user registration page
  *   GET '/dashboard' get the dashboard (login) page based on login status
  *   GET '/profile'   get the user profile page
+ *   GET '/template'   get the templating page
  */
 "use strict";
 

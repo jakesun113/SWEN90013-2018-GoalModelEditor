@@ -30,7 +30,7 @@ var dbModule = require("./DBModule");
 // });
 
 //test code for updateGoalModel function:
-// dbModule.updateGoalModel('uid11', 'mid', 'modelName', 'modelDescription','filePath').then(res => {
+// dbModule.updateGoalModel('uid', 'mid', 'modelName', 'modelDescription','filePath').then(res => {
 //     console.log(JSON.stringify(res));
 //
 // }).catch(err => {
