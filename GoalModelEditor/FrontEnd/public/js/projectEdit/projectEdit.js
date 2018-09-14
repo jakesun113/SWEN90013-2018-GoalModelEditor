@@ -132,6 +132,8 @@ function getID(type) {
  * delete goal by pressing 'Escape' when empty
  * @param event
  */
+//TODO: add alert when deleting goals that have children
+//FIXME: when deleting goals that have children, also deleted its parents
 document.onkeyup = function (event) {
     //when the user press the 'ESC' button in the goal list
     if (document.activeElement.tagName === "INPUT" && event.key === "Escape") {
@@ -161,6 +163,39 @@ document.onkeyup = function (event) {
             let cluster = clusterNumDiv.parentNode;
             cluster.removeChild(clusterNumDiv);
             event.preventDefault();
+        }
+    }
+
+    //if press "backspace" make the goal empty, delete that goal
+    if (document.activeElement.tagName === "INPUT" && event.key === "Backspace") {
+        if (event.target.value === "") {
+            let parent = document.activeElement.parentNode;
+            let grandparent = parent.parentNode;
+            // if parent not null, delete child
+            if (grandparent.childNodes.length > 1) {
+                grandparent.removeChild(parent);
+                event.preventDefault();
+            }
+        }
+    }
+
+    if (document.activeElement.tagName === "DIV" && event.key === "Backspace") {
+        if (event.target.textContent === "") {
+            let ddHandleDiv = document.activeElement.parentNode;
+            let ddItemLi = ddHandleDiv.parentNode;
+            let ddListOl = ddItemLi.parentNode;
+            // if parent not null, delete child
+            if (ddListOl.childNodes.length > 0) {
+                ddListOl.removeChild(ddItemLi);
+                event.preventDefault();
+            }
+            //if ol is empty, remove the cluster
+            if (ddListOl.childNodes.length === 0) {
+                let clusterNumDiv = ddListOl.parentNode;
+                let cluster = clusterNumDiv.parentNode;
+                cluster.removeChild(clusterNumDiv);
+                event.preventDefault();
+            }
         }
     }
 };
