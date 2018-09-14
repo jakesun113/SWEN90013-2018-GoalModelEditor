@@ -65,6 +65,7 @@ document.onkeydown = function (event) {
     if (
         document.activeElement.tagName === "INPUT" &&
         event.target.value !== "" &&
+        $(event.target.parentNode).is(':last-child') &&
         event.key === "Enter" &&
         $(event.target.parentNode.parentNode).hasClass("drag-list")
     ) {
