@@ -8,6 +8,21 @@ const SYMBOL_HEIGHT = 110;
 const SYMBOL_X_COORD = 0;
 const SYMBOL_Y_COORD = 0;
 
+// size of the children functional goals
+// relative to the parent goal
+const CHILD_SIZE_SCALE = 0.8;
+
+// width and height of the non-functional goals
+// relative to the associated functional goal
+const SW_EMOTIONAL = 0.8;
+const SH_EMOTIONAL = 0.8;
+const SW_QUALITY = 0.8;
+const SH_QUALITY = 0.8;
+const SW_NEGATIVE = 0.8;
+const SH_NEGATIVE = 0.8;
+const SW_STAKEHOLDER = 0.25;
+const SH_STAKEHOLDER = 0.7;
+
 // different types of goals to be rendered
 const TYPE_FUNCTIONAL = "Functional";
 const TYPE_EMOTIONAL = "Emotional";
@@ -92,7 +107,7 @@ function renderGraph(container) {
         // grab goal hierarchy from the cluster
         var goals = clusters[i].ClusterGoals;
         // ... then call render
-        renderGoals(goals, graph, null);
+        renderGoals(goals, graph, SYMBOL_WIDTH, SYMBOL_HEIGHT, null);
     }
     layoutFunctions(graph);
     associateNonFunctions(graph);
@@ -106,7 +121,7 @@ function renderGraph(container) {
  * : source, the parent goal of the given array, defaults to null
  */
 
-function renderGoals(goals, graph, source = null) {
+function renderGoals(goals, graph, width, height, source = null) {
     console.log("Logging: renderGoals() called on list: " + goals);
 
     // accumulate non-functional goals to be rendered into a single symbol
@@ -123,7 +138,7 @@ function renderGoals(goals, graph, source = null) {
 
         // recurse over functional goals
         if (type === TYPE_FUNCTIONAL) {
-            renderFunction(goal, graph, source);
+            renderFunction(goal, graph, width, height, source);
 
         // accumulate non-functional descriptions into buckets
         } else if (type === TYPE_EMOTIONAL) {
@@ -161,7 +176,7 @@ function renderGoals(goals, graph, source = null) {
  * : graph, the graph to render the goal into
  * : source, the parent of the goal
  */
-function renderFunction(goal, graph, source = null) {
+function renderFunction(goal, graph, width, height, source = null) {
     let image = PATH_FUNCTIONAL;
 
     // insert new vertex and edge into graph
@@ -171,15 +186,16 @@ function renderFunction(goal, graph, source = null) {
         goal.GoalContent,
         SYMBOL_X_COORD,
         SYMBOL_Y_COORD,
-        SYMBOL_WIDTH,
-        SYMBOL_HEIGHT,
+        width,
+        height,
         "fontSize=16;fontColor=black;shape=image;image=" + image
     );
     let edge = graph.insertEdge(null, null, null, source, node,
         "strokeColor=black;endArrow=none;strokeWidth=2");
 
     // then recurse over the goal's children
-    renderGoals(goal.SubGoals, graph, node);
+    renderGoals(goal.SubGoals, graph, width * CHILD_SIZE_SCALE,
+        height * CHILD_SIZE_SCALE, node);
 }
 
 /**
@@ -194,17 +210,22 @@ function renderFunction(goal, graph, source = null) {
  *      goal into
  */
 function renderNonFunction(descriptions, graph, source=null, type="None") {
-    
+    let widthScale = 1;
+    let heightScale = 1;
+    let fWidth = SYMBOL_WIDTH;
+    let fHeight = SYMBOL_HEIGHT;
+    var sourceX = 0;
+    var sourceY = 0;
+
     // fetch parent coordinates
     if (source != null) {
         var geo = graph.getCellGeometry(source);
-        var sourceX = geo.x;
-        var sourceY = geo.y;
         var dX = 0;
         var dY = 0;
-    } else {
-        var sourceX = 0;
-        var sourceY = 0;
+        sourceX = geo.x;
+        sourceY = geo.y;
+        fWidth = geo.width;
+        fHeight = geo.height;
     }
 
 
@@ -214,21 +235,29 @@ function renderNonFunction(descriptions, graph, source=null, type="None") {
             dX = DX_EMOTIONAL;
             dY = DY_EMOTIONAL;
             image = PATH_EMOTIONAL;
+            widthScale = SW_EMOTIONAL;
+            heightScale = SH_EMOTIONAL;
             break;
         case TYPE_NEGATIVE:
             dX = DX_NEGATIVE;
             dY = DY_NEGATIVE;
             image = PATH_NEGATIVE;
+            widthScale = SW_NEGATIVE;
+            heightScale = SH_NEGATIVE;
             break;
         case TYPE_QUALITY:
             dX = DX_QUALITY;
             dY = DY_QUALITY;
             image = PATH_QUALITY;
+            widthScale = SW_QUALITY;
+            heightScale = SH_QUALITY;
             break;
         case TYPE_STAKEHOLDER:
             dX = DX_STAKEHOLDER;
             dY = DY_STAKEHOLDER;
             image = PATH_STAKEHOLDER;
+            widthScale = SW_STAKEHOLDER;
+            heightScale = SH_STAKEHOLDER;
             break;
     }
 
@@ -247,10 +276,13 @@ function renderNonFunction(descriptions, graph, source=null, type="None") {
         descriptions.join(";\n"),
         sourceX + dX,
         sourceY + dY,
-        SYMBOL_WIDTH,
-        SYMBOL_HEIGHT,
+        fWidth * widthScale,
+        fHeight * heightScale,
         style
     );
+    console.log(type + " Symbol w, h: " + SYMBOL_WIDTH + ", " + SYMBOL_HEIGHT);
+    console.log(node.getGeometry());
+    console.log(node.getStyle());
     let edge = graph.insertEdge(null, null, null, source, node);
     // console.log(edge);
 
