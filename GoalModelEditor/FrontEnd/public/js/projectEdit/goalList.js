@@ -229,6 +229,11 @@ function parseClusterNode(node) {
 
     // recursion to add sub goal
     if (node.SubGoals !== undefined && node.SubGoals.length > 0) {
+        // make sure NOT showing two or more sets data-action buttons
+        $(li).children("[data-action]").remove();
+        $(li).prepend($('<button class="dd-expand" data-action="expand">Expand</button>'));
+        $(li).prepend($('<button class="dd-collapse" data-action="collapse">Collapse</button>'));
+
         li.appendChild(parseClusterNodes(node.SubGoals));
     }
 
