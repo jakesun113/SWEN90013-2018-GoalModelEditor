@@ -287,7 +287,8 @@ function parseGoalModel(model) {
     // Model last modified
     modelHTML = modelHTML +
         '<div class="col-4 text-center model_last_modified">' +
-        parseDateFormat(model.last_modified.substring(0,10)) + '</div>';
+        parseDateFormat(parseDate(model.last_modified)) + '</div>';
+
 
     // Model type
     modelHTML = modelHTML + '<div class="col-2 text-center model_type"></div>'
@@ -929,16 +930,25 @@ function removeCustomizedEventListeners() {
 }
 
 /**
+ * Helper function to convert the date to local date
+ *
+ * @param {String} str_date
+ */
+function parseDate(str_date) {
+    return new Date(Date.parse(str_date));
+}
+
+
+/**
  * Helper function to convert database date String to our required format Month Day, Year
  *
- * @param {String} dateString
- * @return {String} date
+ * @param {Date} date
+ * @return {String} str
  */
-function parseDateFormat(dateString) {
-    let mydate = new Date(dateString);
+function parseDateFormat(date) {
     let month = ["January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"][mydate.getMonth()];
-    let str = month + " " + mydate.getDay() + ", " + mydate.getFullYear();
+        "July", "August", "September", "October", "November", "December"][date.getMonth()];
+    let str = month + " " + date.getDate() + ", " + date.getFullYear();
     return str;
 }
 
