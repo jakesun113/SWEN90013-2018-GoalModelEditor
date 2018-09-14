@@ -73,3 +73,11 @@ var dbModule = require("./DBModule");
 //     .catch(err => {
 //         console.log(err);
 //     });
+
+// dbModule.getGoalModel('mid')
+//     .then(res => {
+//         console.log(JSON.stringify(res));
+//     })
+//     .catch(err => {
+//         console.log(err);
+//     });
