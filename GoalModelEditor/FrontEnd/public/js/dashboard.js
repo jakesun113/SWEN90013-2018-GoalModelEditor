@@ -192,6 +192,24 @@ $(document).click(evt => {
 });
 
 /**
+ * Make the whole page not selectable
+ */
+$(document).mouseenter(evt => {
+    evt.preventDefault();
+    evt.stopImmediatePropagation();
+});
+
+$(document).mouseover(evt => {
+    evt.preventDefault();
+    evt.stopImmediatePropagation();
+});
+
+$(document).mousemove(evt => {
+    evt.preventDefault();
+    evt.stopImmediatePropagation();
+});
+
+/**
  * Add click EventListener for 'projects' nav
  *
  * @trigger {id:v-pills-projects-tab|HTML:a}
@@ -862,9 +880,10 @@ function addClickOnProject() {
             parentNode = $(evt.target).parents(".project")[0];
         }
         setPID($(parentNode).attr("id"));
-        let collapseBtn = $(parentNode).find(".collapse-btn")[0];
-        changeCollapseStyle(collapseBtn);
         addProjectClicked($(parentNode).find(".project_header")[0]);
+
+        changeFolderStyle($(parentNode).find(".folder-icon")[0]);
+        changeCollapseStyle($(parentNode).find(".collapse-btn")[0]);
 
         // Show/unfold the model list
         $("#models_" + getPID()).collapse('toggle');
@@ -1175,7 +1194,6 @@ function removeAllClicked() {
  */
 function addProjectClicked(project_header) {
     $(project_header).addClass("project-clicked");
-    changeFolderStyle($(project_header).parents(".project").eq(0).find(".folder-icon")[0]);
 }
 
 /**
