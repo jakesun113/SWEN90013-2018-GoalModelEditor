@@ -13,6 +13,8 @@ $(document).ready(function () {
     $("#username")
         .eq(0)
         .html(Cookies.get("UIID"));
+
+    $(".non-draggable").attr("draggable", "false");
 });
 
 //when mouse over the specific goals, show corresponding notes
@@ -78,7 +80,7 @@ document.onkeydown = function (event) {
 
         let placeholderText = getPlaceholder(goalType);
         // new goal html
-        let newlist =
+        let newList =
             '<li draggable="true" class="dragger"><input id="' +
             goalID +
             '" class="' +
@@ -87,7 +89,7 @@ document.onkeydown = function (event) {
             '" placeholder="' + placeholderText + '" note="notes" oninput="changeFontWeight(this)" value="" style="font-weight: bold"/></li>';
 
         // add new goal node to its parent node
-        $(event.target).parent().after(newlist);
+        $(event.target).parent().after(newList);
 
         $("#" + goalID).focus();
 
@@ -236,10 +238,16 @@ let nowCopying;
 function getDraggingElement() {
     $(".dragger").on("dragstart", function (e) {
 
-        //if input has value
-        if ($(e.target).children("input")[0].value) {
-            nowCopying = e.target;
-            //console.log(nowCopying);
+        //only when the current dragging element is "input"
+        if (document.activeElement.tagName === "INPUT") {
+            //if input has value
+            if ($(e.target).children("input")[0].value) {
+                nowCopying = e.target;
+                //console.log(nowCopying);
+            }
+            else {
+                nowCopying = "";
+            }
         }
         else {
             nowCopying = "";
@@ -268,6 +276,8 @@ function drop_zone(clusterNumber) {
             },
             scroll: true
         });
+
+        console.log(nowCopying);
 
         //only when the input of the goal is not empty
         if (nowCopying) {

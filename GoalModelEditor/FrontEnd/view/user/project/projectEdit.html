@@ -9,11 +9,13 @@
     <!-- Loads and initializes the Bootstrap style -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!--Load the edit page style-->
-    <link rel="stylesheet" href="/stylesheet/projectedit.css">
+    <link rel="stylesheet" href="/stylesheet/projectEdit.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
           integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
           crossorigin="anonymous">
+    <!--add jquery UI library-->
+    <!--<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">-->
 
     <!--add nestable library-->
     <link rel="stylesheet" href="/stylesheet/jquery.nestable.css">
@@ -64,8 +66,8 @@
 <header class="bg-white mb-2 py-3">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-4" id="model_name" style="font-size: 35px">
-                &nbsp;&nbsp;&nbsp;<strong>Motivational Model</strong>
+            <div class="col-4 non-draggable dragger" id="model_name" style="font-size: 35px">
+                &nbsp;&nbsp;&nbsp;<strong class="non-draggable dragger">Motivational Model</strong>
             </div>
             <!-- Search div -->
             <div class="col-6">
@@ -75,17 +77,17 @@
             <div class="col-2">
                 <div class="row text-center pt-2">
                     <div class="dropdown mr-1">
-                        <button class="btn" type="button" id="user-dropdown"
+                        <button class="btn non-draggable dragger" type="button" id="user-dropdown"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-user"></i>&nbsp;&nbsp;<a id="username"> username</a>
+                            <i class="fas fa-user"></i>&nbsp;&nbsp;<a class="non-draggable dragger" id="username"> username</a>
                         </button>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user-dropdown">
-                            <a class="dropdown-item" href="/profile" method="get">Profile</a>
-                            <a class="dropdown-item" method="post" href="/"
+                        <div class="dropdown-menu dropdown-menu-right non-draggable dragger" aria-labelledby="user-dropdown">
+                            <a class="dropdown-item non-draggable dragger" href="/profile" method="get">Profile</a>
+                            <a class="dropdown-item non-draggable dragger" method="post" href="/"
                                id="signout">Sign out</a>
                         </div>
                     </div>
-                    <a class="btn btn-secondary" href="/dashboard">Return</a>
+                    <a class="btn btn-secondary non-draggable dragger" href="/dashboard">Return</a>
                 </div>
             </div>
         </div>
@@ -114,28 +116,28 @@
                 <!-- Nav tabs -->
                 <fieldset class="form-group py-0 my-0">
                     <div class="text-right my-1">
-                        <button id="photoNextBtn" class="btn-sm btn-outline-primary" onclick="handleNextToCluster()">Next</button>
+                        <button id="photoNextBtn" class="btn-sm btn-outline-primary non-draggable dragger" onclick="handleNextToCluster()">Next</button>
                     </div>
                     <ul class="nav nav-tabs nav-justified indigo" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#panel1" role="tab"><img class="icon" src="/img/Function.png"/><br>Function</a>
+                        <li class="nav-item non-draggable dragger">
+                            <a class="nav-link active non-draggable dragger" data-toggle="tab" href="#panel1" role="tab"><img class="icon dragger non-draggable" src="/img/Function.png"/><br>Function</a>
                             <!--<span class="badge badge-primary">Functional</span>-->
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#panel2" role="tab"><img class="icon" src="/img/Cloud.png"/><br>Quality</a>
+                        <li class="nav-item non-draggable dragger">
+                            <a class="nav-link non-draggable dragger" data-toggle="tab" href="#panel2" role="tab"><img class="icon dragger non-draggable" src="/img/Cloud.png"/><br>Quality</a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#panel3" role="tab"><img class="icon" src="/img/Heart.png"/><br>Feeling</a>
+                        <li class="nav-item non-draggable dragger">
+                            <a class="nav-link non-draggable dragger" data-toggle="tab" href="#panel3" role="tab"><img class="icon dragger non-draggable" src="/img/Heart.png"/><br>Feeling</a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#panel4" role="tab"><img class="icon" src="/img/Risk.png"/><br>Concern</a>
+                        <li class="nav-item dragger non-draggable">
+                            <a class="nav-link non-draggable" data-toggle="tab" href="#panel4" role="tab"><img class="icon dragger non-draggable" src="/img/Risk.png"/><br>Concern</a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#panel5" role="tab"><img class="icon" src="/img/Stakeholder.png"/><br>Actor</a>
+                        <li class="nav-item non-draggable dragger">
+                            <a class="nav-link non-draggable dragger" data-toggle="tab" href="#panel5" role="tab"><img class="icon dragger non-draggable" src="/img/Stakeholder.png"/><br>Actor</a>
                         </li>
 
 
@@ -186,9 +188,9 @@
 
                     <!--used goals-->
                     <div id="notes" class="showborder inside-scrollbar" style="display: none">
-                        <h6>Notes</h6>
+                        <h6 class="non-draggable dragger">Notes</h6>
                         <div id="notedata">
-                            <text id="notecontent"></text>
+                            <text class="non-draggable dragger" id="notecontent"></text>
                         </div>
                     </div>
 
@@ -206,12 +208,12 @@
             <!--cluster section start-->
             <div id="cluster" class="col-7 showborder scrollbar" style="display: none; background-color:rgba(35, 144, 231, 0.1);">
                 <div>
-                    <h4>Cluster</h4>
-                    <button class="btn-sm btn-outline-primary" id="clusterNextBtn" onclick="handleNextToRender()">Next</button>
-                    <button style="display: none" class="btn-sm btn-outline-primary" id="renderbtn">Render</button>
-                    <button type="button" class="btn-sm btn-outline-primary" id="edit">Edit All</button>
-                    <button type="button" class="btn-sm btn-outline-primary" id="drag">Drag All</button>
-                    <button type="button" class="btn-sm btn-outline-primary" id="Export">ExportSVG</button>
+                    <h4 class="non-draggable dragger">Cluster</h4>
+                    <button class="btn-sm btn-outline-primary non-draggable dragger" id="clusterNextBtn" onclick="handleNextToRender()">Next</button>
+                    <button style="display: none" class="btn-sm btn-outline-primary non-draggable dragger" id="renderbtn">Render</button>
+                    <button type="button" class="btn-sm btn-outline-primary non-draggable dragger" id="edit">Edit All</button>
+                    <button type="button" class="btn-sm btn-outline-primary non-draggable dragger" id="drag">Drag All</button>
+                    <button type="button" class="btn-sm btn-outline-primary non-draggable dragger" id="Export">ExportSVG</button>
                     <!--< a id="Export" href="#">ExportSVG</a>-->
                 </div>
                 <!--show cluster data from JSON-->
@@ -236,10 +238,10 @@
             <div id="generator" class="col-sm showborder scrollbar" style="display: none; background-color: rgb(236, 244, 244)">
                 <div class="row">
                     <div class="col-10 text-left my-1">
-                        <h3>Generate Your Goal Model</h3>
+                        <h3 class="non-draggable dragger">Generate Your Goal Model</h3>
                     </div>
                     <div class="col-2 text-right my-1" id="zoomButtons">
-                        <button type="button" class="btn-sm btn-outline-primary" id="saveXML">Save Graph</button>
+                        <button type="button" class="btn-sm btn-outline-primary non-draggable dragger" id="saveXML">Save Graph</button>
                     </div>
                 </div>
                 <div id="graphContainer"
@@ -258,7 +260,7 @@
     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Warning</h5>
+                <h5 class="modal-title non-draggable dragger">Warning</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -268,9 +270,9 @@
                     <lable type="text">Do you want to overwrite current symbolic goal model?</lable>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn" style="background-color: transparent"
+                    <button type="button" class="btn non-draggable dragger" style="background-color: transparent"
                             data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="renderGraph(document.getElementById('graphContainer'))">Confirm</button>
+                    <button type="button" class="btn btn-primary non-draggable dragger" data-dismiss="modal" onclick="renderGraph(document.getElementById('graphContainer'))">Confirm</button>
                 </div>
             </form>
         </div>
@@ -281,6 +283,8 @@
 <!-- Loads and initializes the Bootstrap javascript -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--add jquery UI library-->
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
@@ -311,7 +315,7 @@
 
 
 <footer>
-    <p class="text-center">&copy;<em>&nbsp;2018 The University of Melbourne</em></p>
+    <p class="text-center non-draggable dragger">&copy;<em class="non-draggable dragger">&nbsp;2018 The University of Melbourne</em></p>
 </footer>
 
 <!--</div>-->
