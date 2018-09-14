@@ -20,7 +20,9 @@ $(document).ready(function () {
 //when mouse over the specific goals, show corresponding notes
 $(document).on("mouseover", "#ul li input", function () {
     // alert($(this).val());
-    $("#notedata").html("<p>" + $(this).attr("note") + "</p>");
+    $("#notedata").html("<p class=\"non-draggable dragger\">" + $(this).attr("note") + "</p>");
+    $(".non-draggable").attr("draggable", "false");
+    getDraggingElement();
 });
 
 /*Add new cluster start*/
