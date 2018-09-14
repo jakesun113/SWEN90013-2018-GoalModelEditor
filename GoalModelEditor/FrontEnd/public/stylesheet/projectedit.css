@@ -1,4 +1,4 @@
-.header {
+header {
     box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.5);
     background-image: url("/img/profile-background.jpg");
 }
@@ -100,12 +100,14 @@
     padding-left: 20px;
     padding-right: 20px;
 }
+
 .container-heading1 {
     padding-top: 0px;
     padding-bottom: 0px;
     padding-left: 0px;
     padding-right: 0px;
 }
+
 .container-heading2 {
     padding-top: 0px;
     padding-bottom: 0px;
@@ -171,4 +173,8 @@ input {
 .typeIcon {
     height:100%;
     float:left;
+}
+
+#model_name {
+    cursor: default;
 }
