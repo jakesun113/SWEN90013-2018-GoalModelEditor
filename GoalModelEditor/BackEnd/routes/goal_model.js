@@ -586,6 +586,56 @@ router.get("/images/:userId/:goalmodelId", (req, res) => {
         })
 });
 
+const PDFDocument = require('pdfkit');
+const SVGtoPDF = require('svg-to-pdfkit');
+
+router.post("/exportToPdf/:userId/:goalmodelId", (req, res, next) => {
+
+    // check token for authentication
+    if (!auth.authenticate(req.headers)) {
+        res.statusCode = 401;
+        res.json({ created: false, message: "Authentication failed" });
+        return res.end();
+    }
+    console.log("1");
+    let dirpath = "./UserFiles/" + req.params.userId;
+    console.log("2");
+    let svg = req.body.svg;
+    //let svg = `<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+    // xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 100%; height: 100%; display: block; min-width: 111px; min-height: 61px;"><g><g></g><g><g style="visibility: visible; cursor: move;"><image x="0" y="0" width="110" height="60" xlink:href="file:///Users/tccc/Bitbucket/swen90013-2018-go/GoalModelEditor/FrontEnd/public/img/Function.png"></image></g><g style="cursor: move;"><g fill="#774400" font-family="Arial,Helvetica" text-anchor="middle" font-size="11px"><text x="55" y="33.5">aaaaa</text></g></g></g><g></g><g></g></g></svg>`;
+    console.log("3");
+
+    let doc = new PDFDocument(),
+        stream = fs.createWriteStream(
+            //dirpath + "/" + req.params.goalmodelId +
+            //"/" + req.params.goalmodelId +
+            "test.pdf"
+        );
+    console.log("4");
+    //console.log(svg);
+
+    SVGtoPDF(doc, svg, 0, 0);
+    console.log("5");
+    stream.on('finish', function() {
+        console.log(fs.readFileSync(
+            // dirpath + "/" + req.params.goalmodelId +
+            //"/" + req.params.goalmodelId +
+            "test.pdf"));
+        let downloadStream = fs.readFileSync('test.pdf',"base64");
+        // Be careful of special characters
+        console.log(downloadStream);
+        res.statusCode=200;
+        //res.writeHead(200, headers);
+        res.json({pdf: downloadStream});
+        return res.end();
+
+    });
+    doc.pipe(stream);
+    doc.end();
+});
+
+
+
 /** Recursively creates the whole path to a directory
  * @param filepath : the full path of the directory that is to be created
  */
