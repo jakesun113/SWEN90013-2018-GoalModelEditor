@@ -132,8 +132,7 @@ function getID(type) {
  * delete goal by pressing 'Escape' when empty
  * @param event
  */
-//TODO: add alert when deleting goals that have children
-//FIXME: when deleting goals that have children, also deleted its parents
+let activeElement;
 document.onkeyup = function (event) {
     //when the user press the 'ESC' button in the goal list
     if (document.activeElement.tagName === "INPUT" && event.key === "Escape") {
@@ -157,12 +156,19 @@ document.onkeyup = function (event) {
             ddListOl.removeChild(ddItemLi);
             event.preventDefault();
         }
-        //if ol is empty, remove the cluster
+        //if ol is empty, remove this ol
         if (ddListOl.childNodes.length === 0) {
             let clusterNumDiv = ddListOl.parentNode;
-            let cluster = clusterNumDiv.parentNode;
-            cluster.removeChild(clusterNumDiv);
+            $(clusterNumDiv).removeClass("dd-collapsed");
+            $(clusterNumDiv).children("[data-action]").remove();
+            $(clusterNumDiv).children("ol").remove();
             event.preventDefault();
+            //only when the cluster is empty, remove this cluster
+            if ($(clusterNumDiv.parentNode).attr('id') === "cluster") {
+                let cluster = clusterNumDiv.parentNode;
+                cluster.removeChild(clusterNumDiv);
+                event.preventDefault();
+            }
         }
     }
 
@@ -181,25 +187,43 @@ document.onkeyup = function (event) {
 
     if (document.activeElement.tagName === "DIV" && event.key === "Backspace") {
         if (event.target.textContent === "") {
-            let ddHandleDiv = document.activeElement.parentNode;
-            let ddItemLi = ddHandleDiv.parentNode;
-            let ddListOl = ddItemLi.parentNode;
-            // if parent not null, delete child
-            if (ddListOl.childNodes.length > 0) {
-                ddListOl.removeChild(ddItemLi);
-                event.preventDefault();
-            }
-            //if ol is empty, remove the cluster
-            if (ddListOl.childNodes.length === 0) {
-                let clusterNumDiv = ddListOl.parentNode;
-                let cluster = clusterNumDiv.parentNode;
-                cluster.removeChild(clusterNumDiv);
-                event.preventDefault();
-            }
+            activeElement = document.activeElement;
+            //show warning modal
+            $("#deleteGoalWarning").modal();
         }
     }
 };
+
 /*Delete goal by pressing 'Escape' when empty end*/
+/**
+ * function when click "delete goal" button
+ */
+$("#deleteGoalBtn").click(function () {
+    //console.log(activeElement);
+    let ddHandleDiv = activeElement.parentNode;
+    let ddItemLi = ddHandleDiv.parentNode;
+    let ddListOl = ddItemLi.parentNode;
+    // if parent not null, delete child
+    if (ddListOl.childNodes.length > 0) {
+        ddListOl.removeChild(ddItemLi);
+        event.preventDefault();
+
+    }
+    //if ol is empty, remove this ol
+    if (ddListOl.childNodes.length === 0) {
+        let clusterNumDiv = ddListOl.parentNode;
+        $(clusterNumDiv).removeClass("dd-collapsed");
+        $(clusterNumDiv).children("[data-action]").remove();
+        $(clusterNumDiv).children("ol").remove();
+        event.preventDefault();
+        //only when the cluster is empty, remove this cluster
+        if ($(clusterNumDiv.parentNode).attr('id') === "cluster") {
+            let cluster = clusterNumDiv.parentNode;
+            cluster.removeChild(clusterNumDiv);
+            event.preventDefault();
+        }
+    }
+});
 
 /*Hide and show section start*/
 /**
@@ -314,7 +338,7 @@ function drop_zone(clusterNumber) {
             scroll: true
         });
 
-        console.log(nowCopying);
+        //console.log(nowCopying);
 
         //only when the input of the goal is not empty
         if (nowCopying) {
