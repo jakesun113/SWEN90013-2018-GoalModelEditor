@@ -186,6 +186,8 @@ function parseNode(node) {
         fontWeight = "normal";
     }
     let placeholderText = getPlaceholder(node.GoalType);
+
+    const MAX_CHARS = 40;
     // li.setAttribute('id', node.GoalID);
     li.innerHTML =
         '<input id= "' +
@@ -195,7 +197,8 @@ function parseNode(node) {
         " " +
         '" value = "' +
         node.GoalContent +
-        '" placeholder="' + placeholderText + '" style="font-weight: ' +
+        '" placeholder="' + placeholderText + '" maxlength="'+ MAX_CHARS +'" ' +
+        'style="font-weight: ' +
         fontWeight +
         '" ' +
         'note="' +

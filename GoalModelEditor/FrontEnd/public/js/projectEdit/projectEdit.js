@@ -87,6 +87,7 @@ document.onkeydown = function (event) {
         event.preventDefault();
 
         let placeholderText = getPlaceholder(goalType);
+        const MAX_CHARS = 40;
         // new goal html
         let newList =
             '<li draggable="true" class="dragger"><input id="' +
@@ -94,7 +95,8 @@ document.onkeydown = function (event) {
             '" class="' +
             goalType +
             " " +
-            '" placeholder="' + placeholderText + '" note="notes" oninput="changeFontWeight(this)" value="" style="font-weight: bold"/></li>';
+            '" placeholder="' + placeholderText + '" maxlength="'+ MAX_CHARS +'"' +
+            'note="notes" oninput="changeFontWeight(this)" value="" style="font-weight: bold"/></li>';
 
         // add new goal node to its parent node
         $(event.target).parent().after(newList);
@@ -453,6 +455,8 @@ function createElementFromHTML(htmlString) {
 $("#drag").hide();
 
 //handle operation of clicking "editAll"
+//TODO: set max length of div content
+//TODO: adjust height of div based on the length of text
 $("#edit").click(function () {
     saveJSON();
     $(".dd-handle-style").removeClass("dd-handle");
