@@ -169,8 +169,8 @@ const SQL_CHECK_PRIORITY_ON_GOALMODEL =
  * @type {string}
  */
 const SQL_CREATE_TEMPLATE =
-    "INSERT INTO Template (TemplateId,TemplateName, TemplateDescription, DirPath, User) " +
-    "VALUES (UUID(), ?, ?, ?, ?, ?)";
+    "INSERT INTO Template (TemplateId, TemplateName, TemplateDescription, DirPath, User) " +
+    "VALUES (UUID(), ?, ?, ?, ?)";
 /**
  * Delete a template
  * @type {string}
@@ -184,7 +184,15 @@ const SQL_DELETE_TEMPLATE =
 const SQL_UPDATE_TEMPLATE =
     "UPDATE Template " +
     "SET TemplateName = ?, TemplateDescription = ?, DirPath = ?, LastModified = NOW() " +
-    "WHERE BINARY TemplateId = ?";
+    "WHERE BINARY TemplateId = ? AND BINARY User = ?";
+/**
+ * Update a template's time
+ * @type {string}
+ */
+const SQL_UPDATE_TEMPLATE_TIME =
+    "UPDATE Template " +
+    "SET LastModified = NOW() " +
+    "WHERE BINARY TemplateId = ? AND BINARY User = ?";
 /**
  * return a template
  * @type {string}
@@ -1169,7 +1177,7 @@ const DBModule = function () {
                                 });
                             }
                             if (result.length === 1) {// success
-                                return resolve(result);
+                                return resolve(result[0]);
                             } else { //
                                 return resolve({
                                     code: DBModule.INVALID,
@@ -1181,6 +1189,101 @@ const DBModule = function () {
                 });
             }
         );
+    };
+
+    /**
+     * update a single Template.
+     * @return format(if success) : {model_name:<>, last_modified:<>}
+     * @return format(if error) : {code:<Error Code>, message:<Error Message>}
+     * @param userId
+     * @param templateId
+     * @param templateName
+     * @param templateDescription
+     * @param dirPath
+     */
+    DBModule.updateTemplate = function (userId,
+                                        templateId,
+                                        templateName,
+                                        templateDescription,
+                                        dirPath) {
+        return new Promise((resolve, reject) => {
+            pool.getConnection(function (err, connection) {
+                if (err) {
+                    connection.release();
+                    return reject({
+                        code: DBModule.UNKNOWN_ERROR,
+                        message: err.sqlMessage
+                    });
+                }
+                connection.query(
+                    SQL_UPDATE_TEMPLATE,
+                    [templateName, templateDescription, dirPath, templateId, userId],
+                    (err, result) => {
+                        if (err) {
+                            // network connection or other errors
+                            connection.release();
+                            return reject({
+                                code: DBModule.UNKNOWN_ERROR,
+                                message: err.sqlMessage
+                            });
+                        }
+                        if (result.length === 1) {// success
+                            return resolve(result);
+                        } else { //
+                            return resolve({
+                                code: DBModule.INVALID,
+                                message: "template not found"
+                            });
+                        }
+                    }
+                );
+
+            });
+        });
+    };
+    /**
+     * update a single Template's kast modified time
+     * @return format(if success) : {model_name:<>, last_modified:<>}
+     * @return format(if error) : {code:<Error Code>, message:<Error Message>}
+     * @param userId
+     * @param templateId
+     */
+    DBModule.updateTemplateTime = function (userId,
+                                            templateId) {
+        return new Promise((resolve, reject) => {
+            pool.getConnection(function (err, connection) {
+                if (err) {
+                    connection.release();
+                    return reject({
+                        code: DBModule.UNKNOWN_ERROR,
+                        message: err.sqlMessage
+                    });
+                }
+                connection.query(
+                    SQL_UPDATE_TEMPLATE_TIME,
+                    [templateId, userId],
+                    (err, result) => {
+                        if (err) {
+                            // network connection or other errors
+                            connection.release();
+                            return reject({
+                                code: DBModule.UNKNOWN_ERROR,
+                                message: err.sqlMessage
+                            });
+                        }
+                        if (result.length === 1) {// success
+                            return resolve(result);
+                        } else { //
+                            return resolve({
+                                code: DBModule.INVALID,
+                                message: "Template not found"
+                            });
+                        }
+                    }
+                );
+
+            });
+        });
     };
     /**************************************************
      * Do not change code under this line

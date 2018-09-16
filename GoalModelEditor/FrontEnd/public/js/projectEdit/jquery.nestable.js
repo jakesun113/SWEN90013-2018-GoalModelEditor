@@ -1261,7 +1261,9 @@
 
         // Append the .dd-empty div to the list so it can be populated and styled
         appendEmptyElement: function(element) {
-            element.append('<div class="' + this.options.emptyClass + '"/>');
+            element.append('<div class="' + this.options.emptyClass  +'">'+
+                    '<div class="dragger non-draggable mt-5" style="color:rgba(0, 0, 0, .35);cursor: default">'
+                + "Drag here to create a new cluster" + '</div>' + '</div>');
         }
     };
 
