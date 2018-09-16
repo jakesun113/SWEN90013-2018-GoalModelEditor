@@ -163,7 +163,6 @@ $("#delete_model").submit(evt => {
  *
  * @trigger {id:rename_template|HTMLForm}
  */
-// TODO: to be completed
 $("#rename_template").submit(evt => {
     evt.preventDefault();
     const TID = getTID();
@@ -184,8 +183,7 @@ $("#rename_template").submit(evt => {
  *
  * @trigger {id:rename_template|HTMLForm}
  */
-// TODO: to be completed
-$("#detele_template").submit(evt => {
+$("#delete_template").submit(evt => {
     evt.preventDefault();
     const TID = getTID();
     if (typeof TID === undefined) {
@@ -400,7 +398,7 @@ function parseTemplate(template) {
 
     // The template div
     let templateHTML =
-        '<div class="row template py-3 border-bottom text-color" id="'+ template.model_id +'">';
+        '<div class="row template py-3 border-bottom text-color" id="'+ template.template_id +'">';
 
     // To make the view consistent
     templateHTML = templateHTML + '<div class="col-1"></div>';
@@ -627,7 +625,6 @@ function renameModel(url, mid, model) {
         type: "PUT",
         headers: { Authorization: "Bearer " + TOKEN },
         success: () => {
-            console.log(model);
             successMessageSlide(
                 "Model:" +
                 $("#" + mid).find(".model_name").eq(0).html() +
@@ -683,7 +680,7 @@ function createTemplate(template) {
         headers: { Authorization: "Bearer" + TOKEN },
         success: template => {
             // Append the project to current UI
-            let templatetHTML = parseTemplate(template);
+            let templateHTML = parseTemplate(template);
             $("#templates-container").append(templateHTML);
             successMessageSlide("Template: " + template.template_name + " successfully created.");
 
@@ -712,6 +709,16 @@ function renameTemplate(url, tid, template) {
         type: "PUT",
         headers: { Authorization: "Bearer " + TOKEN },
         success: () => {
+            successMessageSlide(
+                "Model:" +
+                $("#" + tid).find(".template_name").eq(0).html() +
+                " successfully renamed to " +
+                $("#rename-template .modal-body input").val() +
+                "."
+            );
+
+            // Make the new model name shown in UI
+            $("#" + tid).find(".template_name").eq(0).html($("#rename-template .modal-body input").val());
         }
     }).fail(function(jqXHR) {
         warningMessageSlide(jqXHR.responseJSON.message + "<br>Please try again.");
@@ -731,6 +738,14 @@ function deleteTemplate(url, tid, template) {
         type: "DELETE",
         headers: { Authorization: "Bearer " + TOKEN },
         success: () => {
+            successMessageSlide(
+                "Template:" +
+                $("#" + tid).find(".template_name").eq(0).html() +
+                " successfully deleted."
+            );
+
+            // Hide the corresponding HTML
+            $("#" + tid).hide();
         }
     }).fail(function(jqXHR) {
         warningMessageSlide(jqXHR.responseJSON.message + "<br>Please try again.");
@@ -927,6 +942,7 @@ function addListenersToNewItem() {
     addClickOnRenameModel();
     addClickOnDeleteModel();
     addDbClickOnModel();
+    addDbClickOnTemplate();
     addClickOnDropdown();
     removeDblclickOnMore();
     removeClickOnModelFromProject();
@@ -1128,6 +1144,24 @@ function addClickOnTemplate() {
 }
 
 /**
+ * Function to add dblclick eventListener to 'template' class
+ */
+function addDbClickOnTemplate() {
+    $(".template").dblclick(evt => {
+        evt.stopImmediatePropagation();
+        let parentNode = null;
+        if($(evt.target).hasClass("template")) {
+            parentNode = evt.target;
+        } else {
+            parentNode = $(evt.target).parents(".template")[0];
+        }
+        setTID($(parentNode).attr("id"));
+        window.location.href = "/template/edit?TID=" + getTID();
+    });
+}
+
+
+/**
  * Function to add click eventListener to 'rename-template' class
  */
 function addClickOnRenameTemplate() {
@@ -1220,6 +1254,7 @@ function removeCustomizedEventListeners() {
     $(".delete-model").off("click")
     $(".dropdown").off("click");
     $(".model").off("dblclick");
+    $(".template").off("dbclick");
     $(".template").off("click");
     $(".rename-template").off("click");
     $(".delete-template").off("click");

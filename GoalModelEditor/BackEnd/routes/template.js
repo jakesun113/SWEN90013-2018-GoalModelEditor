@@ -18,6 +18,13 @@ const db = require(path.resolve(
     "../../Database/DBModule/DBModule.js"
 ));
 
+/* GET template editing page */
+router.get("/edit", function(req, res) {
+    if (req.cookies.LOKIDIED) {
+        res.render("user/project/templateEdit");
+    }
+    res.redirect("/login");
+});
 
 /* POST Create template */
 router.post("/:userId", (req, res, next) => {

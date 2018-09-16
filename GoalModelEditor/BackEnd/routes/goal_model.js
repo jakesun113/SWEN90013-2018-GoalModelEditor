@@ -44,7 +44,7 @@ const db = require(path.resolve(
 /* GET get the edit page */
 router.get("/edit", function(req, res) {
     if (req.cookies.LOKIDIED) {
-        res.render("user/project/projectedit");
+        res.render("user/project/projectEdit");
     }
     res.redirect("/login");
 });
