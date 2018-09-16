@@ -14,21 +14,19 @@ const bodyParser = require("body-parser");
 
 // helper modules from stdlib
 const logger = require("morgan");
-const path = require("path");
-
-// database connection
-const database = require("../Database/DBModule/DBModule.js");
 
 // routes to endpoints
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/user");
 const projectRouter = require("./routes/project");
 const goalModelRouter = require("./routes/goal_model");
+const templateRouter = require("./routes/template");
+const goalModelExtensionRouter = require("./routes/goal_model_ext");
 
 // server config
 let config = require("./config");
 
-var app = express();
+let app = express();
 
 // view engine setup
 app.set("views", config.FRONT_VIEW_DIR);
@@ -48,6 +46,8 @@ app.use("/", indexRouter);
 app.use("/user", usersRouter);
 app.use("/project", projectRouter);
 app.use("/goal_model", goalModelRouter);
+app.use("/template", templateRouter);
+app.use("/goal_model_ext", goalModelExtensionRouter);
 
 // QUESTION: should this occur before the routing to endpoints?
 app.use(bodyParser.json()); // for parsing application/json
