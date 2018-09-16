@@ -51,7 +51,8 @@ router.get("/list/:userId", (req, res) => {
                     projects[model.ProjectId].models.push({
                         model_id: model.ModelId,
                         model_name: model.ModelName,
-                        last_modified: model.LastModified
+                        last_modified: model.LastModified,
+                        type: model.Type
                     });
                 } else {
                     projects[model.ProjectId] = {
@@ -61,7 +62,8 @@ router.get("/list/:userId", (req, res) => {
                             {
                                 model_id: model.ModelId,
                                 model_name: model.ModelName,
-                                last_modified: model.LastModified
+                                last_modified: model.LastModified,
+                                type: model.Type
                             }
                         ]
                     };
