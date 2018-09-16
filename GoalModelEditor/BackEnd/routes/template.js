@@ -90,8 +90,20 @@ router.get("/list/:userId", (req, res) => {
     db.getTemplateList(req.params.userId)
         .then(result => {
             console.log(result);
+
+            let ret = [];
+            for (let x of result) {
+                ret.push({
+                    template_id: x.TemplateId,
+                    template_name: x.TemplateName,
+                    description: x.TemplateDescription,
+                    last_modified: x.LastModified,
+                    dir_path: x.DirPath
+                });
+            }
+
             res.statusCode = 200;
-            res.json({templates: result});
+            res.json({templates: ret});
             return res.end();
         })
         .catch(err => {
