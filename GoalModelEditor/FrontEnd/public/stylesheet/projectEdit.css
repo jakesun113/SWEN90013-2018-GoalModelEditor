@@ -127,6 +127,7 @@ header {
 input {
     border: 0px;
     width:100%;
+    cursor: move;
 }
 
 .icon {
@@ -168,6 +169,7 @@ input {
     background: #fafafa;
     border-radius: 3px;
     box-sizing: border-box;
+    cursor: move;
 }
 
 .typeIcon {
@@ -176,5 +178,9 @@ input {
 }
 
 #model_name {
+    cursor: default;
+}
+
+footer {
     cursor: default;
 }

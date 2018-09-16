@@ -15,7 +15,7 @@ const TOKEN = SECRET.token;
 const UID = SECRET.uid;
 const UNAME = SECRET.uiid;
 const GET_PROJECT_URL = "/project/list/" + UID;
-const GET_TEMPLATE_URL = "/template/list" + UID;
+const GET_TEMPLATE_URL = "/template/list/" + UID;
 const POST_PROJECT_URL = "/project/" + UID;
 const POST_TEMPLATE_URL = "/template/" + UID;
 
@@ -165,7 +165,18 @@ $("#delete_model").submit(evt => {
  */
 // TODO: to be completed
 $("#rename_template").submit(evt => {
+    evt.preventDefault();
+    const TID = getTID();
+    if (typeof TID === undefined) {
+        warningMessageSlide("Please choose a template");
+        return;
+    }
+    const RENAME_TEMPLATE_URL = "/template/info/" + UID + "/" + TID;
+    let formData = $("#rename_template").serialize();
+    renameTemplate(RENAME_TEMPLATE_URL, TID, formData);
 
+    // Close the modal
+    $("#rename-template").modal("toggle");
 });
 
 /**
@@ -175,7 +186,18 @@ $("#rename_template").submit(evt => {
  */
 // TODO: to be completed
 $("#detele_template").submit(evt => {
+    evt.preventDefault();
+    const TID = getTID();
+    if (typeof TID === undefined) {
+        warningMessageSlide("Please choose a model");
+        return;
+    }
+    const DELETE_TEMPLATE_URL = "/template/" + UID + "/" + TID;
+    let formData = $("#delete_template").serialize();
+    deleteTemplate(DELETE_TEMPLATE_URL, TID, formData);
 
+    // Close the modal
+    $("#delete-template").modal("toggle");
 });
 
 /**
@@ -369,6 +391,55 @@ function parseGoalModelList(models, projectHTML) {
 }
 
 /**
+ * Function for parsing JSON(model) to templateHTML{HTMLElement}
+ *
+ * @param {object/json} template
+ * @return {HTMLElement} templateHTML
+ */
+function parseTemplate(template) {
+
+    // The template div
+    let templateHTML =
+        '<div class="row template py-3 border-bottom text-color" id="'+ template.model_id +'">';
+
+    // To make the view consistent
+    templateHTML = templateHTML + '<div class="col-1"></div>';
+
+    // Template name
+    templateHTML = templateHTML +
+        '<div class="col-3">' +
+        '<div class="row">' +
+        '<div class="col-2 text-right"><i class="fas fa-shapes"></i></div>' +
+        '<div class="template_name col-8">' + template.template_name + '</div></div></div>';
+
+    // Template last modified
+    templateHTML = templateHTML +
+        '<div class="col-4 text-center model_last_modified">' +
+        parseDateFormat(parseDate(template.last_modified)) + '</div>';
+
+
+    // To make the view better
+    templateHTML = templateHTML + '<div class="col-3"></div>';
+
+    // More options - rename/delete
+    templateHTML = templateHTML +
+        '<div class="col-1 text-center more">' +
+        '<a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+        '<i class="fas fa-align-justify"></i></a>' +
+        '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">' +
+        '<a class="dropdown-item rename-template">' +
+        '<i class="fas fa-edit"></i>Rename</a>' +
+        '<a class="dropdown-item delete-template">' +
+        '<i class="fas fa-trash"></i>Delete</a>' +
+        '</div></div>';
+
+    // Close the model div
+    templateHTML = templateHTML + '</div>';
+
+    return templateHTML;
+}
+
+/**
  * Ajax function for retrieving all projects
  */
 function retriveProjects() {
@@ -405,6 +476,12 @@ function retriveTemplates() {
         type: "GET",
         headers: { Authorization: "Bearer " + TOKEN },
         success: templates => {
+
+            // Append the projects to current UI
+            for (let i in templates.templates) {
+                let templateHTML = parseTemplate(templates.templates[i]);
+                $("#templates-container").append(templateHTML);
+            }
 
             // Add listeners
             removeCustomizedEventListeners();
@@ -546,20 +623,21 @@ function deleteProject(url, pid, project) {
  */
 function renameModel(url, mid, model) {
     $.ajax(url, {
-        data: model,
+        data: JSON.stringify(model),
         type: "PUT",
         headers: { Authorization: "Bearer " + TOKEN },
         success: () => {
+            console.log(model);
             successMessageSlide(
                 "Model:" +
                 $("#" + mid).find(".model_name").eq(0).html() +
-                " successfully deleted. " +
-                model.model_name +
+                " successfully renamed to " +
+                $("#rename-model .modal-body input").val() +
                 "."
             );
 
             // Make the new model name shown in UI
-            $("#" + mid).find(".model_name").eq(0).html(model.model_name);
+            $("#" + mid).find(".model_name").eq(0).html($("#rename-model .modal-body input").val());
         }
     }).fail(function(jqXHR) {
         warningMessageSlide(jqXHR.responseJSON.message + "<br>Please try again.");
@@ -604,7 +682,17 @@ function createTemplate(template) {
         type: "POST",
         headers: { Authorization: "Bearer" + TOKEN },
         success: template => {
+            // Append the project to current UI
+            let templatetHTML = parseTemplate(template);
+            $("#templates-container").append(templateHTML);
+            successMessageSlide("Template: " + template.template_name + " successfully created.");
 
+            // add Listeners
+            removeCustomizedEventListeners();
+            addListenersToNewItem();
+
+            // Re-initialize the input for the modal
+            $("#add-template .modal-body input").val("");
         }
     }).fail(function(jqXHR) {
         warningMessageSlide(jqXHR.responseJSON.message + "<br>Please try again.");
@@ -1122,14 +1210,15 @@ function changeFolderStyle(iconDiv) {
  * Helper function to remove customized eventListeners so that there would be duplicates
  */
 function removeCustomizedEventListeners() {
-    $(".project").off("click");
+    $(".project_header").off("click");
     $(".new-model").off("click");
     $(".model").off("click");
     $(".rename-project").off("click");
     $(".delete-project").off("click");
     $(".more").off("click");
     $(".rename-model").off("click");
-    $(".delete-model").off("click");
+    $(".delete-model").off("click")
+    $(".dropdown").off("click");
     $(".model").off("dblclick");
     $(".template").off("click");
     $(".rename-template").off("click");

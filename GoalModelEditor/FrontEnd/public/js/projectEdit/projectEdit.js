@@ -456,6 +456,7 @@ $("#drag").hide();
 $("#edit").click(function () {
     saveJSON();
     $(".dd-handle-style").removeClass("dd-handle");
+    $(".dd-handle-style").css("cursor", "auto");
     $(".goal-content").attr("contenteditable", "true");
     // when editing, cannot press "Enter"
     $(".goal-content").keypress(function (e) {
@@ -471,6 +472,7 @@ $("#edit").click(function () {
 $("#drag").click(function () {
 
     $(".dd-handle-style").addClass("dd-handle");
+    $(".dd-handle-style").css("cursor", "move");
     $(".goal-content").attr("contenteditable", "false");
     $(".goal-content").css("font-weight", "bold");
 
