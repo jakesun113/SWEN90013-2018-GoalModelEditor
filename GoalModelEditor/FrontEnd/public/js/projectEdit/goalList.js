@@ -23,7 +23,17 @@ function getJSONFile() {
             //activate drag function
             getDraggingElement();
 
+            addNoChildrenClass();
+
             $(".dd").nestable({
+
+                onDragStart: function (l, e) {
+                    // get type of dragged element
+                    var type = $(e).children(".dd-handle").attr("class").split(" ")[0];
+                    console.log(type);
+                    addNoChildrenClass();
+                },
+
                 callback: function (l, e) {
                     // l is the main container
                     // e is the element that was moved
@@ -555,4 +565,15 @@ function getTypeIconPath(type) {
  */
 function setTitle(title) {
     $("title").eq(0).html(title);
+}
+
+/**
+ * Set non-functional goals cannot have children
+ *
+ */
+function addNoChildrenClass() {
+    $(".Quality").parent().addClass('dd-nochildren');
+    $(".Negative").parent().addClass('dd-nochildren');
+    $(".Emotional").parent().addClass('dd-nochildren');
+    $(".Stakeholder").parent().addClass('dd-nochildren');
 }
