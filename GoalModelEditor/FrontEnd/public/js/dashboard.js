@@ -548,7 +548,7 @@ function renameModel(url, mid, model) {
     $.ajax(url, {
         data: model,
         type: "PUT",
-        headers: { Authorization: "Bearer" + TOKEN },
+        headers: { Authorization: "Bearer " + TOKEN },
         success: () => {
             successMessageSlide(
                 "Model:" +
@@ -577,7 +577,7 @@ function deleteModel(url, mid, model) {
     $.ajax(url, {
         data: model,
         type: "DELETE",
-        headers: { Authorization: "Bearer" + TOKEN },
+        headers: { Authorization: "Bearer " + TOKEN },
         success: () => {
             successMessageSlide(
                 "Model:" +
@@ -622,7 +622,7 @@ function renameTemplate(url, tid, template) {
     $.ajax(url, {
         data: template,
         type: "PUT",
-        headers: { Authorization: "Bearer" + TOKEN },
+        headers: { Authorization: "Bearer " + TOKEN },
         success: () => {
         }
     }).fail(function(jqXHR) {
@@ -641,7 +641,7 @@ function deleteTemplate(url, tid, template) {
     $.ajax(url, {
         data: template,
         type: "DELETE",
-        headers: { Authorization: "Bearer" + TOKEN },
+        headers: { Authorization: "Bearer " + TOKEN },
         success: () => {
         }
     }).fail(function(jqXHR) {
