@@ -52,7 +52,7 @@ router.get("/list/:userId", (req, res) => {
                         model_id: model.ModelId,
                         model_name: model.ModelName,
                         last_modified: model.LastModified,
-                        type: model.Type
+                        model_type: model.Type
                     });
                 } else {
                     projects[model.ProjectId] = {
@@ -63,7 +63,7 @@ router.get("/list/:userId", (req, res) => {
                                 model_id: model.ModelId,
                                 model_name: model.ModelName,
                                 last_modified: model.LastModified,
-                                type: model.Type
+                                model_type: model.Type
                             }
                         ]
                     };
