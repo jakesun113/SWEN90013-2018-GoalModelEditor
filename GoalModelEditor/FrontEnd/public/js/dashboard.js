@@ -192,24 +192,6 @@ $(document).click(evt => {
 });
 
 /**
- * Make the whole page not selectable
- */
-$(document).mouseenter(evt => {
-    evt.preventDefault();
-    evt.stopImmediatePropagation();
-});
-
-$(document).mouseover(evt => {
-    evt.preventDefault();
-    evt.stopImmediatePropagation();
-});
-
-$(document).mousemove(evt => {
-    evt.preventDefault();
-    evt.stopImmediatePropagation();
-});
-
-/**
  * Add click EventListener for 'projects' nav
  *
  * @trigger {id:v-pills-projects-tab|HTML:a}
@@ -232,7 +214,6 @@ $("#v-pills-templates-tab").click(evt => {
     $("#v-pills-templates").show();
     $("#v-pills-projects").hide();
 });
-
 
 /**
  * Handle click EventListener on {id:signout|Button}
@@ -1037,7 +1018,7 @@ function addDbClickOnModel() {
             parentNode = $(evt.target).parents(".model")[0];
         }
         setMID($(parentNode).attr("id"));
-        window.open("/goal_model/edit",'_blank');
+        window.location.href = "/goal_model/edit?MID=" + getMID();
     });
 }
 
