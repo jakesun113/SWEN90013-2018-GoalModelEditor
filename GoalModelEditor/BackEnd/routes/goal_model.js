@@ -354,6 +354,7 @@ router.put("/:userId/:goalmodelId", (req, res) => {
                     return res.end();
                 }
             );
+            db.updateGoalModelTime(req.params.userId, req.params.goalmodelId);
         })
         .catch(err => {
             if ((err.code = db.INVALID)) {
@@ -382,8 +383,8 @@ router.put("/info/:userId/:goalmodelId", (req, res) => {
     }
 
     // update goal model
-    let dirpath = "./UserFiles/" + req.params.userId + "/";
-    db.updateGpalModel(
+    let dirpath = "./UserFiles/" + req.params.userId + "/" + req.params.goalmodelId + "/";
+    db.updateGoalModel(
             req.params.goalmodelId,
             req.body.model_name,
             req.body.description,
