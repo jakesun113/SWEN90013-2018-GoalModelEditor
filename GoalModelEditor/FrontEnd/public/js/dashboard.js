@@ -546,20 +546,21 @@ function deleteProject(url, pid, project) {
  */
 function renameModel(url, mid, model) {
     $.ajax(url, {
-        data: model,
+        data: JSON.stringify(model),
         type: "PUT",
         headers: { Authorization: "Bearer " + TOKEN },
         success: () => {
+            console.log(model);
             successMessageSlide(
                 "Model:" +
                 $("#" + mid).find(".model_name").eq(0).html() +
-                " successfully deleted. " +
-                model.model_name +
+                " successfully renamed to " +
+                $("#rename-model .modal-body input").val() +
                 "."
             );
 
             // Make the new model name shown in UI
-            $("#" + mid).find(".model_name").eq(0).html(model.model_name);
+            $("#" + mid).find(".model_name").eq(0).html($("#rename-model .modal-body input").val());
         }
     }).fail(function(jqXHR) {
         warningMessageSlide(jqXHR.responseJSON.message + "<br>Please try again.");
@@ -1122,14 +1123,15 @@ function changeFolderStyle(iconDiv) {
  * Helper function to remove customized eventListeners so that there would be duplicates
  */
 function removeCustomizedEventListeners() {
-    $(".project").off("click");
+    $(".project_header").off("click");
     $(".new-model").off("click");
     $(".model").off("click");
     $(".rename-project").off("click");
     $(".delete-project").off("click");
     $(".more").off("click");
     $(".rename-model").off("click");
-    $(".delete-model").off("click");
+    $(".delete-model").off("click")
+    $(".dropdown").off("click");
     $(".model").off("dblclick");
     $(".template").off("click");
     $(".rename-template").off("click");

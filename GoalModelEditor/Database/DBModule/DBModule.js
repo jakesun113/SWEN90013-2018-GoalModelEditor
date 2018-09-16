@@ -79,7 +79,7 @@ const SQL_RET_MODEL = " SELECT * FROM GoalModel WHERE ModelId = ? ";
 
 const SQL_GET_PROJ_GOALMODEL =
     "SELECT Project.*, GM.ModelId, GM.ModelName, GM.ModelDescription, " +
-    "GM.DirPath, GM.LastModified, GM.GoalModelCreateTime " +
+    "GM.DirPath, GM.LastModified, GM.GoalModelCreateTime, GM.Type " +
     "FROM Project INNER JOIN User_Project AS UP " +
     "ON  UP.ProjectId = Project.ProjectId " +
     "LEFT OUTER JOIN GoalModel AS GM " +
