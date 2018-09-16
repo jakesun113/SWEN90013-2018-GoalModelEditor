@@ -12,7 +12,7 @@ $(document).ready(function () {
     // Set the username in display
     $("#username")
         .eq(0)
-        .html(Cookies.get("UIID"));
+        .html(JSON.parse(Cookies.get("LOKIDIED")).uiid);
 
     $(".non-draggable").attr("draggable", "false");
 });

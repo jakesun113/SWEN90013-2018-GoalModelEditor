@@ -13,7 +13,7 @@
 const SECRET = JSON.parse(Cookies.get("LOKIDIED"));
 const TOKEN = SECRET.token;
 const UID = SECRET.uid;
-const UNAME = Cookies.get("UIID");
+const UNAME = SECRET.uiid;
 
 /**
  * Page onReady EventListener

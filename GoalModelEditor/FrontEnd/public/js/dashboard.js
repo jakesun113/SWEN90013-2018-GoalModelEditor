@@ -13,7 +13,7 @@
 const SECRET = JSON.parse(Cookies.get("LOKIDIED"));
 const TOKEN = SECRET.token;
 const UID = SECRET.uid;
-const UNAME = Cookies.get("UIID");
+const UNAME = SECRET.uiid;
 const GET_PROJECT_URL = "/project/list/" + UID;
 const GET_TEMPLATE_URL = "/template/list" + UID;
 const POST_PROJECT_URL = "/project/" + UID;
