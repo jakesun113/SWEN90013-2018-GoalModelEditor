@@ -45,6 +45,12 @@ function addCluster() {
     //activate drag and drop function
     drop_zone(clusterNumber);
     $(".dd").nestable({
+        onDragStart: function (l, e) {
+            // get type of dragged element
+            var type = $(e).children(".dd-handle").attr("class").split(" ")[0];
+            console.log(type);
+            addNoChildrenClass();
+        },
         callback: function (l, e) {
             // l is the main container
             // e is the element that was moved
@@ -329,6 +335,14 @@ function drop_zone(clusterNumber) {
 
         //activate nestable2 function
         $(".dd").nestable({
+
+            onDragStart: function (l, e) {
+                // get type of dragged element
+                var type = $(e).children(".dd-handle").attr("class").split(" ")[0];
+                console.log(type);
+                addNoChildrenClass();
+            },
+
             callback: function (l, e) {
                 // l is the main container
                 // e is the element that was moved
@@ -394,6 +408,8 @@ function drop_zone(clusterNumber) {
                             )
                         );
                 }
+
+                addNoChildrenClass();
             }
 
             //after dropping finished, change font style of the dragged element
@@ -409,6 +425,13 @@ drop_zone(clusterNumber);
 
 //activate nestable2 function
 $(".dd").nestable({
+
+    onDragStart: function (l, e) {
+        // get type of dragged element
+        var type = $(e).children(".dd-handle").attr("class").split(" ")[0];
+        console.log(type);
+        addNoChildrenClass();
+    },
     callback: function (l, e) {
         // l is the main container
         // e is the element that was moved
@@ -471,6 +494,12 @@ function appendCluster() {
         //activate nestable2 function
         drop_zone(clusterNumber);
         $(".dd").nestable({
+            onDragStart: function (l, e) {
+                // get type of dragged element
+                var type = $(e).children(".dd-handle").attr("class").split(" ")[0];
+                console.log(type);
+                addNoChildrenClass();
+            },
             callback: function (l, e) {
                 // l is the main container
                 // e is the element that was moved
@@ -490,6 +519,13 @@ function removeCluster() {
 
         //activate nestable2 function
         $(".dd").nestable({
+
+            onDragStart: function (l, e) {
+                // get type of dragged element
+                var type = $(e).children(".dd-handle").attr("class").split(" ")[0];
+                console.log(type);
+                addNoChildrenClass();
+            },
             callback: function (l, e) {
                 // l is the main container
                 // e is the element that was moved
