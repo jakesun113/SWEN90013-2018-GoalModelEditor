@@ -6,16 +6,18 @@
 "use strict";
 
 /**
- * Define all variables and constants used accross functions
+ * Define all variables and constants used across functions
  */
 
 /* Constants */
 const SECRET = JSON.parse(Cookies.get("LOKIDIED"));
 const TOKEN = SECRET.token;
 const UID = SECRET.uid;
-const UNAME = Cookies.get("UIID");
+const UNAME = SECRET.uiid;
 const GET_PROJECT_URL = "/project/list/" + UID;
+const GET_TEMPLATE_URL = "/template/list" + UID;
 const POST_PROJECT_URL = "/project/" + UID;
+const POST_TEMPLATE_URL = "/template/" + UID;
 
 /**
  * Page onReady EventListener
@@ -23,6 +25,7 @@ const POST_PROJECT_URL = "/project/" + UID;
  */
 $(document).ready(() => {
     retriveProjects();
+    retriveTemplates();
 });
 
 /**
@@ -42,7 +45,7 @@ $("#create-project").submit(evt => {
 /**
  * Create-model submit (click) EventListener
  *
- * @trigger {id:creat-model|HTMLForm}
+ * @trigger {id:create-model|HTMLForm}
  */
 $("#create-model").submit(evt => {
     evt.preventDefault();
@@ -57,6 +60,20 @@ $("#create-model").submit(evt => {
 
     // Close the modal
     $("#add-model").modal("toggle");
+});
+
+/**
+ * Create-template submit (click) EventListener
+ *
+ * @trigger {id:create-template|HTMLForm}
+ */
+$("#create-template").submit(evt => {
+    evt.preventDefault();
+    let formData = $("#create-template").serialize();
+    createTemplate(formData);
+
+    // Close the modal
+    $("#add-template").modal("toggle");
 });
 
 /**
@@ -133,21 +150,42 @@ $("#delete_model").submit(evt => {
         warningMessageSlide("Please choose a model");
         return;
     }
-    const RENAME_MODEL_URL = "/goal_model/" + UID + "/" + MID;
+    const DELETE_MODEL_URL = "/goal_model/" + UID + "/" + MID;
     let formData = $("#delete_model").serialize();
-    deleteModel(RENAME_MODEL_URL, MID, formData);
+    deleteModel(DELETE_MODEL_URL, MID, formData);
 
     // Close the modal
     $("#delete-model").modal("toggle");
 });
 
 /**
+ * Rename-template submit (click) EventListener
+ *
+ * @trigger {id:rename_template|HTMLForm}
+ */
+// TODO: to be completed
+$("#rename_template").submit(evt => {
+
+});
+
+/**
+ * Delete-template submit (click) EventListener
+ *
+ * @trigger {id:rename_template|HTMLForm}
+ */
+// TODO: to be completed
+$("#detele_template").submit(evt => {
+
+});
+
+/**
  * Add click on window (except for "id: view_container")to remove "clicked" effect
  *
+ * @trigger {document|HTMLElement}
  */
 $(document).click(evt => {
-    if($(evt.target).attr("id") === "view_container" ||
-        $(evt.target).parents("#view_container")[0]) {
+    if($(evt.target).hasClass("view-container") ||
+        $(evt.target).parents(".view-container")[0]) {
         return;
     }
     removeAllClicked();
@@ -176,7 +214,6 @@ $("#v-pills-templates-tab").click(evt => {
     $("#v-pills-templates").show();
     $("#v-pills-projects").hide();
 });
-
 
 /**
  * Handle click EventListener on {id:signout|Button}
@@ -350,6 +387,27 @@ function retriveProjects() {
             }
 
             // Add listeners
+            removeCustomizedEventListeners();
+            addListenersToNewItem();
+        }
+    }).fail(function(jqXHR) {
+        warningMessageSlide(
+            jqXHR.responseJSON.message + "<br>Please try again."
+        );
+    });
+}
+
+/**
+ * Ajax function for retrieving all templates
+ */
+function retriveTemplates() {
+    $.ajax(GET_TEMPLATE_URL, {
+        type: "GET",
+        headers: { Authorization: "Bearer " + TOKEN },
+        success: templates => {
+
+            // Add listeners
+            removeCustomizedEventListeners();
             addListenersToNewItem();
         }
     }).fail(function(jqXHR) {
@@ -503,7 +561,9 @@ function renameModel(url, mid, model) {
             // Make the new model name shown in UI
             $("#" + mid).find(".model_name").eq(0).html(model.model_name);
         }
-    })
+    }).fail(function(jqXHR) {
+        warningMessageSlide(jqXHR.responseJSON.message + "<br>Please try again.");
+    });
 }
 
 /**
@@ -516,7 +576,7 @@ function renameModel(url, mid, model) {
 function deleteModel(url, mid, model) {
     $.ajax(url, {
         data: model,
-        type: "PUT",
+        type: "DELETE",
         headers: { Authorization: "Bearer" + TOKEN },
         success: () => {
             successMessageSlide(
@@ -528,7 +588,65 @@ function deleteModel(url, mid, model) {
             // Hide the corresponding HTML
             $("#" + mid).hide();
         }
-    })
+    }).fail(function(jqXHR) {
+        warningMessageSlide(jqXHR.responseJSON.message + "<br>Please try again.");
+    });
+}
+
+/**
+ * Ajax function for creating a template
+ *
+ * @params {formData} template - formData with encapsulated template to be created
+ */
+function createTemplate(template) {
+    $.ajax(POST_TEMPLATE_URL, {
+        data: template,
+        type: "POST",
+        headers: { Authorization: "Bearer" + TOKEN },
+        success: template => {
+
+        }
+    }).fail(function(jqXHR) {
+        warningMessageSlide(jqXHR.responseJSON.message + "<br>Please try again.");
+    });
+}
+
+/**
+ * Ajax function for renaming a template
+ *
+ * @param {url} url - to specify the user & template
+ * @param {String} tid - templateID - to help rename the template in HTML
+ * @param {formData} template - formData with encapsulated template to be renamed
+ */
+function renameTemplate(url, tid, template) {
+    $.ajax(url, {
+        data: template,
+        type: "PUT",
+        headers: { Authorization: "Bearer" + TOKEN },
+        success: () => {
+        }
+    }).fail(function(jqXHR) {
+        warningMessageSlide(jqXHR.responseJSON.message + "<br>Please try again.");
+    });
+}
+
+/**
+ * Ajax function for deleting a template
+ *
+ * @param {url} url - to specify the user & template
+ * @param {String} tid - templateID - to help delete the template in HTML
+ * @param {formData} template - formData with encapsulated template to be deleted
+ */
+function deleteTemplate(url, tid, template) {
+    $.ajax(url, {
+        data: template,
+        type: "DELETE",
+        headers: { Authorization: "Bearer" + TOKEN },
+        success: () => {
+        }
+    }).fail(function(jqXHR) {
+        warningMessageSlide(jqXHR.responseJSON.message + "<br>Please try again.");
+    });
 }
 
 /**
@@ -550,7 +668,17 @@ function setMID(mid) {
 }
 
 /**
+ * Function for setting the TID - in Cookies
+ *
+ * @param {String} tid - the template id to be saved in Cookies
+ */
+function setTID(tid) {
+    Cookies.set("TID", tid);
+}
+
+/**
  * Function for getting the PID - in Cookies
+ *
  * @return {String} project id
  */
 function getPID() {
@@ -559,10 +687,20 @@ function getPID() {
 
 /**
  * Function for getting the MID - in Cookies
+ *
  * @return {String} model id
  */
 function getMID() {
     return Cookies.get("MID");
+}
+
+/**
+ * Function for getting the TID - in Cookies
+ *
+ * @return {String} template id
+ */
+function getTID() {
+    return Cookies.get("TID");
 }
 
 /**
@@ -582,10 +720,11 @@ function setUserName(username) {
  * @param {String} projectName - the clicked project name
  */
 function putProjectNameInModal(projectName) {
+
     // Set the modal input to the clicked project name
     $("#rename_project .modal-body input").val(projectName);
 
-    /* Set time out so that the project name gets rendered in the modal */
+    // Set time out so that the project name gets rendered in the modal
     let $target = $("#rename-project");
     $target.data("triggered", true);
     setTimeout(function() {
@@ -602,11 +741,32 @@ function putProjectNameInModal(projectName) {
  * @param {String} modelName -the clicked model name
  */
 function putModelNameInModal(modelName) {
-    // Set the modal input to the clicked project name
+
+    // Set the modal input to the clicked model name
     $("#rename-model .modal-body input").val(modelName);
 
-    /* Set time out so that the project name gets rendered in the modal */
+    // Set time out so that the model name gets rendered in the modal
     let $target = $("#rename-model");
+    $target.data("triggered", true);
+    setTimeout(function() {
+        if ($target.data("triggered")) {
+            $target.modal("show").data("triggered", false);
+        }
+    }, 300);
+    return false;
+}
+
+/**
+ * Helper Function for renaming the template - put the clicked template name in the modal
+ *
+ * @param {String} templateName -the clicked model name
+ */
+function putTemplateNameInModal(templateName) {
+    // Set the modal input to the clicked template name
+    $("#rename-template .modal-body input").val(templateName);
+
+    // Set time out so that the template name gets rendered in the madal
+    let $target = $("#rename-template");
     $target.data("triggered", true);
     setTimeout(function() {
         if ($target.data("triggered")) {
@@ -668,7 +828,6 @@ function warningMessageSlide(message) {
 /**
  * Helper function to be called every time after any change has been made to the page
  * To make sure all newly added items have the right eventListeners
- *
  */
 function addListenersToNewItem() {
     addClickOnProject();
@@ -683,6 +842,9 @@ function addListenersToNewItem() {
     addClickOnDropdown();
     removeDblclickOnMore();
     removeClickOnModelFromProject();
+    addClickOnTemplate();
+    addClickOnRenameTemplate();
+    addClickOnDeleteTemplate();
 }
 
 /**
@@ -699,9 +861,10 @@ function addClickOnProject() {
             parentNode = $(evt.target).parents(".project")[0];
         }
         setPID($(parentNode).attr("id"));
-        let collapseBtn = $(parentNode).find(".collapse-btn")[0];
-        changeCollapseStyle(collapseBtn);
         addProjectClicked($(parentNode).find(".project_header")[0]);
+
+        changeFolderStyle($(parentNode).find(".folder-icon")[0]);
+        changeCollapseStyle($(parentNode).find(".collapse-btn")[0]);
 
         // Show/unfold the model list
         $("#models_" + getPID()).collapse('toggle');
@@ -710,7 +873,6 @@ function addClickOnProject() {
 
 /**
  * Function to add click eventListener to 'new-model' class
- *
  */
 function addClickOnNewModel() {
     $(".new-model").click(evt => {
@@ -725,7 +887,6 @@ function addClickOnNewModel() {
 
 /**
  * Function to add click eventListener to 'rename-project' class
- *
  */
 function addClickOnRenameProject() {
     $(".rename-project").click(evt => {
@@ -741,7 +902,6 @@ function addClickOnRenameProject() {
 
 /**
  * Function to add click eventListener to 'delete-project' class
- *
  */
 function addClickOnDeleteProject() {
     $(".delete-project").click(evt => {
@@ -757,7 +917,6 @@ function addClickOnDeleteProject() {
 
 /**
  * Function to add click eventListener to 'model' class
- *
  */
 function addClickOnModel() {
     $(".model").click(evt => {
@@ -799,7 +958,6 @@ function addClickOnMore() {
 /**
  * Function to add click eventListener to 'dropdown' class
  * remove "model_clicked" and add it to the currently clicked model
- *
  */
 function addClickOnDropdown() {
     $(".dropdown").click(evt => {
@@ -814,7 +972,6 @@ function addClickOnDropdown() {
 
 /**
  * Function to add click eventListener to 'rename-model' class
- *
  */
 function addClickOnRenameModel() {
     $(".rename-model").click(evt => {
@@ -833,7 +990,6 @@ function addClickOnRenameModel() {
 
 /**
  * Function to add click eventListener to 'delete-model' class
- *
  */
 function addClickOnDeleteModel() {
     $(".delete-model").click(evt => {
@@ -851,7 +1007,6 @@ function addClickOnDeleteModel() {
 
 /**
  * Function to add dblclick eventListener to 'model' class
- *
  */
 function addDbClickOnModel() {
     $(".model").dblclick(evt => {
@@ -863,13 +1018,64 @@ function addDbClickOnModel() {
             parentNode = $(evt.target).parents(".model")[0];
         }
         setMID($(parentNode).attr("id"));
-        window.location.href = "/goal_model/edit";
+        window.location.href = "/goal_model/edit?MID=" + getMID();
     });
 }
 
 /**
+ * Function to add click eventListener to 'template' class
+ */
+function addClickOnTemplate() {
+    $(".template").click(evt => {
+        removeAllClicked();
+        let parentNode = null;
+        if($(evt.target).hasClass("template")) {
+            parentNode = evt.target;
+        } else {
+            parentNode = $(evt.target).parents(".template")[0];
+        }
+        setTID($(parentNode).attr("id"));
+        addTemplateClicked(parentNode);
+    });
+}
+
+/**
+ * Function to add click eventListener to 'rename-template' class
+ */
+function addClickOnRenameTemplate() {
+    $(".rename-template").click(evt => {
+        evt.stopImmediatePropagation();
+        let parentNode = null;
+        if($(evt.target).hasClass("template")) {
+            parentNode = evt.target;
+        } else {
+            parentNode = $(evt.target).parents(".template")[0];
+        }
+        setTID($(parentNode).attr("id"));
+        let templateName = $(parentNode).find(".template_name").eq(0).html();
+        putTemplateNameInModal(templateName);
+    });
+}
+
+/**
+ * Function to add click eventListener to 'rename-template' class
+ */
+function addClickOnDeleteTemplate() {
+    $(".delete-template").click(evt => {
+        evt.stopImmediatePropagation();
+        let parentNode = null;
+        if($(evt.target).hasClass("template")) {
+            parentNode = evt.target;
+        } else {
+            parentNode = $(evt.target).parents(".template")[0];
+        }
+        setTID($(parentNode).attr("id"));
+        $("#delete-template").modal("toggle");
+    })
+}
+
+/**
  * Helper function to mute dblclick on 'more' class
- *
  */
 function removeDblclickOnMore() {
     $(".more").dblclick(evt => {
@@ -879,7 +1085,6 @@ function removeDblclickOnMore() {
 
 /**
  * Helper function to remove click -- on 'project' for 'model class'
- *
  */
 function removeClickOnModelFromProject() {
     $(".model").off("click", "**", false);
@@ -915,7 +1120,6 @@ function changeFolderStyle(iconDiv) {
 
 /**
  * Helper function to remove customized eventListeners so that there would be duplicates
- *
  */
 function removeCustomizedEventListeners() {
     $(".project").off("click");
@@ -927,6 +1131,9 @@ function removeCustomizedEventListeners() {
     $(".rename-model").off("click");
     $(".delete-model").off("click");
     $(".model").off("dblclick");
+    $(".template").off("click");
+    $(".rename-template").off("click");
+    $(".delete-template").off("click");
 }
 
 /**
@@ -946,19 +1153,19 @@ function parseDate(str_date) {
  * @return {String} str
  */
 function parseDateFormat(date) {
-    let month = ["January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"][date.getMonth()];
+    let month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][date.getMonth()];
     let str = month + " " + date.getDate() + ", " + date.getFullYear();
     return str;
 }
 
 /**
  * Helper function to remove all "model_clicked" and "project_clicked" class
- *
  */
 function removeAllClicked() {
-    $(".model").removeClass("model_clicked");
-    $(".project_header").removeClass("project_clicked");
+    $(".model").removeClass("model-clicked");
+    $(".project_header").removeClass("project-clicked");
+    $(".template").removeClass("template-clicked");
 }
 
 /**
@@ -967,8 +1174,7 @@ function removeAllClicked() {
  * @param {HTMLElement|div} project_header
  */
 function addProjectClicked(project_header) {
-    $(project_header).addClass("project_clicked");
-    changeFolderStyle($(project_header).parents(".project").eq(0).find(".folder-icon")[0]);
+    $(project_header).addClass("project-clicked");
 }
 
 /**
@@ -977,5 +1183,14 @@ function addProjectClicked(project_header) {
  * @param {HTMLElement|div} model
  */
 function addModelClicked(model) {
-    $(model).addClass("model_clicked");
+    $(model).addClass("model-clicked");
+}
+
+/**
+ * Helper function to add "template_clicked" class to the specified element
+ *
+ * @param {HTMLElement|div} template
+ */
+function addTemplateClicked(template) {
+    $(template).addClass("template-clicked");
 }

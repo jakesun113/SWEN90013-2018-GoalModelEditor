@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="/img/leon.png">
-    <title>My Project - Goal Model Editor</title>
+    <title>Dashboard - Goal Model Editor</title>
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
@@ -28,31 +28,14 @@
         <!-- End alert div -->
         <!-- Header part of the page -->
         <header class="bg-white mb-2 py-3">
-            <div class="pt-3 container-fluid">
+            <div class="container-fluid">
                 <div class="row">
                     <div class="col-4" style="font-size: 35px">
                         <strong>&nbsp;&nbsp;&nbsp;Motivational Model</strong>
-                        <!-- Add new file button-->
-                        <!--<button type="button" class="btn btn-primary mb-3 ml-5"-->
-                                <!--data-toggle="modal" data-target="#add-project"-->
-                                <!--id="new-project-button">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New Project-->
-                            <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>-->
                     </div>
                     <!-- Search div -->
                     <div class="col-6">
                     </div>
-                    <!--<div class="col-8">-->
-                        <!--<div class="input-group mb-3">-->
-                            <!--<div class="input-group-prepend">-->
-                                    <!--<span class="input-group-text" id="basic-addon1"><img-->
-                                            <!--src="/img/search.svg"-->
-                                            <!--alt="search"></span>-->
-                            <!--</div>-->
-                            <!--<input class="form-control" type="search"-->
-                                   <!--placeholder="Search" aria-label="Search" aria-describedby="basic-addon1">-->
-                            <!--<button class="btn btn-dark my-2 my-sm-0" type="submit" >Search</button>-->
-                        <!--</div>-->
-                    <!--</div>-->
                     <!-- User div -->
                     <div class="col-2">
                         <div class="row text-center pt-2">
@@ -181,7 +164,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-9 container-fluid" id="view_container">
+                <div class="col-9 container-fluid">
                     <div class="tab-content" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="v-pills-projects" role="tabpanel"
                              aria-labelledby="v-pills-projects-tab-tab">
@@ -194,40 +177,39 @@
                                         <div class="col-2 text-center header-color"></div>
                                     </div>
                                 </div>
-                                <div id="projects-container" class="container-fluid bg-white rounded">
+                                <div id="projects-container" class="view-container container-fluid bg-white rounded">
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="tab-pane fade" id="v-pills-templates" role="tabpanel"
-                             aria-labelledby="v-pills-templates-tab">
-                        <div class="container-fluid">
-                            <div class="py-2 container-fluid"> <!-- Header div for the file list -->
-                                <div class="row text-color">
-                                    <div class="col-4 header-color">Name</div>
-                                    <div class="col-4 header-color">Last modified</div>
-                                    <div class="col-2 header-color"></div>
-                                    <div class="col-2 header-color"></div>
+                        <div class="tab-pane fade" id="v-pills-templates" role="tabpanel"
+                                 aria-labelledby="v-pills-templates-tab">
+                            <div class="container-fluid">
+                                <div class="py-2 container-fluid"> <!-- Header div for the file list -->
+                                    <div class="row text-color">
+                                        <div class="col-4 header-color">Name</div>
+                                        <div class="col-4 header-color">Last modified</div>
+                                        <div class="col-2 header-color"></div>
+                                        <div class="col-2 header-color"></div>
+                                    </div>
+                                </div>
+                                <div id="templates-container" class="view-container container-fluid bg-white rounded">
                                 </div>
                             </div>
-                            <div id="templates-container" class="container-fluid bg-white rounded">
-                            </div>
                         </div>
+                            <!-- TODO: add shared with me html here -->
+                        <div class="tab-pane fade" id="v-pills-share" role="tabpanel"
+                             aria-labelledby="v-pills-share-tab">...</div>
+                            <!-- TODO: add trash html here -->
+                        <div class="tab-pane fade" id="v-pills-trash"
+                             role="tabpanel" aria-labelledby="v-pills-trash-tab">...</div>
                     </div>
-                        <!-- TODO: add shared with me html here -->
-                    <div class="tab-pane fade" id="v-pills-share" role="tabpanel"
-                         aria-labelledby="v-pills-share-tab">...</div>
-                        <!-- TODO: add trash html here -->
-                    <div class="tab-pane fade" id="v-pills-trash"
-                         role="tabpanel" aria-labelledby="v-pills-trash-tab">...</div>
-
                 </div>
             </div>
         </main>
 
-        <div class="inner mt-3">
+        <footer class="inner mt-3">
             <p class="text-center">&copy;<em>2018 The University of Melbourne</em></p>
-        </div>
+        </footer>
 
         <!-- Create goal model modal-->
         <div class="modal fade" id="add-model" tabindex="-1" role="dialog"
@@ -412,7 +394,7 @@
             <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="template-title" id="new-template">New Template</h5>
+                        <h5 class="modal-title" id="new-template">New Template</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -439,7 +421,7 @@
             <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="template-title">Rename Template</h5>
+                        <h5 class="modal-title">Rename Template</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

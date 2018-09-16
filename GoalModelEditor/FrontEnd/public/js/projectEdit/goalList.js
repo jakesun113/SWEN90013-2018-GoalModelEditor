@@ -33,6 +33,9 @@ function getJSONFile() {
                 scroll: true
             });
             getXML();
+            setTitle(jsonData.GoalModelProject.ProjectName +
+                " - " +
+                jsonData.GoalModelProject.ModelName);
         }
     }).fail(function (jqXHR) {
         $("#warning-alert").html(
@@ -229,6 +232,11 @@ function parseClusterNode(node) {
 
     // recursion to add sub goal
     if (node.SubGoals !== undefined && node.SubGoals.length > 0) {
+        // make sure NOT showing two or more sets data-action buttons
+        $(li).children("[data-action]").remove();
+        $(li).prepend($('<button class="dd-expand" data-action="expand">Expand</button>'));
+        $(li).prepend($('<button class="dd-collapse" data-action="collapse">Collapse</button>'));
+
         li.appendChild(parseClusterNodes(node.SubGoals));
     }
 
@@ -538,4 +546,13 @@ function getTypeIconPath(type) {
         default:
             return "";
     }
+}
+
+/**
+ * Helper function to set the title of the page
+ *
+ * @param {String} title
+ */
+function setTitle(title) {
+    $("title").eq(0).html(title);
 }

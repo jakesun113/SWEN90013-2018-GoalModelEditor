@@ -2,6 +2,11 @@
 header {
     box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.5);
     background-image: url("/img/profile-background.jpg");
+    cursor: default;
+}
+
+footer {
+    cursor: default;
 }
 
 
@@ -147,6 +152,12 @@ For dashboard v2 ends
     color: #007bff;
 }
 
+.nav-link:hover {
+    background-color: rgba(220, 220, 220, .54);
+    border-radius: 0 66px 66px 0;
+    color: #5f6368;
+}
+
 a {
     color: #5f6368;
 }
@@ -192,14 +203,7 @@ a {
     color: rgba(0, 0, 0, .54);
 }
 
-.model_clicked {
+.model-clicked, .project-clicked, .template-clicked {
     background-color: rgba(232, 240, 254, .54);
     color: #1967d2;
 }
-
-.project_clicked {
-    background-color: rgba(220, 220, 220, .54);
-    color: #1967d2;
-}
-
-
