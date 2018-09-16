@@ -97,6 +97,16 @@
     </div>
 </header>
 
+<div class="steps_bar mt-2 mb-1">
+    <ul>
+        <li id="imageTab" class="current" onclick="imageClick()"><span>Upload Image</span></li>
+        <li id="goalTab" class="" onclick="goalClick()"><span>Goal List</span></li>
+        <li id="clusterTab" class="" onclick="clusterClick()"><span>Cluster</span></li>
+        <li id="graphTab" class="last" onclick="graphClick()"><span>Render</span></li>
+    </ul>
+</div>
+
+
 <!--the main section-->
 <div class="container-body">
     <div id="height-full-screen" class="container-fluid">
@@ -104,8 +114,7 @@
             <!--import pictures section start-->
             <div id="photo" class="col-7 showborder scrollbar" style="background-color:rgba(35, 144, 231, 0.1);">
                 <fieldset class="form-group">
-                    <br/>
-                    <button class="btn btn-outline-primary" onclick="$('#pro-image').click()">Upload Image</button>
+                    <button class="btn btn-outline-primary mt-3" onclick="$('#pro-image').click()">Upload Image</button>
                     <input type="file" accept="image/*" id="pro-image" name="pro-image" style="display: none;"
                            class="form-control" multiple>
                 </fieldset>
@@ -117,14 +126,9 @@
 
             <!--to do list goal section start-->
             <div id="todolist" class="col-5 showborder scrollbar"
-                 style="margin-top: 0px; background-color: rgb(236, 244, 244)">
+                 style="margin-top: 0px; background-color: rgb(236, 244, 244);">
                 <!-- Nav tabs -->
                 <fieldset class="form-group py-0 my-0">
-                    <div class="text-right my-1">
-                        <button id="photoNextBtn" class="btn-sm btn-outline-primary non-draggable dragger"
-                                onclick="handleNextToCluster()">Next
-                        </button>
-                    </div>
                     <ul class="nav nav-tabs nav-justified indigo" role="tablist">
                         <li class="nav-item non-draggable dragger">
                             <a class="nav-link active non-draggable dragger" data-toggle="tab" href="#panel1"
@@ -158,7 +162,7 @@
 
 
                 <!-- Tab panels -->
-                <div style="background-color: white ">
+                <div style="background-color: white;">
                     <div id="goals" class="tab-content inside-scrollbar notopborder">
                         <!--Panel 1-->
                         <div class="tab-pane fade in show active pt-2" id="panel1" role="tabpanel">
@@ -219,20 +223,14 @@
             <div id="cluster" class="col-7 showborder scrollbar"
                  style="display: none; background-color:rgba(35, 144, 231, 0.1);">
                 <div>
-                    <h4 class="non-draggable dragger">Cluster</h4>
-                    <button class="btn-sm btn-outline-primary non-draggable dragger" id="clusterNextBtn"
-                            onclick="handleNextToRender()">Next
-                    </button>
                     <button style="display: none" class="btn-sm btn-outline-primary non-draggable dragger"
                             id="renderbtn">Render
                     </button>
-                    <button type="button" class="btn-sm btn-outline-primary non-draggable dragger" id="edit">Edit All
+                    <button type="button" class="btn-sm btn-outline-primary non-draggable dragger mt-3" id="edit">Edit All
                     </button>
-                    <button type="button" class="btn-sm btn-outline-primary non-draggable dragger" id="drag">Drag All
+                    <button type="button" class="btn-sm btn-outline-primary non-draggable dragger mt-3" id="drag">Drag All
                     </button>
-                    <button type="button" class="btn-sm btn-outline-primary non-draggable dragger" id="Export">
-                        ExportSVG
-                    </button>
+
                     <!--< a id="Export" href="#">ExportSVG</a>-->
                 </div>
                 <!--show cluster data from JSON-->
@@ -257,10 +255,13 @@
             <div id="generator" class="col-sm showborder scrollbar"
                  style="display: none; background-color: rgb(236, 244, 244)">
                 <div class="row">
-                    <div class="col-10 text-left my-1">
-                        <h3 class="non-draggable dragger">Generate Your Goal Model</h3>
+                    <div class="col-9 text-left my-1">
+
                     </div>
-                    <div class="col-2 text-right my-1" id="zoomButtons">
+                    <div class="col-3 text-right my-1" id="zoomButtons">
+                        <button type="button" class="btn-sm btn-outline-primary non-draggable dragger" id="Export">
+                            ExportSVG
+                        </button>
                         <button type="button" class="btn-sm btn-outline-primary non-draggable dragger" id="saveXML">Save
                             Graph
                         </button>
@@ -271,7 +272,6 @@
                 </div>
             </div>
             <!--generate section end-->
-
         </div>
     </div>
 </div>

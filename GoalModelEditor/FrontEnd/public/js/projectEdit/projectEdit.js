@@ -231,72 +231,6 @@ $("#deleteGoalBtn").click(function () {
     }
 });
 
-/*Hide and show section start*/
-/**
- * next button in the first page
- * [image section hide]
- * [cluster section show]
- */
-function handleNextToCluster() {
-    let p = document.getElementById("photo");
-    let n = document.getElementById("notes");
-    let c = document.getElementById("cluster");
-    // let g = document.getElementById('generator');
-    let b = document.getElementById("photoNextBtn");
-    //when clicking "next" button, save current work
-    saveJSON();
-
-    if (p.style.display === "none") {
-        p.style.display = "block";
-        n.style.display = "none";
-        c.style.display = "none";
-        // g.style.display = 'none';
-        b.innerHTML = "Next";
-    } else {
-        p.style.display = "none";
-        // goal.removeAttributeNode('style');
-        // goal.addAttributes('goalscrollbar');
-        n.style.display = "block";
-        c.style.display = "block";
-        // g.style.display = 'block';
-        b.innerHTML = "Back";
-    }
-}
-
-/**
- * next button in the second page, the Render button
- * [goal list section hide]
- * [mxgraph section show]
- */
-function handleNextToRender() {
-    let p = document.getElementById("photo");
-    let t = document.getElementById("todolist");
-    let c = document.getElementById("cluster");
-    let g = document.getElementById("generator");
-    let b = document.getElementById("clusterNextBtn");
-    let r = document.getElementById("renderbtn");
-    //when clicking "next" button, save current work
-    saveJSON();
-
-    if (t.style.display === "none") {
-        p.style.display = "none";
-        t.style.display = "block";
-        c.style.display = "block";
-        c.setAttribute("class", "col-7 showborder scrollbar");
-        r.style.display = "none";
-        g.style.display = "none";
-        b.innerHTML = "Next";
-    } else {
-        p.style.display = "none";
-        t.style.display = "none";
-        c.setAttribute("class", "col-3 showborder scrollbar");
-        c.style.display = "block";
-        r.style.display = "inline-block";
-        g.style.display = "block";
-        b.innerHTML = "Back";
-        // renderGraph(document.getElementById("graphContainer"));
-    }
-}
 
 /*drag and drop start*/
 let nowCopying;
@@ -574,3 +508,64 @@ $("#renderbtn").click(function () {
         renderGraph(document.getElementById('graphContainer'));
     }
 });
+
+/**
+ * progress bar
+ */
+function imageClick(){
+    $("#imageTab").removeClass().addClass("current");
+    $("#goalTab").removeClass();
+    $("#clusterTab").removeClass();
+    $("#graphTab").removeClass().addClass("last");
+    saveJSON();
+    $("#photo").css("display","block");
+    $("#todolist").css("display","block");
+    $("#notes").css("display","none");
+    $("#cluster").css("display","none");
+    $("#generator").css("display","none");
+
+}
+
+function goalClick(){
+    $("#imageTab").removeClass().addClass("current_prev");
+    $("#goalTab").removeClass().addClass("current");
+    $("#clusterTab").removeClass();
+    $("#graphTab").removeClass().addClass("last");
+    saveJSON();
+    $("#photo").css("display","block");
+    $("#todolist").css("display","block");
+    $("#notes").css("display","none");
+    $("#cluster").css("display","none");
+    $("#generator").css("display","none");
+
+}
+
+function clusterClick(){
+    $("#imageTab").removeClass().addClass("done");
+    $("#goalTab").removeClass().addClass("current_prev");
+    $("#clusterTab").removeClass().addClass("current");
+    $("#graphTab").removeClass().addClass("last");
+    saveJSON();
+    $("#photo").css("display","none");
+    $("#todolist").css("display","block");
+    $("#notes").css("display","block");
+    $("#cluster").css("display","block");
+    $("#cluster").removeClass().addClass("col-7 showborder scrollbar");
+    $("#generator").css("display","none");
+
+}
+
+function graphClick(){
+    $("#imageTab").removeClass().addClass("done");
+    $("#goalTab").removeClass().addClass("done");
+    $("#clusterTab").removeClass().addClass("current_prev");
+    $("#graphTab").removeClass().addClass("current");
+    saveJSON();
+    $("#photo").css("display","none");
+    $("#photo").css("display","none");
+    $("#todolist").css("display","none")
+    $("#notes").css("display","none");
+    $("#cluster").css("display","block");
+    $("#cluster").removeClass().addClass("col-3 showborder scrollbar");
+    $("#generator").css("display","block");
+}

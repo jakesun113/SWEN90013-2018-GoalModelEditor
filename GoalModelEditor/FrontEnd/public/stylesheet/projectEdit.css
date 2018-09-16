@@ -95,14 +95,14 @@ header {
 }
 
 .container-body {
-    padding-top: 30px;
+    padding-top: 1px;
     padding-bottom: 20px;
     padding-left: 20px;
     padding-right: 20px;
 }
 
 .container-heading1 {
-    padding-top: 0px;
+    padding-top: 5px;
     padding-bottom: 0px;
     padding-left: 0px;
     padding-right: 0px;
@@ -183,4 +183,23 @@ input {
 
 footer {
     cursor: default;
+}
+
+/*progress bar*/
+.steps_bar ul { border-left:solid 1px #ccc; overflow:auto; margin: 0;padding:0;}
+.steps_bar ul li { float:left; height:57px; padding-right:19px; line-height:60px; text-align:center; background:url("/img/stepbar.png")  no-repeat 100% 0 #f1f1f1; font-weight:bold;}
+.steps_bar ul li span { display:block; height:58px; padding:0; background:#f1f1f1; border-top:solid 1px #ccc; border-bottom:solid 1px #ccc;}
+.steps_bar ul li.done { color:#fff; background-position:100% -120px; background-color:rgb(186,213,185);}
+.steps_bar ul li.current_prev { color:#fff; background-position:100% -60px; background-color:rgb(186,213,185);}
+.steps_bar ul li.done span, .steps_bar ul li.current_prev span { background:rgb(186,213,185);}
+
+.steps_bar ul li.current { color:#fff; background-color:rgb(126,176,125);}
+.steps_bar ul li.current span { background:rgb(126,176,125);}
+.steps_bar ul li.last { background-position:100% -180px; background-color:transparent;}
+.steps_bar ul li.last span { background:#f1f1f1;}
+.steps_bar ul li.last.current { background-position:100% -240px;}
+.steps_bar ul li.last.current span { background:rgb(126,176,125);}
+
+.steps_bar ul li {
+    width: 25%;
 }

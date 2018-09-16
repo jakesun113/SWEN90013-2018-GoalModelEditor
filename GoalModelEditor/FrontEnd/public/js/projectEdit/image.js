@@ -77,6 +77,7 @@ function uploadPictures(formData) {
                 .slideDown()
                 .delay(3000)
                 .slideUp();
+            goalClick();
         }
     }).fail(function(jqXHR) {
         $("#warning-alert").html(
