@@ -68,7 +68,8 @@ router.post("/:userId/:projectId", (req, res, next) => {
             req.body.model_name,
             req.body.description,
             dirpath,
-            req.params.projectId
+            req.params.projectId,
+            req.body.model_type
         )
         .then(result => {
             createDirectoryPath(dirpath);
@@ -156,7 +157,8 @@ router.post("/:userId/:projectId", (req, res, next) => {
                 model_name: result.ModelName,
                 model_id: result.ModelId,
                 project_id: result.ProjectId,
-                last_modified: result.LastModified
+                last_modified: result.LastModified,
+                model_type: result.Type
             });
             // console.log(result.DirPath);
             return res.end();
@@ -354,6 +356,7 @@ router.put("/:userId/:goalmodelId", (req, res) => {
                     return res.end();
                 }
             );
+            db.updateGoalModelTime(req.params.userId, req.params.goalmodelId);
         })
         .catch(err => {
             if ((err.code = db.INVALID)) {
@@ -382,8 +385,9 @@ router.put("/info/:userId/:goalmodelId", (req, res) => {
     }
 
     // update goal model
-    let dirpath = "./UserFiles/" + req.params.userId + "/";
-    db.updateGpalModel(
+    let dirpath = "./UserFiles/" + req.params.userId + "/" + req.params.goalmodelId + "/";
+    db.updateGoalModel(
+            req.params.userId,
             req.params.goalmodelId,
             req.body.model_name,
             req.body.description,
