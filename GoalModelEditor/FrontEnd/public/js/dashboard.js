@@ -328,7 +328,7 @@ function parseGoalModel(model) {
 
 
     // Model type
-    modelHTML = modelHTML + '<div class="col-2 text-center model_type"></div>'
+    modelHTML = modelHTML + '<div class="col-2 text-center model_type">' + model.model_type + '</div>'
 
     // To make the view better
     modelHTML = modelHTML + '<div class="col-1"></div>';
