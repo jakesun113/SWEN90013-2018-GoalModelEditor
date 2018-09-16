@@ -15,7 +15,7 @@ const TOKEN = SECRET.token;
 const UID = SECRET.uid;
 const UNAME = SECRET.uiid;
 const GET_PROJECT_URL = "/project/list/" + UID;
-const GET_TEMPLATE_URL = "/template/list" + UID;
+const GET_TEMPLATE_URL = "/template/list/" + UID;
 const POST_PROJECT_URL = "/project/" + UID;
 const POST_TEMPLATE_URL = "/template/" + UID;
 
@@ -25,7 +25,6 @@ const POST_TEMPLATE_URL = "/template/" + UID;
  */
 $(document).ready(() => {
     retriveProjects();
-    retriveTemplates();
     retriveTemplates();
 });
 
@@ -410,7 +409,7 @@ function parseTemplate(template) {
     templateHTML = templateHTML +
         '<div class="col-3">' +
         '<div class="row">' +
-        '<div class="col-2 text-right"><i class="far fa-image"></i></div>' +
+        '<div class="col-2 text-right"><i class="fas fa-shapes"></i></div>' +
         '<div class="template_name col-8">' + template.template_name + '</div></div></div>';
 
     // Template last modified
@@ -684,8 +683,8 @@ function createTemplate(template) {
         headers: { Authorization: "Bearer" + TOKEN },
         success: template => {
             // Append the project to current UI
-            let projectHTML = parseProject(template);
-            $("#templates-container").append(projectHTML);
+            let templatetHTML = parseTemplate(template);
+            $("#templates-container").append(templateHTML);
             successMessageSlide("Template: " + template.template_name + " successfully created.");
 
             // add Listeners

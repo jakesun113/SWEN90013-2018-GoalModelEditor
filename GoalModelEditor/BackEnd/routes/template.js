@@ -39,7 +39,7 @@ router.post("/:userId", (req, res, next) => {
         req.body.template_name,
         req.body.description,
         dirpath,
-        req.params.userId,
+        req.params.userId
     ).then(result => {
         createDirectoryPath(dirpath);
         console.log(result);
