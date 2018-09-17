@@ -75,7 +75,6 @@ function renderGraph(container) {
     graph.removeCells(graph.getChildVertices(graph.getDefaultParent()));
     graph.removeCells(graph.getChildEdges(graph.getDefaultParent()));
 
-
     // reset the accumulators for non-functional goals
     emotionsGlob = {};
     negativesGlob = {};
