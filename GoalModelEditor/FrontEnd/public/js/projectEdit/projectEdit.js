@@ -518,20 +518,6 @@ $("#renderbtn").click(function () {
 /**
  * progress bar
  */
-function imageClick(){
-    $("#imageTab").removeClass().addClass("current");
-    $("#goalTab").removeClass();
-    $("#clusterTab").removeClass();
-    $("#graphTab").removeClass().addClass("last");
-    saveJSON();
-    $("#photo").css("display","block");
-    $("#todolist").css("display","block");
-    $("#notes").css("display","none");
-    $("#cluster").css("display","none");
-    $("#generator").css("display","none");
-
-}
-
 function goalClick(){
     $("#imageTab").removeClass().addClass("current_prev");
     $("#goalTab").removeClass().addClass("current");
@@ -574,4 +560,5 @@ function graphClick(){
     $("#cluster").css("display","block");
     $("#cluster").removeClass().addClass("col-3 showborder scrollbar");
     $("#generator").css("display","block");
+    $("#renderbtn").css("display","inline-block");
 }
