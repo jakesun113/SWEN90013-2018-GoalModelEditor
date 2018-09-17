@@ -99,10 +99,10 @@
 
 <div class="steps_bar mt-2 mb-1">
     <ul>
-        <li id="imageTab" class="current" onclick="imageClick()"><span>Upload Image</span></li>
-        <li id="goalTab" class="" onclick="goalClick()"><span>Goal List</span></li>
-        <li id="clusterTab" class="" onclick="clusterClick()"><span>Cluster</span></li>
-        <li id="graphTab" class="last" onclick="graphClick()"><span>Render</span></li>
+        <!--<li id="imageTab" class="current" onclick="imageClick()"><span>Upload Image</span></li>-->
+        <li id="goalTab" class="current" onclick="goalClick()"><span>Write Goal List</span></li>
+        <li id="clusterTab" class="" onclick="clusterClick()"><span>Cluster Goals / Arrange into Hierarchy</span></li>
+        <li id="graphTab" class="last" onclick="graphClick()"><span>Render Model</span></li>
     </ul>
 </div>
 
@@ -223,12 +223,12 @@
             <div id="cluster" class="col-7 showborder scrollbar"
                  style="display: none; background-color:rgba(35, 144, 231, 0.1);">
                 <div>
-                    <button style="display: none" class="btn-sm btn-outline-primary non-draggable dragger"
-                            id="renderbtn">Render
-                    </button>
                     <button type="button" class="btn-sm btn-outline-primary non-draggable dragger mt-3" id="edit">Edit All
                     </button>
                     <button type="button" class="btn-sm btn-outline-primary non-draggable dragger mt-3" id="drag">Drag All
+                    </button>
+                    <button style="display: none" class="btn-sm btn-outline-primary non-draggable dragger"
+                            id="renderbtn">Render
                     </button>
 
                     <!--< a id="Export" href="#">ExportSVG</a>-->
