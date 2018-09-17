@@ -529,7 +529,7 @@ function goalClick(){
     $("#notes").css("display","none");
     $("#cluster").css("display","none");
     $("#generator").css("display","none");
-
+    $("#renderbtn").css("display","none");
 }
 
 function clusterClick(){
@@ -544,6 +544,7 @@ function clusterClick(){
     $("#cluster").css("display","block");
     $("#cluster").removeClass().addClass("col-7 showborder scrollbar");
     $("#generator").css("display","none");
+    $("#renderbtn").css("display","none");
 
 }
 
