@@ -68,14 +68,28 @@
         </nav>
     </header>
 
-    <div id="graphContainer"
-         class="mt-4 mx-3"
-         style="position:relative;
-         overflow:hidden;
-         width:auto;
-         height:80vh;
-         background:url('/src/images/grid.gif');
-         cursor:default;">
+    <div class="row">
+        <div class="col-1 text-left">
+            <div id="sidebarContainer"
+                class="mt-4 mx-3"
+                style="position:relative;
+                width:80;
+                height:80vh;
+                text-alight:center">
+            </div>
+        </div>
+
+        <div class="col-11 text-right">
+            <div id="graphContainer"
+            class="mt-4 mx-3"
+            style="position:relative;
+            overflow:hidden;
+            width:auto;
+            height:80vh;
+            background:url('/src/images/grid.gif');
+            cursor:default;">
+            </div>
+        </div>
     </div>
 
 
@@ -105,6 +119,7 @@
 <!-- load and initialise mxgraph library -->
 <script type="text/javascript" src="/src/js/mxClient.js"></script>
 <script type="text/javascript" src="/js/templateEdit.js"></script>
+<script type="text/javascript" src="/js/template.js"></script>
 
 </body>
 </html>

@@ -37,19 +37,17 @@ const PATH_NEGATIVE = "/src/images/Risk.png";
 const PATH_QUALITY = "/src/images/Cloud.png";
 const PATH_STAKEHOLDER = "/src/images/Stakeholder.png";
 
-// it is necessary to store the variable pointing to the graph object
-// in the global scope - this is so that consecutive calls to render()
-// are able to access (and hence destroy) any existing graph
-var graph = new mxGraph(document.getElementById("graphContainer"));
-graph.setPanning(true);
-graph.panningHandler.useLeftButtonForPanning = true;
 
-console.log(graph.container)
-
+// accumulators for non-functional goals
 var emotionsGlob = {};
 var negativesGlob = {};
 var qualitiesGlob = {};
 var stakeholdersGlob = {};
+
+// create the graph object
+var graph = new mxGraph(document.getElementById("graphContainer"));
+graph.setPanning(true);
+graph.panningHandler.useLeftButtonForPanning = true;
 
 // add graph sidebar
 var sidebar = new mxToolbar(document.getElementById("sidebarContainer"));
@@ -76,7 +74,6 @@ function renderGraph(container) {
     // reset - remove any existing graph if render is called
     graph.removeCells(graph.getChildVertices(graph.getDefaultParent()));
     graph.removeCells(graph.getChildEdges(graph.getDefaultParent()));
-
 
     // reset the accumulators for non-functional goals
     emotionsGlob = {};
