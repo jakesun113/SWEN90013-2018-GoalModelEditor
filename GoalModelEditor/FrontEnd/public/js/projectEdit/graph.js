@@ -51,36 +51,19 @@ var negativesGlob = {};
 var qualitiesGlob = {};
 var stakeholdersGlob = {};
 
-// create the container for the toolbar of the graph
-var tbContainer = document.createElement('div');
-tbContainer.id = 'toolbarContainer';
-tbContainer.style.position = 'relative';
-tbContainer.style.float = 'right';
-tbContainer.style.overflow = 'auto';
-tbContainer.style.padding = '2px';
-tbContainer.style.left = '0px';
-tbContainer.style.top = '0px';
-tbContainer.style.bottom = '0px';
-
-let tbColumn = document.createElement('div');
-tbColumn.className = 'col-1 text-right';
-tbColumn.appendChild(tbContainer);
-
-let gcId = graph.container.id;
-$("#"+gcId).parent().parent().append(tbColumn);
-
-// Creates new toolbar without event processing
-var toolbar = new mxToolbar(tbContainer);
-
-let zoominImg = toolbar.addItem('Zoom in', "/src/images/zoomin.svg", function (){
-    graph.zoomIn();
+// add graph sidebar
+var sidebar = new mxToolbar(document.getElementById("sidebarContainer"));
+let zoomIn = sidebar.addItem("Zoom In", "/src/images/zoomin.svg",
+    function() {
+        graph.zoomIn();
 });
-zoominImg.style.width = '30px';
+zoomIn.style.width = '30px';
 
-let zoomoutImg = toolbar.addItem('Zoom out', "/src/images/zoomout.svg", function (){
-    graph.zoomOut();
+let zoomOut = sidebar.addItem("Zoom Out", "/src/images/zoomout.svg",
+    function() {
+        graph.zoomOut();
 });
-zoomoutImg.style.width = '30px';
+zoomOut.style.width = '30px';
 
 
 /**
@@ -91,10 +74,9 @@ function renderGraph(container) {
     console.log("Logging: renderGraph() called.");
 
     // reset - remove any existing graph if render is called
-    graph.destroy();
-    graph = new mxGraph(container);
-    graph.setPanning(true);
-    graph.panningHandler.useLeftButtonForPanning = true;
+    graph.removeCells(graph.getChildVertices(graph.getDefaultParent()));
+    graph.removeCells(graph.getChildEdges(graph.getDefaultParent()));
+
 
     // reset the accumulators for non-functional goals
     emotionsGlob = {};
