@@ -35,3 +35,12 @@ function setUserName(username) {
         .eq(0)
         .html(username);
 }
+
+/**
+ * Helper function to set the title of the page
+ *
+ * @param {String} title
+ */
+function setTitle(title) {
+    $("title").eq(0).html(title);
+}

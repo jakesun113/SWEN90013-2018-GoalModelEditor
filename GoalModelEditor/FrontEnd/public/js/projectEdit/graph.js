@@ -14,12 +14,12 @@ const CHILD_SIZE_SCALE = 0.8;
 
 // width and height of the non-functional goals
 // relative to the associated functional goal
-const SW_EMOTIONAL = 0.8;
-const SH_EMOTIONAL = 0.8;
-const SW_QUALITY = 0.8;
-const SH_QUALITY = 0.8;
-const SW_NEGATIVE = 0.8;
-const SH_NEGATIVE = 0.8;
+const SW_EMOTIONAL = 1;
+const SH_EMOTIONAL = 1;
+const SW_QUALITY = 1;
+const SH_QUALITY = 1;
+const SW_NEGATIVE = 1;
+const SH_NEGATIVE = 1;
 const SW_STAKEHOLDER = 0.25;
 const SH_STAKEHOLDER = 0.7;
 
@@ -37,16 +37,6 @@ const PATH_NEGATIVE = "/src/images/Risk.png";
 const PATH_QUALITY = "/src/images/Cloud.png";
 const PATH_STAKEHOLDER = "/src/images/Stakeholder.png";
 
-// offset for non-emotional goals
-const DX_EMOTIONAL = -SYMBOL_WIDTH * 0.8;
-const DY_EMOTIONAL = -SYMBOL_HEIGHT * 0.3;
-const DX_QUALITY = -SYMBOL_WIDTH * 0.9;
-const DY_QUALITY = SYMBOL_HEIGHT * 0.3;
-const DX_NEGATIVE = SYMBOL_WIDTH * 1.0;
-const DY_NEGATIVE = -SYMBOL_HEIGHT * 0.25;
-const DX_STAKEHOLDER = SYMBOL_WIDTH * 0.6;
-const DY_STAKEHOLDER = SYMBOL_HEIGHT * 0.25;
-
 // it is necessary to store the variable pointing to the graph object
 // in the global scope - this is so that consecutive calls to render()
 // are able to access (and hence destroy) any existing graph
@@ -54,20 +44,44 @@ var graph = new mxGraph(document.getElementById("graphContainer"));
 graph.setPanning(true);
 graph.panningHandler.useLeftButtonForPanning = true;
 
+console.log(graph.container)
+
 var emotionsGlob = {};
 var negativesGlob = {};
 var qualitiesGlob = {};
 var stakeholdersGlob = {};
 
-var zoomInBtn = mxUtils.button('+', function() {
+// create the container for the toolbar of the graph
+var tbContainer = document.createElement('div');
+tbContainer.id = 'toolbarContainer';
+tbContainer.style.position = 'relative';
+tbContainer.style.float = 'right';
+tbContainer.style.overflow = 'auto';
+tbContainer.style.padding = '2px';
+tbContainer.style.left = '0px';
+tbContainer.style.top = '0px';
+tbContainer.style.bottom = '0px';
+
+let tbColumn = document.createElement('div');
+tbColumn.className = 'col-1 text-right';
+tbColumn.appendChild(tbContainer);
+
+let gcId = graph.container.id;
+$("#"+gcId).parent().parent().append(tbColumn);
+
+// Creates new toolbar without event processing
+var toolbar = new mxToolbar(tbContainer);
+
+let zoominImg = toolbar.addItem('Zoom in', "/src/images/zoomin.svg", function (){
     graph.zoomIn();
 });
-document.getElementById("zoomButtons").append(zoomInBtn);
+zoominImg.style.width = '30px';
 
-var zoomOutBtn = mxUtils.button('-', function() {
+let zoomoutImg = toolbar.addItem('Zoom out', "/src/images/zoomout.svg", function (){
     graph.zoomOut();
 });
-document.getElementById("zoomButtons").append(zoomOutBtn);
+zoomoutImg.style.width = '30px';
+
 
 /**
  * Renders window.jsonData into a motivational model into graphContainer.
@@ -107,7 +121,7 @@ function renderGraph(container) {
         // grab goal hierarchy from the cluster
         var goals = clusters[i].ClusterGoals;
         // ... then call render
-        renderGoals(goals, graph, SYMBOL_WIDTH, SYMBOL_HEIGHT, null);
+        renderGoals(goals, graph, null);
     }
     layoutFunctions(graph);
     associateNonFunctions(graph);
@@ -121,7 +135,7 @@ function renderGraph(container) {
  * : source, the parent goal of the given array, defaults to null
  */
 
-function renderGoals(goals, graph, width, height, source = null) {
+function renderGoals(goals, graph, source = null) {
     console.log("Logging: renderGoals() called on list: " + goals);
 
     // accumulate non-functional goals to be rendered into a single symbol
@@ -138,7 +152,7 @@ function renderGoals(goals, graph, width, height, source = null) {
 
         // recurse over functional goals
         if (type === TYPE_FUNCTIONAL) {
-            renderFunction(goal, graph, width, height, source);
+            renderFunction(goal, graph, source);
 
         // accumulate non-functional descriptions into buckets
         } else if (type === TYPE_EMOTIONAL) {
@@ -176,8 +190,16 @@ function renderGoals(goals, graph, width, height, source = null) {
  * : graph, the graph to render the goal into
  * : source, the parent of the goal
  */
-function renderFunction(goal, graph, width, height, source = null) {
+function renderFunction(goal, graph, source = null) {
     let image = PATH_FUNCTIONAL;
+
+    let width = SYMBOL_WIDTH;
+    let height = SYMBOL_HEIGHT;
+    if (source != null){
+        let geo = graph.getCellGeometry(source);
+        width = geo.width * CHILD_SIZE_SCALE;
+        height = geo.height * CHILD_SIZE_SCALE;
+    }
 
     // insert new vertex and edge into graph
     let node = graph.insertVertex(
@@ -194,8 +216,7 @@ function renderFunction(goal, graph, width, height, source = null) {
         "strokeColor=black;endArrow=none;strokeWidth=2");
 
     // then recurse over the goal's children
-    renderGoals(goal.SubGoals, graph, width * CHILD_SIZE_SCALE,
-        height * CHILD_SIZE_SCALE, node);
+    renderGoals(goal.SubGoals, graph, node);
 }
 
 /**
@@ -210,54 +231,52 @@ function renderFunction(goal, graph, width, height, source = null) {
  *      goal into
  */
 function renderNonFunction(descriptions, graph, source=null, type="None") {
-    let widthScale = 1;
-    let heightScale = 1;
-    let fWidth = SYMBOL_WIDTH;
-    let fHeight = SYMBOL_HEIGHT;
-    var sourceX = 0;
-    var sourceY = 0;
+
+    if (source == null){
+        return;
+    }
 
     // fetch parent coordinates
-    if (source != null) {
-        var geo = graph.getCellGeometry(source);
-        var dX = 0;
-        var dY = 0;
-        sourceX = geo.x;
-        sourceY = geo.y;
-        fWidth = geo.width;
-        fHeight = geo.height;
-    }
+    var geo = graph.getCellGeometry(source);
+    var x = 0;
+    var y = 0;
+    let sourceX = geo.x;
+    let sourceY = geo.y;
+    let fWidth = geo.width;
+    let fHeight = geo.height;
+    let width = fWidth;
+    let height = fHeight;
 
 
     let image = "";
     switch (type) {
         case TYPE_EMOTIONAL:
-            dX = DX_EMOTIONAL;
-            dY = DY_EMOTIONAL;
             image = PATH_EMOTIONAL;
-            widthScale = SW_EMOTIONAL;
-            heightScale = SH_EMOTIONAL;
+            width = fWidth * SW_EMOTIONAL;
+            height = fHeight * SH_EMOTIONAL;
+            x = sourceX - width / 2;
+            y = sourceY - height / 2;
             break;
         case TYPE_NEGATIVE:
-            dX = DX_NEGATIVE;
-            dY = DY_NEGATIVE;
             image = PATH_NEGATIVE;
-            widthScale = SW_NEGATIVE;
-            heightScale = SH_NEGATIVE;
+            width = fWidth * SW_NEGATIVE;
+            height = fHeight * SH_NEGATIVE;
+            x = sourceX + fWidth - width / 2;
+            y = sourceY - height / 2;
             break;
         case TYPE_QUALITY:
-            dX = DX_QUALITY;
-            dY = DY_QUALITY;
             image = PATH_QUALITY;
-            widthScale = SW_QUALITY;
-            heightScale = SH_QUALITY;
+            width = fWidth * SW_QUALITY;
+            height = fHeight * SH_QUALITY;
+            x = sourceX - width / 2;
+            y = sourceY + fHeight - height / 2;
             break;
         case TYPE_STAKEHOLDER:
-            dX = DX_STAKEHOLDER;
-            dY = DY_STAKEHOLDER;
             image = PATH_STAKEHOLDER;
-            widthScale = SW_STAKEHOLDER;
-            heightScale = SH_STAKEHOLDER;
+            width = fWidth * SW_STAKEHOLDER;
+            height = fHeight * SH_STAKEHOLDER;
+            x = sourceX + fWidth - width / 2;
+            y = sourceY + fHeight - height / 2;
             break;
     }
 
@@ -274,10 +293,10 @@ function renderNonFunction(descriptions, graph, source=null, type="None") {
         null,
         null,
         descriptions.join(";\n"),
-        sourceX + dX,
-        sourceY + dY,
-        fWidth * widthScale,
-        fHeight * heightScale,
+        x,
+        y,
+        width,
+        height,
         style
     );
     console.log(type + " Symbol w, h: " + SYMBOL_WIDTH + ", " + SYMBOL_HEIGHT);
