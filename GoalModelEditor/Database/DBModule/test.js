@@ -37,12 +37,19 @@ var dbModule = require("./DBModule");
 //     console.log(err);
 // });
 
-//test code for deleting GoalModel (return "1" if success)
-// dbModule.deleteGoalModel('uid', 'mid').then(res => {
+//test code for create GoalModel (return "1" if success)
+// dbModule.createGoalModel('modelname1', 'desc','','pid','GoalList').then(res => {
 //     console.log(JSON.stringify(res));
 // }).catch(err => {
 //     console.log(err);
 // });
+
+//test code for deleting GoalModel (return "1" if success)
+dbModule.deleteGoalModel('6acb311c-96c6-11e8-9bb4-02b330fa6e48', '634cad6d-b96c-11e8-b616-02b330fa6e48').then(res => {
+    console.log(JSON.stringify(res));
+}).catch(err => {
+    console.log(err);
+});
 
 //test code for deleting Project(return "1" if success)
 // dbModule
