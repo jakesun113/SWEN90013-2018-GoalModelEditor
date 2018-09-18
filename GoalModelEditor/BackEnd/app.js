@@ -20,6 +20,7 @@ const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/user");
 const projectRouter = require("./routes/project");
 const goalModelRouter = require("./routes/goal_model");
+const templateRouter = require("./routes/template");
 
 // server config
 let config = require("./config");
@@ -44,6 +45,7 @@ app.use("/", indexRouter);
 app.use("/user", usersRouter);
 app.use("/project", projectRouter);
 app.use("/goal_model", goalModelRouter);
+app.use("/template", templateRouter);
 
 // QUESTION: should this occur before the routing to endpoints?
 app.use(bodyParser.json()); // for parsing application/json

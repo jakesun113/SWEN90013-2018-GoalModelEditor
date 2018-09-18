@@ -2,7 +2,7 @@
 const mysql = require("../../BackEnd/node_modules/mysql/index");
 const Promise = require("../../BackEnd/node_modules/bluebird/js/release/bluebird");
 
-const dbconfig = require("./dbconfig.json");
+const dbConfig = require("./dbConfig.json");
 
 let pool = null;
 
@@ -57,22 +57,29 @@ const SQL_RET_GOALMODEL_OF_PROJ =
  * @type {string}
  */
 const SQL_CREATE_GOALMODEL =
-    "INSERT INTO GoalModel (ModelId,ModelName, ModelDescription, DirPath, Project) " +
-    "VALUES (UUID(), ?, ?, ?, ?)";
-
+    "INSERT INTO GoalModel (ModelId,ModelName, ModelDescription, DirPath, Project, Type) " +
+    "VALUES (UUID(), ?, ?, ?, ?, ?)";
+/**
+ * The sql to retrieve a goalmodel by its name
+ * @type {string}
+ */
 const SQL_RET_GOALMODEL =
     "SELECT * FROM GoalModel LEFT JOIN Project " +
     "ON Project.ProjectId = GoalModel.Project" +
     " WHERE BINARY ModelName = ? AND Project = ?";
-
+/**
+ * The sql to retrieve a goalmodel by id
+ * @type {string}
+ */
 const SQL_RET_MODEL = " SELECT * FROM GoalModel WHERE ModelId = ? ";
 /**
  * get all project and its corresponding goalmodels
  * @type {string}
  */
+
 const SQL_GET_PROJ_GOALMODEL =
     "SELECT Project.*, GM.ModelId, GM.ModelName, GM.ModelDescription, " +
-    "GM.DirPath, GM.LastModified, GM.GoalModelCreateTime " +
+    "GM.DirPath, GM.LastModified, GM.GoalModelCreateTime, GM.Type " +
     "FROM Project INNER JOIN User_Project AS UP " +
     "ON  UP.ProjectId = Project.ProjectId " +
     "LEFT OUTER JOIN GoalModel AS GM " +
@@ -101,6 +108,14 @@ const SQL_UPDATE_PROJECT =
 const SQL_UPDATE_GOAL_MODEL =
     "UPDATE GoalModel " +
     "SET ModelName = ?, ModelDescription = ?, DirPath = ?, LastModified = NOW() " +
+    "WHERE BINARY ModelId = ?";
+/**
+ * Update a goal model's last odified time
+ * @type {string}
+ */
+const SQL_UPDATE_GOAL_MODEL_TIME =
+    "UPDATE GoalModel " +
+    "SET LastModified = NOW() " +
     "WHERE BINARY ModelId = ?";
 /**
  * Get the information of a project
@@ -135,14 +150,10 @@ const SQL_UPDATE_USER_PROFILE =
  */
 const SQL_DELETE_GOAL_MODEL = "DELETE FROM GoalModel WHERE BINARY ModelId = ?";
 /**
- *  Delete a
+ *  Delete a project.
  * @type {string}
  */
 const SQL_DELETE_PROJECT = "DELETE FROM Project WHERE BINARY ProjectId = ?";
-/**
- * DBModule
- * @returns {{DBModule}}
- */
 
 const SQL_CHECK_PRIORITY_ON_PROJECT =
     "SELECT Priority FROM GoalModel_A.User_Project " +
@@ -153,7 +164,65 @@ const SQL_CHECK_PRIORITY_ON_GOALMODEL =
     " User_Project " +
     "INNER JOIN GoalModel ON User_Project.projectId = GoalModel.Project" +
     " where BINARY User_Project.UserId = ? AND BINARY GoalModel.ModelId = ?";
+/**
+ * Create a template
+ * @type {string}
+ */
+const SQL_CREATE_TEMPLATE =
+    "INSERT INTO Template (TemplateId, TemplateName, TemplateDescription, DirPath, User) " +
+    "VALUES (UUID(), ?, ?, ?, ?)";
+/**
+ * Delete a template
+ * @type {string}
+ */
+const SQL_DELETE_TEMPLATE =
+    "DELETE FROM Template WHERE BINARY TemplateId = ? AND User = ?";
+/**
+ * Update a template
+ * @type {string}
+ */
+const SQL_UPDATE_TEMPLATE =
+    "UPDATE Template " +
+    "SET TemplateName = ?, TemplateDescription = ?, DirPath = ?, LastModified = NOW() " +
+    "WHERE BINARY TemplateId = ? AND BINARY User = ?";
+/**
+ * Update a template's time
+ * @type {string}
+ */
+const SQL_UPDATE_TEMPLATE_TIME =
+    "UPDATE Template " +
+    "SET LastModified = NOW() " +
+    "WHERE BINARY TemplateId = ? AND BINARY User = ?";
+/**
+ * return a template
+ * @type {string}
+ */
+const SQL_RET_TEMPLATE =
+    "SELECT * FROM Template WHERE BINARY TemplateName = ? AND User = ?";
+/**
+ * Get all templates of a user
+ * @type {string}
+ */
+const SQL_GET_TEMPLATE_LIST =
+    "SELECT * FROM Template WHERE User = ?";
+/**
+ * get a template by its id
+ * @type {string}
+ */
+const SQL_GET_TEMPLATE_BY_ID =
+    "SELECT * FROM Template WHERE TemplateId = ? AND User = ?";
 
+/**
+ *  Predefined MYSQL error number for duplicate entry
+ * @type {number}
+ */
+const DUP_ENTRY = 1062;
+
+
+/**
+ * DBModule
+ * @returns {{DBModule}}
+ */
 const DBModule = function () {
     let DBModule = {};
     DBModule.SUCCESS = 1;
@@ -164,7 +233,7 @@ const DBModule = function () {
     DBModule.MESSAGE_ACCESS_DENIED =
         "You don't have the right to do so. Please contact your project manager.";
 
-    pool = mysql.createPool(dbconfig);
+    pool = mysql.createPool(dbConfig);
 
     /**
      * Store the information of a new project into the database
@@ -184,7 +253,7 @@ const DBModule = function () {
                 function (err, result) {
                     if (err) {
                         console.log(JSON.stringify(err));
-                        if (err.errno === 1062) {
+                        if (err.errno === DUP_ENTRY) {
                             // MYSQL error number for duplicate entry
                             // Username already exists.
                             reject({
@@ -244,7 +313,7 @@ const DBModule = function () {
                     if (err) {
                         console.log(JSON.stringify(err));
                         // MYSQL error number for duplicate entry
-                        if (err.errno === 1062) {
+                        if (err.errno === DUP_ENTRY) {
                             // Username already exists.
                             reject({
                                 code: DBModule.ALREADY_EXIST,
@@ -325,16 +394,16 @@ const DBModule = function () {
     DBModule.createGoalModel = function (modelName,
                                          modelDescription,
                                          filePath,
-                                         ProjectId) {
+                                         ProjectId, Type) {
         return new Promise(function (resolve, reject) {
             pool.query(
                 SQL_CREATE_GOALMODEL,
-                [modelName, modelDescription, filePath, ProjectId],
+                [modelName, modelDescription, filePath, ProjectId, Type],
                 function (err, result) {
                     if (err) {
                         console.log(JSON.stringify(err));
                         // MYSQL error number for duplicate entry
-                        if (err.errno === 1062) {
+                        if (err.errno === DUP_ENTRY) {
                             // Username already exists.
                             reject({
                                 code: DBModule.ALREADY_EXIST,
@@ -518,7 +587,7 @@ const DBModule = function () {
                                     connection.release();
                                     if (err) {
                                         console.log(err);
-                                        if ((err.errno = 1062)) {
+                                        if ((err.errno = DUP_ENTRY)) {
                                             console.log("dup");
                                             return reject({
                                                 code: DBModule.ALREADY_EXIST,
@@ -594,7 +663,7 @@ const DBModule = function () {
                                     if (err) {
                                         connection.release();
                                         console.log(err);
-                                        if ((err.errno = 1062)) {
+                                        if ((err.errno = DUP_ENTRY)) {
                                             console.log("dup");
                                             return reject({
                                                 code: DBModule.ALREADY_EXIST,
@@ -611,6 +680,96 @@ const DBModule = function () {
                                     if (result.affectedRows === 1) {
                                         // success
                                         //resolve(result);
+                                        connection.query(
+                                            SQL_RET_MODEL,
+                                            [modelId],
+                                            function (err, result) {
+                                                connection.release();
+                                                if (err) {
+                                                    console.log(err);
+                                                    return reject({
+                                                        code:
+                                                        DBModule.UNKNOWN_ERROR,
+                                                        message: err.sqlMessage
+                                                    }); // unknown error
+                                                } else {
+                                                    // success
+                                                    return resolve({
+                                                        model_name:
+                                                        result[0].ModelName,
+                                                        last_modified:
+                                                        result[0]
+                                                            .LastModified
+                                                    });
+                                                }
+                                            }
+                                        );
+                                    } else {
+                                        connection.release();
+                                        return reject({
+                                            code: DBModule.INVALID,
+                                            message: result.message
+                                        });
+                                    }
+                                }
+                            );
+                        }
+                    }
+                );
+            });
+        });
+    };
+    /**
+     * update a single goal model's time.
+     * @return format(if success) : {model_name:<>, last_modified:<>}
+     * @return format(if error) : {code:<Error Code>, message:<Error Message>}
+     * @param userId
+     * @param modelId
+     */
+    DBModule.updateGoalModelTime = function (userId, modelId) {
+        return new Promise((resolve, reject) => {
+            pool.getConnection(function (err, connection) {
+                connection.query(
+                    SQL_CHECK_PRIORITY_ON_GOALMODEL,
+                    [userId, modelId],
+                    (err, result) => {
+                        if (err) {
+                            // network connection or other errors
+                            connection.release();
+                            return reject({
+                                code: DBModule.UNKNOWN_ERROR,
+                                message: err.sqlMessage
+                            });
+                        }
+                        if (result.length === 0) {
+                            // No priority on the project
+                            connection.release();
+                            return reject({
+                                code: DBModule.ACCESS_DENIED,
+                                message: DBModule.MESSAGE_ACCESS_DENIED
+                            });
+                        } else if (result.length === 1) {
+                            connection.query(
+                                SQL_UPDATE_GOAL_MODEL_TIME,
+                                [modelId],
+                                (err, result) => {
+                                    if (err) {
+                                        connection.release();
+                                        console.log(err);
+                                        if ((err.errno = DUP_ENTRY)) {
+                                            console.log("dup");
+                                            return reject({
+                                                code: DBModule.ALREADY_EXIST,
+                                                message: err.sqlMessage
+                                            });
+                                        } else {
+                                            return reject({
+                                                code: DBModule.UNKNOWN_ERROR,
+                                                message: err.sqlMessage
+                                            });
+                                        }
+                                    }
+                                    if (result.affectedRows === 1) {
                                         connection.query(
                                             SQL_RET_MODEL,
                                             [modelId],
@@ -869,6 +1028,266 @@ const DBModule = function () {
             });
         });
     };
+
+
+    /**
+     * Delete a Template
+     * @return format(if success) : 1
+     * @return format(if error) : {code:<Error Code>, message:<Error Message>}
+     * @param userId
+     * @param TemplateId
+     */
+    DBModule.deleteTemplate = function (userId, templateId) {
+        return new Promise((resolve, reject) => {
+            pool.getConnection(function (err, connection) {
+                connection.query(
+                    SQL_DELETE_TEMPLATE,
+                    [templateId, userId],
+                    (err, result) => {
+                        if (err) {
+                            // network connection or other errors
+                            connection.release();
+                            return reject({
+                                code: DBModule.UNKNOWN_ERROR,
+                                message: err.sqlMessage
+                            });
+                        }
+                        if (result.affectedRows === 1) {
+                            return resolve(DBModule.SUCCESS);
+                        } else {
+                            // No priority on the project or no such user
+                            connection.release();
+                            if (err) {// connection err
+                                return reject({
+                                    code: DBModule.UNKNOWN_ERROR,
+                                    message: err.sqlMessage
+                                });
+                            }
+                            return reject({ // no such template or access denied
+                                code: DBModule.INVALID,
+                                message: result.message
+                            });
+                        }
+                    });
+            });
+        });
+    }
+
+    /**
+     * The function to create a TEMPLATE under a user.
+     * @return format(if success) : <template DB row>
+     * @return format(if error) : {code:<Error Code>, message:<Error Message>}
+     * @param templateName
+     * @param templateDescription
+     * @param dirPath
+     * @param User
+     */
+    DBModule.createTemplate = function (templateName,
+                                        templateDescription,
+                                        dirPath,
+                                        User) {
+        return new Promise(function (resolve, reject) {
+            pool.query(
+                SQL_CREATE_TEMPLATE,
+                [templateName, templateDescription, dirPath, User],
+                function (err, result) {
+                    if (err) {
+                        console.log(JSON.stringify(err));
+                        // MYSQL error number for duplicate entry
+                        if (err.errno === DUP_ENTRY) {
+                            // Username already exists.
+                            reject({
+                                code: DBModule.ALREADY_EXIST,
+                                message: err.sqlMessage
+                            });
+                        } else {
+                            reject({
+                                code: DBModule.UNKNOWN_ERROR,
+                                message: err.sqlMessage
+                            }); // unknown error
+                        }
+                    } else {
+                        pool.query(
+                            SQL_RET_TEMPLATE,
+                            [templateName, User],
+                            function (err, result) {
+                                if (err) {
+                                    console.log(err);
+                                    reject({
+                                        code: DBModule.UNKNOWN_ERROR,
+                                        message: err.sqlMessage
+                                    });
+                                } else {
+                                    // success
+                                    resolve(result[0]);
+                                }
+                            }
+                        );
+                    }
+                }
+            );
+        });
+    };
+    /**
+     * checks the user priority and load his templates.
+     * @return format(if success) : < all related templates >
+     * @return format(if error) : {code:<Error Code>, message:<Error Message>}
+     * @param UserId
+     */
+    DBModule.getTemplateList = function (UserId) {
+        return new Promise((resolve, reject) => {
+            pool.getConnection(function (err, connection) {
+                connection.query(
+                    SQL_GET_TEMPLATE_LIST,
+                    [UserId],
+                    (err, result) => {
+                        if (err) {
+                            // network connection or other errors
+                            connection.release();
+                            return reject({
+                                code: DBModule.UNKNOWN_ERROR,
+                                message: err.sqlMessage
+                            });
+                        }
+                        return resolve(result);
+                    }
+                );
+            });
+        });
+    };
+    /**
+     * checks the user priority and load his templates.
+     * @return format(if success) : < all related templates >
+     * @return format(if error) : {code:<Error Code>, message:<Error Message>}
+     * @param UserId
+     */
+    DBModule.getTemplate = function (UserId, TemplateId) {
+        return new Promise((resolve, reject) => {
+                pool.getConnection(function (err, connection) {
+                    connection.query(
+                        SQL_GET_TEMPLATE_BY_ID,
+                        [TemplateId, UserId],
+                        (err, result) => {
+                            if (err) {
+                                // network connection or other errors
+                                connection.release();
+                                return reject({
+                                    code: DBModule.UNKNOWN_ERROR,
+                                    message: err.sqlMessage
+                                });
+                            }
+                            if (result.length === 1) {// success
+                                return resolve(result[0]);
+                            } else { //
+                                return resolve({
+                                    code: DBModule.INVALID,
+                                    message: err.sqlMessage
+                                });
+                            }
+                        }
+                    );
+                });
+            }
+        );
+    };
+
+    /**
+     * update a single Template.
+     * @return format(if success) : {model_name:<>, last_modified:<>}
+     * @return format(if error) : {code:<Error Code>, message:<Error Message>}
+     * @param userId
+     * @param templateId
+     * @param templateName
+     * @param templateDescription
+     * @param dirPath
+     */
+    DBModule.updateTemplate = function (userId,
+                                        templateId,
+                                        templateName,
+                                        templateDescription,
+                                        dirPath) {
+        return new Promise((resolve, reject) => {
+            pool.getConnection(function (err, connection) {
+                if (err) {
+                    connection.release();
+                    return reject({
+                        code: DBModule.UNKNOWN_ERROR,
+                        message: err.sqlMessage
+                    });
+                }
+                connection.query(
+                    SQL_UPDATE_TEMPLATE,
+                    [templateName, templateDescription, dirPath, templateId, userId],
+                    (err, result) => {
+                        if (err) {
+                            // network connection or other errors
+                            connection.release();
+                            return reject({
+                                code: DBModule.UNKNOWN_ERROR,
+                                message: err.sqlMessage
+                            });
+                        }
+                        if (result.length === 1) {// success
+                            return resolve(result);
+                        } else { //
+                            return resolve({
+                                code: DBModule.INVALID,
+                                message: "template not found"
+                            });
+                        }
+                    }
+                );
+
+            });
+        });
+    };
+    /**
+     * update a single Template's kast modified time
+     * @return format(if success) : {model_name:<>, last_modified:<>}
+     * @return format(if error) : {code:<Error Code>, message:<Error Message>}
+     * @param userId
+     * @param templateId
+     */
+    DBModule.updateTemplateTime = function (userId,
+                                            templateId) {
+        return new Promise((resolve, reject) => {
+            pool.getConnection(function (err, connection) {
+                if (err) {
+                    connection.release();
+                    return reject({
+                        code: DBModule.UNKNOWN_ERROR,
+                        message: err.sqlMessage
+                    });
+                }
+                connection.query(
+                    SQL_UPDATE_TEMPLATE_TIME,
+                    [templateId, userId],
+                    (err, result) => {
+                        if (err) {
+                            // network connection or other errors
+                            connection.release();
+                            return reject({
+                                code: DBModule.UNKNOWN_ERROR,
+                                message: err.sqlMessage
+                            });
+                        }
+                        if (result.length === 1) {// success
+                            return resolve(result);
+                        } else { //
+                            return resolve({
+                                code: DBModule.INVALID,
+                                message: "Template not found"
+                            });
+                        }
+                    }
+                );
+
+            });
+        });
+    };
+    /**************************************************
+     * Do not change code under this line
+     *************************************************/
     return DBModule;
 };
 

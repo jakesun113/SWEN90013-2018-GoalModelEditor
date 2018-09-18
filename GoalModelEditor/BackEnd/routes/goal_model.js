@@ -68,7 +68,8 @@ router.post("/:userId/:projectId", (req, res, next) => {
             req.body.model_name,
             req.body.description,
             dirpath,
-            req.params.projectId
+            req.params.projectId,
+            req.body.model_type
         )
         .then(result => {
             createDirectoryPath(dirpath);
@@ -156,7 +157,8 @@ router.post("/:userId/:projectId", (req, res, next) => {
                 model_name: result.ModelName,
                 model_id: result.ModelId,
                 project_id: result.ProjectId,
-                last_modified: result.LastModified
+                last_modified: result.LastModified,
+                model_type: result.Type
             });
             // console.log(result.DirPath);
             return res.end();
@@ -361,6 +363,7 @@ router.put("/:userId/:goalmodelId", (req, res) => {
                     return res.end();
                 }
             );
+            db.updateGoalModelTime(req.params.userId, req.params.goalmodelId);
         })
         .catch(err => {
             if ((err.code = db.INVALID)) {
@@ -389,7 +392,7 @@ router.put("/info/:userId/:goalmodelId", (req, res) => {
     }
 
     // update goal model
-    let dirpath = "./UserFiles/" + req.params.userId + "/";
+    let dirpath = "./UserFiles/" + req.params.userId + "/" + req.params.goalmodelId + "/";
     db.updateGoalModel(
             req.params.userId,
             req.params.goalmodelId,
@@ -593,6 +596,56 @@ router.get("/images/:userId/:goalmodelId", (req, res) => {
             return res.end();
         })
 });
+
+const PDFDocument = require('pdfkit');
+const SVGtoPDF = require('svg-to-pdfkit');
+
+router.post("/exportToPdf/:userId/:goalmodelId", (req, res, next) => {
+
+    // check token for authentication
+    if (!auth.authenticate(req.headers)) {
+        res.statusCode = 401;
+        res.json({ created: false, message: "Authentication failed" });
+        return res.end();
+    }
+
+    let dirpath = "./UserFiles/" + req.params.userId;
+
+    let svg = req.body.svg;
+    //let svg = `<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+    // xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 100%; height: 100%; display: block; min-width: 111px; min-height: 61px;"><g><g></g><g><g style="visibility: visible; cursor: move;"><image x="0" y="0" width="110" height="60" xlink:href="file:///Users/tccc/Bitbucket/swen90013-2018-go/GoalModelEditor/FrontEnd/public/img/Function.png"></image></g><g style="cursor: move;"><g fill="#774400" font-family="Arial,Helvetica" text-anchor="middle" font-size="11px"><text x="55" y="33.5">aaaaa</text></g></g></g><g></g><g></g></g></svg>`;
+
+    let doc = new PDFDocument(),
+        stream = fs.createWriteStream(
+            dirpath + "/" + req.params.goalmodelId +
+            "/" + req.params.goalmodelId +
+            ".pdf"
+        );
+
+    //console.log(svg);
+
+    SVGtoPDF(doc, svg, 0, 0);
+    stream.on('finish', function() {
+        console.log(fs.readFileSync(
+            dirpath + "/" + req.params.goalmodelId +
+            "/" + req.params.goalmodelId +
+            ".pdf"));
+        let downloadStream = fs.readFileSync(dirpath + "/" + req.params.goalmodelId +
+            "/" + req.params.goalmodelId +
+            ".pdf","base64");
+        // Be careful of special characters
+        console.log(downloadStream);
+        res.statusCode=200;
+        //res.writeHead(200, headers);
+        res.json({pdf: downloadStream});
+        return res.end();
+
+    });
+    doc.pipe(stream);
+    doc.end();
+});
+
+
 
 /** Recursively creates the whole path to a directory
  * @param filepath : the full path of the directory that is to be created
