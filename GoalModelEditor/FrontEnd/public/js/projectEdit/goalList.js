@@ -200,7 +200,7 @@ function parseNode(node) {
         " " +
         '" value = "' +
         node.GoalContent +
-        '" placeholder="' + placeholderText + '" maxlength="'+ MAX_CHARS +'" ' +
+        '" placeholder="' + placeholderText + '" ' +
         'style="font-weight: ' +
         fontWeight +
         '" ' +

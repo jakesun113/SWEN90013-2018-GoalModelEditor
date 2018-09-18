@@ -95,7 +95,7 @@ document.onkeydown = function (event) {
             '" class="' +
             goalType +
             " " +
-            '" placeholder="' + placeholderText + '" maxlength="' + MAX_CHARS + '"' +
+            '" placeholder="' + placeholderText + '" ' +
             'note="notes" oninput="changeFontWeight(this)" value="" style="font-weight: bold"/></li>';
 
         // add new goal node to its parent node
@@ -106,12 +106,22 @@ document.onkeydown = function (event) {
         //activate drag and drop
         getDraggingElement();
     }
-    //when editing div content, set max length of div content
-    if (document.activeElement.tagName === "DIV" &&
-        event.key !== "Backspace" &&
-        $(event.target).text().length > MAX_CHARS) {
+    // //when editing div content, set max length of div content
+    // if (document.activeElement.tagName === "DIV" &&
+    //     event.key !== "Backspace" &&
+    //     $(event.target).text().length > MAX_CHARS) {
+    //
+    //     event.preventDefault();
+    // }
+    //when editing input content, if text is longer than max length, text cannot be selected
+    if (document.activeElement.tagName === "INPUT" &&
+        $(event.target).val().length > MAX_CHARS) {
 
-        event.preventDefault();
+        //TODO: make the input cannot be selected if the text is longer than required
+        console.log("in none");
+        //$(event.target).addClass("non-selectable");
+        $(event.target).attr("onselectstart","return false")
+
     }
 };
 
@@ -396,7 +406,6 @@ function createElementFromHTML(htmlString) {
 $("#drag").hide();
 
 //handle operation of clicking "editAll"
-//TODO: adjust height of div based on the length of text
 $("#edit").click(function () {
     saveJSON();
     $(".dd-handle-style").removeClass("dd-handle");
