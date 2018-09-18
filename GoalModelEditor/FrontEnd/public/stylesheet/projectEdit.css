@@ -203,3 +203,7 @@ footer {
 .steps_bar ul li {
     width: 33.33%;
 }
+
+.steps_bar{
+    cursor: pointer;
+}

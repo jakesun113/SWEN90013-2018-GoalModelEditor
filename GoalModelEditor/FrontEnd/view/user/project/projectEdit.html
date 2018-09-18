@@ -100,9 +100,9 @@
 <div class="steps_bar mt-2 mb-1">
     <ul>
         <!--<li id="imageTab" class="current" onclick="imageClick()"><span>Upload Image</span></li>-->
-        <li id="goalTab" class="current" onclick="goalClick()"><span>Write Goal List</span></li>
-        <li id="clusterTab" class="" onclick="clusterClick()"><span>Cluster Goals / Arrange into Hierarchy</span></li>
-        <li id="graphTab" class="last" onclick="graphClick()"><span>Render Model</span></li>
+        <li id="goalTab" class="current non-draggable dragger" onclick="goalClick()"><span class="non-draggable dragger">Write Goal List</span></li>
+        <li id="clusterTab" class="non-draggable dragger" onclick="clusterClick()"><span class="non-draggable dragger">Cluster Goals / Arrange into Hierarchy</span></li>
+        <li id="graphTab" class="last non-draggable dragger" onclick="graphClick()"><span class="non-draggable dragger">Render Model</span></li>
     </ul>
 </div>
 
@@ -267,7 +267,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="row" style="height:100%">
+                <div class="row" style="height:auto; min-height:90%">
                     <div class="col-11 text-left">
                         <div id="graphContainer"
                              style="position:relative;overflow:hidden;width:100%;height:100%;background:url('/src/images/grid.gif');cursor:default;">
