@@ -141,6 +141,9 @@ input {
     border: 0px;
     width: 100%;
     cursor: move;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .icon {
