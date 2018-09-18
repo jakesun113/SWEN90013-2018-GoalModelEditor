@@ -1,6 +1,3 @@
-//set max characters that input and div allow
-const MAX_CHARS = 40;
-
 /**
  * get JSON file from backend according to userId and modelId
  */

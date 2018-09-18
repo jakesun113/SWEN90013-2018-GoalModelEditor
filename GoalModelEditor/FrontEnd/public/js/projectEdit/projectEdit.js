@@ -106,23 +106,6 @@ document.onkeydown = function (event) {
         //activate drag and drop
         getDraggingElement();
     }
-    // //when editing div content, set max length of div content
-    // if (document.activeElement.tagName === "DIV" &&
-    //     event.key !== "Backspace" &&
-    //     $(event.target).text().length > MAX_CHARS) {
-    //
-    //     event.preventDefault();
-    // }
-    //when editing input content, if text is longer than max length, text cannot be selected
-    if (document.activeElement.tagName === "INPUT" &&
-        $(event.target).val().length > MAX_CHARS) {
-
-        //TODO: make the input cannot be selected if the text is longer than required
-        console.log("in none");
-        //$(event.target).addClass("non-selectable");
-        $(event.target).attr("onselectstart", "return false")
-
-    }
 };
 
 /**
@@ -168,6 +151,12 @@ document.onkeyup = function (event) {
         if (grandparent.childNodes.length > 1) {
             grandparent.removeChild(parent);
             event.preventDefault();
+        }
+        //if this is the only goal left, clear the goal content
+        if (grandparent.childNodes.length === 1) {
+            //console.log(event.target);
+            $(event.target).val("");
+            changeFontWeight(event.target);
         }
     }
     //when the user press the 'ESC' button in the cluster
@@ -259,7 +248,7 @@ function getDraggingElement() {
     $(".dragger").on("dragstart", function (e) {
 
         //when the current dragging element is "input"
-        //or it is the list that has parent of "drag-list""
+        //or it is the list that has parent of "drag-list"
         if (
             document.activeElement.tagName === "INPUT"
             || $(e.target.parentNode).hasClass("drag-list")
