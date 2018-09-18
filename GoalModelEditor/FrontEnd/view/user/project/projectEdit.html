@@ -223,15 +223,20 @@
             <div id="cluster" class="col-7 showborder scrollbar"
                  style="display: none; background-color:rgba(35, 144, 231, 0.1);">
                 <div>
-                    <button type="button" class="btn-sm btn-outline-primary non-draggable dragger mt-3" id="edit">Edit All
-                    </button>
-                    <button type="button" class="btn-sm btn-outline-primary non-draggable dragger mt-3" id="drag">Drag All
-                    </button>
                     <button style="display: none" class="btn-sm btn-outline-primary non-draggable dragger"
                             id="renderbtn">Render
                     </button>
 
                     <!--< a id="Export" href="#">ExportSVG</a>-->
+                </div>
+                <!--Switch Button, Drag Mode & Edit Mode-->
+                <div class="btn-group btn-group-toggle switch" data-toggle="buttons">
+                    <label class="btn btn-outline-primary active non-draggable dragger mt-3">
+                        <input type="radio" id="drag" autocomplete="off" checked> Drag Mode
+                    </label>
+                    <label class="btn btn-outline-primary non-draggable dragger mt-3">
+                        <input type="radio" id="edit" autocomplete="off"> Edit Mode
+                    </label>
                 </div>
                 <!--show cluster data from JSON-->
                 <div class="dd py-3" id="cluster_1">
@@ -275,7 +280,7 @@
                     </div>
                     <div class="col-1 text-right">
                         <div id="sidebarContainer"
-                            style="position:relative;float:right;overflow:auto;width:30;padding:0px;left:0px;top:0px;bottom:0px">
+                            style="position:relative;float:right;overflow:auto;width:30px;padding:0px;left:0px;top:0px;bottom:0px">
                         </div>
                     </div>
                 </div>

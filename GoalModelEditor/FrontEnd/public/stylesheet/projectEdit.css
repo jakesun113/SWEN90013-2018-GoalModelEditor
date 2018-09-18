@@ -293,3 +293,6 @@ footer {
 .drag-style{
     cursor: move;
 }
+.switch{
+    cursor: pointer;
+}

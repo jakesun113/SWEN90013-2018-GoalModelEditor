@@ -233,13 +233,15 @@ function parseClusterNode(node) {
         node.GoalID +
         '" class="' +
         node.GoalType +
-        " dd-handle dd-handle-style" + '"' +
+        " dd-handle dd-handle-style" + '" ' +
         'note="' +
         node.GoalNote +
         '"' +
         ">" +
         '<img src="' + iconPath + '" class="mr-1 typeIcon">' +
-        '<div class="goal-content">' + node.GoalContent + '</div>' +
+        '<div class="goal-content"  tabindex="-1" ' +
+        'ondblclick="editGoalInCluster(this);" ' +
+        'onblur="finishEditGoalInCluster(this);">' + node.GoalContent + '</div>' +
         "</div>";
 
     // recursion to add sub goal
@@ -578,4 +580,29 @@ function addNoChildrenClass() {
     $(".Negative").parent().addClass('dd-nochildren');
     $(".Emotional").parent().addClass('dd-nochildren');
     $(".Stakeholder").parent().addClass('dd-nochildren');
+}
+
+/**
+ * Make goals in cluster editable by double click
+ *
+ */
+function editGoalInCluster(element){
+    //console.log("in content");
+    $(element).attr("contenteditable", "true");
+    // when editing, cannot press "Enter"
+    $(element).keypress(function (e) {
+        return e.which !== 13;
+    });
+
+    $(element).css("font-weight", "normal");
+}
+/**
+ * If do something else, make div not editable again
+ *
+ */
+function finishEditGoalInCluster(element){
+    //console.log("in finish");
+    $(element).attr("contenteditable", "false");
+    $(element).css("font-weight", "bold");
+    saveJSON();
 }

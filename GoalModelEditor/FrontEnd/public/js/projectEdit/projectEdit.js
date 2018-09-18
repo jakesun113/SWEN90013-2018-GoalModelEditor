@@ -326,7 +326,9 @@ function drop_zone(clusterNumber) {
             let imagePath = getTypeIconPath(type);
 
             $(newNode).html('<img src=' + imagePath + ' class="mr-1 typeIcon" >' +
-                '<div class="goal-content">' +
+                '<div class="goal-content" tabindex="-1" ' +
+                'ondblclick="editGoalInCluster(this);" ' +
+                'onblur="finishEditGoalInCluster(this);"' + '>' +
                 $(nowCopying).children("input")[0].value) + '</div>';
 
             draggableWrapper += newNode.outerHTML;
@@ -394,37 +396,24 @@ function createElementFromHTML(htmlString) {
     // Change this to div.childNodes to support multiple top-level nodes
     return div.firstChild;
 }
-
-//at first, hide the "dragAll" button
-$("#drag").hide();
-
-//handle operation of clicking "editAll"
-$("#edit").click(function () {
+//TODO: make "Edit Mode" and "Drag Mode" always seeable even scroll down
+//handle operation of clicking "Edit Mode"
+$("#edit").change(function(){
     saveJSON();
     $(".dd-handle-style").removeClass("dd-handle");
     $(".dd-handle-style").css("cursor", "auto");
-    $(".goal-content").attr("contenteditable", "true");
-    // when editing, cannot press "Enter"
-    $(".goal-content").keypress(function (e) {
-        return e.which !== 13;
-    });
-
-    $(".goal-content").css("font-weight", "normal");
-
-    $("#edit").hide();
-    $("#drag").show();
+    $("#cluster").css("background-color", "rgb(236, 244, 244)");
 });
 
-//handle operation of clicking "dragAll"
-$("#drag").click(function () {
+//handle operation of clicking "Drag Mode"
+$("#drag").change(function () {
 
     $(".dd-handle-style").addClass("dd-handle");
     $(".dd-handle-style").css("cursor", "move");
     $(".goal-content").attr("contenteditable", "false");
     $(".goal-content").css("font-weight", "bold");
-
-    $("#drag").hide();
-    $("#edit").show();
+    $("#cluster").css("background-color", "rgba(35, 144, 231, 0.1)");
+    saveJSON();
 });
 
 //if no "dd-empty" is existed, append new cluster
