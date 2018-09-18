@@ -18,6 +18,13 @@ const db = require(path.resolve(
     "../../Database/DBModule/DBModule.js"
 ));
 
+/* GET template editing page */
+router.get("/edit", function(req, res) {
+    if (req.cookies.LOKIDIED) {
+        res.render("user/project/templateEdit");
+    }
+    res.redirect("/login");
+});
 
 /* POST Create template */
 router.post("/:userId", (req, res, next) => {
@@ -39,7 +46,7 @@ router.post("/:userId", (req, res, next) => {
         req.body.template_name,
         req.body.description,
         dirpath,
-        req.params.userId,
+        req.params.userId
     ).then(result => {
         createDirectoryPath(dirpath);
         console.log(result);

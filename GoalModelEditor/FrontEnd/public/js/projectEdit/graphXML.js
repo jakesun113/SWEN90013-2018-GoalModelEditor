@@ -31,6 +31,8 @@ function sendXML() {
     }); // end ajax
 }
 
+let isXMLExisted = false;
+
 function getXML() {
     let secret = JSON.parse(Cookies.get("LOKIDIED"));
     let token = secret.token;
@@ -43,6 +45,7 @@ function getXML() {
         type: "GET",
         headers: { Authorization: "Bearer " + token },
         success: function(xmlFile) {
+            isXMLExisted = true;
             renderFromXML(xmlFile.xml);
             $('#loadingModal').modal('toggle');
         }
@@ -85,33 +88,118 @@ function renderFromXML(xml) {
 /**
  * Can only be called when the svg is rendered onto the screen!!!!!!
  */
-function exportImage() {
-    var svg = document.getElementsByTagName("svg")[0];
+function exportModel() {
+
+    let secret = JSON.parse(Cookies.get("LOKIDIED"));
+    let token = secret.token;
+    let userId = secret.uid;
+    let modelId = Cookies.get("MID");
+    let export_url = "/goal_model/exportToPdf/" + userId + "/" + modelId;
+
+    let svg = document.getElementsByTagName("svg")[0];
     svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
     svg.setAttribute("version", "1.1");
+    svg.setAttribute("xmlns:xlink","http://www.w3.org/1999/xlink");
     // console.log(svg.outerHTML);
 
-    var file = new Blob([svg.outerHTML], {type: "text/plain"});
-    if (window.navigator.msSaveOrOpenBlob) // IE10+
-        window.navigator.msSaveOrOpenBlob(file, filename);
-    else { // Others
-        var a = document.createElement("a"),
-            url = URL.createObjectURL(file);
-        a.href = url;
-        a.download = "a.svg";
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(function () {
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-        }, 0);
-    }
+    let serializer = new XMLSerializer();
+    let ser = serializer.serializeToString(svg);
+    let w = window.open();
 
+    w.document.open();
+    // let container = w.document.createElement("div");
+    // container.style.width = "1000px";
+    // container.style.height = "1000px";
+
+    // let previewGraph = new mxGraph(container);
+    // previewGraph.setPanning(true);
+    // previewGraph.panningHandler.useLeftButtonForPanning = true;
+    // renderFromXML(xml);
+
+    w.document.write("<h1>Preview:</h1><br>");
+    // 1. Create the button
+    let svgButton = w.document.createElement("button");
+    svgButton.innerHTML = "Export as SVG";
+
+    let pdfButton = w.document.createElement("button");
+    pdfButton.innerHTML = "Export as pdf";
+    // 2. Append
+    let body = w.document.getElementsByTagName("body")[0];
+    body.appendChild(svgButton);
+    body.appendChild(pdfButton);
+
+    w.document.write(ser);
+
+    // 3. Add event handler
+    svgButton.addEventListener ("click", function() {
+
+        let file = new Blob([svg.outerHTML], {type: "text/plain"});
+        if (window.navigator.msSaveOrOpenBlob) // IE10+
+            window.navigator.msSaveOrOpenBlob(file, filename);
+        else { // Others
+            let a = document.createElement("a"),
+                url = URL.createObjectURL(file);
+            a.href = url;
+            a.download = "a.svg";
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(function () {
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            }, 0);
+        }
+    });
+
+    pdfButton.addEventListener ("click", function() {
+        $.ajax(export_url, {
+            type: "POST",
+            headers: { Authorization: "Bearer " + token },
+            contentType: "application/json",
+            data: JSON.stringify({ svg: ser }),
+
+            success: function(res) {
+                console.log(res);
+                var base64str = res.pdf;
+                // decode base64 string, remove space for IE compatibility
+                var binary = atob(base64str.replace(/\s/g, ''));
+                var len = binary.length;
+                var buffer = new ArrayBuffer(len);
+                var view = new Uint8Array(buffer);
+                for (var i = 0; i < len; i++) {
+                    view[i] = binary.charCodeAt(i);
+                }
+                let pdfFile = new Blob([view], {type: "application/pdf"});
+                console.log(pdfFile);
+                if (window.navigator.msSaveOrOpenBlob) // IE10+
+                    window.navigator.msSaveOrOpenBlob(pdfFile, Filename);
+                else { // Others
+                    let a = document.createElement("a"),
+                        url = URL.createObjectURL(pdfFile);
+                    a.href = url;
+                    a.download = "a.pdf";
+                    document.body.appendChild(a);
+                    a.click();
+                    setTimeout(function () {
+                        document.body.removeChild(a);
+                        window.URL.revokeObjectURL(url);
+                    }, 0);
+                }
+
+            }
+        }).fail(function(jqXHR) {
+            warningMessageSlide(
+                jqXHR.responseJSON.message + "<br>Please try again."
+            );
+        });
+
+    });
+
+    w.document.close();
 }
 
 $("#Export").click(function (evt) {
     saveJSON();
-    exportImage();
+    exportModel();
 });
 
 $("#saveXML").click( evt => {

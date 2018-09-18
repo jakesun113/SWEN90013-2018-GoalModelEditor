@@ -44,7 +44,7 @@ const db = require(path.resolve(
 /* GET get the edit page */
 router.get("/edit", function(req, res) {
     if (req.cookies.LOKIDIED) {
-        res.render("user/project/projectedit");
+        res.render("user/project/projectEdit");
     }
     res.redirect("/login");
 });
@@ -644,7 +644,6 @@ router.post("/exportToPdf/:userId/:goalmodelId", (req, res, next) => {
     doc.pipe(stream);
     doc.end();
 });
-
 
 
 /** Recursively creates the whole path to a directory

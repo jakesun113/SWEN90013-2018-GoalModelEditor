@@ -1,12 +1,27 @@
 "use strict";
 
 // default width/height of MM symbols
-const SYMBOL_WIDTH = 110;
-const SYMBOL_HEIGHT = 60;
+const SYMBOL_WIDTH = 145;
+const SYMBOL_HEIGHT = 110;
 
 // default x and y coord of the MM symbols
 const SYMBOL_X_COORD = 0;
 const SYMBOL_Y_COORD = 0;
+
+// size of the children functional goals
+// relative to the parent goal
+const CHILD_SIZE_SCALE = 0.8;
+
+// width and height of the non-functional goals
+// relative to the associated functional goal
+const SW_EMOTIONAL = 1;
+const SH_EMOTIONAL = 1;
+const SW_QUALITY = 1;
+const SH_QUALITY = 1;
+const SW_NEGATIVE = 1;
+const SH_NEGATIVE = 1;
+const SW_STAKEHOLDER = 0.25;
+const SH_STAKEHOLDER = 0.7;
 
 // different types of goals to be rendered
 const TYPE_FUNCTIONAL = "Functional";
@@ -22,21 +37,37 @@ const PATH_NEGATIVE = "/src/images/Risk.png";
 const PATH_QUALITY = "/src/images/Cloud.png";
 const PATH_STAKEHOLDER = "/src/images/Stakeholder.png";
 
-// default spacing for auto-layout algorithm
-const VERTICAL_SPACING = 100;
-const HORIZONTAL_SPACING = 100;
+// random string, used to store unassociated non-functions in accumulators
+const ROOT_KEY = "0723y450nv3-2r8mchwouebfioasedfiadfg";
 
-// it is necessary to store the variable pointing to the graph object
-// in the global scope - this is so that consecutive calls to render()
-// are able to access (and hence destroy) any existing graph
-var graph = new mxGraph(document.getElementById("graphContainer"));
-graph.setPanning(true);
-graph.panningHandler.useLeftButtonForPanning = true;
+// variable, stores the identity of the root function
+var rootGoal = null;
 
+// accumulators for non-functional goals
 var emotionsGlob = {};
 var negativesGlob = {};
 var qualitiesGlob = {};
 var stakeholdersGlob = {};
+
+// create the graph object
+var graph = new mxGraph(document.getElementById("graphContainer"));
+graph.setPanning(true);
+graph.panningHandler.useLeftButtonForPanning = true;
+
+// add graph sidebar
+var sidebar = new mxToolbar(document.getElementById("sidebarContainer"));
+let zoomIn = sidebar.addItem("Zoom In", "/src/images/zoomin.svg",
+    function() {
+        graph.zoomIn();
+});
+zoomIn.style.width = '30px';
+
+let zoomOut = sidebar.addItem("Zoom Out", "/src/images/zoomout.svg",
+    function() {
+        graph.zoomOut();
+});
+zoomOut.style.width = '30px';
+
 
 /**
  * Renders window.jsonData into a motivational model into graphContainer.
@@ -46,10 +77,9 @@ function renderGraph(container) {
     console.log("Logging: renderGraph() called.");
 
     // reset - remove any existing graph if render is called
-    graph.destroy();
-    graph = new mxGraph(container);
-    graph.setPanning(true);
-    graph.panningHandler.useLeftButtonForPanning = true;
+    graph.removeCells(graph.getChildVertices(graph.getDefaultParent()));
+    graph.removeCells(graph.getChildEdges(graph.getDefaultParent()));
+    rootGoal = null;
 
     // reset the accumulators for non-functional goals
     emotionsGlob = {};
@@ -124,21 +154,24 @@ function renderGoals(goals, graph, source = null) {
     }
 
     // render each of the non-functional goals
+    var key;
+    if (source === null) {
+        key = ROOT_KEY;
+    } else {
+        key = source.value;
+    }
+
     if (emotions.length) {
-        emotionsGlob[source.value] = emotions;
-        //renderNonFunction(emotions, graph, source, TYPE_EMOTIONAL);
+        emotionsGlob[key] = emotions;
     }
     if (qualities.length) {
-        qualitiesGlob[source.value] = qualities;
-        //renderNonFunction(qualities, graph, source, TYPE_QUALITY);
+        qualitiesGlob[key] = qualities;
     }
     if (concerns.length) {
-        negativesGlob[source.value] = concerns;
-        //renderNonFunction(concerns, graph, source, TYPE_NEGATIVE);
+        negativesGlob[key] = concerns;
     }
     if (stakeholders.length) {
-        stakeholdersGlob[source.value] = stakeholders;
-        //renderNonFunction(stakeholders, graph, source, TYPE_STAKEHOLDER);
+        stakeholdersGlob[key] = stakeholders;
     }
 }
 
@@ -150,7 +183,16 @@ function renderGoals(goals, graph, source = null) {
  * : source, the parent of the goal
  */
 function renderFunction(goal, graph, source = null) {
+
+    // styling
     let image = PATH_FUNCTIONAL;
+    let width = SYMBOL_WIDTH;
+    let height = SYMBOL_HEIGHT;
+    if (source != null){
+        let geo = graph.getCellGeometry(source);
+        width = geo.width * CHILD_SIZE_SCALE;
+        height = geo.height * CHILD_SIZE_SCALE;
+    }
 
     // insert new vertex and edge into graph
     let node = graph.insertVertex(
@@ -159,12 +201,17 @@ function renderFunction(goal, graph, source = null) {
         goal.GoalContent,
         SYMBOL_X_COORD,
         SYMBOL_Y_COORD,
-        SYMBOL_WIDTH,
-        SYMBOL_HEIGHT,
-        "shape=image;image=" + image
+        width,
+        height,
+        "fontSize=16;fontColor=black;shape=image;image=" + image
     );
     let edge = graph.insertEdge(null, null, null, source, node,
-        "strokeColor=black");
+        "strokeColor=black;endArrow=none;strokeWidth=2");
+
+    // if no root goal is registered, then store this as root
+    if (rootGoal === null) {
+        rootGoal = node;
+    }
 
     // then recurse over the goal's children
     renderGoals(goal.SubGoals, graph, node);
@@ -182,56 +229,70 @@ function renderFunction(goal, graph, source = null) {
  *      goal into
  */
 function renderNonFunction(descriptions, graph, source=null, type="None") {
-    
-    // fetch parent coordinates
-    if (source != null) {
-        var geo = graph.getCellGeometry(source);
-        var sourceX = geo.x;
-        var sourceY = geo.y;
-        var dX = 0;
-        var dY = 0;
-    } else {
-        var sourceX = 0;
-        var sourceY = 0;
-    }
 
+    // fetch parent coordinates
+    let geo = graph.getCellGeometry(source);
+    let x = 0;
+    let y = 0;
+    let sourceX = geo.x;
+    let sourceY = geo.y;
+    let fWidth = geo.width;
+    let fHeight = geo.height;
+    let width = fWidth;
+    let height = fHeight;
 
     let image = "";
     switch (type) {
         case TYPE_EMOTIONAL:
-            dX = -50;
-            dY = -20;
             image = PATH_EMOTIONAL;
+            width = fWidth * SW_EMOTIONAL;
+            height = fHeight * SH_EMOTIONAL;
+            x = sourceX - width / 2;
+            y = sourceY - height / 2;
             break;
         case TYPE_NEGATIVE:
-            dX = 50;
-            dY = -20;
             image = PATH_NEGATIVE;
+            width = fWidth * SW_NEGATIVE;
+            height = fHeight * SH_NEGATIVE;
+            x = sourceX + fWidth - width / 2;
+            y = sourceY - height / 2;
             break;
         case TYPE_QUALITY:
-            dX = -50;
-            dY = 20;
             image = PATH_QUALITY;
+            width = fWidth * SW_QUALITY;
+            height = fHeight * SH_QUALITY;
+            x = sourceX - width / 2;
+            y = sourceY + fHeight - height / 2;
             break;
         case TYPE_STAKEHOLDER:
-            dX = 50;
-            dY = 10;
             image = PATH_STAKEHOLDER;
+            width = fWidth * SW_STAKEHOLDER;
+            height = fHeight * SH_STAKEHOLDER;
+            x = sourceX + fWidth - width / 2;
+            y = sourceY + fHeight - height / 2;
             break;
     }
-    // insert new vertex and edge into graph
+
+    // customize vertex style
+    let style = "fontSize=16;fontColor=black;shape=image;image=" + image;
+
+    // if stakeholder, text goes at bottom
+    if (type === TYPE_STAKEHOLDER) {
+        style = style + ";verticalAlign=top;verticalLabelPosition=bottom";
+    }
+
+    // insert the vertex
     let node = graph.insertVertex(
         null,
         null,
         descriptions.join(";\n"),
-        sourceX + dX,
-        sourceY + dY,
-        SYMBOL_WIDTH,
-        SYMBOL_HEIGHT,
-        "shape=image;image=" + image
+        x,
+        y,
+        width,
+        height,
+        style
     );
     let edge = graph.insertEdge(null, null, null, source, node);
-    // console.log(edge);
 
     // make the edge invisible - we still want to create the edge
     // the edge is needed when running the autolayout logic
@@ -261,22 +322,54 @@ function associateNonFunctions(graph) {
 
         // render all emotions
         if (emotionsGlob[value]) {
-            renderNonFunction(emotionsGlob[goal.value], graph, goal, TYPE_EMOTIONAL);
+            renderNonFunction(
+                emotionsGlob[goal.value], graph, goal, TYPE_EMOTIONAL
+            );
         }
     
         // render all qualities
         if (qualitiesGlob[value]) {
-            renderNonFunction(qualitiesGlob[goal.value], graph, goal, TYPE_QUALITY);
+            renderNonFunction(
+                qualitiesGlob[goal.value], graph, goal, TYPE_QUALITY
+            );
         }
 
         // render all concerns
         if (negativesGlob[value]) {
-            renderNonFunction(negativesGlob[goal.value], graph, goal, TYPE_NEGATIVE);
+            renderNonFunction(
+                negativesGlob[goal.value],
+                graph, goal, TYPE_NEGATIVE
+            );
         }
 
         // render all stakeholders
         if (stakeholdersGlob[value]) {
-            renderNonFunction(stakeholdersGlob[goal.value], graph, goal, TYPE_STAKEHOLDER);
+            renderNonFunction(
+                stakeholdersGlob[goal.value],
+                graph, goal, TYPE_STAKEHOLDER
+            );
         }
+    }
+
+    // render each of the non-functional goals at the root level
+    if (emotionsGlob[ROOT_KEY] && rootGoal != null) {
+        renderNonFunction(emotionsGlob[ROOT_KEY],
+            graph, rootGoal, TYPE_EMOTIONAL
+        );
+    }
+    if (qualitiesGlob[ROOT_KEY] && rootGoal != null) {
+        renderNonFunction(qualitiesGlob[ROOT_KEY],
+            graph, rootGoal, TYPE_QUALITY
+        );
+    }
+    if (negativesGlob[ROOT_KEY] && rootGoal != null) {
+        renderNonFunction(negativesGlob[ROOT_KEY],
+            graph, rootGoal, TYPE_NEGATIVE
+        );
+    }
+    if (stakeholdersGlob[ROOT_KEY] && rootGoal != null) {
+        renderNonFunction(stakeholdersGlob[ROOT_KEY],
+            graph, rootGoal, TYPE_STAKEHOLDER
+        );
     }
 }
