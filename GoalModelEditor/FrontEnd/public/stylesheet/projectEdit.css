@@ -186,7 +186,7 @@ footer {
 }
 
 /*progress bar*/
-.steps_bar ul { border-left:solid 1px #ccc; overflow:auto; margin: 0;padding:0;}
+.steps_bar ul { border-left:solid 1px #ccc; overflow:hidden; margin: 0;padding:0;}
 .steps_bar ul li { float:left; height:57px; padding-right:19px; line-height:60px; text-align:center; background:url("/img/stepbar.png")  no-repeat 100% 0 #f1f1f1; font-weight:bold;}
 .steps_bar ul li span { display:block; height:58px; padding:0; background:#f1f1f1; border-top:solid 1px #ccc; border-bottom:solid 1px #ccc;}
 .steps_bar ul li.done { color:#fff; background-position:100% -120px; background-color:rgb(186,213,185);}
