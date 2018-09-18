@@ -493,7 +493,7 @@ function getPlaceholder(type) {
         case "Emotional":
             return "New Emotional Goal";
         case "Stakeholder":
-            return "New Stakeholder";
+            return "New Role";
         default:
             return "";
     }
