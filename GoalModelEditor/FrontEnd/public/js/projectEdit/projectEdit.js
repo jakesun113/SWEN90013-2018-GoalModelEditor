@@ -95,7 +95,7 @@ document.onkeydown = function (event) {
             '" class="' +
             goalType +
             " " +
-            '" placeholder="' + placeholderText + '" maxlength="'+ MAX_CHARS +'"' +
+            '" placeholder="' + placeholderText + '" maxlength="' + MAX_CHARS + '"' +
             'note="notes" oninput="changeFontWeight(this)" value="" style="font-weight: bold"/></li>';
 
         // add new goal node to its parent node
@@ -105,6 +105,13 @@ document.onkeydown = function (event) {
 
         //activate drag and drop
         getDraggingElement();
+    }
+    //when editing div content, set max length of div content
+    if (document.activeElement.tagName === "DIV" &&
+        event.key !== "Backspace" &&
+        $(event.target).text().length > MAX_CHARS) {
+
+        event.preventDefault();
     }
 };
 
@@ -365,7 +372,7 @@ $(".dd").nestable({
     onDragStart: function (l, e) {
         // get type of dragged element
         var type = $(e).children(".dd-handle").attr("class").split(" ")[0];
-        console.log(type);
+        //console.log(type);
         addNoChildrenClass();
     },
     callback: function (l, e) {
@@ -398,13 +405,6 @@ $("#edit").click(function () {
     // when editing, cannot press "Enter"
     $(".goal-content").keypress(function (e) {
         return e.which !== 13;
-    });
-    //when editing, set max length of div content
-    $(".goal-content").keydown(function(e){
-        if(e.which !== 8 && $(".goal-content").text().length > MAX_CHARS)
-        {
-            e.preventDefault();
-        }
     });
 
     $(".goal-content").css("font-weight", "normal");
@@ -525,48 +525,48 @@ $("#renderbtn").click(function () {
 /**
  * progress bar
  */
-function goalClick(){
+function goalClick() {
     $("#imageTab").removeClass().addClass("current_prev");
     $("#goalTab").removeClass().addClass("current");
     $("#clusterTab").removeClass();
     $("#graphTab").removeClass().addClass("last");
     saveJSON();
-    $("#photo").css("display","block");
-    $("#todolist").css("display","block");
-    $("#notes").css("display","none");
-    $("#cluster").css("display","none");
-    $("#generator").css("display","none");
-    $("#renderbtn").css("display","none");
+    $("#photo").css("display", "block");
+    $("#todolist").css("display", "block");
+    $("#notes").css("display", "none");
+    $("#cluster").css("display", "none");
+    $("#generator").css("display", "none");
+    $("#renderbtn").css("display", "none");
 }
 
-function clusterClick(){
+function clusterClick() {
     $("#imageTab").removeClass().addClass("done");
     $("#goalTab").removeClass().addClass("current_prev");
     $("#clusterTab").removeClass().addClass("current");
     $("#graphTab").removeClass().addClass("last");
     saveJSON();
-    $("#photo").css("display","none");
-    $("#todolist").css("display","block");
-    $("#notes").css("display","block");
-    $("#cluster").css("display","block");
+    $("#photo").css("display", "none");
+    $("#todolist").css("display", "block");
+    $("#notes").css("display", "block");
+    $("#cluster").css("display", "block");
     $("#cluster").removeClass().addClass("col-7 showborder scrollbar");
-    $("#generator").css("display","none");
-    $("#renderbtn").css("display","none");
+    $("#generator").css("display", "none");
+    $("#renderbtn").css("display", "none");
 
 }
 
-function graphClick(){
+function graphClick() {
     $("#imageTab").removeClass().addClass("done");
     $("#goalTab").removeClass().addClass("done");
     $("#clusterTab").removeClass().addClass("current_prev");
     $("#graphTab").removeClass().addClass("current");
     saveJSON();
-    $("#photo").css("display","none");
-    $("#photo").css("display","none");
-    $("#todolist").css("display","none")
-    $("#notes").css("display","none");
-    $("#cluster").css("display","block");
+    $("#photo").css("display", "none");
+    $("#photo").css("display", "none");
+    $("#todolist").css("display", "none")
+    $("#notes").css("display", "none");
+    $("#cluster").css("display", "block");
     $("#cluster").removeClass().addClass("col-3 showborder scrollbar");
-    $("#generator").css("display","block");
-    $("#renderbtn").css("display","inline-block");
+    $("#generator").css("display", "block");
+    $("#renderbtn").css("display", "inline-block");
 }
