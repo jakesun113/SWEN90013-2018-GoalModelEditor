@@ -87,7 +87,7 @@ document.onkeydown = function (event) {
         event.preventDefault();
 
         let placeholderText = getPlaceholder(goalType);
-        const MAX_CHARS = 40;
+
         // new goal html
         let newList =
             '<li draggable="true" class="dragger"><input id="' +
@@ -389,7 +389,6 @@ function createElementFromHTML(htmlString) {
 $("#drag").hide();
 
 //handle operation of clicking "editAll"
-//TODO: set max length of div content
 //TODO: adjust height of div based on the length of text
 $("#edit").click(function () {
     saveJSON();
@@ -400,6 +399,14 @@ $("#edit").click(function () {
     $(".goal-content").keypress(function (e) {
         return e.which !== 13;
     });
+    //when editing, set max length of div content
+    $(".goal-content").keydown(function(e){
+        if(e.which !== 8 && $(".goal-content").text().length > MAX_CHARS)
+        {
+            e.preventDefault();
+        }
+    });
+
     $(".goal-content").css("font-weight", "normal");
 
     $("#edit").hide();

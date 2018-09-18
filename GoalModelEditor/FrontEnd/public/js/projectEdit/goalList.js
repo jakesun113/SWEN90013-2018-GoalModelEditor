@@ -1,3 +1,6 @@
+//set max characters that input and div allow
+const MAX_CHARS = 40;
+
 /**
  * get JSON file from backend according to userId and modelId
  */
@@ -187,7 +190,7 @@ function parseNode(node) {
     }
     let placeholderText = getPlaceholder(node.GoalType);
 
-    const MAX_CHARS = 40;
+
     // li.setAttribute('id', node.GoalID);
     li.innerHTML =
         '<input id= "' +
