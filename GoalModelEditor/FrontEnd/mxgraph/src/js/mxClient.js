@@ -739,6 +739,7 @@ if (
     mxClient.include(mxClient.basePath + "/js/layout/mxParallelEdgeLayout.js");
     mxClient.include(mxClient.basePath + "/js/layout/mxCompositeLayout.js");
     mxClient.include(mxClient.basePath + "/js/layout/mxEdgeLabelLayout.js");
+    mxClient.include(mxClient.basePath + "/js/layout/mxGoalModelLayout.js");
     mxClient.include(
         mxClient.basePath +
             "/js/layout/hierarchical/model/mxGraphAbstractHierarchyCell.js"
@@ -780,6 +781,9 @@ if (
     );
     mxClient.include(
         mxClient.basePath + "/js/layout/hierarchical/mxHierarchicalLayout.js"
+    );
+    mxClient.include(
+        mxClient.basePath + "/js/layout/hierarchical/mxMotivationalLayout.js"
     );
     mxClient.include(
         mxClient.basePath + "/js/layout/hierarchical/mxSwimlaneLayout.js"
