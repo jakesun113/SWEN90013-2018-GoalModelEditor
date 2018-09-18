@@ -90,7 +90,7 @@ document.onkeydown = function (event) {
 
         // new goal html
         let newList =
-            '<li draggable="true" class="dragger"><input id="' +
+            '<li draggable="true" class="dragger drag-style"><input id="' +
             goalID +
             '" class="' +
             goalType +
@@ -120,7 +120,7 @@ document.onkeydown = function (event) {
         //TODO: make the input cannot be selected if the text is longer than required
         console.log("in none");
         //$(event.target).addClass("non-selectable");
-        $(event.target).attr("onselectstart","return false")
+        $(event.target).attr("onselectstart", "return false")
 
     }
 };
@@ -258,8 +258,12 @@ let nowCopying;
 function getDraggingElement() {
     $(".dragger").on("dragstart", function (e) {
 
-        //only when the current dragging element is "input"
-        if (document.activeElement.tagName === "INPUT") {
+        //when the current dragging element is "input"
+        //or it is the list that has parent of "drag-list""
+        if (
+            document.activeElement.tagName === "INPUT"
+            || $(e.target.parentNode).hasClass("drag-list")
+        ) {
             //if input has value
             if ($(e.target).children("input")[0].value) {
                 nowCopying = e.target;

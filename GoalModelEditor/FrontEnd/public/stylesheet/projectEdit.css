@@ -286,3 +286,7 @@ footer {
 .steps_bar {
     cursor: pointer;
 }
+
+.drag-style{
+    cursor: move;
+}

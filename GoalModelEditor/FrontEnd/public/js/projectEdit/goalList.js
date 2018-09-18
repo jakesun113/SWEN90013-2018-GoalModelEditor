@@ -181,8 +181,7 @@ function parseClusterNodes(nodes) {
 function parseNode(node) {
     // takes a node object and turns it into a <li>
     let li = document.createElement("LI");
-    li.setAttribute("class", node.GoalType);
-    li.setAttribute("class", "dragger");
+    li.setAttribute("class", "dragger" + " drag-style");
     li.setAttribute("draggable", "true");
     let fontWeight = "bold";
     if (node.Used) {
