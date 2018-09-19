@@ -286,9 +286,10 @@ function parseProject(project) {
     // Add new model button
     projectHTML =
         projectHTML +
-        '<div class="col-1 new-model" data-toggle="modal"' +
+        '<div class="col-1 new-model text-center" data-toggle="modal"' +
         'data-target="#add-model" title="Add a new model">' +
-        '<i class="fas fa-plus"></i>' +
+        '<i '+'id = "add_' + project.project_id +'" class="fas fa-plus" ' +
+        'data-placement="top" data-toggle="popover" data-content="Click here to create a motivational model."></i>' +
         '</div>';
 
     // More options - rename/delete
@@ -515,6 +516,12 @@ function createProject(project) {
 
             // Re-initialize the input for the modal
             $("#add-project .modal-body input").val("");
+
+            // Instructions to add models
+            $("#add_" + newProject.project_id).popover('toggle');
+
+            // Add click on the window to dismiss the popover
+            addClickToDismissInstruction("add_" + newProject.project_id);
         }
     }).fail(function(jqXHR) {
         warningMessageSlide(jqXHR.responseJSON.message + "<br>Please try again.");
@@ -534,7 +541,7 @@ function createGoalModel(url, pid, model) {
         type: "POST",
         headers: { Authorization: "Bearer " + TOKEN },
         success: function(model) {
-
+            setMID(model.model_id);
             // Append the new model to the UI
             let modelHTML = parseGoalModel(model);
             appendToProject(modelHTML, pid);
@@ -547,6 +554,9 @@ function createGoalModel(url, pid, model) {
 
             // Re-initialize the input for the modal
             $("#add-model .modal-body input").val("");
+
+            // Re-direct the user to the new model
+            window.location.href = "/goal_model/edit?MID=" + getMID();
         }
     }).fail(function(jqXHR) {
         warningMessageSlide(jqXHR.responseJSON.message + "<br>Please try again.");
@@ -926,6 +936,17 @@ function warningMessageSlide(message) {
         .slideDown()
         .delay(3000)
         .slideUp();
+}
+
+/**
+ * Helper function to add click on the window to dismiss the instruction popover
+ *
+ * @param {String} popoverId
+ */
+function addClickToDismissInstruction(popoverId) {
+    $(document).click(evt => {
+        $("#" + popoverId).popover('hide');
+    })
 }
 
 /**
