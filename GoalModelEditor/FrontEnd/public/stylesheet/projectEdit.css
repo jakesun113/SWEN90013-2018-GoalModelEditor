@@ -216,18 +216,18 @@ footer {
 /*progress bar*/
 .steps_bar ul {
     border-left: solid 1px #ccc;
-    overflow: scroll;
+    overflow: hidden;
     margin: 0;
-    padding: 0;
-    height: auto;
+    padding: 10px;
 }
 
 .steps_bar ul li {
     float: left;
     height: 60px;
-    padding-right: 19px;
+    padding-right: 18px;
     line-height: 56px;
     text-align: center;
+    overflow: hidden;
     background: url("/img/stepbar.png") no-repeat 100% 0 #f1f1f1;
     font-weight: bold;
 }
@@ -237,7 +237,6 @@ footer {
     height: 100%;
     padding: 0;
     background: #f1f1f1;
-    overflow: scroll;
     border-top: solid 1px #ccc;
     border-bottom: solid 1px #ccc;
 }
@@ -284,8 +283,15 @@ footer {
     background: rgb(126, 176, 125);
 }
 
-.steps_bar ul li {
-    width: 33.3%;
+.steps_bar ul #goalTab {
+    width: 30%;
+}
+
+.steps_bar ul #clusterTab {
+    width: 40%;
+}
+.steps_bar ul #graphTab {
+    width: 30%;
 }
 
 .steps_bar {

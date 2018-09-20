@@ -284,8 +284,8 @@ function drop_zone(clusterNumber) {
 
             onDragStart: function (l, e) {
                 // get type of dragged element
-                var type = $(e).children(".dd-handle").attr("class").split(" ")[0];
-                console.log(type);
+                // var type = $(e).children(".dd-handle").attr("class").split(" ")[0];
+                // console.log(type);
                 addNoChildrenClass();
             },
 
@@ -561,3 +561,8 @@ function graphClick() {
     $("#generator").css("display", "block");
     $("#renderbtn").css("display", "inline-block");
 }
+
+$(document).on("drop", evt => {
+    $("#graphTab").click();
+    $("#clusterTab").click();
+});
