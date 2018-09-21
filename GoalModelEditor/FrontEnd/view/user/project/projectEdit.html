@@ -64,18 +64,19 @@
 </div>
 
 <!-- Header part of the page -->
-<header class="bg-white mb-2 py-3">
+<header class="bg-white mb-2 py-3" style="width:auto; min-width:1280px;
+        overflow-y:hidden; max-width: 100%;">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-4 non-draggable dragger" id="model_name" style="font-size: 35px">
-                &nbsp;&nbsp;&nbsp;<strong class="non-draggable dragger">Motivational Model</strong>
+            <div class="col-9 non-draggable dragger" id="model_name">
+                &nbsp;&nbsp;&nbsp;<strong class="non-draggable dragger" style="font-size: 35px">Motivational Model</strong>
             </div>
-            <!-- Search div -->
-            <div class="col-6">
+            <!-- Loading div -->
+            <div class="col-1">
                 <img id="saveJSONLoading" src="/img/loading1.gif" style="display: none" height="45" width="45"/>
             </div>
             <!-- User div -->
-            <div class="col-2">
+            <div class="col-2 text-right">
                 <div class="row text-center pt-2">
                     <div class="dropdown mr-1">
                         <button class="btn non-draggable dragger" type="button" id="user-dropdown"
@@ -97,7 +98,8 @@
     </div>
 </header>
 
-<div class="steps_bar mt-2 mb-1">
+<div class="steps_bar" style="width:auto; min-width:1280px;
+        overflow-y:hidden; max-width: 100%;">
     <ul>
         <!--<li id="imageTab" class="current" onclick="imageClick()"><span>Upload Image</span></li>-->
         <li id="goalTab" class="current non-draggable dragger" onclick="goalClick()"><span class="non-draggable dragger">Write Goal List</span></li>
@@ -108,7 +110,8 @@
 
 
 <!--the main section-->
-<div class="container-body">
+<div class="container-body" style="width:auto; min-width:1280px;
+        overflow-y:hidden; max-width: 100%;">
     <div id="height-full-screen" class="container-fluid">
         <div class="row">
             <!--import pictures section start-->
@@ -201,7 +204,7 @@
                     </div>
 
                     <!--used goals-->
-                    <div id="notes" class="showborder inside-scrollbar" style="display: none">
+                    <div id="notes" class="showborder inside-scrollbar" style="display: none;">
                         <h6 class="non-draggable dragger">Notes</h6>
                         <div id="notedata">
                             <text class="non-draggable dragger" id="notecontent"></text>
@@ -288,6 +291,10 @@
             <!--generate section end-->
         </div>
     </div>
+    <footer>
+        <p class="text-center non-draggable dragger mt-1 mb-0">&copy;<em class="non-draggable dragger">&nbsp;2018 The University of
+            Melbourne</em></p>
+    </footer>
 </div>
 
 <!-- Render warning deleting goal modal start -->
@@ -385,13 +392,6 @@
 <script src="/js/projectEdit/goalList.js"></script>
 <script src="/js/projectEdit/projectEdit.js"></script>
 <script src="/js/projectEdit/graphXML.js"></script>
-
-
-<footer>
-    <p class="text-center non-draggable dragger">&copy;<em class="non-draggable dragger">&nbsp;2018 The University of
-        Melbourne</em></p>
-</footer>
-
 <!--</div>-->
 </body>
 

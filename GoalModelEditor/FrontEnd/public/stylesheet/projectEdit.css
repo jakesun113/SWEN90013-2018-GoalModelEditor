@@ -1,3 +1,7 @@
+body {
+    height: 100vh;
+}
+
 header {
     box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.5);
     background-image: url("/img/profile-background.jpg");
@@ -15,16 +19,16 @@ header {
 
 /*Set frame and scroll start*/
 #height-full-screen > .row {
-    min-height: 76vh;
+    height: 80vh;
 }
 
 .scrollbar {
-    height: 76vh;
+    height: 80vh;
     overflow-y: scroll;
 }
 
 .inside-scrollbar {
-    height: 28vh;
+    height: 25vh;
     overflow-y: scroll;
 }
 
@@ -108,7 +112,7 @@ header {
 
 .container-body {
     padding-top: 1px;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
     padding-left: 20px;
     padding-right: 20px;
 }
@@ -218,7 +222,7 @@ footer {
     border-left: solid 1px #ccc;
     overflow: hidden;
     margin: 0;
-    padding: 10px;
+    padding: 10px 2px;
 }
 
 .steps_bar ul li {

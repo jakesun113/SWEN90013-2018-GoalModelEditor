@@ -13,11 +13,10 @@ function getJSONFile() {
         headers: {Authorization: "Bearer " + token},
         success: function (data) {
             window.jsonData = JSON.parse(JSON.parse(JSON.stringify(data)));
-            $("#model_name strong").html(
-                jsonData.GoalModelProject.ProjectName +
+            let modelName = jsonData.GoalModelProject.ProjectName +
                 " - " +
-                jsonData.GoalModelProject.ModelName
-            );
+                jsonData.GoalModelProject.ModelName;
+            $("#model_name strong").html(modelName);
             loadData();
             loadImages();
             //activate drag function
@@ -43,9 +42,7 @@ function getJSONFile() {
                 scroll: true
             });
             getXML();
-            setTitle(jsonData.GoalModelProject.ProjectName +
-                " - " +
-                jsonData.GoalModelProject.ModelName);
+            setTitle(modelName);
         }
     }).fail(function (jqXHR) {
         $("#warning-alert").html(
