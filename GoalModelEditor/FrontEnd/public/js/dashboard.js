@@ -286,10 +286,12 @@ function parseProject(project) {
     // Add new model button
     projectHTML =
         projectHTML +
-        '<div class="col-1 new-model text-center" data-toggle="modal"' +
+        '<div class="col-1 new-model text-center model show" data-toggle="modal"' +
         'data-target="#add-model" title="Add a new model">' +
-        '<i '+'id = "add_' + project.project_id +'" class="fas fa-plus" ' +
-        'data-placement="top" data-toggle="popover" data-content="Click here to create a motivational model."></i>' +
+        '<i class="fas fa-plus"></i>' +
+        '<div class="instruction" id = "add_' + project.project_id +'" ' +
+        'data-placement="bottom" data-toggle="popover" ' +
+        'data-content="Click here to create a motivational model."></div>' +
         '</div>';
 
     // More options - rename/delete
@@ -519,9 +521,7 @@ function createProject(project) {
 
             // Instructions to add models
             $("#add_" + newProject.project_id).popover('toggle');
-
-            // Add click on the window to dismiss the popover
-            addClickToDismissInstruction("add_" + newProject.project_id);
+            $(".overlay").show();
         }
     }).fail(function(jqXHR) {
         warningMessageSlide(jqXHR.responseJSON.message + "<br>Please try again.");
@@ -939,17 +939,6 @@ function warningMessageSlide(message) {
 }
 
 /**
- * Helper function to add click on the window to dismiss the instruction popover
- *
- * @param {String} popoverId
- */
-function addClickToDismissInstruction(popoverId) {
-    $(document).click(evt => {
-        $("#" + popoverId).popover('hide');
-    })
-}
-
-/**
  * Helper function to be called every time after any change has been made to the page
  * To make sure all newly added items have the right eventListeners
  */
@@ -993,6 +982,11 @@ function addClickOnProject() {
 
         // Show/unfold the model list
         $("#models_" + getPID()).collapse('toggle');
+
+        if($("#models_" + getPID() + " .model")[0] === undefined) {
+            $("#add_" + getPID()).popover('toggle');
+            $(".overlay").show();
+        }
     });
 }
 
@@ -1311,6 +1305,8 @@ function removeAllClicked() {
     $(".model").removeClass("model-clicked");
     $(".project_header").removeClass("project-clicked");
     $(".template").removeClass("template-clicked");
+    $(".instruction").popover('hide');
+    $(".overlay").hide();
 }
 
 /**
