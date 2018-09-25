@@ -39,6 +39,14 @@
     <!--&lt;!&ndash; script for rendering graph #currently a stub &ndash;&gt;-->
     <!--<script type="text/javascript" src="/js/graph.js">-->
     <!--</script>-->
+    <style>
+        li dt{
+            display:none;
+        }
+        li:hover dt{
+            display:block;
+        }
+    </style>
 </head>
 
 
@@ -103,9 +111,42 @@
         overflow-y:hidden; max-width: 100%;">
     <ul>
         <!--<li id="imageTab" class="current" onclick="imageClick()"><span>Upload Image</span></li>-->
-        <li id="goalTab" class="current non-draggable dragger" onclick="goalClick()"><span class="non-draggable dragger">Write Goal List</span></li>
-        <li id="clusterTab" class="non-draggable dragger" onclick="clusterClick()"><span class="non-draggable dragger">Cluster Goals / Arrange into Hierarchy</span></li>
-        <li id="graphTab" class="last non-draggable dragger" onclick="graphClick()"><span class="non-draggable dragger">Render Model</span></li>
+        <li id="goalTab" class="current non-draggable dragger" onclick="goalClick()"><span class="non-draggable dragger">Write Goal List
+                <i class="fas fa-info-circle"></i>
+                <div style="position: absolute; z-index: 10" align="left">
+                    <dt style="position:relative; top:-20px; left:60px;width:310px; height:150px; font-size:14px; line-height:30px; background-color:rgba(228,229,234,0.8); color:darkgrey">
+                        • Click <strong><code>Upload Image</code></strong> to upload <br/>
+                        • Click the goal and use <strong><code>[delete]</code></strong> to delete goals <br/>
+                        • Click the last goal on the goal list and use <strong><code>[return]</code></strong> to add a new goal <br/>
+                    </dt>
+                </div>
+        </span>
+        </li>
+
+        <li id="clusterTab" class="non-draggable dragger" onclick="clusterClick()"><span class="non-draggable dragger">Cluster Goals / Arrange into Hierarchy
+            <i class="fas fa-info-circle"></i>
+            <div style="position: absolute; z-index: 10" align="left">
+                    <dt style="position:relative; top:-20px; left:30px;width:380px; height:210px; font-size:14px; line-height:30px; background-color:rgba(228,229,234,0.8); color:darkgrey">
+                        • Click the goal and use <strong><code>[delete]</code></strong> to delete a goal <br/>
+                        • Click the last goal on the goal list and use <strong><code>[return]</code></strong> to generate a new goal <br/>
+                        • Drag the goal from the goal list on the left section and drop it into the cluster on the right section<br/>
+                        • Drag the goal in the cluster to the right or left sides to achieve the hierarchical structure <br/>
+                    </dt>
+            </div>
+        </span>
+        </li>
+
+        <li id="graphTab" class="last non-draggable dragger" onclick="graphClick()"><span class="non-draggable dragger">Render Model
+            <i class="fas fa-info-circle"></i>
+            <div style="position: absolute; z-index: 10" align="left">
+                    <dt style="position:relative; top:-20px; left:30px;width:380px; height:180px; font-size:14px; line-height:30px; background-color:rgba(228,229,234,0.8); color:darkgrey">
+                        • Click <strong><code>Edit All</code></strong> on the left section to edit the names of goals <br/>
+                        • Click <strong><code>Drag All</code></strong> on the left section to drag the cluster into the graph on the right section<br/>
+                        • Click <strong><code>Render</code></strong> on the left section to generate the goal modal<br/>
+                    </dt>
+            </div>
+        </span>
+        </li>
     </ul>
 </div>
 
