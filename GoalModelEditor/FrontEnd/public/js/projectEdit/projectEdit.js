@@ -87,15 +87,15 @@ document.onkeydown = function (event) {
         event.preventDefault();
 
         let placeholderText = getPlaceholder(goalType);
-        const MAX_CHARS = 40;
+
         // new goal html
         let newList =
-            '<li draggable="true" class="dragger"><input id="' +
+            '<li draggable="true" class="dragger drag-style"><input id="' +
             goalID +
             '" class="' +
             goalType +
             " " +
-            '" placeholder="' + placeholderText + '" maxlength="'+ MAX_CHARS +'"' +
+            '" placeholder="' + placeholderText + '" ' +
             'note="notes" oninput="changeFontWeight(this)" value="" style="font-weight: bold"/></li>';
 
         // add new goal node to its parent node
@@ -151,6 +151,12 @@ document.onkeyup = function (event) {
         if (grandparent.childNodes.length > 1) {
             grandparent.removeChild(parent);
             event.preventDefault();
+        }
+        //if this is the only goal left, clear the goal content
+        if (grandparent.childNodes.length === 1) {
+            //console.log(event.target);
+            $(event.target).val("");
+            changeFontWeight(event.target);
         }
     }
     //when the user press the 'ESC' button in the cluster
@@ -241,8 +247,12 @@ let nowCopying;
 function getDraggingElement() {
     $(".dragger").on("dragstart", function (e) {
 
-        //only when the current dragging element is "input"
-        if (document.activeElement.tagName === "INPUT") {
+        //when the current dragging element is "input"
+        //or it is the list that has parent of "drag-list"
+        if (
+            document.activeElement.tagName === "INPUT"
+            || $(e.target.parentNode).hasClass("drag-list")
+        ) {
             //if input has value
             if ($(e.target).children("input")[0].value) {
                 nowCopying = e.target;
@@ -274,8 +284,8 @@ function drop_zone(clusterNumber) {
 
             onDragStart: function (l, e) {
                 // get type of dragged element
-                var type = $(e).children(".dd-handle").attr("class").split(" ")[0];
-                console.log(type);
+                // var type = $(e).children(".dd-handle").attr("class").split(" ")[0];
+                // console.log(type);
                 addNoChildrenClass();
             },
 
@@ -316,7 +326,9 @@ function drop_zone(clusterNumber) {
             let imagePath = getTypeIconPath(type);
 
             $(newNode).html('<img src=' + imagePath + ' class="mr-1 typeIcon" >' +
-                '<div class="goal-content">' +
+                '<div class="goal-content" tabindex="-1" ' +
+                'ondblclick="editGoalInCluster(this);" ' +
+                'onblur="finishEditGoalInCluster(this);"' + '>' +
                 $(nowCopying).children("input")[0].value) + '</div>';
 
             draggableWrapper += newNode.outerHTML;
@@ -365,7 +377,7 @@ $(".dd").nestable({
     onDragStart: function (l, e) {
         // get type of dragged element
         var type = $(e).children(".dd-handle").attr("class").split(" ")[0];
-        console.log(type);
+        //console.log(type);
         addNoChildrenClass();
     },
     callback: function (l, e) {
@@ -384,38 +396,24 @@ function createElementFromHTML(htmlString) {
     // Change this to div.childNodes to support multiple top-level nodes
     return div.firstChild;
 }
-
-//at first, hide the "dragAll" button
-$("#drag").hide();
-
-//handle operation of clicking "editAll"
-//TODO: set max length of div content
-//TODO: adjust height of div based on the length of text
-$("#edit").click(function () {
+//TODO: make "Edit Mode" and "Drag Mode" always seeable even scroll down
+//handle operation of clicking "Edit Mode"
+$("#edit").change(function(){
     saveJSON();
     $(".dd-handle-style").removeClass("dd-handle");
     $(".dd-handle-style").css("cursor", "auto");
-    $(".goal-content").attr("contenteditable", "true");
-    // when editing, cannot press "Enter"
-    $(".goal-content").keypress(function (e) {
-        return e.which !== 13;
-    });
-    $(".goal-content").css("font-weight", "normal");
-
-    $("#edit").hide();
-    $("#drag").show();
+    $("#cluster").css("background-color", "rgb(236, 244, 244)");
 });
 
-//handle operation of clicking "dragAll"
-$("#drag").click(function () {
+//handle operation of clicking "Drag Mode"
+$("#drag").change(function () {
 
     $(".dd-handle-style").addClass("dd-handle");
     $(".dd-handle-style").css("cursor", "move");
     $(".goal-content").attr("contenteditable", "false");
     $(".goal-content").css("font-weight", "bold");
-
-    $("#drag").hide();
-    $("#edit").show();
+    $("#cluster").css("background-color", "rgba(35, 144, 231, 0.1)");
+    saveJSON();
 });
 
 //if no "dd-empty" is existed, append new cluster
@@ -518,48 +516,53 @@ $("#renderbtn").click(function () {
 /**
  * progress bar
  */
-function goalClick(){
+function goalClick() {
     $("#imageTab").removeClass().addClass("current_prev");
     $("#goalTab").removeClass().addClass("current");
     $("#clusterTab").removeClass();
     $("#graphTab").removeClass().addClass("last");
     saveJSON();
-    $("#photo").css("display","block");
-    $("#todolist").css("display","block");
-    $("#notes").css("display","none");
-    $("#cluster").css("display","none");
-    $("#generator").css("display","none");
-    $("#renderbtn").css("display","none");
+    $("#photo").css("display", "block");
+    $("#todolist").css("display", "block");
+    $("#notes").css("display", "none");
+    $("#cluster").css("display", "none");
+    $("#generator").css("display", "none");
+    $("#renderbtn").css("display", "none");
 }
 
-function clusterClick(){
+function clusterClick() {
     $("#imageTab").removeClass().addClass("done");
     $("#goalTab").removeClass().addClass("current_prev");
     $("#clusterTab").removeClass().addClass("current");
     $("#graphTab").removeClass().addClass("last");
     saveJSON();
-    $("#photo").css("display","none");
-    $("#todolist").css("display","block");
-    $("#notes").css("display","block");
-    $("#cluster").css("display","block");
+    $("#photo").css("display", "none");
+    $("#todolist").css("display", "block");
+    $("#notes").css("display", "block");
+    $("#cluster").css("display", "block");
     $("#cluster").removeClass().addClass("col-7 showborder scrollbar");
-    $("#generator").css("display","none");
-    $("#renderbtn").css("display","none");
+    $("#generator").css("display", "none");
+    $("#renderbtn").css("display", "none");
 
 }
 
-function graphClick(){
+function graphClick() {
     $("#imageTab").removeClass().addClass("done");
     $("#goalTab").removeClass().addClass("done");
     $("#clusterTab").removeClass().addClass("current_prev");
     $("#graphTab").removeClass().addClass("current");
     saveJSON();
-    $("#photo").css("display","none");
-    $("#photo").css("display","none");
-    $("#todolist").css("display","none")
-    $("#notes").css("display","none");
-    $("#cluster").css("display","block");
+    $("#photo").css("display", "none");
+    $("#photo").css("display", "none");
+    $("#todolist").css("display", "none")
+    $("#notes").css("display", "none");
+    $("#cluster").css("display", "block");
     $("#cluster").removeClass().addClass("col-3 showborder scrollbar");
-    $("#generator").css("display","block");
-    $("#renderbtn").css("display","inline-block");
+    $("#generator").css("display", "block");
+    $("#renderbtn").css("display", "inline-block");
 }
+
+$(document).on("drop", evt => {
+    $("#graphTab").click();
+    $("#clusterTab").click();
+});

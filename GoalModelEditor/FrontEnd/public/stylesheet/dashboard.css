@@ -215,3 +215,33 @@ a {
     background-color: rgba(232, 240, 254, .54);
     color: #1967d2;
 }
+
+.project_name, .model_name {
+    cursor: default;
+}
+
+.overlay {
+    position:absolute;
+    display:none;
+    opacity:1;
+
+    /* color with alpha transparency */
+    background-color: rgba(0, 0, 0, 0.5);
+
+    /* stretch to screen edges */
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1200;
+}
+
+.new-model {
+    z-index: 1200;
+}
+
+.popover {
+    position: absolute;
+    cursor: default;
+    z-index: 1200;
+}

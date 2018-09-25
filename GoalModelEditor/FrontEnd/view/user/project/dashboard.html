@@ -15,7 +15,9 @@
 
 </head>
 <body>
-    <div> <!-- Start wrapper div -->
+    <!-- Start wrapper div -->
+    <div>
+        <div class="overlay"></div>
         <!-- Start alert div -->
         <!-- Success alert -->
         <div style="display: none" class="text-center alert alert-success mb-0 notification"
@@ -26,6 +28,7 @@
              id="warning-alert" role="alert">
         </div>
         <!-- End alert div -->
+
         <!-- Header part of the page -->
         <header class="bg-white mb-2 py-3">
             <div class="container-fluid">
@@ -59,44 +62,7 @@
         <!-- Main part of the page -->
         <main role="main" class="border-bottom container-fluid pt-2"  style="width:auto; min-width:1280px;
         overflow-y:hidden; max-width: 100%;">
-            <!-- first version of project system -->
-            <!--<div class="row">-->
-                <!--<div class="col-3 container-fluid">&lt;!&ndash; Instruction field: content needed &ndash;&gt;-->
-                    <!--<div class="container-fluid">-->
-                        <!--<div class="text-center my-3"><h5>Instruction</h5></div>-->
-                        <!--<img src="/img/instruction.jpg" class="img-fluid" alt="example-goal-model">-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="col-9 container-fluid">-->
-                    <!--<div class="container-fluid">-->
-                        <!--<div class="py-2 container-fluid"> &lt;!&ndash; Header div for the file list &ndash;&gt;-->
-                            <!--<div class="row">-->
-                                <!--<div class="col-3 text-center text-color">Name</div>-->
-                                <!--<div class="col-3 text-center text-color">Owner</div>-->
-                                <!--<div class="col-3 text-center text-color">Last modified</div>-->
-                                <!--<div class="col-3 text-center text-color">File size</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div id="fileList" class="container-fluid bg-white rounded">&lt;!&ndash; File lists &ndash;&gt;-->
-                            <!--&lt;!&ndash; Mock lists&ndash;&gt;-->
-                            <!--<div class="row border-bottom py-3 file-item" id="abcdefg">-->
-                                <!--<div class="col-3 text-center">My first goal model</div>-->
-                                <!--<div class="col-3 text-center text-color">Me</div>-->
-                                <!--<div class="col-3 text-center text-color">May 8, 2017</div>-->
-                                <!--<div class="col-3 text-center text-color">10 KB</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
 
-            <!-- second version of project system -->
-            <!--<div class="container-fluid bg-white rounded my-3" id="projects-container">-->
-
-
-            <!--</div>-->
-
-            <!-- third version of project system -->
             <div class="row" style="width:auto; min-width:1280px; overflow-y:hidden; max-width: 100%;">
                 <div class="container-fluid" style="width:auto; min-width:20%;">
 
@@ -175,7 +141,8 @@
                                         <div class="col-4 text-center header-color">Name</div>
                                         <div class="col-4 text-center header-color">Last modified</div>
                                         <div class="col-2 text-center header-color">Type</div>
-                                        <div class="col-2 text-center header-color"></div>
+                                        <div class="col-1 text-center header-color" style="font-size:10px">Create Model</div>
+                                        <div class="col-1 text-center header-color">More</div>
                                     </div>
                                 </div>
                                 <div id="projects-container" class="view-container container-fluid bg-white rounded">

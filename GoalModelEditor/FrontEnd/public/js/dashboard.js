@@ -286,9 +286,12 @@ function parseProject(project) {
     // Add new model button
     projectHTML =
         projectHTML +
-        '<div class="col-1 new-model" data-toggle="modal"' +
+        '<div class="col-1 new-model text-center model show" data-toggle="modal"' +
         'data-target="#add-model" title="Add a new model">' +
         '<i class="fas fa-plus"></i>' +
+        '<div class="instruction" id = "add_' + project.project_id +'" ' +
+        'data-placement="bottom" data-toggle="popover" ' +
+        'data-content="Click here to create a motivational model."></div>' +
         '</div>';
 
     // More options - rename/delete
@@ -515,6 +518,10 @@ function createProject(project) {
 
             // Re-initialize the input for the modal
             $("#add-project .modal-body input").val("");
+
+            // Instructions to add models
+            $("#add_" + newProject.project_id).popover('toggle');
+            $(".overlay").show();
         }
     }).fail(function(jqXHR) {
         warningMessageSlide(jqXHR.responseJSON.message + "<br>Please try again.");
@@ -534,7 +541,7 @@ function createGoalModel(url, pid, model) {
         type: "POST",
         headers: { Authorization: "Bearer " + TOKEN },
         success: function(model) {
-
+            setMID(model.model_id);
             // Append the new model to the UI
             let modelHTML = parseGoalModel(model);
             appendToProject(modelHTML, pid);
@@ -547,6 +554,9 @@ function createGoalModel(url, pid, model) {
 
             // Re-initialize the input for the modal
             $("#add-model .modal-body input").val("");
+
+            // Re-direct the user to the new model
+            window.location.href = "/goal_model/edit?MID=" + getMID();
         }
     }).fail(function(jqXHR) {
         warningMessageSlide(jqXHR.responseJSON.message + "<br>Please try again.");
@@ -972,6 +982,11 @@ function addClickOnProject() {
 
         // Show/unfold the model list
         $("#models_" + getPID()).collapse('toggle');
+
+        if($("#models_" + getPID() + " .model")[0] === undefined) {
+            $("#add_" + getPID()).popover('toggle');
+            $(".overlay").show();
+        }
     });
 }
 
@@ -1290,6 +1305,8 @@ function removeAllClicked() {
     $(".model").removeClass("model-clicked");
     $(".project_header").removeClass("project-clicked");
     $(".template").removeClass("template-clicked");
+    $(".instruction").popover('hide');
+    $(".overlay").hide();
 }
 
 /**

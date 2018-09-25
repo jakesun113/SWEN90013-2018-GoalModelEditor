@@ -37,6 +37,11 @@ const PATH_NEGATIVE = "/src/images/Risk.png";
 const PATH_QUALITY = "/src/images/Cloud.png";
 const PATH_STAKEHOLDER = "/src/images/Stakeholder.png";
 
+// random string, used to store unassociated non-functions in accumulators
+const ROOT_KEY = "0723y450nv3-2r8mchwouebfioasedfiadfg";
+
+// variable, stores the identity of the root function
+var rootGoal = null;
 
 // accumulators for non-functional goals
 var emotionsGlob = {};
@@ -74,6 +79,7 @@ function renderGraph(container) {
     // reset - remove any existing graph if render is called
     graph.removeCells(graph.getChildVertices(graph.getDefaultParent()));
     graph.removeCells(graph.getChildEdges(graph.getDefaultParent()));
+    rootGoal = null;
 
     // reset the accumulators for non-functional goals
     emotionsGlob = {};
@@ -148,17 +154,24 @@ function renderGoals(goals, graph, source = null) {
     }
 
     // render each of the non-functional goals
+    var key;
+    if (source === null) {
+        key = ROOT_KEY;
+    } else {
+        key = source.value;
+    }
+
     if (emotions.length) {
-        emotionsGlob[source.value] = emotions;
+        emotionsGlob[key] = emotions;
     }
     if (qualities.length) {
-        qualitiesGlob[source.value] = qualities;
+        qualitiesGlob[key] = qualities;
     }
     if (concerns.length) {
-        negativesGlob[source.value] = concerns;
+        negativesGlob[key] = concerns;
     }
     if (stakeholders.length) {
-        stakeholdersGlob[source.value] = stakeholders;
+        stakeholdersGlob[key] = stakeholders;
     }
 }
 
@@ -170,8 +183,9 @@ function renderGoals(goals, graph, source = null) {
  * : source, the parent of the goal
  */
 function renderFunction(goal, graph, source = null) {
-    let image = PATH_FUNCTIONAL;
 
+    // styling
+    let image = PATH_FUNCTIONAL;
     let width = SYMBOL_WIDTH;
     let height = SYMBOL_HEIGHT;
     if (source != null){
@@ -194,6 +208,11 @@ function renderFunction(goal, graph, source = null) {
     let edge = graph.insertEdge(null, null, null, source, node,
         "strokeColor=black;endArrow=none;strokeWidth=2");
 
+    // if no root goal is registered, then store this as root
+    if (rootGoal === null) {
+        rootGoal = node;
+    }
+
     // then recurse over the goal's children
     renderGoals(goal.SubGoals, graph, node);
 }
@@ -211,21 +230,16 @@ function renderFunction(goal, graph, source = null) {
  */
 function renderNonFunction(descriptions, graph, source=null, type="None") {
 
-    if (source == null){
-        return;
-    }
-
     // fetch parent coordinates
-    var geo = graph.getCellGeometry(source);
-    var x = 0;
-    var y = 0;
+    let geo = graph.getCellGeometry(source);
+    let x = 0;
+    let y = 0;
     let sourceX = geo.x;
     let sourceY = geo.y;
     let fWidth = geo.width;
     let fHeight = geo.height;
     let width = fWidth;
     let height = fHeight;
-
 
     let image = "";
     switch (type) {
@@ -278,11 +292,7 @@ function renderNonFunction(descriptions, graph, source=null, type="None") {
         height,
         style
     );
-    console.log(type + " Symbol w, h: " + SYMBOL_WIDTH + ", " + SYMBOL_HEIGHT);
-    console.log(node.getGeometry());
-    console.log(node.getStyle());
     let edge = graph.insertEdge(null, null, null, source, node);
-    // console.log(edge);
 
     // make the edge invisible - we still want to create the edge
     // the edge is needed when running the autolayout logic
@@ -339,5 +349,27 @@ function associateNonFunctions(graph) {
                 graph, goal, TYPE_STAKEHOLDER
             );
         }
+    }
+
+    // render each of the non-functional goals at the root level
+    if (emotionsGlob[ROOT_KEY] && rootGoal != null) {
+        renderNonFunction(emotionsGlob[ROOT_KEY],
+            graph, rootGoal, TYPE_EMOTIONAL
+        );
+    }
+    if (qualitiesGlob[ROOT_KEY] && rootGoal != null) {
+        renderNonFunction(qualitiesGlob[ROOT_KEY],
+            graph, rootGoal, TYPE_QUALITY
+        );
+    }
+    if (negativesGlob[ROOT_KEY] && rootGoal != null) {
+        renderNonFunction(negativesGlob[ROOT_KEY],
+            graph, rootGoal, TYPE_NEGATIVE
+        );
+    }
+    if (stakeholdersGlob[ROOT_KEY] && rootGoal != null) {
+        renderNonFunction(stakeholdersGlob[ROOT_KEY],
+            graph, rootGoal, TYPE_STAKEHOLDER
+        );
     }
 }

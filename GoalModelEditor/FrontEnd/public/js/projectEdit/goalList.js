@@ -13,11 +13,10 @@ function getJSONFile() {
         headers: {Authorization: "Bearer " + token},
         success: function (data) {
             window.jsonData = JSON.parse(JSON.parse(JSON.stringify(data)));
-            $("#model_name strong").html(
-                jsonData.GoalModelProject.ProjectName +
+            let modelName = jsonData.GoalModelProject.ProjectName +
                 " - " +
-                jsonData.GoalModelProject.ModelName
-            );
+                jsonData.GoalModelProject.ModelName;
+            $("#model_name strong").html(modelName);
             loadData();
             loadImages();
             //activate drag function
@@ -43,9 +42,7 @@ function getJSONFile() {
                 scroll: true
             });
             getXML();
-            setTitle(jsonData.GoalModelProject.ProjectName +
-                " - " +
-                jsonData.GoalModelProject.ModelName);
+            setTitle(modelName);
         }
     }).fail(function (jqXHR) {
         $("#warning-alert").html(
@@ -178,8 +175,7 @@ function parseClusterNodes(nodes) {
 function parseNode(node) {
     // takes a node object and turns it into a <li>
     let li = document.createElement("LI");
-    li.setAttribute("class", node.GoalType);
-    li.setAttribute("class", "dragger");
+    li.setAttribute("class", "dragger" + " drag-style");
     li.setAttribute("draggable", "true");
     let fontWeight = "bold";
     if (node.Used) {
@@ -187,7 +183,7 @@ function parseNode(node) {
     }
     let placeholderText = getPlaceholder(node.GoalType);
 
-    const MAX_CHARS = 40;
+
     // li.setAttribute('id', node.GoalID);
     li.innerHTML =
         '<input id= "' +
@@ -197,7 +193,7 @@ function parseNode(node) {
         " " +
         '" value = "' +
         node.GoalContent +
-        '" placeholder="' + placeholderText + '" maxlength="'+ MAX_CHARS +'" ' +
+        '" placeholder="' + placeholderText + '" ' +
         'style="font-weight: ' +
         fontWeight +
         '" ' +
@@ -234,13 +230,15 @@ function parseClusterNode(node) {
         node.GoalID +
         '" class="' +
         node.GoalType +
-        " dd-handle dd-handle-style" + '"' +
+        " dd-handle dd-handle-style" + '" ' +
         'note="' +
         node.GoalNote +
         '"' +
         ">" +
         '<img src="' + iconPath + '" class="mr-1 typeIcon">' +
-        '<div class="goal-content">' + node.GoalContent + '</div>' +
+        '<div class="goal-content"  tabindex="-1" ' +
+        'ondblclick="editGoalInCluster(this);" ' +
+        'onblur="finishEditGoalInCluster(this);">' + node.GoalContent + '</div>' +
         "</div>";
 
     // recursion to add sub goal
@@ -269,6 +267,8 @@ function saveJSON() {
     let modelId = Cookies.get("MID");
     let url = "/goal_model/" + userId + "/" + modelId;
     $("#saveJSONLoading").show();
+    $("#savedLabel").show();
+
     getData();
     // ajax starts
     $.ajax(url, {
@@ -278,7 +278,10 @@ function saveJSON() {
         contentType: "application/json",
         headers: {Authorization: "Bearer " + token},
         success: function (data) {
-            $("#saveJSONLoading").hide();
+            setTimeout(function () {
+                $("#saveJSONLoading").hide();
+                $("#savedLabel").hide();
+            }, 1000);
         }
     }).fail(function (jqXHR) {
         $("#saveJSONLoading").hide();
@@ -494,7 +497,7 @@ function getPlaceholder(type) {
         case "Emotional":
             return "New Emotional Goal";
         case "Stakeholder":
-            return "New Stakeholder";
+            return "New Role";
         default:
             return "";
     }
@@ -579,4 +582,29 @@ function addNoChildrenClass() {
     $(".Negative").parent().addClass('dd-nochildren');
     $(".Emotional").parent().addClass('dd-nochildren');
     $(".Stakeholder").parent().addClass('dd-nochildren');
+}
+
+/**
+ * Make goals in cluster editable by double click
+ *
+ */
+function editGoalInCluster(element){
+    //console.log("in content");
+    $(element).attr("contenteditable", "true");
+    // when editing, cannot press "Enter"
+    $(element).keypress(function (e) {
+        return e.which !== 13;
+    });
+
+    $(element).css("font-weight", "normal");
+}
+/**
+ * If do something else, make div not editable again
+ *
+ */
+function finishEditGoalInCluster(element){
+    //console.log("in finish");
+    $(element).attr("contenteditable", "false");
+    $(element).css("font-weight", "bold");
+    saveJSON();
 }

@@ -39,15 +39,6 @@
     <!--&lt;!&ndash; script for rendering graph #currently a stub &ndash;&gt;-->
     <!--<script type="text/javascript" src="/js/graph.js">-->
     <!--</script>-->
-
-    <style>
-        li dt{
-            display:none;
-        }
-        li:hover dt{
-            display:block;
-        }
-    </style>
 </head>
 
 
@@ -73,18 +64,20 @@
 </div>
 
 <!-- Header part of the page -->
-<header class="bg-white mb-2 py-3">
+<header class="bg-white mb-2 py-3" style="width:auto; min-width:1280px;
+        overflow-y:hidden; max-width: 100%;">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-4 non-draggable dragger" id="model_name" style="font-size: 35px">
-                &nbsp;&nbsp;&nbsp;<strong class="non-draggable dragger">Motivational Model</strong>
+            <div class="col-9 non-draggable dragger" id="model_name">
+                &nbsp;&nbsp;&nbsp;<strong class="non-draggable dragger" style="font-size: 35px">Motivational Model</strong>
             </div>
-            <!-- Search div -->
-            <div class="col-6">
+            <!-- Loading div -->
+            <div class="col-1">
                 <img id="saveJSONLoading" src="/img/loading1.gif" style="display: none" height="45" width="45"/>
+                <h8 id="savedLabel" style="display: none">Saved</h8>
             </div>
             <!-- User div -->
-            <div class="col-2">
+            <div class="col-2 text-right">
                 <div class="row text-center pt-2">
                     <div class="dropdown mr-1">
                         <button class="btn non-draggable dragger" type="button" id="user-dropdown"
@@ -106,50 +99,20 @@
     </div>
 </header>
 
-<div class="steps_bar mt-2 mb-1">
+<div class="steps_bar" style="width:auto; min-width:1280px;
+        overflow-y:hidden; max-width: 100%;">
     <ul>
         <!--<li id="imageTab" class="current" onclick="imageClick()"><span>Upload Image</span></li>-->
-        <li id="goalTab" class="current" onclick="goalClick()"><span>Write Goal List
-                <i class="fas fa-info-circle"></i>
-                <div style="position: absolute; z-index: 10" align="left">
-                    <dt style="position:relative; top:-20px; left:60px;width:310px; height:150px; font-size:14px; line-height:30px; background-color:rgba(228,229,234,0.8); color:darkgrey">
-                        • Click <strong><code>Upload Image</code></strong> to upload <br/>
-                        • Click the goal and use <strong><code>[delete]</code></strong> to delete goals <br/>
-                        • Click the last goal on the goal list and use <strong><code>[return]</code></strong> to add a new goal <br/>
-                    </dt>
-
-                </div>
-            </span>
-        </li>
-        <li id="clusterTab" class="" onclick="clusterClick()"><span>Cluster Goals / Arrange into Hierarchy
-            <i class="fas fa-info-circle"></i>
-                <div style="position: absolute; z-index: 10" align="left">
-                    <dt style="position:relative; top:-20px; left:30px;width:380px; height:210px; font-size:14px; line-height:30px; background-color:rgba(228,229,234,0.8); color:darkgrey">
-                        • Click the goal and use <strong><code>[delete]</code></strong> to delete a goal <br/>
-                        • Click the last goal on the goal list and use <strong><code>[return]</code></strong> to generate a new goal <br/>
-                        • Drag the goal from the goal list on the left section and drop it into the cluster on the right section<br/>
-                        • Drag the goal in the cluster to the right or left sides to achieve the hierarchical structure <br/>
-                    </dt>
-                </div>
-            </span>
-        </li>
-        <li id="graphTab" class="last" onclick="graphClick()"><span>Render Model
-            <i class="fas fa-info-circle"></i>
-                <div style="position: absolute; z-index: 10" align="left">
-                    <dt style="position:relative; top:-20px; left:30px;width:380px; height:180px; font-size:14px; line-height:30px; background-color:rgba(228,229,234,0.8); color:darkgrey">
-                        • Click <strong><code>Edit All</code></strong> on the left section to edit the names of goals <br/>
-                        • Click <strong><code>Drag All</code></strong> on the left section to drag the cluster into the graph on the right section<br/>
-                        • Click <strong><code>Render</code></strong> on the left section to generate the goal modal<br/>
-                    </dt>
-                </div>
-            </span>
-        </li>
+        <li id="goalTab" class="current non-draggable dragger" onclick="goalClick()"><span class="non-draggable dragger">Write Goal List</span></li>
+        <li id="clusterTab" class="non-draggable dragger" onclick="clusterClick()"><span class="non-draggable dragger">Cluster Goals / Arrange into Hierarchy</span></li>
+        <li id="graphTab" class="last non-draggable dragger" onclick="graphClick()"><span class="non-draggable dragger">Render Model</span></li>
     </ul>
 </div>
 
 
 <!--the main section-->
-<div class="container-body">
+<div class="container-body" style="width:auto; min-width:1280px;
+        overflow-y:hidden; max-width: 100%;">
     <div id="height-full-screen" class="container-fluid">
         <div class="row">
             <!--import pictures section start-->
@@ -184,7 +147,7 @@
 
                         <li class="nav-item non-draggable dragger">
                             <a class="nav-link non-draggable dragger" data-toggle="tab" href="#panel3" role="tab"><img
-                                    class="icon dragger non-draggable" src="/img/Heart.png"/><br>Feeling</a>
+                                    class="icon dragger non-draggable" src="/img/Heart.png"/><br>Emotion</a>
                         </li>
 
                         <li class="nav-item dragger non-draggable">
@@ -194,7 +157,7 @@
 
                         <li class="nav-item non-draggable dragger">
                             <a class="nav-link non-draggable dragger" data-toggle="tab" href="#panel5" role="tab"><img
-                                    class="icon dragger non-draggable" src="/img/Stakeholder.png"/><br>Actor</a>
+                                    class="icon dragger non-draggable" src="/img/Stakeholder.png"/><br>Role</a>
                         </li>
 
 
@@ -242,7 +205,7 @@
                     </div>
 
                     <!--used goals-->
-                    <div id="notes" class="showborder inside-scrollbar" style="display: none">
+                    <div id="notes" class="showborder inside-scrollbar" style="display: none;">
                         <h6 class="non-draggable dragger">Notes</h6>
                         <div id="notedata">
                             <text class="non-draggable dragger" id="notecontent"></text>
@@ -264,15 +227,20 @@
             <div id="cluster" class="col-7 showborder scrollbar"
                  style="display: none; background-color:rgba(35, 144, 231, 0.1);">
                 <div>
-                    <button type="button" class="btn-sm btn-outline-primary non-draggable dragger mt-3" id="edit">Edit All
-                    </button>
-                    <button type="button" class="btn-sm btn-outline-primary non-draggable dragger mt-3" id="drag">Drag All
-                    </button>
                     <button style="display: none" class="btn-sm btn-outline-primary non-draggable dragger"
                             id="renderbtn">Render
                     </button>
 
                     <!--< a id="Export" href="#">ExportSVG</a>-->
+                </div>
+                <!--Switch Button, Drag Mode & Edit Mode-->
+                <div class="btn-group btn-group-toggle switch" data-toggle="buttons">
+                    <label class="btn btn-outline-primary active non-draggable dragger mt-3">
+                        <input type="radio" id="drag" autocomplete="off" checked> Drag Mode
+                    </label>
+                    <label class="btn btn-outline-primary non-draggable dragger mt-3">
+                        <input type="radio" id="edit" autocomplete="off"> Edit Mode
+                    </label>
                 </div>
                 <!--show cluster data from JSON-->
                 <div class="dd py-3" id="cluster_1">
@@ -308,7 +276,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="row" style="height:100%">
+                <div class="row" style="height:auto; min-height:90%">
                     <div class="col-11 text-left">
                         <div id="graphContainer"
                              style="position:relative;overflow:hidden;width:100%;height:100%;background:url('/src/images/grid.gif');cursor:default;">
@@ -316,7 +284,7 @@
                     </div>
                     <div class="col-1 text-right">
                         <div id="sidebarContainer"
-                            style="position:relative;float:right;overflow:auto;width:30;padding:0px;left:0px;top:0px;bottom:0px">
+                            style="position:relative;float:right;overflow:auto;width:30px;padding:0px;left:0px;top:0px;bottom:0px">
                         </div>
                     </div>
                 </div>
@@ -324,6 +292,10 @@
             <!--generate section end-->
         </div>
     </div>
+    <footer>
+        <p class="text-center non-draggable dragger mt-1 mb-0">&copy;<em class="non-draggable dragger">&nbsp;2018 The University of
+            Melbourne</em></p>
+    </footer>
 </div>
 
 <!-- Render warning deleting goal modal start -->
@@ -421,13 +393,6 @@
 <script src="/js/projectEdit/goalList.js"></script>
 <script src="/js/projectEdit/projectEdit.js"></script>
 <script src="/js/projectEdit/graphXML.js"></script>
-
-
-<footer>
-    <p class="text-center non-draggable dragger">&copy;<em class="non-draggable dragger">&nbsp;2018 The University of
-        Melbourne</em></p>
-</footer>
-
 <!--</div>-->
 </body>
 
