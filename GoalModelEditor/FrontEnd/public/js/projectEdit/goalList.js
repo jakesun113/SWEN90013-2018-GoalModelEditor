@@ -520,7 +520,8 @@ function getAllSubgoals($goalList, goals) {
         $goal.attr("note"),
         newSubGoals
     );
-    if ($($goalList.children("ol")).length !== 0) {
+    if ($($goalList.children("ol")).length !== 0
+        && !($goalList.attr("class").includes("collapsed"))) {
         let listItems = $($goalList.children("ol")).children("li");
         let $listItems = $(listItems);
         for (let i = 0; i < $listItems.length; i++) {
