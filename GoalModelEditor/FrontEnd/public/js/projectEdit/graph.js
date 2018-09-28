@@ -247,29 +247,29 @@ function renderNonFunction(descriptions, graph, source=null, type="None") {
             image = PATH_EMOTIONAL;
             width = fWidth * SW_EMOTIONAL;
             height = fHeight * SH_EMOTIONAL;
-            x = sourceX - width / 2;
-            y = sourceY - height / 2;
+            x = sourceX - width / 2 - fWidth / 4;
+            y = sourceY - height / 2 - fHeight / 4;
             break;
         case TYPE_NEGATIVE:
             image = PATH_NEGATIVE;
             width = fWidth * SW_NEGATIVE;
             height = fHeight * SH_NEGATIVE;
-            x = sourceX + fWidth - width / 2;
-            y = sourceY - height / 2;
+            x = sourceX + fWidth * 1.25 - width / 2;
+            y = sourceY - height / 2 - fHeight / 4;
             break;
         case TYPE_QUALITY:
             image = PATH_QUALITY;
             width = fWidth * SW_QUALITY;
             height = fHeight * SH_QUALITY;
-            x = sourceX - width / 2;
-            y = sourceY + fHeight - height / 2;
+            x = sourceX - width / 2 - fWidth / 4;
+            y = sourceY + fHeight * 1.25 - height / 2;
             break;
         case TYPE_STAKEHOLDER:
             image = PATH_STAKEHOLDER;
             width = fWidth * SW_STAKEHOLDER;
             height = fHeight * SH_STAKEHOLDER;
-            x = sourceX + fWidth - width / 2;
-            y = sourceY + fHeight - height / 2;
+            x = sourceX + fWidth * 1.25 - width / 2;
+            y = sourceY + fHeight * 1.25 - height / 2;
             break;
     }
 
