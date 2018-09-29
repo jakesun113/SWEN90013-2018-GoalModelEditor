@@ -1,5 +1,8 @@
 "use strict";
 
+// keybindings
+const DELETE_KEYBINDING = 8;
+
 // default width/height of MM symbols
 const SYMBOL_WIDTH = 145;
 const SYMBOL_HEIGHT = 110;
@@ -71,6 +74,14 @@ let zoomOut = sidebar.addItem("Zoom Out", "/src/images/zoomout.svg",
         graph.zoomOut();
 });
 zoomOut.style.width = '30px';
+
+// key-handler for deletion using Backspace
+var keyHandler = new mxKeyHandler(graph);
+keyHandler.bindKey(DELETE_KEYBINDING, function(evt) {
+  if (graph.isEnabled()) {
+    graph.removeCells();
+  }
+});
 
 /**
  * Renders window.jsonData into a motivational model into graphContainer.
