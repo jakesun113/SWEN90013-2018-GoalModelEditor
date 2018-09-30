@@ -238,8 +238,11 @@ function parseClusterNode(node) {
         '<img src="' + iconPath + '" class="mr-1 typeIcon">' +
         '<div class="goal-content"  tabindex="-1" ' +
         'onblur="finishEditGoalInCluster(this);">' + node.GoalContent + '</div>' +
-        "</div>" +
-        '<button class="btn btn-outline-primary" onclick="editGoalInCluster(this)">' + "edit" +'</button>';
+        '<img class="editButton" src="/img/edit-solid.svg"' +
+        ' onclick="event.stopImmediatePropagation(); editGoalInCluster(this)"' +
+        'onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
+        'onmousedown="event.stopImmediatePropagation()">'+
+        "</div>";
 
     // recursion to add sub goal
     if (node.SubGoals !== undefined && node.SubGoals.length > 0) {
@@ -590,11 +593,9 @@ function addNoChildrenClass() {
  *
  */
 function editGoalInCluster(element){
-    console.log("in content");
-    console.log(element);
     $(".dd-handle-style").removeClass("dd-handle");
     $(".dd-handle-style").css("cursor", "auto");
-    let target = $(element.parentNode).children(".dd-handle-style").children(".goal-content");
+    let target = $(element.parentNode).children(".goal-content");
     target.attr("contenteditable", "true");
     // when editing, cannot press "Enter"
     target.keypress(function (e) {

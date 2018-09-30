@@ -621,7 +621,7 @@ router.get("/images/:userId/:goalmodelId", (req, res) => {
 
 const PDFDocument = require('pdfkit');
 const SVGtoPDF = require('svg-to-pdfkit');
-router.post("/exportToPng/:userId/:goalmodelId", async(req, res)=> {
+router.post("/exportToPng/:userId/:goalmodelId", async(req, res) => {
 
     // check token for authentication
     if (!auth.authenticate(req.headers)) {

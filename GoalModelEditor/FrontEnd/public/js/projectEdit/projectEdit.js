@@ -330,19 +330,12 @@ function drop_zone(clusterNumber) {
             $(newNode).html('<img src=' + imagePath + ' class="mr-1 typeIcon" > ' +
                 '<div class="goal-content" tabindex="-1" ' +
                 'onblur="finishEditGoalInCluster(this);"' + '>' +
-                $(nowCopying).children("input")[0].value + '</div>');
+                $(nowCopying).children("input")[0].value + '</div><img class="editButton" src="/img/edit-solid.svg"' +
+                'onclick="event.stopImmediatePropagation(); editGoalInCluster(this)" ' +
+                'onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
+                'onmousedown="event.stopImmediatePropagation()">');
 
             draggableWrapper += newNode.outerHTML;
-
-            //add edit button for each goal
-
-            let editBtn = document.createElement("button");
-            editBtn.className = "btn btn-outline-primary";
-
-            editBtn.setAttribute("onclick", 'editGoalInCluster(this)');
-            $(editBtn).html("edit");
-
-            draggableWrapper += editBtn.outerHTML;
 
             draggableWrapper += "</li></ol>";
             let node = createElementFromHTML(draggableWrapper);
@@ -365,7 +358,7 @@ function drop_zone(clusterNumber) {
                         .children("ol")[0]
                         .appendChild(
                             createElementFromHTML(
-                                '<li class="dd-item">' + newNode.outerHTML + editBtn.outerHTML + "</li>"
+                                '<li class="dd-item">' + newNode.outerHTML + "</li>"
                             )
                         );
                 }
