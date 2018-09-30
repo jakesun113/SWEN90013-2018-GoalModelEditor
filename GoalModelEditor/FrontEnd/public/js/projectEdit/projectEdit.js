@@ -312,7 +312,9 @@ function drop_zone(clusterNumber) {
             //copy the id, class, and value from the original dragged goal
             let newNode = document.createElement("div");
             newNode.className = $(nowCopying).children("input")[0].className;
-            $(newNode).attr("id", ($(nowCopying).attr("id")));
+
+            newNode.setAttribute("id", "C_" + $($(nowCopying).children("input")[0]).attr("id"));
+            //console.log($(newNode).attr("id"));
 
             //add font weight, class name to the new goal element
             $(newNode).css("font-weight", "bold");
@@ -325,16 +327,27 @@ function drop_zone(clusterNumber) {
 
             let imagePath = getTypeIconPath(type);
 
-            $(newNode).html('<img src=' + imagePath + ' class="mr-1 typeIcon" >' +
+            $(newNode).html('<img src=' + imagePath + ' class="mr-1 typeIcon" > ' +
                 '<div class="goal-content" tabindex="-1" ' +
-                'ondblclick="editGoalInCluster(this);" ' +
                 'onblur="finishEditGoalInCluster(this);"' + '>' +
-                $(nowCopying).children("input")[0].value) + '</div>';
+                $(nowCopying).children("input")[0].value + '</div>');
 
             draggableWrapper += newNode.outerHTML;
+
+            //add edit button for each goal
+
+            let editBtn = document.createElement("button");
+            editBtn.className = "btn btn-outline-primary";
+
+            editBtn.setAttribute("onclick", 'editGoalInCluster(this)');
+            $(editBtn).html("edit");
+
+            draggableWrapper += editBtn.outerHTML;
+
             draggableWrapper += "</li></ol>";
             let node = createElementFromHTML(draggableWrapper);
 
+            console.log(node);
             //if the drag element comes from the goal list
             if (fromGoalList) {
                 //if there is dd-empty (first time drag to here)
@@ -352,7 +365,7 @@ function drop_zone(clusterNumber) {
                         .children("ol")[0]
                         .appendChild(
                             createElementFromHTML(
-                                '<li class="dd-item">' + newNode.outerHTML + "</li>"
+                                '<li class="dd-item">' + newNode.outerHTML + editBtn.outerHTML + "</li>"
                             )
                         );
                 }
@@ -396,26 +409,6 @@ function createElementFromHTML(htmlString) {
     // Change this to div.childNodes to support multiple top-level nodes
     return div.firstChild;
 }
-//TODO: make "Edit Mode" and "Drag Mode" always seeable even scroll down
-//handle operation of clicking "Edit Mode"
-$("#edit").change(function(){
-    saveJSON();
-    $(".dd-handle-style").removeClass("dd-handle");
-    $(".dd-handle-style").css("cursor", "auto");
-    $("#cluster").css("background-color", "rgb(236, 244, 244)");
-});
-
-//handle operation of clicking "Drag Mode"
-$("#drag").change(function () {
-
-    $(".dd-handle-style").addClass("dd-handle");
-    $(".dd-handle-style").css("cursor", "move");
-    $(".goal-content").attr("contenteditable", "false");
-    $(".goal-content").css("font-weight", "bold");
-    $("#cluster").css("background-color", "rgba(35, 144, 231, 0.1)");
-    saveJSON();
-});
-
 //if no "dd-empty" is existed, append new cluster
 // to make sure there is always at least one "new" cluster
 function appendCluster() {
