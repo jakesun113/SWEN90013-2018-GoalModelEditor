@@ -57,11 +57,16 @@ var qualitiesGlob = {};
 var stakeholdersGlob = {};
 
 // create the graph object
+mxConstants.DEFAULT_HOTSPOT = 0.15;
+mxConnectionHandler.prototype.connectImage = new mxImage('/img/link.png', 14, 14);
+
 var graph = new mxGraph(document.getElementById("graphContainer"));
 graph.setPanning(true);
 graph.panningHandler.useLeftButtonForPanning = true;
 graph.dropEnabled = true;
 graph.setConnectable(true);
+graph.connectionHandler.
+graph.setAllowDanglingEdges(false);
 graph.setMultigraph(true);
 
 
