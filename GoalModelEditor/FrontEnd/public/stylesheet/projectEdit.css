@@ -200,6 +200,15 @@ input {
     float: left;
 }
 
+.editButton {
+    height: 20px;
+    padding: 0;
+    margin: 0;
+    margin-top: -20px;
+    cursor: pointer;
+    float: right;
+}
+
 .non-selectable,
 .non-selectable:focus {
     -webkit-user-select: none;

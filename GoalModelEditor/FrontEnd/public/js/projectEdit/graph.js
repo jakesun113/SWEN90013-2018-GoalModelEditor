@@ -1,8 +1,15 @@
 "use strict";
 
+// keybindings
+const DELETE_KEYBINDING = 8;
+
 // default width/height of MM symbols
 const SYMBOL_WIDTH = 145;
 const SYMBOL_HEIGHT = 110;
+
+// default vertical/horizontal spacing between functional goals
+const VERTICAL_SPACING = 40;
+const HORIZONTAL_SPACING = 40;
 
 // default x and y coord of the MM symbols
 const SYMBOL_X_COORD = 0;
@@ -68,6 +75,13 @@ let zoomOut = sidebar.addItem("Zoom Out", "/src/images/zoomout.svg",
 });
 zoomOut.style.width = '30px';
 
+// key-handler for deletion using Backspace
+var keyHandler = new mxKeyHandler(graph);
+keyHandler.bindKey(DELETE_KEYBINDING, function(evt) {
+  if (graph.isEnabled()) {
+    graph.removeCells();
+  }
+});
 
 /**
  * Renders window.jsonData into a motivational model into graphContainer.
@@ -119,7 +133,6 @@ function renderGraph(container) {
  * : graph, the graph into which goals will be rendered
  * : source, the parent goal of the given array, defaults to null
  */
-
 function renderGoals(goals, graph, source = null) {
     console.log("Logging: renderGoals() called on list: " + goals);
 
@@ -303,7 +316,11 @@ function renderNonFunction(descriptions, graph, source=null, type="None") {
  * Automatically lays-out the functional hierarchy of the graph.
  */
 function layoutFunctions(graph) {
-    let layout = new mxGoalModelLayout(graph);
+    let layout = new mxGoalModelLayout(
+        graph, 
+        VERTICAL_SPACING,
+        HORIZONTAL_SPACING
+    );
     layout.execute(graph.getDefaultParent());
 }
 

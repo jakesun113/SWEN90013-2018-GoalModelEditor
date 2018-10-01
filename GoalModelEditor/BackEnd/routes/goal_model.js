@@ -33,13 +33,35 @@ const path = require("path");
 const fs = require("fs");
 const multiparty = require("multiparty");
 const FormData = require("form-data");
-
+const { convert } = require('convert-svg-to-png');
 // security related imports
 const auth = require("../authen");
 const db = require(path.resolve(
     __dirname,
     "../../Database/DBModule/DBModule.js"
 ));
+const Function = path.resolve(
+    __dirname,
+    "../../BackEnd/images/Function.png"
+);
+const Cloud = path.resolve(
+    __dirname,
+    "../../BackEnd/images/Cloud.png"
+);
+const Heart = path.resolve(
+    __dirname,
+    "../../BackEnd/images/Heart.png"
+);
+const Risk = path.resolve(
+    __dirname,
+    "../../BackEnd/images/Risk.png"
+);
+const Stakeholder = path.resolve(
+    __dirname,
+    "../../BackEnd/images/Stakeholder.png"
+);
+
+
 
 /* GET get the edit page */
 router.get("/edit", function(req, res) {
@@ -599,6 +621,35 @@ router.get("/images/:userId/:goalmodelId", (req, res) => {
 
 const PDFDocument = require('pdfkit');
 const SVGtoPDF = require('svg-to-pdfkit');
+router.post("/exportToPng/:userId/:goalmodelId", async(req, res) => {
+
+    // check token for authentication
+    if (!auth.authenticate(req.headers)) {
+        res.statusCode = 401;
+        res.json({created: false, message: "Authentication failed"});
+        return res.end();
+    }
+    let svg=req.body.svg;
+    console.log(svg);
+    let funcRegex=/https:\/\/([^<>]+\/)+Function\.png/gi;
+     svg=svg.replace(funcRegex, Function);
+    let cloudRegex=/https:\/\/([^<>]+\/)+Cloud\.png/gi;
+     svg=svg.replace(cloudRegex, Cloud);
+    let heartRegex=/https:\/\/([^<>]+\/)+Heart\.png/gi;
+    svg=svg.replace(heartRegex, Heart);
+    let riskRegex=/https:\/\/([^<>]+\/)+Risk\.png/gi;
+    svg=svg.replace(riskRegex, Risk);
+    let shRegex=/https:\/\/([^<>]+\/)+Stakeholder\.png/gi;
+    svg=svg.replace(shRegex, Stakeholder);
+    console.log(svg);
+    let png = await convert(svg);
+    console.log(png);
+    res.statusCode=200;
+    //res.writeHead(200, headers);
+    res.json({png: png});
+    return res.end();
+
+});
 
 router.post("/exportToPdf/:userId/:goalmodelId", (req, res, next) => {
 
@@ -610,8 +661,12 @@ router.post("/exportToPdf/:userId/:goalmodelId", (req, res, next) => {
     }
 
     let dirpath = "./UserFiles/" + req.params.userId;
-
+    const Function = path.resolve(
+        __dirname,
+        "../../BackEnd/Function.png"
+    );
     let svg = req.body.svg;
+    console.log(svg);
     //let svg = `<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
     // xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 100%; height: 100%; display: block; min-width: 111px; min-height: 61px;"><g><g></g><g><g style="visibility: visible; cursor: move;"><image x="0" y="0" width="110" height="60" xlink:href="file:///Users/tccc/Bitbucket/swen90013-2018-go/GoalModelEditor/FrontEnd/public/img/Function.png"></image></g><g style="cursor: move;"><g fill="#774400" font-family="Arial,Helvetica" text-anchor="middle" font-size="11px"><text x="55" y="33.5">aaaaa</text></g></g></g><g></g><g></g></g></svg>`;
 
