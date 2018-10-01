@@ -89,17 +89,19 @@ mxDragSource.prototype.getDropTarget = function(graph, x, y) {
 };
 
 // ... with zoom-in/zoom-out buttons
+sidebar.addLine();
 let zoomIn = sidebar.addItem("Zoom In", "/src/images/zoomin.svg",
     function() {
         graph.zoomIn();
 });
-zoomIn.style.width = '30px';
+zoomIn.style.width = '20px';
 
 let zoomOut = sidebar.addItem("Zoom Out", "/src/images/zoomout.svg",
     function() {
         graph.zoomOut();
 });
-zoomOut.style.width = '30px';
+zoomOut.style.width = '20px';
+sidebar.addLine();
 
 // add the sidebar elements for each of the goals
 var addSidebarItem = function(graph, sidebar, image, width, height) {
@@ -123,7 +125,10 @@ var addSidebarItem = function(graph, sidebar, image, width, height) {
 
     // add a symbol to the sidebar
     var sidebarItem = sidebar.addMode(null, image, dragAndDrop);
-    sidebarItem.style.width = "80px";
+    sidebarItem.style.width = "60px";
+    if (image == PATH_STAKEHOLDER) {
+        sidebarItem.style.width = "30px";
+    }
     mxUtils.makeDraggable(sidebarItem, graph, dragAndDrop);
 };
 
@@ -141,8 +146,9 @@ addSidebarItem(graph, sidebar, PATH_QUALITY,
     SYMBOL_WIDTH*SW_QUALITY, SYMBOL_HEIGHT*SW_QUALITY
 );
 addSidebarItem(graph, sidebar, PATH_STAKEHOLDER,
-    SYMBOL_WIDTH*SW_STAKEHOLDER, SYMBOL_HEIGHT*SW_STAKEHOLDER
+    SYMBOL_WIDTH*SW_STAKEHOLDER*1.5, SYMBOL_HEIGHT*SW_STAKEHOLDER*1.5
 );
+sidebar.addLine();
 
 // key-handler for deletion using Backspace
 var keyHandler = new mxKeyHandler(graph);
