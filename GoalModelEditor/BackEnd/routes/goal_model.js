@@ -238,13 +238,13 @@ router.post("/images/:userId/:goalmodelId", (req, res) => {
 });
 
 /* =====================================================================
- * POST Upload XML
+ * PUT Upload and update XML
  * @input('req')
  *  content-type: application/xml
  *  body: <xml graph file>
  *
  * =====================================================================*/
-router.post("/xml/:userId/:goalmodelId", (req, res) => {
+router.put("/xml/:userId/:goalmodelId", (req, res) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
