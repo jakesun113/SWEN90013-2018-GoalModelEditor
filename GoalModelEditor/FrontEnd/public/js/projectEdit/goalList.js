@@ -602,6 +602,8 @@ function editGoalInCluster(element){
         return e.which !== 13;
     });
     $(element.parentNode).css("background-color", "rgba(0,0,0,0.1)");
+    setCaret(target[0]);
+
     target.css("font-weight", "normal");
 }
 /**
@@ -616,4 +618,17 @@ function finishEditGoalInCluster(element){
     $(element).css("font-weight", "bold");
     $(element.parentNode).css("background-color", "#fafafa");
     saveJSON();
+}
+
+/**
+ * SetCaret to the end of the div
+ */
+function setCaret(div) {
+    let length = $(div).html().length;
+    let range = document.createRange();
+    let sel = window.getSelection();
+    range.setStart(div.childNodes[0], length);
+    range.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(range);
 }
