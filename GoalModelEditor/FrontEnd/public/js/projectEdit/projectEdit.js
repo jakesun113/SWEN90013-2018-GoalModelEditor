@@ -25,6 +25,20 @@ $(document).on("mouseover", "#ul li input", function () {
     getDraggingElement();
 });
 
+//when mouse over the specific goal in the cluster, show corresponding edit button
+//FIXME: with bugs, only trigger the first cluster
+// $("#cluster_" + clusterNumber).on("mouseover", "div", function () {
+//     console.log("in hover");
+//     console.log(this.className);
+//
+//     if (this.className === "goal-content") {
+//         $(this.parentNode).children(".editButton").hide();
+//     }
+//     else{
+//         $(this.parentNode).children(".editButton").hide();
+//     }
+// });
+
 /*Add new cluster start*/
 /**
  * add new cluster
@@ -402,6 +416,7 @@ function createElementFromHTML(htmlString) {
     // Change this to div.childNodes to support multiple top-level nodes
     return div.firstChild;
 }
+
 //if no "dd-empty" is existed, append new cluster
 // to make sure there is always at least one "new" cluster
 function appendCluster() {
