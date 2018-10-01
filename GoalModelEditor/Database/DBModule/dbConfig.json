@@ -1,8 +1,8 @@
 {
-    "connectionLimit": 100,
-    "host": "goal.c6qicuvmfc76.ap-southeast-2.rds.amazonaws.com",
-    "user": "admin",
-    "password": "SWEN90013goal",
+  "connectionLimit": 100,
+  "host": "goal.c6qicuvmfc76.ap-southeast-2.rds.amazonaws.com",
+  "user": "admin",
+  "password": "SWEN90013goal",
   "database": "GoalModel_A",
   "timezone": "utc"
 }

@@ -8,8 +8,8 @@ const SYMBOL_WIDTH = 145;
 const SYMBOL_HEIGHT = 110;
 
 // default vertical/horizontal spacing between functional goals
-const VERTICAL_SPACING = 40;
-const HORIZONTAL_SPACING = 40;
+const VERTICAL_SPACING = 60;
+const HORIZONTAL_SPACING = 60;
 
 // default x and y coord of the MM symbols
 const SYMBOL_X_COORD = 0;
@@ -27,8 +27,8 @@ const SW_QUALITY = 1;
 const SH_QUALITY = 1;
 const SW_NEGATIVE = 1;
 const SH_NEGATIVE = 1;
-const SW_STAKEHOLDER = 0.25;
-const SH_STAKEHOLDER = 0.7;
+const SW_STAKEHOLDER = 0.40;
+const SH_STAKEHOLDER = 0.8;
 
 // different types of goals to be rendered
 const TYPE_FUNCTIONAL = "Functional";
@@ -57,23 +57,103 @@ var qualitiesGlob = {};
 var stakeholdersGlob = {};
 
 // create the graph object
+mxConstants.DEFAULT_HOTSPOT = 0.15;
+mxConnectionHandler.prototype.connectImage = new mxImage('/img/link.png', 14, 14);
+
 var graph = new mxGraph(document.getElementById("graphContainer"));
 graph.setPanning(true);
 graph.panningHandler.useLeftButtonForPanning = true;
+graph.dropEnabled = true;
+graph.setConnectable(true);
+graph.connectionHandler.
+graph.setAllowDanglingEdges(false);
+graph.setMultigraph(true);
 
+
+// set default edge style
+var style = graph.getStylesheet().getDefaultEdgeStyle();
+style['strokeColor'] = 'black';
+style['fontColor'] = 'black';
+style['endArrow'] = 'none';
+style['strokeWidth'] = '2';
+
+/**
+ * Sidebar
+ */
 // add graph sidebar
 var sidebar = new mxToolbar(document.getElementById("sidebarContainer"));
+sidebar.enabled = false;
+
+// allow vertices to be dropped on the graph at arbitrary points
+mxDragSource.prototype.getDropTarget = function(graph, x, y) {
+    var cell = graph.getCellAt(x, y);
+    if (!graph.isValidDropTarget(cell)) {
+        cell = null;
+    }
+    return cell;
+};
+
+// ... with zoom-in/zoom-out buttons
+sidebar.addLine();
 let zoomIn = sidebar.addItem("Zoom In", "/src/images/zoomin.svg",
     function() {
         graph.zoomIn();
 });
-zoomIn.style.width = '30px';
+zoomIn.style.width = '20px';
 
 let zoomOut = sidebar.addItem("Zoom Out", "/src/images/zoomout.svg",
     function() {
         graph.zoomOut();
 });
-zoomOut.style.width = '30px';
+zoomOut.style.width = '20px';
+sidebar.addLine();
+
+// add the sidebar elements for each of the goals
+var addSidebarItem = function(graph, sidebar, image, width, height) {
+
+    // create the prototype cell which will be cloned when a sidebar item
+    // is dragged on to the graph
+    var prototype = new mxCell(null, new mxGeometry(0, 0, width, height),
+        "fontSize=16;fontColor=black;shape=rounded;shape=image;image="+image);
+    prototype.setVertex(true);
+
+    // function attached to each dragable sidebar item - this is used
+    // to drag an item from the toolbar, then instantiate it in the graph
+    var dragAndDrop = function(graph, evnt, cell) {
+        graph.stopEditing(false);
+        var point = graph.getPointForEvent(evnt);
+        var goal = graph.getModel().cloneCell(prototype);
+        goal.geometry.x = point.x;
+        goal.geometry.y = point.y;
+        graph.getSelectionCells(graph.importCells([goal], 0, 0, cell));
+    }
+
+    // add a symbol to the sidebar
+    var sidebarItem = sidebar.addMode(null, image, dragAndDrop);
+    sidebarItem.style.width = "60px";
+    if (image == PATH_STAKEHOLDER) {
+        sidebarItem.style.width = "30px";
+    }
+    mxUtils.makeDraggable(sidebarItem, graph, dragAndDrop);
+};
+
+// add sidebar items for each of the goal types
+addSidebarItem(graph, sidebar, PATH_FUNCTIONAL,
+    SYMBOL_WIDTH, SYMBOL_HEIGHT
+);
+addSidebarItem(graph, sidebar, PATH_EMOTIONAL,
+    SYMBOL_WIDTH*SW_EMOTIONAL, SYMBOL_HEIGHT*SH_EMOTIONAL
+);
+addSidebarItem(graph, sidebar, PATH_NEGATIVE,
+    SYMBOL_WIDTH*SW_NEGATIVE, SYMBOL_HEIGHT*SW_NEGATIVE
+);
+addSidebarItem(graph, sidebar, PATH_QUALITY,
+    SYMBOL_WIDTH*SW_QUALITY, SYMBOL_HEIGHT*SW_QUALITY
+);
+addSidebarItem(graph, sidebar, PATH_STAKEHOLDER,
+    SYMBOL_WIDTH*SW_STAKEHOLDER*1.5, SYMBOL_HEIGHT*SW_STAKEHOLDER*1.5
+);
+sidebar.addLine();
 
 // key-handler for deletion using Backspace
 var keyHandler = new mxKeyHandler(graph);
@@ -267,7 +347,7 @@ function renderNonFunction(descriptions, graph, source=null, type="None") {
             image = PATH_NEGATIVE;
             width = fWidth * SW_NEGATIVE;
             height = fHeight * SH_NEGATIVE;
-            x = sourceX + fWidth * 1.25 - width / 2;
+            x = sourceX + fWidth * 1.15 - width / 2;
             y = sourceY - height / 2 - fHeight / 4;
             break;
         case TYPE_QUALITY:
@@ -275,14 +355,14 @@ function renderNonFunction(descriptions, graph, source=null, type="None") {
             width = fWidth * SW_QUALITY;
             height = fHeight * SH_QUALITY;
             x = sourceX - width / 2 - fWidth / 4;
-            y = sourceY + fHeight * 1.25 - height / 2;
+            y = sourceY + fHeight * 1.15 - height / 2;
             break;
         case TYPE_STAKEHOLDER:
             image = PATH_STAKEHOLDER;
             width = fWidth * SW_STAKEHOLDER;
             height = fHeight * SH_STAKEHOLDER;
-            x = sourceX + fWidth * 1.25 - width / 2;
-            y = sourceY + fHeight * 1.25 - height / 2;
+            x = sourceX + fWidth * 1.05 - width / 2;
+            y = sourceY + fHeight * 1.0 - height / 2;
             break;
     }
 
