@@ -1,14 +1,18 @@
-function sendXML() {
+function sendXML(isTemplate) {
     let secret = JSON.parse(Cookies.get("LOKIDIED"));
     let token = secret.token;
     let userId = secret.uid;
     let modelId = Cookies.get("MID");
     let url = "/goal_model/xml/" + userId + "/" + modelId;
+    if (isTemplate){
+        let templateId = Cookies.get("TID");
+        url = "/template/" + userId + "/" + templateId;
+    }
 
     let xml = parseToXML(graph);
     $.ajax(url, {
         // the API of upload pictures
-        type: "POST",
+        type: "PUT",
         contentType: "application/json",
         data: JSON.stringify({ xml: xml }),
         async: true,
@@ -204,5 +208,10 @@ $("#Export").click(function (evt) {
 
 $("#saveXML").click( evt => {
     evt.preventDefault();
-    sendXML();
+    sendXML(false);
+});
+
+$("#saveTemplateXML").click( evt => {
+    evt.preventDefault();
+    sendXML(true);
 });

@@ -498,7 +498,7 @@ setInterval("saveJSON()", "120000");
 window.onbeforeunload = function checkLeave(event) {
     event.preventDefault();
     saveJSON();
-    sendXML();
+    sendXML(false);
     console.log("Auto Saved!");
 };
 
