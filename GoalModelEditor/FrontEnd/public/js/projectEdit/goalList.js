@@ -601,7 +601,7 @@ function editGoalInCluster(element){
     target.keypress(function (e) {
         return e.which !== 13;
     });
-
+    $(element.parentNode).css("background-color", "rgba(0,0,0,0.1)");
     target.css("font-weight", "normal");
 }
 /**
@@ -614,5 +614,6 @@ function finishEditGoalInCluster(element){
     $(".dd-handle-style").css("cursor", "move");
     $(element).attr("contenteditable", "false");
     $(element).css("font-weight", "bold");
+    $(element.parentNode).css("background-color", "#fafafa");
     saveJSON();
 }
