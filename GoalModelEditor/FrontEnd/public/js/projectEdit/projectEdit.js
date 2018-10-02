@@ -187,7 +187,7 @@ document.onkeyup = function (event) {
     }
 
     if (document.activeElement.tagName === "DIV" && event.key === "Backspace") {
-        if (event.target.textContent === "") {
+        if (event.target.className === "goal-content" && event.target.textContent === "") {
             activeElement = document.activeElement;
             //show warning modal
             $("#deleteGoalWarning").modal();
