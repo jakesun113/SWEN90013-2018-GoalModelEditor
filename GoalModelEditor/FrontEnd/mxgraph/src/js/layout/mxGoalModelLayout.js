@@ -15,7 +15,6 @@ function mxGoalModelLayout(graph, levelDistance, nodeDistance) {
 mxGoalModelLayout.prototype = new mxGraphLayout();
 mxGoalModelLayout.prototype.constructor = mxGoalModelLayout;
 
-
 // tracks parents that need to be updated if children are updated
 mxGoalModelLayout.prototype.parentsChanged = null;
 
@@ -40,7 +39,6 @@ mxGoalModelLayout.prototype.root = null;
 
 // internal representation of root cell - DO NOT TOUCH THIS
 mxGoalModelLayout.prototype.node = null;
-
 
 /**
  * Determine whether vertex should be ignored for the purposes of

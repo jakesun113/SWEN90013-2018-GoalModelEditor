@@ -238,13 +238,13 @@ router.post("/images/:userId/:goalmodelId", (req, res) => {
 });
 
 /* =====================================================================
- * POST Upload XML
+ * PUT Upload and update XML
  * @input('req')
  *  content-type: application/xml
  *  body: <xml graph file>
  *
  * =====================================================================*/
-router.post("/xml/:userId/:goalmodelId", (req, res) => {
+router.put("/xml/:userId/:goalmodelId", (req, res) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
@@ -621,7 +621,7 @@ router.get("/images/:userId/:goalmodelId", (req, res) => {
 
 const PDFDocument = require('pdfkit');
 const SVGtoPDF = require('svg-to-pdfkit');
-router.post("/exportToPng/:userId/:goalmodelId", async(req, res)=> {
+router.post("/exportToPng/:userId/:goalmodelId", async(req, res) => {
 
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
