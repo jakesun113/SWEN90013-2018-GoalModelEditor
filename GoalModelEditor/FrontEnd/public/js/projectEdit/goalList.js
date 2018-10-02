@@ -664,7 +664,6 @@ function deleteGoalInCluster(element) {
  */
 function setCaret(div) {
     let length = $(div).html().length;
-    //console.log(length);
     let range = document.createRange();
     let sel = window.getSelection();
     range.setStart(div.childNodes[0], length);

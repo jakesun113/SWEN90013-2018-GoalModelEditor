@@ -9,7 +9,7 @@ function sendXML(isTemplate) {
     let userId = secret.uid;
     let modelId = Cookies.get("MID");
     let url = "/goal_model/xml/" + userId + "/" + modelId;
-    if (isTemplate){
+    if (isTemplate) {
         let templateId = Cookies.get("TID");
         url = "/template/" + userId + "/" + templateId;
     }
@@ -137,7 +137,7 @@ function exportModel() {
                 let a = document.createElement("a"),
                     url = URL.createObjectURL(pngFile);
                 a.href = url;
-                a.download = "a.png";
+                a.download = "model.png";
                 document.body.appendChild(a);
                 a.click();
                 setTimeout(function () {
@@ -155,117 +155,115 @@ function exportModel() {
 }
 
 
-
-
-    // let w = window.open();
-    //
-    // w.document.open();
-    //
-    // w.document.write("<h1>Preview:</h1><br>");
-    // // 1. Create the button
-    // let svgButton = w.document.createElement("button");
-    // svgButton.innerHTML = "Export as SVG";
-    //
-    // let pdfButton = w.document.createElement("button");
-    // pdfButton.innerHTML = "Export as png";
-    // // 2. Append
-    // let body = w.document.getElementsByTagName("body")[0];
-    // body.appendChild(svgButton);
-    // body.appendChild(pdfButton);
-    //
-    // w.document.write(ser);
-    //
-    // // 3. Add event handler
-    // svgButton.addEventListener("click", function () {
-    //
-    //     let file = new Blob([svg.outerHTML], {type: "text/plain"});
-    //     if (window.navigator.msSaveOrOpenBlob) // IE10+
-    //     {
-    //         window.navigator.msSaveOrOpenBlob(file, filename);
-    //     } else { // Others
-    //         let a = document.createElement("a"),
-    //             url = URL.createObjectURL(file);
-    //         a.href = url;
-    //         a.download = "a.svg";
-    //         document.body.appendChild(a);
-    //         a.click();
-    //         setTimeout(function () {
-    //             document.body.removeChild(a);
-    //             window.URL.revokeObjectURL(url);
-    //         }, 0);
-    //     }
-    // });
-    //
-    // pdfButton.addEventListener("click", function () {
-    //
-    //     // let img = svg.getElementsByTagName('image');
-    //     // console.log(img);
-    //     // Array.from(img).forEach(setRef);
-    //     //
-    //     // function setRef(value) {
-    //     //     console.log("set");
-    //     //     let ref=value.getAttribute("xlink:href");
-    //     //     if (ref.includes("Function"))
-    //     //         value.setAttribute("xlink:href", "function");
-    //     //
-    //     //     else if(ref.includes("Heart"))
-    //     //         value.setAttribute("xlink:href", "heart");
-    //     //     else if (ref.includes("Risk"))
-    //     //         value.setAttribute("xlink:href", "risk");
-    //     //     else if (ref.includes("Cloud"))
-    //     //         value.setAttribute("xlink:href", "cloud");
-    //     //     else if (ref.includes("Stakeholder"))
-    //     //         value.setAttribute("xlink:href", "stakeholder");
-    //     // }
-    //     // let serializer = new XMLSerializer();
-    //     // let ser = serializer.serializeToString(svg);
-    //
-    //     $.ajax(export_url, {
-    //         type: "POST",
-    //         headers: {Authorization: "Bearer " + token},
-    //         contentType: "application/json",
-    //         data: JSON.stringify({svg: ser}),
-    //
-    //         success: function (res) {
-    //             console.log(res.png.data);
-    //             // var base64str = res.pdf;
-    //             // // decode base64 string, remove space for IE compatibility
-    //             // var binary = atob(base64str.replace(/\s/g, ''));
-    //             // var len = binary.length;
-    //             // var buffer = new ArrayBuffer(len);
-    //             // var view = new Uint8Array(buffer);
-    //             // for (var i = 0; i < len; i++) {
-    //             //     view[i] = binary.charCodeAt(i);
-    //             // }
-    //             let data = new Uint8Array(res.png.data);
-    //             let pngFile = new Blob([data], {type: "image/png"});
-    //             console.log(pngFile);
-    //             if (window.navigator.msSaveOrOpenBlob) // IE10+
-    //             {
-    //                 window.navigator.msSaveOrOpenBlob(pngFile, Filename);
-    //             } else { // Others
-    //                 let a = document.createElement("a"),
-    //                     url = URL.createObjectURL(pngFile);
-    //                 a.href = url;
-    //                 a.download = "a.png";
-    //                 document.body.appendChild(a);
-    //                 a.click();
-    //                 setTimeout(function () {
-    //                     document.body.removeChild(a);
-    //                     window.URL.revokeObjectURL(url);
-    //                 }, 0);
-    //             }
-    //
-    //         }
-    //     }).fail(function (jqXHR) {
-    //         warningMessageSlide(
-    //             jqXHR.responseJSON.message + "<br>Please try again."
-    //         );
-    //     });
-    //
-    // });
-    //
-    // w.document.close();
+// let w = window.open();
+//
+// w.document.open();
+//
+// w.document.write("<h1>Preview:</h1><br>");
+// // 1. Create the button
+// let svgButton = w.document.createElement("button");
+// svgButton.innerHTML = "Export as SVG";
+//
+// let pdfButton = w.document.createElement("button");
+// pdfButton.innerHTML = "Export as png";
+// // 2. Append
+// let body = w.document.getElementsByTagName("body")[0];
+// body.appendChild(svgButton);
+// body.appendChild(pdfButton);
+//
+// w.document.write(ser);
+//
+// // 3. Add event handler
+// svgButton.addEventListener("click", function () {
+//
+//     let file = new Blob([svg.outerHTML], {type: "text/plain"});
+//     if (window.navigator.msSaveOrOpenBlob) // IE10+
+//     {
+//         window.navigator.msSaveOrOpenBlob(file, filename);
+//     } else { // Others
+//         let a = document.createElement("a"),
+//             url = URL.createObjectURL(file);
+//         a.href = url;
+//         a.download = "a.svg";
+//         document.body.appendChild(a);
+//         a.click();
+//         setTimeout(function () {
+//             document.body.removeChild(a);
+//             window.URL.revokeObjectURL(url);
+//         }, 0);
+//     }
+// });
+//
+// pdfButton.addEventListener("click", function () {
+//
+//     // let img = svg.getElementsByTagName('image');
+//     // console.log(img);
+//     // Array.from(img).forEach(setRef);
+//     //
+//     // function setRef(value) {
+//     //     console.log("set");
+//     //     let ref=value.getAttribute("xlink:href");
+//     //     if (ref.includes("Function"))
+//     //         value.setAttribute("xlink:href", "function");
+//     //
+//     //     else if(ref.includes("Heart"))
+//     //         value.setAttribute("xlink:href", "heart");
+//     //     else if (ref.includes("Risk"))
+//     //         value.setAttribute("xlink:href", "risk");
+//     //     else if (ref.includes("Cloud"))
+//     //         value.setAttribute("xlink:href", "cloud");
+//     //     else if (ref.includes("Stakeholder"))
+//     //         value.setAttribute("xlink:href", "stakeholder");
+//     // }
+//     // let serializer = new XMLSerializer();
+//     // let ser = serializer.serializeToString(svg);
+//
+//     $.ajax(export_url, {
+//         type: "POST",
+//         headers: {Authorization: "Bearer " + token},
+//         contentType: "application/json",
+//         data: JSON.stringify({svg: ser}),
+//
+//         success: function (res) {
+//             console.log(res.png.data);
+//             // var base64str = res.pdf;
+//             // // decode base64 string, remove space for IE compatibility
+//             // var binary = atob(base64str.replace(/\s/g, ''));
+//             // var len = binary.length;
+//             // var buffer = new ArrayBuffer(len);
+//             // var view = new Uint8Array(buffer);
+//             // for (var i = 0; i < len; i++) {
+//             //     view[i] = binary.charCodeAt(i);
+//             // }
+//             let data = new Uint8Array(res.png.data);
+//             let pngFile = new Blob([data], {type: "image/png"});
+//             console.log(pngFile);
+//             if (window.navigator.msSaveOrOpenBlob) // IE10+
+//             {
+//                 window.navigator.msSaveOrOpenBlob(pngFile, Filename);
+//             } else { // Others
+//                 let a = document.createElement("a"),
+//                     url = URL.createObjectURL(pngFile);
+//                 a.href = url;
+//                 a.download = "a.png";
+//                 document.body.appendChild(a);
+//                 a.click();
+//                 setTimeout(function () {
+//                     document.body.removeChild(a);
+//                     window.URL.revokeObjectURL(url);
+//                 }, 0);
+//             }
+//
+//         }
+//     }).fail(function (jqXHR) {
+//         warningMessageSlide(
+//             jqXHR.responseJSON.message + "<br>Please try again."
+//         );
+//     });
+//
+// });
+//
+// w.document.close();
 // }
 
 $("#Export").click(function (evt) {
@@ -278,7 +276,7 @@ $("#saveXML").click(evt => {
     sendXML(false);
 });
 
-$("#saveTemplateXML").click( evt => {
+$("#saveTemplateXML").click(evt => {
     evt.preventDefault();
     sendXML(true);
 });

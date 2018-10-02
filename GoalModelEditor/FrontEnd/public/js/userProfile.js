@@ -127,7 +127,7 @@ $(document).ready(function() {
 }); // end ready
 
 //when clicking "submit" of editing profile, after validation success, put data to the backend
-$("#profile").validator().on("submit", function(evt) {
+$("#profile").validator().on("submit", function (evt) {
         //by default, when the form is invalid, .preventDefault() is called
         //so when the form is valid
         if (!evt.isDefaultPrevented()) {
@@ -170,7 +170,7 @@ $("#profile").validator().on("submit", function(evt) {
     });
 
 //when clicking "submit" of changing password, after validation success, put data to the backend
-$("#pwdform").validator().on("submit", function(evt) {
+$("#pwdform").validator().on("submit", function (evt) {
         //by default, when the form is invalid, .preventDefault() is called
         //so when the form is valid
         if (!evt.isDefaultPrevented()) {

@@ -190,7 +190,7 @@ mxMotivationalLayout.prototype.edgeStyle = mxHierarchicalEdgeStyle.POLYLINE;
  *
  * Returns the internal <mxGraphHierarchyModel> for this layout algorithm.
  */
-mxMotivationalLayout.prototype.getModel = function() {
+mxMotivationalLayout.prototype.getModel = function () {
     return this.model;
 };
 
@@ -204,7 +204,7 @@ mxMotivationalLayout.prototype.getModel = function() {
  * parent - Parent <mxCell> that contains the children to be laid out.
  * roots - Optional starting roots of the layout.
  */
-mxMotivationalLayout.prototype.execute = function(parent, roots) {
+mxMotivationalLayout.prototype.execute = function (parent, roots) {
     this.parent = parent;
     var model = this.graph.model;
     this.edgesCache = new mxDictionary();
@@ -301,7 +301,7 @@ mxMotivationalLayout.prototype.execute = function(parent, roots) {
  * parent - <mxCell> whose children should be checked.
  * vertices - array of vertices to limit search to
  */
-mxMotivationalLayout.prototype.findRoots = function(parent, vertices) {
+mxMotivationalLayout.prototype.findRoots = function (parent, vertices) {
     var roots = [];
 
     if (parent != null && vertices != null) {
@@ -357,7 +357,7 @@ mxMotivationalLayout.prototype.findRoots = function(parent, vertices) {
  *
  * cell - <mxCell> whose edges should be returned.
  */
-mxMotivationalLayout.prototype.getEdges = function(cell) {
+mxMotivationalLayout.prototype.getEdges = function (cell) {
     var cachedEdges = this.edgesCache.get(cell);
 
     if (cachedEdges != null) {
@@ -423,7 +423,7 @@ mxMotivationalLayout.prototype.getEdges = function(cell) {
  * edge - <mxCell> whose edges should be returned.
  * source - Boolean that specifies whether the source or target terminal is to be returned
  */
-mxMotivationalLayout.prototype.getVisibleTerminal = function(edge, source) {
+mxMotivationalLayout.prototype.getVisibleTerminal = function (edge, source) {
     var terminalCache = this.edgesTargetTermCache;
 
     if (source) {
@@ -469,7 +469,7 @@ mxMotivationalLayout.prototype.getVisibleTerminal = function(edge, source) {
  * routing changes made. It runs each stage of the layout that has been
  * created.
  */
-mxMotivationalLayout.prototype.run = function(parent) {
+mxMotivationalLayout.prototype.run = function (parent) {
     // Separate out unconnected hierarchies
     var hierarchyVertices = [];
     var allVertexSet = [];
@@ -579,7 +579,7 @@ mxMotivationalLayout.prototype.run = function(parent) {
  *
  * Creates an array of descendant cells
  */
-mxMotivationalLayout.prototype.filterDescendants = function(cell, result) {
+mxMotivationalLayout.prototype.filterDescendants = function (cell, result) {
     var model = this.graph.model;
 
     if (
@@ -618,7 +618,7 @@ mxMotivationalLayout.prototype.filterDescendants = function(cell, result) {
  *
  * cell - <mxCell> that represents the port.
  */
-mxMotivationalLayout.prototype.isPort = function(cell) {
+mxMotivationalLayout.prototype.isPort = function (cell) {
     if (cell.geometry.relative) {
         return true;
     }
@@ -638,11 +638,9 @@ mxMotivationalLayout.prototype.isPort = function(cell) {
  * target -
  * directed -
  */
-mxMotivationalLayout.prototype.getEdgesBetween = function(
-    source,
-    target,
-    directed
-) {
+mxMotivationalLayout.prototype.getEdgesBetween = function (source,
+                                                           target,
+                                                           directed) {
     directed = directed != null ? directed : false;
     var edges = this.getEdges(source);
     var result = [];
@@ -680,15 +678,13 @@ mxMotivationalLayout.prototype.getEdgesBetween = function(
  * null for the first step of the traversal.
  * allVertices - Array of cell paths for the visited cells.
  */
-mxMotivationalLayout.prototype.traverse = function(
-    vertex,
-    directed,
-    edge,
-    allVertices,
-    currentComp,
-    hierarchyVertices,
-    filledVertexSet
-) {
+mxMotivationalLayout.prototype.traverse = function (vertex,
+                                                    directed,
+                                                    edge,
+                                                    allVertices,
+                                                    currentComp,
+                                                    hierarchyVertices,
+                                                    filledVertexSet) {
     if (vertex != null && allVertices != null) {
         // Has this vertex been seen before in any traversal
         // And if the filled vertex set is populated, only
@@ -795,7 +791,7 @@ mxMotivationalLayout.prototype.traverse = function(
  *
  * Executes the cycle stage using mxMinimumCycleRemover.
  */
-mxMotivationalLayout.prototype.cycleStage = function(parent) {
+mxMotivationalLayout.prototype.cycleStage = function (parent) {
     var cycleStage = new mxMinimumCycleRemover(this);
     cycleStage.execute(parent);
 };
@@ -805,7 +801,7 @@ mxMotivationalLayout.prototype.cycleStage = function(parent) {
  *
  * Implements first stage of a Sugiyama layout.
  */
-mxMotivationalLayout.prototype.layeringStage = function() {
+mxMotivationalLayout.prototype.layeringStage = function () {
     this.model.initialRank();
     this.model.fixRanks();
 };
@@ -815,7 +811,7 @@ mxMotivationalLayout.prototype.layeringStage = function() {
  *
  * Executes the crossing stage using mxMedianHybridCrossingReduction.
  */
-mxMotivationalLayout.prototype.crossingStage = function(parent) {
+mxMotivationalLayout.prototype.crossingStage = function (parent) {
     var crossingStage = new mxMedianHybridCrossingReduction(this);
     crossingStage.execute(parent);
 };
@@ -825,7 +821,7 @@ mxMotivationalLayout.prototype.crossingStage = function(parent) {
  *
  * Executes the placement stage using mxCoordinateAssignment.
  */
-mxMotivationalLayout.prototype.placementStage = function(initialX, parent) {
+mxMotivationalLayout.prototype.placementStage = function (initialX, parent) {
     var placementStage = new mxCoordinateAssignment(
         this,
         this.intraCellSpacing,

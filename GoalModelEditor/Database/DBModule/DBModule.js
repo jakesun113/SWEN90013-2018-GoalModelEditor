@@ -1271,7 +1271,9 @@ const DBModule = function () {
                                 message: err.sqlMessage
                             });
                         }
-                        if (result.length === 1) {// success
+                        if (result.changedRows === 1) {// success
+                            result.TemplateId = templateId;
+                            result.UserId = userId;
                             return resolve(result);
                         } else { //
                             return resolve({

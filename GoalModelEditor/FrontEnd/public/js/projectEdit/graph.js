@@ -65,8 +65,7 @@ graph.setPanning(true);
 graph.panningHandler.useLeftButtonForPanning = true;
 graph.dropEnabled = true;
 graph.setConnectable(true);
-graph.connectionHandler.
-graph.setAllowDanglingEdges(false);
+graph.connectionHandler.graph.setAllowDanglingEdges(false);
 graph.setMultigraph(true);
 
 
@@ -85,7 +84,7 @@ var sidebar = new mxToolbar(document.getElementById("sidebarContainer"));
 sidebar.enabled = false;
 
 // allow vertices to be dropped on the graph at arbitrary points
-mxDragSource.prototype.getDropTarget = function(graph, x, y) {
+mxDragSource.prototype.getDropTarget = function (graph, x, y) {
     var cell = graph.getCellAt(x, y);
     if (!graph.isValidDropTarget(cell)) {
         cell = null;
@@ -96,30 +95,30 @@ mxDragSource.prototype.getDropTarget = function(graph, x, y) {
 // ... with zoom-in/zoom-out buttons
 sidebar.addLine();
 let zoomIn = sidebar.addItem("Zoom In", "/src/images/zoomin.svg",
-    function() {
+    function () {
         graph.zoomIn();
-});
+    });
 zoomIn.style.width = '20px';
 
 let zoomOut = sidebar.addItem("Zoom Out", "/src/images/zoomout.svg",
-    function() {
+    function () {
         graph.zoomOut();
-});
+    });
 zoomOut.style.width = '20px';
 sidebar.addLine();
 
 // add the sidebar elements for each of the goals
-var addSidebarItem = function(graph, sidebar, image, width, height) {
+var addSidebarItem = function (graph, sidebar, image, width, height) {
 
     // create the prototype cell which will be cloned when a sidebar item
     // is dragged on to the graph
     var prototype = new mxCell(null, new mxGeometry(0, 0, width, height),
-        "fontSize=16;fontColor=black;shape=rounded;shape=image;image="+image);
+        "fontSize=16;fontColor=black;shape=rounded;shape=image;image=" + image);
     prototype.setVertex(true);
 
     // function attached to each dragable sidebar item - this is used
     // to drag an item from the toolbar, then instantiate it in the graph
-    var dragAndDrop = function(graph, evnt, cell) {
+    var dragAndDrop = function (graph, evnt, cell) {
         graph.stopEditing(false);
         var point = graph.getPointForEvent(evnt);
         var goal = graph.getModel().cloneCell(prototype);
@@ -142,25 +141,25 @@ addSidebarItem(graph, sidebar, PATH_FUNCTIONAL,
     SYMBOL_WIDTH, SYMBOL_HEIGHT
 );
 addSidebarItem(graph, sidebar, PATH_EMOTIONAL,
-    SYMBOL_WIDTH*SW_EMOTIONAL, SYMBOL_HEIGHT*SH_EMOTIONAL
+    SYMBOL_WIDTH * SW_EMOTIONAL, SYMBOL_HEIGHT * SH_EMOTIONAL
 );
 addSidebarItem(graph, sidebar, PATH_NEGATIVE,
-    SYMBOL_WIDTH*SW_NEGATIVE, SYMBOL_HEIGHT*SW_NEGATIVE
+    SYMBOL_WIDTH * SW_NEGATIVE, SYMBOL_HEIGHT * SW_NEGATIVE
 );
 addSidebarItem(graph, sidebar, PATH_QUALITY,
-    SYMBOL_WIDTH*SW_QUALITY, SYMBOL_HEIGHT*SW_QUALITY
+    SYMBOL_WIDTH * SW_QUALITY, SYMBOL_HEIGHT * SW_QUALITY
 );
 addSidebarItem(graph, sidebar, PATH_STAKEHOLDER,
-    SYMBOL_WIDTH*SW_STAKEHOLDER*1.5, SYMBOL_HEIGHT*SW_STAKEHOLDER*1.5
+    SYMBOL_WIDTH * SW_STAKEHOLDER * 1.5, SYMBOL_HEIGHT * SW_STAKEHOLDER * 1.5
 );
 sidebar.addLine();
 
 // key-handler for deletion using Backspace
 var keyHandler = new mxKeyHandler(graph);
-keyHandler.bindKey(DELETE_KEYBINDING, function(evt) {
-  if (graph.isEnabled()) {
-    graph.removeCells();
-  }
+keyHandler.bindKey(DELETE_KEYBINDING, function (evt) {
+    if (graph.isEnabled()) {
+        graph.removeCells();
+    }
 });
 
 /**
@@ -281,7 +280,7 @@ function renderFunction(goal, graph, source = null) {
     let image = PATH_FUNCTIONAL;
     let width = SYMBOL_WIDTH;
     let height = SYMBOL_HEIGHT;
-    if (source != null){
+    if (source != null) {
         let geo = graph.getCellGeometry(source);
         width = geo.width * CHILD_SIZE_SCALE;
         height = geo.height * CHILD_SIZE_SCALE;
@@ -397,7 +396,7 @@ function renderNonFunction(descriptions, graph, source=null, type="None") {
  */
 function layoutFunctions(graph) {
     let layout = new mxGoalModelLayout(
-        graph, 
+        graph,
         VERTICAL_SPACING,
         HORIZONTAL_SPACING
     );

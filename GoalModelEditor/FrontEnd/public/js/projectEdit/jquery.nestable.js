@@ -1000,20 +1000,20 @@
                 return;
             }
 
-            window.jQuery.fn.scrollParent = function() {
+            window.jQuery.fn.scrollParent = function () {
                 var overflowRegex = /(auto|scroll)/,
-                    position = this.css( "position" ),
+                    position = this.css("position"),
                     excludeStaticParent = position === "absolute",
-                    scrollParent = this.parents().filter( function() {
-                        var parent = $( this );
-                        if ( excludeStaticParent && parent.css( "position" ) === "static" ) {
+                    scrollParent = this.parents().filter(function () {
+                        var parent = $(this);
+                        if (excludeStaticParent && parent.css("position") === "static") {
                             return false;
                         }
                         var overflowState = parent.css(["overflow", "overflowX", "overflowY"]);
-                        return (overflowRegex).test( overflowState.overflow + overflowState.overflowX + overflowState.overflowY );
-                    }).eq( 0 );
+                        return (overflowRegex).test(overflowState.overflow + overflowState.overflowX + overflowState.overflowY);
+                    }).eq(0);
 
-                return position === "fixed" || !scrollParent.length ? $( this[ 0 ].ownerDocument || document ) : scrollParent;
+                return position === "fixed" || !scrollParent.length ? $(this[0].ownerDocument || document) : scrollParent;
             };
 
             // do scrolling if enable
@@ -1261,8 +1261,8 @@
 
         // Append the .dd-empty div to the list so it can be populated and styled
         appendEmptyElement: function(element) {
-            element.append('<div class="' + this.options.emptyClass  +'">'+
-                    '<div class="dragger non-draggable mt-5" style="color:rgba(0, 0, 0, .35);cursor: default">'
+            element.append('<div class="' + this.options.emptyClass + '">' +
+                '<div class="dragger non-draggable mt-5" style="color:rgba(0, 0, 0, .35);cursor: default">'
                 + "Drag here to create a new cluster" + '</div>' + '</div>');
         }
     };

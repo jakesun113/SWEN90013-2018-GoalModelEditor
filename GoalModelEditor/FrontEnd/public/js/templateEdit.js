@@ -24,7 +24,6 @@ $(document).ready(() => {
 });
 
 
-
 /**
  * Function for setting the userName
  *

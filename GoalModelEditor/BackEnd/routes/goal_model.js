@@ -33,7 +33,7 @@ const path = require("path");
 const fs = require("fs");
 const multiparty = require("multiparty");
 const FormData = require("form-data");
-const { convert } = require('convert-svg-to-png');
+const {convert} = require('convert-svg-to-png');
 // security related imports
 const auth = require("../authen");
 const db = require(path.resolve(
@@ -90,8 +90,8 @@ router.post("/:userId/:projectId", (req, res, next) => {
             req.body.model_name,
             req.body.description,
             dirpath,
-            req.params.projectId,
-            req.body.model_type
+        req.params.projectId,
+        req.body.model_type
         )
         .then(result => {
             createDirectoryPath(dirpath);
@@ -416,7 +416,7 @@ router.put("/info/:userId/:goalmodelId", (req, res) => {
     // update goal model
     let dirpath = "./UserFiles/" + req.params.userId + "/" + req.params.goalmodelId + "/";
     db.updateGoalModel(
-            req.params.userId,
+        req.params.userId,
             req.params.goalmodelId,
             req.body.model_name,
             req.body.description,
@@ -579,14 +579,14 @@ router.get("/images/:userId/:goalmodelId", (req, res) => {
                 imagepath = result.DirPath + result.ModelId + "/images/";
                 let formData = new FormData();
                 fs.readdir(imagepath, function (err, items) {
-                    console.log("item length" +items.length+ "\n")
+                    console.log("item length" + items.length + "\n")
                     for (let i = 0; i < items.length; i++) {
                         let image = fs.readFileSync(
                             imagepath + items[i],
                             "base64"
                         );
                         formData.append("image", image);
-                        console.log("appended item " + i );
+                        console.log("appended item " + i);
                     }
                     res.statusCode = 200;
                     res.format({
@@ -621,7 +621,7 @@ router.get("/images/:userId/:goalmodelId", (req, res) => {
 
 const PDFDocument = require('pdfkit');
 const SVGtoPDF = require('svg-to-pdfkit');
-router.post("/exportToPng/:userId/:goalmodelId", async(req, res) => {
+router.post("/exportToPng/:userId/:goalmodelId", async (req, res) => {
 
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
@@ -629,22 +629,22 @@ router.post("/exportToPng/:userId/:goalmodelId", async(req, res) => {
         res.json({created: false, message: "Authentication failed"});
         return res.end();
     }
-    let svg=req.body.svg;
+    let svg = req.body.svg;
     console.log(svg);
-    let funcRegex=/https:\/\/([^<>]+\/)+Function\.png/gi;
-     svg=svg.replace(funcRegex, Function);
-    let cloudRegex=/https:\/\/([^<>]+\/)+Cloud\.png/gi;
-     svg=svg.replace(cloudRegex, Cloud);
-    let heartRegex=/https:\/\/([^<>]+\/)+Heart\.png/gi;
-    svg=svg.replace(heartRegex, Heart);
-    let riskRegex=/https:\/\/([^<>]+\/)+Risk\.png/gi;
-    svg=svg.replace(riskRegex, Risk);
-    let shRegex=/https:\/\/([^<>]+\/)+Stakeholder\.png/gi;
-    svg=svg.replace(shRegex, Stakeholder);
+    let funcRegex = /https:\/\/([^<>]+\/)+Function\.png/gi;
+    svg = svg.replace(funcRegex, Function);
+    let cloudRegex = /https:\/\/([^<>]+\/)+Cloud\.png/gi;
+    svg = svg.replace(cloudRegex, Cloud);
+    let heartRegex = /https:\/\/([^<>]+\/)+Heart\.png/gi;
+    svg = svg.replace(heartRegex, Heart);
+    let riskRegex = /https:\/\/([^<>]+\/)+Risk\.png/gi;
+    svg = svg.replace(riskRegex, Risk);
+    let shRegex = /https:\/\/([^<>]+\/)+Stakeholder\.png/gi;
+    svg = svg.replace(shRegex, Stakeholder);
     console.log(svg);
     let png = await convert(svg);
     console.log(png);
-    res.statusCode=200;
+    res.statusCode = 200;
     //res.writeHead(200, headers);
     res.json({png: png});
     return res.end();
@@ -656,7 +656,7 @@ router.post("/exportToPdf/:userId/:goalmodelId", (req, res, next) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
-        res.json({ created: false, message: "Authentication failed" });
+        res.json({created: false, message: "Authentication failed"});
         return res.end();
     }
 
@@ -680,17 +680,17 @@ router.post("/exportToPdf/:userId/:goalmodelId", (req, res, next) => {
     //console.log(svg);
 
     SVGtoPDF(doc, svg, 0, 0);
-    stream.on('finish', function() {
+    stream.on('finish', function () {
         console.log(fs.readFileSync(
             dirpath + "/" + req.params.goalmodelId +
             "/" + req.params.goalmodelId +
             ".pdf"));
         let downloadStream = fs.readFileSync(dirpath + "/" + req.params.goalmodelId +
             "/" + req.params.goalmodelId +
-            ".pdf","base64");
+            ".pdf", "base64");
         // Be careful of special characters
         console.log(downloadStream);
-        res.statusCode=200;
+        res.statusCode = 200;
         //res.writeHead(200, headers);
         res.json({pdf: downloadStream});
         return res.end();

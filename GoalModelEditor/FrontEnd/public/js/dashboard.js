@@ -204,7 +204,7 @@ $("#delete_template").submit(evt => {
  * @trigger {document|HTMLElement}
  */
 $(document).click(evt => {
-    if($(evt.target).hasClass("view-container") ||
+    if ($(evt.target).hasClass("view-container") ||
         $(evt.target).parents(".view-container")[0]) {
         return;
     }
@@ -289,7 +289,7 @@ function parseProject(project) {
         '<div class="col-1 new-model text-center model show" data-toggle="modal"' +
         'data-target="#add-model" title="Add a new model">' +
         '<i class="fas fa-plus"></i>' +
-        '<div class="instruction" id = "add_' + project.project_id +'" ' +
+        '<div class="instruction" id = "add_' + project.project_id + '" ' +
         'data-placement="bottom" data-toggle="popover" ' +
         'data-content="Click here to create a motivational model."></div>' +
         '</div>';
@@ -309,7 +309,7 @@ function parseProject(project) {
     projectHTML = projectHTML + '</div>';
 
     // Goal model list
-    projectHTML = projectHTML + '<div id="models_'+ project.project_id +'" class="collapse model-list">';
+    projectHTML = projectHTML + '<div id="models_' + project.project_id + '" class="collapse model-list">';
 
     // Goal models if any
     if (project.models) {
@@ -332,7 +332,7 @@ function parseGoalModel(model) {
 
     // The model div
     let modelHTML =
-        '<div class="row model py-3 border-bottom text-color" id="'+ model.model_id +'">';
+        '<div class="row model py-3 border-bottom text-color" id="' + model.model_id + '">';
 
     // To make the view better
     modelHTML = modelHTML + '<div class="col-1"></div>';
@@ -401,7 +401,7 @@ function parseTemplate(template) {
 
     // The template div
     let templateHTML =
-        '<div class="row template py-3 border-bottom text-color" id="'+ template.template_id +'">';
+        '<div class="row template py-3 border-bottom text-color" id="' + template.template_id + '">';
 
     // To make the view consistent
     templateHTML = templateHTML + '<div class="col-1"></div>';
@@ -462,7 +462,7 @@ function retriveProjects() {
             removeCustomizedEventListeners();
             addListenersToNewItem();
         }
-    }).fail(function(jqXHR) {
+    }).fail(function (jqXHR) {
         warningMessageSlide(
             jqXHR.responseJSON.message + "<br>Please try again."
         );
@@ -475,7 +475,7 @@ function retriveProjects() {
 function retriveTemplates() {
     $.ajax(GET_TEMPLATE_URL, {
         type: "GET",
-        headers: { Authorization: "Bearer " + TOKEN },
+        headers: {Authorization: "Bearer " + TOKEN},
         success: templates => {
 
             // Append the projects to current UI
@@ -581,8 +581,8 @@ function renameProject(url, pid, project) {
         success: () => {
             successMessageSlide(
                 "Project:" +
-                    $("#" + pid).find(".project_name").eq(0).html() +
-                    " successfully renamed to " + project.project_name + "."
+                $("#" + pid).find(".project_name").eq(0).html() +
+                " successfully renamed to " + project.project_name + "."
             );
 
             // Make the new project name shown in UI
@@ -633,7 +633,7 @@ function renameModel(url, mid, model) {
     $.ajax(url, {
         data: JSON.stringify(model),
         type: "PUT",
-        headers: { Authorization: "Bearer " + TOKEN },
+        headers: {Authorization: "Bearer " + TOKEN},
         success: () => {
             successMessageSlide(
                 "Model:" +
@@ -646,7 +646,7 @@ function renameModel(url, mid, model) {
             // Make the new model name shown in UI
             $("#" + mid).find(".model_name").eq(0).html($("#rename-model .modal-body input").val());
         }
-    }).fail(function(jqXHR) {
+    }).fail(function (jqXHR) {
         warningMessageSlide(jqXHR.responseJSON.message + "<br>Please try again.");
     });
 }
@@ -662,7 +662,7 @@ function deleteModel(url, mid, model) {
     $.ajax(url, {
         data: model,
         type: "DELETE",
-        headers: { Authorization: "Bearer " + TOKEN },
+        headers: {Authorization: "Bearer " + TOKEN},
         success: () => {
             successMessageSlide(
                 "Model:" +
@@ -673,7 +673,7 @@ function deleteModel(url, mid, model) {
             // Hide the corresponding HTML
             $("#" + mid).hide();
         }
-    }).fail(function(jqXHR) {
+    }).fail(function (jqXHR) {
         warningMessageSlide(jqXHR.responseJSON.message + "<br>Please try again.");
     });
 }
@@ -687,7 +687,7 @@ function createTemplate(template) {
     $.ajax(POST_TEMPLATE_URL, {
         data: template,
         type: "POST",
-        headers: { Authorization: "Bearer" + TOKEN },
+        headers: {Authorization: "Bearer" + TOKEN},
         success: template => {
             // Append the project to current UI
             let templateHTML = parseTemplate(template);
@@ -701,7 +701,7 @@ function createTemplate(template) {
             // Re-initialize the input for the modal
             $("#add-template .modal-body input").val("");
         }
-    }).fail(function(jqXHR) {
+    }).fail(function (jqXHR) {
         warningMessageSlide(jqXHR.responseJSON.message + "<br>Please try again.");
     });
 }
@@ -717,7 +717,7 @@ function renameTemplate(url, tid, template) {
     $.ajax(url, {
         data: template,
         type: "PUT",
-        headers: { Authorization: "Bearer " + TOKEN },
+        headers: {Authorization: "Bearer " + TOKEN},
         success: () => {
             successMessageSlide(
                 "Model:" +
@@ -730,7 +730,7 @@ function renameTemplate(url, tid, template) {
             // Make the new model name shown in UI
             $("#" + tid).find(".template_name").eq(0).html($("#rename-template .modal-body input").val());
         }
-    }).fail(function(jqXHR) {
+    }).fail(function (jqXHR) {
         warningMessageSlide(jqXHR.responseJSON.message + "<br>Please try again.");
     });
 }
@@ -746,7 +746,7 @@ function deleteTemplate(url, tid, template) {
     $.ajax(url, {
         data: template,
         type: "DELETE",
-        headers: { Authorization: "Bearer " + TOKEN },
+        headers: {Authorization: "Bearer " + TOKEN},
         success: () => {
             successMessageSlide(
                 "Template:" +
@@ -757,7 +757,7 @@ function deleteTemplate(url, tid, template) {
             // Hide the corresponding HTML
             $("#" + tid).hide();
         }
-    }).fail(function(jqXHR) {
+    }).fail(function (jqXHR) {
         warningMessageSlide(jqXHR.responseJSON.message + "<br>Please try again.");
     });
 }
@@ -861,7 +861,7 @@ function putModelNameInModal(modelName) {
     // Set time out so that the model name gets rendered in the modal
     let $target = $("#rename-model");
     $target.data("triggered", true);
-    setTimeout(function() {
+    setTimeout(function () {
         if ($target.data("triggered")) {
             $target.modal("show").data("triggered", false);
         }
@@ -881,7 +881,7 @@ function putTemplateNameInModal(templateName) {
     // Set time out so that the template name gets rendered in the madal
     let $target = $("#rename-template");
     $target.data("triggered", true);
-    setTimeout(function() {
+    setTimeout(function () {
         if ($target.data("triggered")) {
             $target.modal("show").data("triggered", false);
         }
@@ -969,7 +969,7 @@ function addClickOnProject() {
     $(".project_header").click(evt => {
         removeAllClicked();
         let parentNode = null;
-        if($(evt.target).hasClass("project")) {
+        if ($(evt.target).hasClass("project")) {
             parentNode = evt.target;
         } else {
             parentNode = $(evt.target).parents(".project")[0];
@@ -983,7 +983,7 @@ function addClickOnProject() {
         // Show/unfold the model list
         $("#models_" + getPID()).collapse('toggle');
 
-        if($("#models_" + getPID() + " .model")[0] === undefined) {
+        if ($("#models_" + getPID() + " .model")[0] === undefined) {
             $("#add_" + getPID()).popover('toggle');
             $(".overlay").show();
         }
@@ -1041,7 +1041,7 @@ function addClickOnModel() {
     $(".model").click(evt => {
         removeAllClicked();
         let parentNode = null;
-        if($(evt.target).hasClass("model")) {
+        if ($(evt.target).hasClass("model")) {
             parentNode = evt.target;
         } else {
             parentNode = $(evt.target).parents(".model")[0];
@@ -1058,16 +1058,16 @@ function addClickOnMore() {
         evt.stopPropagation();
         removeAllClicked();
         let toggleNode = null;
-        if($(evt.target).hasClass("dropdown")) {
+        if ($(evt.target).hasClass("dropdown")) {
             toggleNode = evt.target;
-        } else if($(evt.target).parents(".dropdown")[0]){
+        } else if ($(evt.target).parents(".dropdown")[0]) {
             toggleNode = $(evt.target).parents(".dropdown")[0];
         } else {
             toggleNode = $(evt.target).children(".dropdown")[0];
         }
-        if($(evt.target).parents(".model")[0]) {
+        if ($(evt.target).parents(".model")[0]) {
             addModelClicked($(evt.target).parents(".model")[0]);
-        } else if($(evt.target).parents(".project_header")[0]) {
+        } else if ($(evt.target).parents(".project_header")[0]) {
             addProjectClicked($(evt.target).parents(".project_header")[0]);
         }
         $(toggleNode).dropdown("toggle");
@@ -1081,9 +1081,9 @@ function addClickOnMore() {
 function addClickOnDropdown() {
     $(".dropdown").click(evt => {
         removeAllClicked();
-        if($(evt.target).parents(".model")[0]) {
+        if ($(evt.target).parents(".model")[0]) {
             addModelClicked($(evt.target).parents(".model")[0]);
-        } else if($(evt.target).parents(".project_header")[0]) {
+        } else if ($(evt.target).parents(".project_header")[0]) {
             addProjectClicked($(evt.target).parents(".project_header")[0]);
         }
     });
@@ -1096,7 +1096,7 @@ function addClickOnRenameModel() {
     $(".rename-model").click(evt => {
         evt.stopImmediatePropagation();
         let parentNode = null;
-        if($(evt.target).hasClass("model")) {
+        if ($(evt.target).hasClass("model")) {
             parentNode = evt.target;
         } else {
             parentNode = $(evt.target).parents(".model")[0];
@@ -1114,7 +1114,7 @@ function addClickOnDeleteModel() {
     $(".delete-model").click(evt => {
         evt.stopImmediatePropagation();
         let parentNode = null;
-        if($(evt.target).hasClass("model")) {
+        if ($(evt.target).hasClass("model")) {
             parentNode = evt.target;
         } else {
             parentNode = $(evt.target).parents(".model")[0];
@@ -1131,7 +1131,7 @@ function addDbClickOnModel() {
     $(".model").dblclick(evt => {
         evt.stopImmediatePropagation();
         let parentNode = null;
-        if($(evt.target).hasClass("model")) {
+        if ($(evt.target).hasClass("model")) {
             parentNode = evt.target;
         } else {
             parentNode = $(evt.target).parents(".model")[0];
@@ -1148,7 +1148,7 @@ function addClickOnTemplate() {
     $(".template").click(evt => {
         removeAllClicked();
         let parentNode = null;
-        if($(evt.target).hasClass("template")) {
+        if ($(evt.target).hasClass("template")) {
             parentNode = evt.target;
         } else {
             parentNode = $(evt.target).parents(".template")[0];
@@ -1165,7 +1165,7 @@ function addDbClickOnTemplate() {
     $(".template").dblclick(evt => {
         evt.stopImmediatePropagation();
         let parentNode = null;
-        if($(evt.target).hasClass("template")) {
+        if ($(evt.target).hasClass("template")) {
             parentNode = evt.target;
         } else {
             parentNode = $(evt.target).parents(".template")[0];
@@ -1183,7 +1183,7 @@ function addClickOnRenameTemplate() {
     $(".rename-template").click(evt => {
         evt.stopImmediatePropagation();
         let parentNode = null;
-        if($(evt.target).hasClass("template")) {
+        if ($(evt.target).hasClass("template")) {
             parentNode = evt.target;
         } else {
             parentNode = $(evt.target).parents(".template")[0];
@@ -1201,7 +1201,7 @@ function addClickOnDeleteTemplate() {
     $(".delete-template").click(evt => {
         evt.stopImmediatePropagation();
         let parentNode = null;
-        if($(evt.target).hasClass("template")) {
+        if ($(evt.target).hasClass("template")) {
             parentNode = evt.target;
         } else {
             parentNode = $(evt.target).parents(".template")[0];
@@ -1233,10 +1233,10 @@ function removeClickOnModelFromProject() {
  * @param {HTMLElement} collapseBtn
  */
 function changeCollapseStyle(collapseBtn) {
-    if($(collapseBtn).hasClass("fa-plus-square")) {
+    if ($(collapseBtn).hasClass("fa-plus-square")) {
         $(collapseBtn).addClass("fa-minus-square");
         $(collapseBtn).removeClass("fa-plus-square");
-    } else if($(collapseBtn).hasClass("fa-minus-square")) {
+    } else if ($(collapseBtn).hasClass("fa-minus-square")) {
         $(collapseBtn).removeClass("fa-minus-square");
         $(collapseBtn).addClass("fa-plus-square");
     }
@@ -1248,7 +1248,7 @@ function changeCollapseStyle(collapseBtn) {
  * @param {HTMLElement} iconDiv
  */
 function changeFolderStyle(iconDiv) {
-    if($(iconDiv).html() === '<i class="far fa-folder"></i>') {
+    if ($(iconDiv).html() === '<i class="far fa-folder"></i>') {
         $(iconDiv).html('<i class="far fa-folder-open"></i>');
     } else {
         $(iconDiv).html('<i class="far fa-folder"></i>');

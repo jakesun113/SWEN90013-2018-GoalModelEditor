@@ -82,7 +82,7 @@ router.get("/list/:userId", (req, res) => {
 });
 
 /* POST Create Project */
-router.post("/:userId", function(req, res) {
+router.post("/:userId", function (req, res) {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
