@@ -152,6 +152,7 @@ function getID(type) {
  * delete goal by pressing 'Escape' when empty
  * @param event
  */
+    //TODO: modify delete goals in list function by adding a "delete" button
 let activeElement;
 document.onkeyup = function (event) {
     //when the user press the 'ESC' button in the goal list
