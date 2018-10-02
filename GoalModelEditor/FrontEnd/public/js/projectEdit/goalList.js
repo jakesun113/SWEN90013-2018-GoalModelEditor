@@ -631,7 +631,7 @@ function finishEditGoalInCluster(element) {
  *
  */
 function deleteGoalInCluster(element) {
-    console.log(element);
+    //console.log(element);
     $(".dd-handle-style").removeClass("dd-handle");
     $(".dd-handle-style").css("cursor", "auto");
     //make the default enter invalid
@@ -643,6 +643,7 @@ function deleteGoalInCluster(element) {
         ddListOl.removeChild(ddItemLi);
         event.preventDefault();
     }
+    //TODO: add alert when deleting goals that have children
     //if ol is empty, remove this ol
     if (ddListOl.childNodes.length === 0) {
         let clusterNumDiv = ddListOl.parentNode;
