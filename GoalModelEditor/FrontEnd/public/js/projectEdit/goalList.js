@@ -62,6 +62,8 @@ let NegativeNum = 0;
 let QualityNum = 0;
 let StakeholderNum = 0;
 
+/*current active element to delete*/
+let activeElement;
 /*Three clusters at start*/
 let clusterNumber = 1;
 
@@ -244,7 +246,7 @@ function parseClusterNode(node) {
         'onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
         'onmousedown="event.stopImmediatePropagation()"/>' +
         '<img class="deleteButton" style="display: none" src="/img/trash-alt-solid.svg"' +
-        'onclick="event.stopImmediatePropagation(); deleteGoalInCluster(this)"' +
+        'onclick="event.stopImmediatePropagation(); handleDeleteGoalInCluster(this)"' +
         'onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
         'onmousedown="event.stopImmediatePropagation()"/>' +
         "</div>";
@@ -627,23 +629,40 @@ function finishEditGoalInCluster(element) {
 }
 
 /**
- * Delete goals in cluster by clicking button
+ * handle function when clicking "delete goal" button
  *
  */
-function deleteGoalInCluster(element) {
+function handleDeleteGoalInCluster(element) {
     //console.log(element);
     $(".dd-handle-style").removeClass("dd-handle");
     $(".dd-handle-style").css("cursor", "auto");
     //make the default enter invalid
     let ddHandleDiv = element.parentNode;
     let ddItemLi = ddHandleDiv.parentNode;
-    let ddListOl = ddItemLi.parentNode;
-    // if parent not null, delete child
+    //set current active element
+    activeElement = ddItemLi;
+
+    //if this target goal has child
+    if ($(ddItemLi).children("ol").length) {
+        $("#deleteGoalWithChildWarning").modal();
+    }
+    else {
+        deleteGoalInCluster(activeElement);
+    }
+}
+
+/**
+ * delete goals in the cluster
+ *
+ */
+function deleteGoalInCluster(element) {
+
+    let ddListOl = element.parentNode;
+    //if parent not null, delete child
     if (ddListOl.childNodes.length > 0) {
-        ddListOl.removeChild(ddItemLi);
+        ddListOl.removeChild(element);
         event.preventDefault();
     }
-    //TODO: add alert when deleting goals that have children
     //if ol is empty, remove this ol
     if (ddListOl.childNodes.length === 0) {
         let clusterNumDiv = ddListOl.parentNode;

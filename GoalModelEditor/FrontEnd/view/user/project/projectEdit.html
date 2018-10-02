@@ -344,7 +344,7 @@
     </footer>
 </div>
 
-<!-- Render warning deleting goal modal start -->
+<!-- Render warning empty goal modal start -->
 <div class="modal fade" id="deleteGoalWarning" tabindex="-1" role="dialog"
      aria-labelledby="new-model" aria-hidden="true">
     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
@@ -367,6 +367,36 @@
                     </button>
                     <button type="button" id="editGoalBtn" class="btn btn-primary non-draggable dragger"
                             data-dismiss="modal">Edit it.
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Render warning empty goal modal end -->
+
+<!-- Render warning deleting goal modal start -->
+<div class="modal fade" id="deleteGoalWithChildWarning" tabindex="-1" role="dialog"
+     aria-labelledby="new-model" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title non-draggable dragger">Warning</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" id="delete_goal_with_child">
+                <div class="modal-body">
+                    <lable type="text">You are going to delete a goal with children goals, are you sure?
+                    </lable>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="cancelDelete" class="btn non-draggable dragger" style="background-color: transparent"
+                            data-dismiss="modal">Cancel
+                    </button>
+                    <button type="button" id="confirmDelete" class="btn btn-primary non-draggable dragger"
+                            data-dismiss="modal">Confirm
                     </button>
                 </div>
             </form>

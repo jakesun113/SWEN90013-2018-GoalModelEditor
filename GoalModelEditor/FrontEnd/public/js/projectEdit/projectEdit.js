@@ -152,8 +152,8 @@ function getID(type) {
  * delete goal by pressing 'Escape' when empty
  * @param event
  */
-    //TODO: modify delete goals in list function by adding a "delete" button
-let activeElement;
+//TODO: modify delete goals in list function by adding a "delete" button
+
 document.onkeyup = function (event) {
     //when the user press the 'ESC' button in the goal list
     if (document.activeElement.tagName === "INPUT" && event.key === "Escape") {
@@ -225,8 +225,12 @@ $("#deleteGoalBtn").click(function () {
         }
     }
 });
-
-
+/**
+ * function when click "confirm delete" button
+ */
+$("#confirmDelete").click(function () {
+    deleteGoalInCluster(activeElement);
+});
 /*drag and drop start*/
 let nowCopying;
 
@@ -323,7 +327,7 @@ function drop_zone(clusterNumber) {
                 'onclick="event.stopImmediatePropagation(); editGoalInCluster(this)" ' +
                 'onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
                 'onmousedown="event.stopImmediatePropagation()"/><img class="deleteButton" style="display: none"' +
-                'src="/img/trash-alt-solid.svg" onclick="event.stopImmediatePropagation(); deleteGoalInCluster(this)"' +
+                'src="/img/trash-alt-solid.svg" onclick="event.stopImmediatePropagation(); handleDeleteGoalInCluster(this)"' +
                 'onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
                 'onmousedown="event.stopImmediatePropagation()"/>');
 
@@ -332,7 +336,7 @@ function drop_zone(clusterNumber) {
             draggableWrapper += "</li></ol>";
             let node = createElementFromHTML(draggableWrapper);
 
-            console.log(node);
+            //console.log(node);
             //if the drag element comes from the goal list
             if (fromGoalList) {
                 //if there is dd-empty (first time drag to here)
