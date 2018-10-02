@@ -43,3 +43,26 @@ function setUserName(username) {
 function setTitle(title) {
     $("title").eq(0).html(title);
 }
+
+/**
+ * Handle click EventListener on {id:signout|Button}
+ *
+ * @trigger {id:signout|Button}
+ */
+$("#signout").click(evt => {
+    evt.preventDefault();
+    signOut();
+    window.location.href = "/";
+});
+
+/**
+ * Helper Function for signing off
+ * Remove all Cookies
+ */
+function signOut() {
+    Cookies.remove("LOKIDIED");
+    Cookies.remove("UIID");
+    Cookies.remove("MID");
+    Cookies.remove("PID");
+    Cookies.remove("TID");
+}
