@@ -137,7 +137,7 @@ function exportModel() {
                 let a = document.createElement("a"),
                     url = URL.createObjectURL(pngFile);
                 a.href = url;
-                a.download = "a.png";
+                a.download = "model.png";
                 document.body.appendChild(a);
                 a.click();
                 setTimeout(function () {
