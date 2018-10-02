@@ -19,7 +19,7 @@ const db = require(path.resolve(
 ));
 
 /* GET template editing page */
-router.get("/edit", function(req, res) {
+router.get("/edit", function (req, res) {
     if (req.cookies.LOKIDIED) {
         res.render("user/project/templateEdit");
     }
@@ -209,6 +209,7 @@ router.put("/:userId/:templateId", (req, res) => {
         req.params.userId,
         req.params.templateId)
         .then(result => {
+            console.log(result)
             fs.writeFile(
                 dirpath + result.TemplateId + ".xml",
                 xml,
@@ -227,7 +228,7 @@ router.put("/:userId/:templateId", (req, res) => {
 
             res.statusCode = 200;
             res.json({
-                template_id: req.params.templateId
+                template_id: result.TemplateId
             });
             return res.end();
         })

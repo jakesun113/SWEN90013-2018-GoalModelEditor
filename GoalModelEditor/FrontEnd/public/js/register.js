@@ -12,14 +12,14 @@ let username = "";
  * Setup form validation on the registration form
  */
 $.formUtils.addValidator({
-    name : 'usernameExist',
-    validatorFunction : function(value, $el, config, language, $form) {
+    name: 'usernameExist',
+    validatorFunction: function (value, $el, config, language, $form) {
         return value !== username;
     },
 });
 
 $.validate({
-    modules : 'security',
+    modules: 'security',
     reCaptchaSiteKey: '...',
     reCaptchaTheme: 'light'
 });
@@ -30,20 +30,20 @@ $.validate({
  * if successful redirect the user to home page
  * @trigger {id:register|HTMLForm}
  */
-$("#register").submit(function(evt) {
+$("#register").submit(function (evt) {
     evt.preventDefault();
     let url = "/user/register";
     let formData = $(this).serialize();
     $.ajax(url, {
         data: formData,
         type: "POST",
-        success: function() {
+        success: function () {
             window.location.href = "/login";
         }
-    }).fail(function(jqXHR) {
+    }).fail(function (jqXHR) {
         if (jqXHR.status === 200) {
             window.location.href = "/login";
-        } else if (jqXHR.status === 409){
+        } else if (jqXHR.status === 409) {
             usernameExistHandler();
         } else {
             warningMessageSlide(jqXHR.responseJSON.message);

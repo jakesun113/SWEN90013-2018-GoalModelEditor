@@ -25,6 +25,18 @@ $(document).on("mouseover", "#ul li input", function () {
     getDraggingElement();
 });
 
+//when mouse enter the specific goal in the cluster, show corresponding button
+function showButton(event) {
+    $(event).children(".editButton").show();
+    $(event).children(".deleteButton").show();
+}
+
+//when mouse enter the specific goal in the cluster, hide corresponding button
+function hideButton(event) {
+    $(event).children(".editButton").hide();
+    $(event).children(".deleteButton").hide();
+}
+
 /*Add new cluster start*/
 /**
  * add new cluster
@@ -90,12 +102,12 @@ document.onkeydown = function (event) {
 
         // new goal html
         let newList =
-            '<li draggable="true" class="dragger"><input id="' +
+            '<li draggable="true" class="dragger drag-style"><input id="' +
             goalID +
             '" class="' +
             goalType +
             " " +
-            '" placeholder="' + placeholderText + '" maxlength="'+ MAX_CHARS +'"' +
+            '" placeholder="' + placeholderText + '" ' +
             'note="notes" oninput="changeFontWeight(this)" value="" style="font-weight: bold"/></li>';
 
         // add new goal node to its parent node
@@ -140,6 +152,7 @@ function getID(type) {
  * delete goal by pressing 'Escape' when empty
  * @param event
  */
+    //TODO: modify delete goals in list function by adding a "delete" button
 let activeElement;
 document.onkeyup = function (event) {
     //when the user press the 'ESC' button in the goal list
@@ -152,31 +165,11 @@ document.onkeyup = function (event) {
             grandparent.removeChild(parent);
             event.preventDefault();
         }
-    }
-    //when the user press the 'ESC' button in the cluster
-    if (document.activeElement.tagName === "DIV" && event.key === "Escape") {
-        //make the default enter invalid
-        let ddHandleDiv = document.activeElement.parentNode;
-        let ddItemLi = ddHandleDiv.parentNode;
-        let ddListOl = ddItemLi.parentNode;
-        // if parent not null, delete child
-        if (ddListOl.childNodes.length > 0) {
-            ddListOl.removeChild(ddItemLi);
-            event.preventDefault();
-        }
-        //if ol is empty, remove this ol
-        if (ddListOl.childNodes.length === 0) {
-            let clusterNumDiv = ddListOl.parentNode;
-            $(clusterNumDiv).removeClass("dd-collapsed");
-            $(clusterNumDiv).children("[data-action]").remove();
-            $(clusterNumDiv).children("ol").remove();
-            event.preventDefault();
-            //only when the cluster is empty, remove this cluster
-            if ($(clusterNumDiv.parentNode).attr('id') === "cluster") {
-                let cluster = clusterNumDiv.parentNode;
-                cluster.removeChild(clusterNumDiv);
-                event.preventDefault();
-            }
+        //if this is the only goal left, clear the goal content
+        if (grandparent.childNodes.length === 1) {
+            //console.log(event.target);
+            $(event.target).val("");
+            changeFontWeight(event.target);
         }
     }
 
@@ -194,7 +187,7 @@ document.onkeyup = function (event) {
     }
 
     if (document.activeElement.tagName === "DIV" && event.key === "Backspace") {
-        if (event.target.textContent === "") {
+        if (event.target.className === "goal-content" && event.target.textContent === "") {
             activeElement = document.activeElement;
             //show warning modal
             $("#deleteGoalWarning").modal();
@@ -241,8 +234,12 @@ let nowCopying;
 function getDraggingElement() {
     $(".dragger").on("dragstart", function (e) {
 
-        //only when the current dragging element is "input"
-        if (document.activeElement.tagName === "INPUT") {
+        //when the current dragging element is "input"
+        //or it is the list that has parent of "drag-list"
+        if (
+            document.activeElement.tagName === "INPUT"
+            || $(e.target.parentNode).hasClass("drag-list")
+        ) {
             //if input has value
             if ($(e.target).children("input")[0].value) {
                 nowCopying = e.target;
@@ -274,8 +271,8 @@ function drop_zone(clusterNumber) {
 
             onDragStart: function (l, e) {
                 // get type of dragged element
-                var type = $(e).children(".dd-handle").attr("class").split(" ")[0];
-                console.log(type);
+                // var type = $(e).children(".dd-handle").attr("class").split(" ")[0];
+                // console.log(type);
                 addNoChildrenClass();
             },
 
@@ -302,8 +299,12 @@ function drop_zone(clusterNumber) {
             //copy the id, class, and value from the original dragged goal
             let newNode = document.createElement("div");
             newNode.className = $(nowCopying).children("input")[0].className;
-            $(newNode).attr("id", ($(nowCopying).attr("id")));
 
+            newNode.setAttribute("id", "C_" + $($(nowCopying).children("input")[0]).attr("id"));
+            //console.log($(newNode).attr("id"));
+
+            newNode.setAttribute("onmouseenter", 'showButton(this)');
+            newNode.setAttribute("onmouseleave", 'hideButton(this)');
             //add font weight, class name to the new goal element
             $(newNode).css("font-weight", "bold");
 
@@ -315,14 +316,23 @@ function drop_zone(clusterNumber) {
 
             let imagePath = getTypeIconPath(type);
 
-            $(newNode).html('<img src=' + imagePath + ' class="mr-1 typeIcon" >' +
-                '<div class="goal-content">' +
-                $(nowCopying).children("input")[0].value) + '</div>';
+            $(newNode).html('<img src=' + imagePath + ' class="mr-1 typeIcon" > ' +
+                '<div class="goal-content" tabindex="-1" ' +
+                'onblur="finishEditGoalInCluster(this);"' + '>' +
+                $(nowCopying).children("input")[0].value + '</div><img class="editButton" style="display: none" src="/img/edit-solid.svg"' +
+                'onclick="event.stopImmediatePropagation(); editGoalInCluster(this)" ' +
+                'onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
+                'onmousedown="event.stopImmediatePropagation()"/><img class="deleteButton" style="display: none"' +
+                'src="/img/trash-alt-solid.svg" onclick="event.stopImmediatePropagation(); deleteGoalInCluster(this)"' +
+                'onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
+                'onmousedown="event.stopImmediatePropagation()"/>');
 
             draggableWrapper += newNode.outerHTML;
+
             draggableWrapper += "</li></ol>";
             let node = createElementFromHTML(draggableWrapper);
 
+            console.log(node);
             //if the drag element comes from the goal list
             if (fromGoalList) {
                 //if there is dd-empty (first time drag to here)
@@ -365,7 +375,7 @@ $(".dd").nestable({
     onDragStart: function (l, e) {
         // get type of dragged element
         var type = $(e).children(".dd-handle").attr("class").split(" ")[0];
-        console.log(type);
+        //console.log(type);
         addNoChildrenClass();
     },
     callback: function (l, e) {
@@ -384,46 +394,6 @@ function createElementFromHTML(htmlString) {
     // Change this to div.childNodes to support multiple top-level nodes
     return div.firstChild;
 }
-
-//at first, hide the "dragAll" button
-$("#drag").hide();
-
-//handle operation of clicking "editAll"
-//TODO: adjust height of div based on the length of text
-$("#edit").click(function () {
-    saveJSON();
-    $(".dd-handle-style").removeClass("dd-handle");
-    $(".dd-handle-style").css("cursor", "auto");
-    $(".goal-content").attr("contenteditable", "true");
-    // when editing, cannot press "Enter"
-    $(".goal-content").keypress(function (e) {
-        return e.which !== 13;
-    });
-    //when editing, set max length of div content
-    $(".goal-content").keydown(function(e){
-        if(e.which !== 8 && $(".goal-content").text().length > MAX_CHARS)
-        {
-            e.preventDefault();
-        }
-    });
-
-    $(".goal-content").css("font-weight", "normal");
-
-    $("#edit").hide();
-    $("#drag").show();
-});
-
-//handle operation of clicking "dragAll"
-$("#drag").click(function () {
-
-    $(".dd-handle-style").addClass("dd-handle");
-    $(".dd-handle-style").css("cursor", "move");
-    $(".goal-content").attr("contenteditable", "false");
-    $(".goal-content").css("font-weight", "bold");
-
-    $("#drag").hide();
-    $("#edit").show();
-});
 
 //if no "dd-empty" is existed, append new cluster
 // to make sure there is always at least one "new" cluster
@@ -507,7 +477,7 @@ setInterval("saveJSON()", "120000");
 window.onbeforeunload = function checkLeave(event) {
     event.preventDefault();
     saveJSON();
-    sendXML();
+    sendXML(false);
     console.log("Auto Saved!");
 };
 
@@ -525,48 +495,53 @@ $("#renderbtn").click(function () {
 /**
  * progress bar
  */
-function goalClick(){
+function goalClick() {
     $("#imageTab").removeClass().addClass("current_prev");
     $("#goalTab").removeClass().addClass("current");
     $("#clusterTab").removeClass();
     $("#graphTab").removeClass().addClass("last");
     saveJSON();
-    $("#photo").css("display","block");
-    $("#todolist").css("display","block");
-    $("#notes").css("display","none");
-    $("#cluster").css("display","none");
-    $("#generator").css("display","none");
-    $("#renderbtn").css("display","none");
+    $("#photo").css("display", "block");
+    $("#todolist").css("display", "block");
+    $("#notes").css("display", "none");
+    $("#cluster").css("display", "none");
+    $("#generator").css("display", "none");
+    $("#renderbtn").css("display", "none");
 }
 
-function clusterClick(){
+function clusterClick() {
     $("#imageTab").removeClass().addClass("done");
     $("#goalTab").removeClass().addClass("current_prev");
     $("#clusterTab").removeClass().addClass("current");
     $("#graphTab").removeClass().addClass("last");
     saveJSON();
-    $("#photo").css("display","none");
-    $("#todolist").css("display","block");
-    $("#notes").css("display","block");
-    $("#cluster").css("display","block");
+    $("#photo").css("display", "none");
+    $("#todolist").css("display", "block");
+    $("#notes").css("display", "block");
+    $("#cluster").css("display", "block");
     $("#cluster").removeClass().addClass("col-7 showborder scrollbar");
-    $("#generator").css("display","none");
-    $("#renderbtn").css("display","none");
+    $("#generator").css("display", "none");
+    $("#renderbtn").css("display", "none");
 
 }
 
-function graphClick(){
+function graphClick() {
     $("#imageTab").removeClass().addClass("done");
     $("#goalTab").removeClass().addClass("done");
     $("#clusterTab").removeClass().addClass("current_prev");
     $("#graphTab").removeClass().addClass("current");
     saveJSON();
-    $("#photo").css("display","none");
-    $("#photo").css("display","none");
-    $("#todolist").css("display","none")
-    $("#notes").css("display","none");
-    $("#cluster").css("display","block");
+    $("#photo").css("display", "none");
+    $("#photo").css("display", "none");
+    $("#todolist").css("display", "none")
+    $("#notes").css("display", "none");
+    $("#cluster").css("display", "block");
     $("#cluster").removeClass().addClass("col-3 showborder scrollbar");
-    $("#generator").css("display","block");
-    $("#renderbtn").css("display","inline-block");
+    $("#generator").css("display", "block");
+    $("#renderbtn").css("display", "inline-block");
 }
+
+$(document).on("drop", evt => {
+    $("#graphTab").click();
+    $("#clusterTab").click();
+});

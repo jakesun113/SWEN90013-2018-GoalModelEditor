@@ -25,11 +25,11 @@ const auth = require("../authen");
 const crypto = require("crypto");
 
 /* POST User Login */
-router.post("/login", function(req, res) {
+router.post("/login", function (req, res) {
     const hash = crypto.createHash("sha256");
     hash.update(req.body.password);
     let promise = db.login(req.body.username, hash.digest("hex"));
-    promise.then(function(user_id) {
+    promise.then(function (user_id) {
             console.log("result is " + user_id);
             let token = auth.genToken(user_id);
             res.statusCode = 200;
@@ -92,7 +92,7 @@ router.post("/register", (req, res) => {
 });
 
 /* GET User Profile */
-router.get("/profile/:userId", function(req, res) {
+router.get("/profile/:userId", function (req, res) {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
@@ -127,7 +127,7 @@ router.get("/profile/:userId", function(req, res) {
 });
 
 /* PUT Change User Profile */
-router.put("/profile/:userId", function(req, res) {
+router.put("/profile/:userId", function (req, res) {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
@@ -169,7 +169,7 @@ router.put("/profile/:userId", function(req, res) {
 });
 
 /* PUT Change User Password */
-router.put("/cred/:userId", function(req, res) {
+router.put("/cred/:userId", function (req, res) {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;

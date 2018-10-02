@@ -1,6 +1,3 @@
-//set max characters that input and div allow
-const MAX_CHARS = 40;
-
 /**
  * get JSON file from backend according to userId and modelId
  */
@@ -16,11 +13,10 @@ function getJSONFile() {
         headers: {Authorization: "Bearer " + token},
         success: function (data) {
             window.jsonData = JSON.parse(JSON.parse(JSON.stringify(data)));
-            $("#model_name strong").html(
-                jsonData.GoalModelProject.ProjectName +
+            let modelName = jsonData.GoalModelProject.ProjectName +
                 " - " +
-                jsonData.GoalModelProject.ModelName
-            );
+                jsonData.GoalModelProject.ModelName;
+            $("#model_name strong").html(modelName);
             loadData();
             loadImages();
             //activate drag function
@@ -46,9 +42,7 @@ function getJSONFile() {
                 scroll: true
             });
             getXML();
-            setTitle(jsonData.GoalModelProject.ProjectName +
-                " - " +
-                jsonData.GoalModelProject.ModelName);
+            setTitle(modelName);
         }
     }).fail(function (jqXHR) {
         $("#warning-alert").html(
@@ -181,8 +175,7 @@ function parseClusterNodes(nodes) {
 function parseNode(node) {
     // takes a node object and turns it into a <li>
     let li = document.createElement("LI");
-    li.setAttribute("class", node.GoalType);
-    li.setAttribute("class", "dragger");
+    li.setAttribute("class", "dragger" + " drag-style");
     li.setAttribute("draggable", "true");
     let fontWeight = "bold";
     if (node.Used) {
@@ -200,7 +193,7 @@ function parseNode(node) {
         " " +
         '" value = "' +
         node.GoalContent +
-        '" placeholder="' + placeholderText + '" maxlength="'+ MAX_CHARS +'" ' +
+        '" placeholder="' + placeholderText + '" ' +
         'style="font-weight: ' +
         fontWeight +
         '" ' +
@@ -237,13 +230,23 @@ function parseClusterNode(node) {
         node.GoalID +
         '" class="' +
         node.GoalType +
-        " dd-handle dd-handle-style" + '"' +
-        'note="' +
+        " dd-handle dd-handle-style" + '" ' +
+        ' onmouseenter="showButton(this)" ' +
+        ' onmouseleave="hideButton(this)" note="' +
         node.GoalNote +
         '"' +
         ">" +
         '<img src="' + iconPath + '" class="mr-1 typeIcon">' +
-        '<div class="goal-content">' + node.GoalContent + '</div>' +
+        '<div class="goal-content"  tabindex="-1" ' +
+        'onblur="finishEditGoalInCluster(this);">' + node.GoalContent + '</div>' +
+        '<img class="editButton" style="display: none" src="/img/edit-solid.svg"' +
+        ' onclick="event.stopImmediatePropagation(); editGoalInCluster(this)"' +
+        'onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
+        'onmousedown="event.stopImmediatePropagation()"/>' +
+        '<img class="deleteButton" style="display: none" src="/img/trash-alt-solid.svg"' +
+        'onclick="event.stopImmediatePropagation(); deleteGoalInCluster(this)"' +
+        'onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
+        'onmousedown="event.stopImmediatePropagation()"/>' +
         "</div>";
 
     // recursion to add sub goal
@@ -272,6 +275,8 @@ function saveJSON() {
     let modelId = Cookies.get("MID");
     let url = "/goal_model/" + userId + "/" + modelId;
     $("#saveJSONLoading").show();
+    $("#savedLabel").show();
+
     getData();
     // ajax starts
     $.ajax(url, {
@@ -281,7 +286,10 @@ function saveJSON() {
         contentType: "application/json",
         headers: {Authorization: "Bearer " + token},
         success: function (data) {
-            $("#saveJSONLoading").hide();
+            setTimeout(function () {
+                $("#saveJSONLoading").hide();
+                $("#savedLabel").hide();
+            }, 1000);
         }
     }).fail(function (jqXHR) {
         $("#saveJSONLoading").hide();
@@ -497,7 +505,7 @@ function getPlaceholder(type) {
         case "Emotional":
             return "New Emotional Goal";
         case "Stakeholder":
-            return "New Stakeholder";
+            return "New Role";
         default:
             return "";
     }
@@ -520,7 +528,8 @@ function getAllSubgoals($goalList, goals) {
         $goal.attr("note"),
         newSubGoals
     );
-    if ($($goalList.children("ol")).length !== 0) {
+    if ($($goalList.children("ol")).length !== 0
+        && !($goalList.attr("class").includes("collapsed"))) {
         let listItems = $($goalList.children("ol")).children("li");
         let $listItems = $(listItems);
         for (let i = 0; i < $listItems.length; i++) {
@@ -582,4 +591,84 @@ function addNoChildrenClass() {
     $(".Negative").parent().addClass('dd-nochildren');
     $(".Emotional").parent().addClass('dd-nochildren');
     $(".Stakeholder").parent().addClass('dd-nochildren');
+}
+
+/**
+ * Make goals in cluster editable by double click
+ *
+ */
+function editGoalInCluster(element) {
+    $(".dd-handle-style").removeClass("dd-handle");
+    $(".dd-handle-style").css("cursor", "auto");
+    let target = $(element.parentNode).children(".goal-content");
+    target.attr("contenteditable", "true");
+    // when editing, cannot press "Enter"
+    target.keypress(function (e) {
+        return e.which !== 13;
+    });
+    $(element.parentNode).css("background-color", "rgba(0,0,0,0.1)");
+    setCaret(target[0]);
+
+    target.css("font-weight", "normal");
+}
+
+/**
+ * If do something else, make div not editable again
+ *
+ */
+function finishEditGoalInCluster(element) {
+    //console.log("in finish");
+    $(".dd-handle-style").addClass("dd-handle");
+    $(".dd-handle-style").css("cursor", "move");
+    $(element).attr("contenteditable", "false");
+    $(element).css("font-weight", "bold");
+    $(element.parentNode).css("background-color", "#fafafa");
+    saveJSON();
+}
+
+/**
+ * Delete goals in cluster by clicking button
+ *
+ */
+function deleteGoalInCluster(element) {
+    //console.log(element);
+    $(".dd-handle-style").removeClass("dd-handle");
+    $(".dd-handle-style").css("cursor", "auto");
+    //make the default enter invalid
+    let ddHandleDiv = element.parentNode;
+    let ddItemLi = ddHandleDiv.parentNode;
+    let ddListOl = ddItemLi.parentNode;
+    // if parent not null, delete child
+    if (ddListOl.childNodes.length > 0) {
+        ddListOl.removeChild(ddItemLi);
+        event.preventDefault();
+    }
+    //TODO: add alert when deleting goals that have children
+    //if ol is empty, remove this ol
+    if (ddListOl.childNodes.length === 0) {
+        let clusterNumDiv = ddListOl.parentNode;
+        $(clusterNumDiv).removeClass("dd-collapsed");
+        $(clusterNumDiv).children("[data-action]").remove();
+        $(clusterNumDiv).children("ol").remove();
+        event.preventDefault();
+        //only when the cluster is empty, remove this cluster
+        if ($(clusterNumDiv.parentNode).attr('id') === "cluster") {
+            let cluster = clusterNumDiv.parentNode;
+            cluster.removeChild(clusterNumDiv);
+            event.preventDefault();
+        }
+    }
+}
+
+/**
+ * SetCaret to the end of the div
+ */
+function setCaret(div) {
+    let length = $(div).html().length;
+    let range = document.createRange();
+    let sel = window.getSelection();
+    range.setStart(div.childNodes[0], length);
+    range.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(range);
 }

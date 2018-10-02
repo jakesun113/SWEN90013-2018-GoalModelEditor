@@ -1,14 +1,19 @@
 /**
  * Extends <mxGraphLayout> to implement auto-layout for Motivaitonal
  * Models.
+ *
+ * Optional arguments:
+ * : levelDistance, default distance between goals at adjacent ranks
+ * : nodeDistance, default distance between adjacent nodes at the same rank
  */
-function mxGoalModelLayout(graph) {
+function mxGoalModelLayout(graph, levelDistance, nodeDistance) {
     mxGraphLayout.call(this, graph);
+    this.levelDistance = levelDistance != null ? levelDistance : 30;
+    this.nodeDistance = nodeDistance != null ? nodeDistance : 30;
 }
 // extend MxGraphLayout
 mxGoalModelLayout.prototype = new mxGraphLayout();
 mxGoalModelLayout.prototype.constructor = mxGoalModelLayout;
-
 
 // tracks parents that need to be updated if children are updated
 mxGoalModelLayout.prototype.parentsChanged = null;
@@ -17,10 +22,10 @@ mxGoalModelLayout.prototype.parentsChanged = null;
 mxGoalModelLayout.prototype.visited = null;
 
 // default vertical separation between nodes on adjacent ranks
-mxGoalModelLayout.prototype.levelDistance = 10;
+mxGoalModelLayout.prototype.levelDistance = null;
 
 // default horizontal separation between nodes on the same rank
-mxGoalModelLayout.prototype.nodeDistance = 20;
+mxGoalModelLayout.prototype.nodeDistance = null;
 
 // default horiztonal distance between edges exiting a vertex
 mxGoalModelLayout.prototype.prefHozEdgeSep = 5;
@@ -34,7 +39,6 @@ mxGoalModelLayout.prototype.root = null;
 
 // internal representation of root cell - DO NOT TOUCH THIS
 mxGoalModelLayout.prototype.node = null;
-
 
 /**
  * Determine whether vertex should be ignored for the purposes of

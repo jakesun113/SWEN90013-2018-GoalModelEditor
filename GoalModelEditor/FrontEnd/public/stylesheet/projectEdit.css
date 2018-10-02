@@ -1,3 +1,7 @@
+body {
+    height: 100vh;
+}
+
 header {
     box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.5);
     background-image: url("/img/profile-background.jpg");
@@ -10,20 +14,24 @@ header {
     border-width: 1px;
     border-radius: 3px;
 }
+
 /*show border end*/
 
 /*Set frame and scroll start*/
 #height-full-screen > .row {
-    min-height: 76vh;
+    height: 80vh;
 }
+
 .scrollbar {
-    height: 76vh;
+    height: 80vh;
     overflow-y: scroll;
 }
+
 .inside-scrollbar {
-    height: 28vh;
+    height: 25vh;
     overflow-y: scroll;
 }
+
 /*Set frame and scroll end*/
 
 /*import photos start*/
@@ -37,12 +45,14 @@ header {
     overflow: auto;
     margin-bottom: 15px;
 }
+
 .preview-images-zone > .preview-image:first-child {
     /*height: 185px;*/
     width: 100%;
     position: relative;
     margin-right: 5px;
 }
+
 .preview-images-zone > .preview-image {
     /*height: 90px;*/
     width: 100%;
@@ -51,14 +61,17 @@ header {
     float: left;
     margin-bottom: 5px;
 }
+
 .preview-images-zone > .preview-image > .image-zone {
     width: 100%;
     height: 100%;
 }
+
 .preview-images-zone > .preview-image > .image-zone > img {
     width: 100%;
     height: 100%;
 }
+
 .preview-images-zone > .preview-image > .tools-edit-image {
     position: absolute;
     z-index: 100;
@@ -69,6 +82,7 @@ header {
     margin-bottom: 10px;
     display: none;
 }
+
 .preview-images-zone > .preview-image > .image-cancel {
     font-size: 18px;
     position: absolute;
@@ -80,10 +94,12 @@ header {
     display: none;
     z-index: 100;
 }
+
 .preview-image:hover > .image-zone {
     cursor: move;
     opacity: 0.5;
 }
+
 .preview-image:hover > .tools-edit-image,
 .preview-image:hover > .image-cancel {
     display: block;
@@ -96,7 +112,7 @@ header {
 
 .container-body {
     padding-top: 1px;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
     padding-left: 20px;
     padding-right: 20px;
 }
@@ -114,6 +130,7 @@ header {
     padding-left: 0px;
     padding-right: 0px;
 }
+
 /*import photos end*/
 
 /*cluster div start*/
@@ -126,8 +143,11 @@ header {
 
 input {
     border: 0px;
-    width:100%;
+    width: 100%;
     cursor: move;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .icon {
@@ -135,7 +155,6 @@ input {
     width: auto;
     margin-bottom: 6px;
 }
-
 
 .notopborder {
     border-width: 1px;
@@ -159,7 +178,7 @@ input {
 .dd-handle-style {
 
     display: block;
-    height: 30px;
+    min-height: 20px;
     margin: 5px 0;
     padding: 5px 10px;
     color: #333;
@@ -172,9 +191,41 @@ input {
     cursor: move;
 }
 
+.goal-content {
+    min-height: 20px;
+}
+
 .typeIcon {
-    height:100%;
-    float:left;
+    height: 20px;
+    float: left;
+}
+
+.editButton {
+    height: 20px;
+    padding: 0;
+    margin: 0;
+    margin-top: -20px;
+    margin-right: 22.5px;
+    cursor: pointer;
+    float: right;
+}
+
+.deleteButton {
+    height: 20px;
+    padding: 0;
+    margin: 0;
+    margin-top: -20px;
+    cursor: pointer;
+    float: right;
+}
+
+.non-selectable,
+.non-selectable:focus {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    outline-style: none; /*IE*/
 }
 
 #model_name {
@@ -186,24 +237,95 @@ footer {
 }
 
 /*progress bar*/
-.steps_bar ul { border-left:solid 1px #ccc; overflow:hidden; margin: 0;padding:0;}
-.steps_bar ul li { float:left; height:57px; padding-right:19px; line-height:60px; text-align:center; background:url("/img/stepbar.png")  no-repeat 100% 0 #f1f1f1; font-weight:bold;}
-.steps_bar ul li span { display:block; height:58px; padding:0; background:#f1f1f1; border-top:solid 1px #ccc; border-bottom:solid 1px #ccc;}
-.steps_bar ul li.done { color:#fff; background-position:100% -120px; background-color:rgb(186,213,185);}
-.steps_bar ul li.current_prev { color:#fff; background-position:100% -60px; background-color:rgb(186,213,185);}
-.steps_bar ul li.done span, .steps_bar ul li.current_prev span { background:rgb(186,213,185);}
-
-.steps_bar ul li.current { color:#fff; background-color:rgb(126,176,125);}
-.steps_bar ul li.current span { background:rgb(126,176,125);}
-.steps_bar ul li.last { background-position:100% -180px; background-color:transparent;}
-.steps_bar ul li.last span { background:#f1f1f1;}
-.steps_bar ul li.last.current { background-position:100% -240px;}
-.steps_bar ul li.last.current span { background:rgb(126,176,125);}
-
-.steps_bar ul li {
-    width: 33.33%;
+.steps_bar ul {
+    border-left: solid 1px #ccc;
+    overflow: hidden;
+    margin: 0;
+    padding: 10px 2px;
 }
 
-.steps_bar{
+.steps_bar ul li {
+    float: left;
+    height: 60px;
+    padding-right: 18px;
+    line-height: 56px;
+    text-align: center;
+    overflow: hidden;
+    background: url("/img/stepbar.png") no-repeat 100% 0 #f1f1f1;
+    font-weight: bold;
+}
+
+.steps_bar ul li span {
+    display: block;
+    height: 100%;
+    padding: 0;
+    background: #f1f1f1;
+    border-top: solid 1px #ccc;
+    border-bottom: solid 1px #ccc;
+}
+
+.steps_bar ul li.done {
+    color: #fff;
+    background-position: 100% -120px;
+    background-color: rgb(186, 213, 185);
+}
+
+.steps_bar ul li.current_prev {
+    color: #fff;
+    background-position: 100% -60px;
+    background-color: rgb(186, 213, 185);
+}
+
+.steps_bar ul li.done span, .steps_bar ul li.current_prev span {
+    background: rgb(186, 213, 185);
+}
+
+.steps_bar ul li.current {
+    color: #fff;
+    background-color: rgb(126, 176, 125);
+}
+
+.steps_bar ul li.current span {
+    background: rgb(126, 176, 125);
+}
+
+.steps_bar ul li.last {
+    background-position: 100% -180px;
+    background-color: transparent;
+}
+
+.steps_bar ul li.last span {
+    background: #f1f1f1;
+}
+
+.steps_bar ul li.last.current {
+    background-position: 100% -240px;
+}
+
+.steps_bar ul li.last.current span {
+    background: rgb(126, 176, 125);
+}
+
+.steps_bar ul #goalTab {
+    width: 30%;
+}
+
+.steps_bar ul #clusterTab {
+    width: 40%;
+}
+
+.steps_bar ul #graphTab {
+    width: 30%;
+}
+
+.steps_bar {
+    cursor: pointer;
+}
+
+.drag-style {
+    cursor: move;
+}
+
+.switch {
     cursor: pointer;
 }

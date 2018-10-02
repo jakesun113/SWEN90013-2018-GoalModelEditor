@@ -51,21 +51,21 @@ sidebar.enabled = false;
 
 // add zoom-in / zoom-out to sidebar
 let zoomIn = sidebar.addItem("ZoomIn", "/src/images/zoomin.svg",
-    function() {
+    function () {
         graph.zoomIn();
     }
 );
 zoomIn.style.width = "30px";
 
 let zoomOut = sidebar.addItem("ZoomOut", "/src/images/zoomout.svg",
-    function() {
+    function () {
         graph.zoomOut();
     }
 );
 zoomOut.style.width = "30px";
 
 // allow vertices to be dropped on the graph at arbitrary points
-mxDragSource.prototype.getDropTarget = function(graph, x, y) {
+mxDragSource.prototype.getDropTarget = function (graph, x, y) {
     var cell = graph.getCellAt(x, y);
     if (!graph.isValidDropTarget(cell)) {
         cell = null;
@@ -74,17 +74,17 @@ mxDragSource.prototype.getDropTarget = function(graph, x, y) {
 };
 
 // add the sidebar elements for each of the goals
-var addSidebarItem = function(graph, sidebar, image, width, height) {
+var addSidebarItem = function (graph, sidebar, image, width, height) {
 
     // create the prototype cell which will be cloned when a sidebar item
     // is dragged on to the graph
     var prototype = new mxCell(null, new mxGeometry(0, 0, width, height),
-        "shape=rounded;shape=image;image="+image);
+        "shape=rounded;shape=image;image=" + image);
     prototype.setVertex(true);
 
     // function attached to each dragable sidebar item - this is used
     // to drag an item from the toolbar, then instantiate it in the graph
-    var dragAndDrop = function(graph, evnt, cell) {
+    var dragAndDrop = function (graph, evnt, cell) {
         graph.stopEditing(false);
         var point = graph.getPointForEvent(evnt);
         var goal = graph.getModel().cloneCell(prototype);
@@ -104,14 +104,14 @@ addSidebarItem(graph, sidebar, PATH_FUNCTIONAL,
     SYMBOL_WIDTH, SYMBOL_HEIGHT
 );
 addSidebarItem(graph, sidebar, PATH_EMOTIONAL,
-    SYMBOL_WIDTH*SW_EMOTIONAL, SYMBOL_HEIGHT*SH_EMOTIONAL
+    SYMBOL_WIDTH * SW_EMOTIONAL, SYMBOL_HEIGHT * SH_EMOTIONAL
 );
 addSidebarItem(graph, sidebar, PATH_NEGATIVE,
-    SYMBOL_WIDTH*SW_NEGATIVE, SYMBOL_HEIGHT*SW_NEGATIVE
+    SYMBOL_WIDTH * SW_NEGATIVE, SYMBOL_HEIGHT * SW_NEGATIVE
 );
 addSidebarItem(graph, sidebar, PATH_QUALITY,
-    SYMBOL_WIDTH*SW_QUALITY, SYMBOL_HEIGHT*SW_QUALITY
+    SYMBOL_WIDTH * SW_QUALITY, SYMBOL_HEIGHT * SW_QUALITY
 );
 addSidebarItem(graph, sidebar, PATH_STAKEHOLDER,
-    SYMBOL_WIDTH*SW_STAKEHOLDER, SYMBOL_HEIGHT*SW_STAKEHOLDER
+    SYMBOL_WIDTH * SW_STAKEHOLDER, SYMBOL_HEIGHT * SW_STAKEHOLDER
 );

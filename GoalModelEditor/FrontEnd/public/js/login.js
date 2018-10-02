@@ -22,7 +22,7 @@ $("#login").submit(function(evt) {
         type: "POST",
         success: function(res) {
             let tokenP = JSON.parse(JSON.stringify(res));
-            let cookie = { token: tokenP.token, uid: tokenP.user_id , uiid: $("#username").val() };
+            let cookie = {token: tokenP.token, uid: tokenP.user_id, uiid: $("#username").val()};
             Cookies.set("LOKIDIED", JSON.stringify(cookie), {
                 expires: 1,
                 path: "/"
