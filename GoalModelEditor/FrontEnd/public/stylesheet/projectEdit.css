@@ -333,7 +333,18 @@ footer {
 
 .drag-style {
     cursor: move;
+    /*list-style: none;*/
 }
+
+/*.drag-style:before {*/
+    /*content: '';*/
+    /*display: inline-block;*/
+    /*height: 1em;*/
+    /*width: 1em;*/
+    /*background-image: url("/img/list-style.png");*/
+    /*background-size: contain;*/
+    /*background-repeat: no-repeat;*/
+/*}*/
 
 .switch {
     cursor: pointer;
