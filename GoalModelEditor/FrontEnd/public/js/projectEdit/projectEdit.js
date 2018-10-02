@@ -25,20 +25,16 @@ $(document).on("mouseover", "#ul li input", function () {
     getDraggingElement();
 });
 
-//when mouse over the specific goal in the cluster, show corresponding edit button
-//FIXME: with bugs, only trigger the first cluster
-// $("#cluster_" + clusterNumber).on("mouseover", "div", function () {
-//     console.log("in hover");
-//     console.log(this.className);
-//
-//     if (this.className === "goal-content") {
-//         $(this.parentNode).children(".editButton").hide();
-//     }
-//     else{
-//         $(this.parentNode).children(".editButton").hide();
-//     }
-// });
-
+//when mouse enter the specific goal in the cluster, show corresponding button
+function showButton(event){
+    $(event).children(".editButton").show();
+    $(event).children(".deleteButton").show();
+}
+//when mouse enter the specific goal in the cluster, hide corresponding button
+function hideButton(event){
+    $(event).children(".editButton").hide();
+    $(event).children(".deleteButton").hide();
+}
 /*Add new cluster start*/
 /**
  * add new cluster
@@ -173,32 +169,6 @@ document.onkeyup = function (event) {
             changeFontWeight(event.target);
         }
     }
-    //when the user press the 'ESC' button in the cluster
-    if (document.activeElement.tagName === "DIV" && event.key === "Escape") {
-        //make the default enter invalid
-        let ddHandleDiv = document.activeElement.parentNode;
-        let ddItemLi = ddHandleDiv.parentNode;
-        let ddListOl = ddItemLi.parentNode;
-        // if parent not null, delete child
-        if (ddListOl.childNodes.length > 0) {
-            ddListOl.removeChild(ddItemLi);
-            event.preventDefault();
-        }
-        //if ol is empty, remove this ol
-        if (ddListOl.childNodes.length === 0) {
-            let clusterNumDiv = ddListOl.parentNode;
-            $(clusterNumDiv).removeClass("dd-collapsed");
-            $(clusterNumDiv).children("[data-action]").remove();
-            $(clusterNumDiv).children("ol").remove();
-            event.preventDefault();
-            //only when the cluster is empty, remove this cluster
-            if ($(clusterNumDiv.parentNode).attr('id') === "cluster") {
-                let cluster = clusterNumDiv.parentNode;
-                cluster.removeChild(clusterNumDiv);
-                event.preventDefault();
-            }
-        }
-    }
 
     //if press "backspace" make the goal empty, delete that goal
     if (document.activeElement.tagName === "INPUT" && event.key === "Backspace") {
@@ -330,6 +300,8 @@ function drop_zone(clusterNumber) {
             newNode.setAttribute("id", "C_" + $($(nowCopying).children("input")[0]).attr("id"));
             //console.log($(newNode).attr("id"));
 
+            newNode.setAttribute("onmouseenter", 'showButton(this)');
+            newNode.setAttribute("onmouseleave", 'hideButton(this)');
             //add font weight, class name to the new goal element
             $(newNode).css("font-weight", "bold");
 
@@ -344,10 +316,13 @@ function drop_zone(clusterNumber) {
             $(newNode).html('<img src=' + imagePath + ' class="mr-1 typeIcon" > ' +
                 '<div class="goal-content" tabindex="-1" ' +
                 'onblur="finishEditGoalInCluster(this);"' + '>' +
-                $(nowCopying).children("input")[0].value + '</div><img class="editButton" src="/img/edit-solid.svg"' +
+                $(nowCopying).children("input")[0].value + '</div><img class="editButton" style="display: none" src="/img/edit-solid.svg"' +
                 'onclick="event.stopImmediatePropagation(); editGoalInCluster(this)" ' +
                 'onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
-                'onmousedown="event.stopImmediatePropagation()">');
+                'onmousedown="event.stopImmediatePropagation()"/><img class="deleteButton" style="display: none"' +
+                'src="/img/trash-alt-solid.svg" onclick="event.stopImmediatePropagation(); deleteGoalInCluster(this)"' +
+                'onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
+                'onmousedown="event.stopImmediatePropagation()"/>');
 
             draggableWrapper += newNode.outerHTML;
 

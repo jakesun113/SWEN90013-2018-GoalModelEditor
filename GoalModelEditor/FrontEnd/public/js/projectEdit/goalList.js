@@ -231,17 +231,22 @@ function parseClusterNode(node) {
         '" class="' +
         node.GoalType +
         " dd-handle dd-handle-style" + '" ' +
-        'note="' +
+        ' onmouseenter="showButton(this)" ' +
+        ' onmouseleave="hideButton(this)" note="' +
         node.GoalNote +
         '"' +
         ">" +
         '<img src="' + iconPath + '" class="mr-1 typeIcon">' +
         '<div class="goal-content"  tabindex="-1" ' +
         'onblur="finishEditGoalInCluster(this);">' + node.GoalContent + '</div>' +
-        '<img class="editButton" src="/img/edit-solid.svg"' +
+        '<img class="editButton" style="display: none" src="/img/edit-solid.svg"' +
         ' onclick="event.stopImmediatePropagation(); editGoalInCluster(this)"' +
         'onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
-        'onmousedown="event.stopImmediatePropagation()">'+
+        'onmousedown="event.stopImmediatePropagation()"/>' +
+        '<img class="deleteButton" style="display: none" src="/img/trash-alt-solid.svg"' +
+        'onclick="event.stopImmediatePropagation(); deleteGoalInCluster(this)"' +
+        'onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
+        'onmousedown="event.stopImmediatePropagation()"/>' +
         "</div>";
 
     // recursion to add sub goal
@@ -592,7 +597,7 @@ function addNoChildrenClass() {
  * Make goals in cluster editable by double click
  *
  */
-function editGoalInCluster(element){
+function editGoalInCluster(element) {
     $(".dd-handle-style").removeClass("dd-handle");
     $(".dd-handle-style").css("cursor", "auto");
     let target = $(element.parentNode).children(".goal-content");
@@ -606,11 +611,12 @@ function editGoalInCluster(element){
 
     target.css("font-weight", "normal");
 }
+
 /**
  * If do something else, make div not editable again
  *
  */
-function finishEditGoalInCluster(element){
+function finishEditGoalInCluster(element) {
     //console.log("in finish");
     $(".dd-handle-style").addClass("dd-handle");
     $(".dd-handle-style").css("cursor", "move");
@@ -621,10 +627,44 @@ function finishEditGoalInCluster(element){
 }
 
 /**
+ * Delete goals in cluster by clicking button
+ *
+ */
+function deleteGoalInCluster(element) {
+    console.log(element);
+    $(".dd-handle-style").removeClass("dd-handle");
+    $(".dd-handle-style").css("cursor", "auto");
+    //make the default enter invalid
+    let ddHandleDiv = element.parentNode;
+    let ddItemLi = ddHandleDiv.parentNode;
+    let ddListOl = ddItemLi.parentNode;
+    // if parent not null, delete child
+    if (ddListOl.childNodes.length > 0) {
+        ddListOl.removeChild(ddItemLi);
+        event.preventDefault();
+    }
+    //if ol is empty, remove this ol
+    if (ddListOl.childNodes.length === 0) {
+        let clusterNumDiv = ddListOl.parentNode;
+        $(clusterNumDiv).removeClass("dd-collapsed");
+        $(clusterNumDiv).children("[data-action]").remove();
+        $(clusterNumDiv).children("ol").remove();
+        event.preventDefault();
+        //only when the cluster is empty, remove this cluster
+        if ($(clusterNumDiv.parentNode).attr('id') === "cluster") {
+            let cluster = clusterNumDiv.parentNode;
+            cluster.removeChild(clusterNumDiv);
+            event.preventDefault();
+        }
+    }
+}
+
+/**
  * SetCaret to the end of the div
  */
 function setCaret(div) {
     let length = $(div).html().length;
+    //console.log(length);
     let range = document.createRange();
     let sel = window.getSelection();
     range.setStart(div.childNodes[0], length);
