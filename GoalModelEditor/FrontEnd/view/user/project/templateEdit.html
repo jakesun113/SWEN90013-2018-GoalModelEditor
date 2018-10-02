@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/img/leon.png">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Template Edit</title>
+    <!-- Loads and initializes the Bootstrap style -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheet/templateEdit.css"
+</head>
+
+<body>
+
+<!-- Alert div starts-->
+<!-- Success alert -->
+<div style="display: none" class="text-center alert alert-success mb-0 notification"
+     id="success-alert" role="alert">
+</div>
+<!-- Warning alert -->
+<div style="display: none" class="text-center alert alert-warning mb-0 notification"
+     id="warning-alert" role="alert">
+</div>
+<!-- Alert div ends -->
+
+<!-- Loading modal starts-->
+<div class="modal" id="loadingModal">
+    <div style="width: 200px;height:20px; z-index: 20000; position: absolute; text-align: center; left: 50%; top: 50%;margin-left:-100px;margin-top:-10px">
+        <img src="/img/loading1.gif" height="150" width="150"/>
+        <h6>Loading...</h6>
+    </div>
+</div>
+<!-- Loading modal ends-->
+
+<!-- Header part of the page -->
+<header class="bg-white mb-2 pt-2 pb-3">
+    <nav class="container-fluid">
+        <div class="row">
+            <div class="col-4" id="model_name" style="font-size: 35px">
+                <strong>&nbsp;&nbsp;&nbsp;Motivational Model</strong>
+            </div>
+
+            <div class="col-6">
+            </div>
+
+            <!-- User div -->
+            <div class="col-2">
+                <div class="row text-center pt-2">
+                    <div class="dropdown">
+                        <button class="btn" type="button" id="user-dropdown"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user"></i>&nbsp;&nbsp;<a id="username"> username</a>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user-dropdown">
+                            <a class="dropdown-item" href="/profile" method="get">Profile</a>
+                            <a class="dropdown-item" id="signout">Sign out</a>
+                        </div>
+                    </div>
+                    <a class="btn btn-secondary non-draggable dragger" href="/dashboard">Return</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="row">
+    <button type="button" class="btn-sm btn-outline-primary non-draggable dragger" id="saveTemplateXML">Save
+        Graph
+    </button>
+</div>
+<div class="row">
+    <div class="col-1 text-left">
+        <div id="sidebarContainer"
+             class="mt-4 mx-3"
+             style="position:relative;
+                width:80;
+                height:80vh;
+                text-alight:center">
+        </div>
+    </div>
+
+    <div class="col-11 text-right">
+        <div id="graphContainer"
+             class="mt-4 mx-3"
+             style="position:relative;
+            overflow:hidden;
+            width:auto;
+            height:80vh;
+            background:url('/src/images/grid.gif');
+            cursor:default;">
+        </div>
+    </div>
+</div>
+
+
+<footer>
+    <p class="text-center">&copy;<em>&nbsp;2018 The University of Melbourne</em></p>
+</footer>
+
+<!-- Loads and initializes the Bootstrap javascript -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+
+<!--<script>-->
+<!--//show loading-->
+<!--$("#loadingModal").modal("show");-->
+<!--</script>-->
+
+<!-- mxgraph basepath -->
+<script type="text/javascript"> mxBasePath = '/src'; </script>
+<!-- load and initialise mxgraph library -->
+<script type="text/javascript" src="/src/js/mxClient.js"></script>
+<script type="text/javascript" src="/js/templateEdit.js"></script>
+<script type="text/javascript" src="/js/template.js"></script>
+<script type="text/javascript" src="/js/projectEdit/graphXML.js"></script>
+
+</body>
+</html>

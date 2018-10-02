@@ -4,13 +4,19 @@
     <meta charset="UTF-8">
     <link rel="icon" href="/img/leon.png">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <title>Goal Model Edit Page</title>
+    <title>Motivational Model Edit Page</title>
 
     <!-- Loads and initializes the Bootstrap style -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!--Load the edit page style-->
-    <link rel="stylesheet" href="/stylesheet/projectedit.css">
+    <link rel="stylesheet" href="/stylesheet/projectEdit.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+          crossorigin="anonymous">
+    <!--add jquery UI library-->
+    <!--<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">-->
 
     <!--add nestable library-->
     <link rel="stylesheet" href="/stylesheet/jquery.nestable.css">
@@ -24,7 +30,7 @@
 
     <!--&lt;!&ndash; mxgraph basepath &ndash;&gt;-->
     <!--<script type="text/javascript">-->
-        <!--mxBasePath ='/src';-->
+    <!--mxBasePath ='/src';-->
     <!--</script>-->
 
     <!--&lt;!&ndash; load and initialise mxgraph library &ndash;&gt;-->
@@ -33,22 +39,31 @@
     <!--&lt;!&ndash; script for rendering graph #currently a stub &ndash;&gt;-->
     <!--<script type="text/javascript" src="/js/graph.js">-->
     <!--</script>-->
+    <style>
+        li dt {
+            display: none;
+        }
 
+        li:hover dt {
+            display: block;
+        }
+    </style>
 </head>
 
 
 <body onload="getJSONFile()" style="background-color: white">
 <!--<div class="pad_menu">-->
 
-    <!-- Start alert div -->
-    <!-- Success alert -->
-    <div style="display: none" class="text-center alert alert-success mb-0 notification"
-         id="success-alert" role="alert">
-    </div>
-    <!-- Warning alert -->
-    <div style="display: none" class="text-center alert alert-warning mb-0 notification"
-         id="warning-alert" role="alert">
-    </div>
+<!-- Start alert div -->
+<!-- Success alert -->
+<div style="display: none" class="text-center alert alert-success mb-0 notification"
+     id="success-alert" role="alert">
+</div>
+<!-- Warning alert -->
+<div style="display: none" class="text-center alert alert-warning mb-0 notification"
+     id="warning-alert" role="alert">
+</div>
+<!-- End alert div -->
 
 <div class="modal" id="loadingModal">
     <div style="width: 200px;height:20px; z-index: 20000; position: absolute; text-align: center; left: 50%; top: 50%;margin-left:-100px;margin-top:-10px">
@@ -57,61 +72,99 @@
     </div>
 </div>
 
-    <!-- End alert div -->
-<!--the top navigation bar-->
-
-<!--<div class="lds-roller" style="text-align: center;"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>-->
-
-
-
-<div class="container-heading1" style="background-color: white">
-    <!--<div class="header-filter" style="background-image: url('/img/home-background.jpg')"></div>-->
-    <!--<nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" role="navigation" -->
-    <!--style="background-color: rgb(236, 244, 244); "-->
-    <!--&gt;-->
-    <nav class="navbar navbar-expand-sm navbar-light navbar-fixed-top header" role="navigation"
-         style="background-image: url('/img/profile-background.jpg'); ">
-        <a class="navbar-brand" href="#" id="model_name" style="font-size: 35px">
-            <strong>Goal Model</strong>
-            <img id="saveJSONLoading" src="/img/loading1.gif" style="display: none" height="45" width="45"/>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="form-inline ml-auto" style="float: right; margin-right: 20px">
-
-            <div class="row text-center">
-
-                <div class="dropdown">
-                    <button class="btn dropdown-toggle" type="button" id="user-dropdown"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <a id="username">username</a>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user-dropdown">
-                        <a class="dropdown-item" href="/profile">Profile</a>
-                        <a class="dropdown-item" method="post"
-                           id="signout">Sign out</a>
+<!-- Header part of the page -->
+<header class="bg-white mb-2 py-3" style="width:auto; min-width:1280px;
+        overflow-y:hidden; max-width: 100%;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-9 non-draggable dragger" id="model_name">
+                &nbsp;&nbsp;&nbsp;<strong class="non-draggable dragger" style="font-size: 35px">Motivational
+                Model</strong>
+            </div>
+            <!-- Loading div -->
+            <div class="col-1">
+                <img id="saveJSONLoading" src="/img/loading1.gif" style="display: none" height="45" width="45"/>
+                <h8 id="savedLabel" style="display: none">Saved</h8>
+            </div>
+            <!-- User div -->
+            <div class="col-2 text-right">
+                <div class="row text-center pt-2">
+                    <div class="dropdown mr-1">
+                        <button class="btn non-draggable dragger" type="button" id="user-dropdown"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user"></i>&nbsp;&nbsp;<a class="non-draggable dragger" id="username">
+                            username</a>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right non-draggable dragger"
+                             aria-labelledby="user-dropdown">
+                            <a class="dropdown-item non-draggable dragger" href="/profile" method="get">Profile</a>
+                            <a class="dropdown-item non-draggable dragger" method="post" href="/"
+                               id="signout">Sign out</a>
+                        </div>
                     </div>
+                    <a class="btn btn-secondary non-draggable dragger" href="/dashboard">Return</a>
                 </div>
-                <!--<button type="button" class="btn btn-success ml-2" id="save">Save</button>-->
-                <a class="btn btn-secondary ml-2" href="/dashboard">Return</a>
             </div>
         </div>
-    </nav>
+    </div>
+</header>
+
+<div class="steps_bar" style="width:auto; min-width:1280px;
+        overflow-y:hidden; max-width: 100%;">
+    <ul>
+        <!--<li id="imageTab" class="current" onclick="imageClick()"><span>Upload Image</span></li>-->
+        <li id="goalTab" class="current non-draggable dragger" onclick="goalClick()"><span
+                class="non-draggable dragger">Write Goal List
+                <i class="fas fa-info-circle"></i>
+                <div style="position: absolute; z-index: 10" align="left">
+                    <dt style="position:relative; top:-20px; left:60px;width:310px; height:150px; font-size:14px; line-height:30px; background-color:rgba(228,229,234,0.8); color:darkgrey">
+                        • Click <strong><code>Upload Image</code></strong> to upload <br/>
+                        • Click the goal and use <strong><code>[delete]</code></strong> to delete goals <br/>
+                        • Click the last goal on the goal list and use <strong><code>[return]</code></strong> to add a new goal <br/>
+                    </dt>
+                </div>
+        </span>
+        </li>
+
+        <li id="clusterTab" class="non-draggable dragger" onclick="clusterClick()"><span class="non-draggable dragger">Cluster Goals / Arrange into Hierarchy
+            <i class="fas fa-info-circle"></i>
+            <div style="position: absolute; z-index: 10" align="left">
+                    <dt style="position:relative; top:-20px; left:30px;width:380px; height:210px; font-size:14px; line-height:30px; background-color:rgba(228,229,234,0.8); color:darkgrey">
+                        • Click the goal and use <strong><code>[delete]</code></strong> to delete a goal <br/>
+                        • Click the last goal on the goal list and use <strong><code>[return]</code></strong> to generate a new goal <br/>
+                        • Drag the goal from the goal list on the left section and drop it into the cluster on the right section<br/>
+                        • Drag the goal in the cluster to the right or left sides to achieve the hierarchical structure <br/>
+                    </dt>
+            </div>
+        </span>
+        </li>
+
+        <li id="graphTab" class="last non-draggable dragger" onclick="graphClick()"><span class="non-draggable dragger">Render Model
+            <i class="fas fa-info-circle"></i>
+            <div style="position: absolute; z-index: 10" align="left">
+                    <dt style="position:relative; top:-20px; left:30px;width:380px; height:180px; font-size:14px; line-height:30px; background-color:rgba(228,229,234,0.8); color:darkgrey">
+                        • Click <strong><code>Edit All</code></strong> on the left section to edit the names of goals <br/>
+                        • Click <strong><code>Drag All</code></strong> on the left section to drag the cluster into the graph on the right section<br/>
+                        • Click <strong><code>Render</code></strong> on the left section to generate the goal modal<br/>
+                    </dt>
+            </div>
+        </span>
+        </li>
+    </ul>
 </div>
 
 
 <!--the main section-->
-<div class="container-body">
+<div class="container-body" style="width:auto; min-width:1280px;
+        overflow-y:hidden; max-width: 100%;">
     <div id="height-full-screen" class="container-fluid">
         <div class="row">
             <!--import pictures section start-->
             <div id="photo" class="col-7 showborder scrollbar" style="background-color:rgba(35, 144, 231, 0.1);">
                 <fieldset class="form-group">
-                    <br/>
-                    <button class="btn btn-outline-primary" onclick="$('#pro-image').click()">Upload Image</button>
-                    <input type="file" accept="image/*" id="pro-image" name="pro-image" style="display: none;" class="form-control" multiple>
+                    <button class="btn btn-outline-primary mt-3" onclick="$('#pro-image').click()">Upload Image</button>
+                    <input type="file" accept="image/*" id="pro-image" name="pro-image" style="display: none;"
+                           class="form-control" multiple>
                 </fieldset>
                 <div class="preview-images-zone" style="background-color: white">
                     <!--preview-images-zone-->
@@ -120,43 +173,44 @@
             <!--import pictures section end-->
 
             <!--to do list goal section start-->
-            <div id="todolist" class="col-5 showborder scrollbar" style="margin-top: 0px; background-color: rgb(236, 244, 244)">
+            <div id="todolist" class="col-5 showborder scrollbar"
+                 style="margin-top: 0px; background-color: rgb(236, 244, 244);">
                 <!-- Nav tabs -->
                 <fieldset class="form-group py-0 my-0">
-                    <div class="text-right my-1">
-                        <button id="photonextbtn" class="btn-sm btn-outline-primary" onclick="photonextbtn()">Next</button>
-                    </div>
                     <ul class="nav nav-tabs nav-justified indigo" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#panel1" role="tab"><img class="icon" src="/img/Function.png"/><br>Function</a>
+                        <li class="nav-item non-draggable dragger">
+                            <a class="nav-link active non-draggable dragger" data-toggle="tab" href="#panel1"
+                               role="tab"><img class="icon dragger non-draggable" src="/img/Function.png"/><br>Function</a>
                             <!--<span class="badge badge-primary">Functional</span>-->
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#panel2" role="tab"><img class="icon" src="/img/Cloud.png"/><br>Quality</a>
+                        <li class="nav-item non-draggable dragger">
+                            <a class="nav-link non-draggable dragger" data-toggle="tab" href="#panel2" role="tab"><img
+                                    class="icon dragger non-draggable" src="/img/Cloud.png"/><br>Quality</a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#panel3" role="tab"><img class="icon" src="/img/Heart.png"/><br>Feeling</a>
+                        <li class="nav-item non-draggable dragger">
+                            <a class="nav-link non-draggable dragger" data-toggle="tab" href="#panel3" role="tab"><img
+                                    class="icon dragger non-draggable" src="/img/Heart.png"/><br>Emotion</a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#panel4" role="tab"><img class="icon" src="/img/Risk.png"/><br>Concern</a>
+                        <li class="nav-item dragger non-draggable">
+                            <a class="nav-link non-draggable" data-toggle="tab" href="#panel4" role="tab"><img
+                                    class="icon dragger non-draggable" src="/img/Risk.png"/><br>Concern</a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#panel5" role="tab"><img class="icon" src="/img/Stakeholder.png"/><br>Actor</a>
+                        <li class="nav-item non-draggable dragger">
+                            <a class="nav-link non-draggable dragger" data-toggle="tab" href="#panel5" role="tab"><img
+                                    class="icon dragger non-draggable" src="/img/Stakeholder.png"/><br>Role</a>
                         </li>
-
 
 
                     </ul>
                 </fieldset>
 
 
-
                 <!-- Tab panels -->
-                <div style="background-color: white ">
+                <div style="background-color: white;">
                     <div id="goals" class="tab-content inside-scrollbar notopborder">
                         <!--Panel 1-->
                         <div class="tab-pane fade in show active pt-2" id="panel1" role="tabpanel">
@@ -195,17 +249,17 @@
                     </div>
 
                     <!--used goals-->
-                    <div id="notes" class="showborder inside-scrollbar" style="display: none">
-                        <h6>Notes</h6>
+                    <div id="notes" class="showborder inside-scrollbar" style="display: none;">
+                        <h6 class="non-draggable dragger">Notes</h6>
                         <div id="notedata">
-                            <text id="notecontent"></text>
+                            <text class="non-draggable dragger" id="notecontent"></text>
                         </div>
                     </div>
 
                     <!--deleted goals-->
                     <!--<div id="deletedgoal" class="showborder inside-scrollbar" style="display: none">-->
-                        <!--<h6>Deleted Goals</h6>-->
-                        <!--<div id="deletedgoaldata"></div>-->
+                    <!--<h6>Deleted Goals</h6>-->
+                    <!--<div id="deletedgoaldata"></div>-->
                     <!--</div>-->
 
                 </div>
@@ -214,64 +268,155 @@
             <!--to do list section end-->
 
             <!--cluster section start-->
-            <div id="cluster" class="col-7 showborder scrollbar" style="display: none; background-color:rgba(35, 144, 231, 0.1);">
+            <div id="cluster" class="col-7 showborder scrollbar"
+                 style="display: none; background-color:rgba(35, 144, 231, 0.1);">
                 <div>
-                    <h4>Cluster</h4>
-                    <button class="btn-sm btn-outline-primary" id="clusternextbtn" onclick="clusternext()">Next</button>
-                    <button style="display: none" class="btn-sm btn-outline-primary" id="renderbtn" onclick="renderGraph(document.getElementById('graphContainer'))">Render</button>
-                    <button type="button" class="btn-sm btn-outline-primary" id="edit">Edit All</button>
-                    <button type="button" class="btn-sm btn-outline-primary" id="drag">Drag All</button>
-                    <a id="Export" href="#">ExportSVG</a>
+
+
+                    <!--< a id="Export" href="#">ExportSVG</a>-->
                 </div>
                 <!--show cluster data from JSON-->
                 <div class="dd py-3" id="cluster_1">
-                     <!--style="background-color: white"-->
+                    <!--style="background-color: white"-->
                 </div>
             </div>
             <!--cluster section end-->
 
             <!--&lt;!&ndash;hierachy section start&ndash;&gt;-->
             <!--<div id="hierarchy" class="col-4 showborder scrollbar" style="display: none; background-color: rgb(236, 244, 244)">-->
-                <!--<div>-->
-                    <!--<h4>Hierarchy</h4>-->
+            <!--<div>-->
+            <!--<h4>Hierarchy</h4>-->
 
-                <!--</div>-->
-                <!--&lt;!&ndash;show hierarchy data from JSON&ndash;&gt;-->
-                <!--<div class="hierarchy showborder inside-scrollbar" id="hierarchydata" style="background-color: white"></div>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;show hierarchy data from JSON&ndash;&gt;-->
+            <!--<div class="hierarchy showborder inside-scrollbar" id="hierarchydata" style="background-color: white"></div>-->
             <!--</div>-->
             <!--&lt;!&ndash;hierachy section end&ndash;&gt;-->
 
             <!--generate section start-->
-            <div id="generator" class="col-sm showborder scrollbar" style="display: none; background-color: rgb(236, 244, 244)">
+            <div id="generator" class="col-sm showborder scrollbar"
+                 style="display: none; background-color: rgb(236, 244, 244)">
                 <div class="row">
-                    <div class="col-10 text-left my-1">
-                        <h3>Generate Your Goal Model</h3>
+                    <div class="col-6 text-left my-1">
                     </div>
-                    <div class="col-2 text-right my-1">
-                        <button type="button" class="btn-sm btn-outline-primary" id="saveXML">Save Graph</button>
+                    <div class="col-6 text-right my-1" id="zoomButtons">
+                        <button type="button" class="btn-sm btn-outline-primary non-draggable dragger" id="Export">
+                            Export
+                        </button>
+                        <button type="button" class="btn-sm btn-outline-primary non-draggable dragger" id="saveXML">
+                            Save
+                        </button>
+                        <button style="display: none" class="btn-sm btn-outline-primary non-draggable dragger"
+                                id="renderbtn">
+                            Render
+                        </button>
                     </div>
                 </div>
-                <div id="graphContainer"
-                    style="position:relative;overflow:hidden;width:821px;height:641px;background:url('/src/images/grid.gif');cursor:default;">
+                <div class="row" style="height:auto; min-height:90%">
+                    <div class="col-11 text-left">
+                        <div id="graphContainer"
+                             style="position:relative;overflow:hidden;width:100%;height:100%;background:url('/src/images/grid.gif');cursor:default;">
+                        </div>
+                    </div>
+                    <div class="col-1 text-right">
+                        <div id="sidebarContainer"
+                             style="
+                            position:relative;
+                            float:right;
+                            padding:0px;
+                            left:0px;
+                            top:0px;
+                            bottom:0px;
+                            background-color:lightgrey;
+                            text-align:center;
+                            outline:thin solid black">
+                        </div>
+                    </div>
                 </div>
             </div>
             <!--generate section end-->
+        </div>
+    </div>
+    <footer>
+        <p class="text-center non-draggable dragger mt-1 mb-0">&copy;<em class="non-draggable dragger">&nbsp;2018 The
+            University of
+            Melbourne</em></p>
+    </footer>
+</div>
 
+<!-- Render warning deleting goal modal start -->
+<div class="modal fade" id="deleteGoalWarning" tabindex="-1" role="dialog"
+     aria-labelledby="new-model" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title non-draggable dragger">Warning</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" id="delete_goal">
+                <div class="modal-body">
+                    <lable type="text">Your goal is empty now. Do you want to delete it or continue editing it to make
+                        it not empty?
+                    </lable>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="deleteGoalBtn" class="btn btn-secondary non-draggable dragger"
+                            data-dismiss="modal">Delete it.
+                    </button>
+                    <button type="button" id="editGoalBtn" class="btn btn-primary non-draggable dragger"
+                            data-dismiss="modal">Edit it.
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+<!-- Render warning deleting goal modal end -->
 
-
-
-
+<!-- Render warning project modal start -->
+<div class="modal fade" id="renderWarning" tabindex="-1" role="dialog"
+     aria-labelledby="new-model" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title non-draggable dragger">Warning</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" id="delete_project">
+                <div class="modal-body">
+                    <lable type="text">Do you want to overwrite current symbolic goal model?</lable>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn non-draggable dragger" style="background-color: transparent"
+                            data-dismiss="modal">Cancel
+                    </button>
+                    <button type="button" class="btn btn-primary non-draggable dragger" data-dismiss="modal"
+                            onclick="renderGraph(document.getElementById('graphContainer'))">Confirm
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Render warning modal end -->
 
 <!-- Loads and initializes the Bootstrap javascript -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--add jquery UI library-->
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+        crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <script>
     //show loading
@@ -279,7 +424,7 @@
 </script>
 <!-- mxgraph basepath -->
 <script type="text/javascript">
-    mxBasePath ='/src';
+    mxBasePath = '/src';
 </script>
 <!-- load and initialise mxgraph library -->
 <script type="text/javascript" src="/src/js/mxClient.js"></script>
@@ -287,18 +432,15 @@
 <!-- script for rendering graph #currently a stub -->
 <script type="text/javascript" src="/js/projectEdit/graph.js"></script>
 
+
 <!--add nestable library-->
 <script src="/js/projectEdit/jquery.nestable.js"></script>
 <script src="/js/projectEdit/image.js"></script>
 <script src="/js/projectEdit/goalList.js"></script>
 <script src="/js/projectEdit/projectEdit.js"></script>
 <script src="/js/projectEdit/graphXML.js"></script>
-
-<footer>
-    <p class="text-center">&copy;<em>&nbsp;2018 The University of Melbourne</em></p>
-</footer>
-
 <!--</div>-->
 </body>
+
 
 </html>

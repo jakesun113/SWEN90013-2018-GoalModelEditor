@@ -10,30 +10,41 @@ function getJSONFile() {
     $.ajax(url, {
         // the API of upload pictures
         type: "GET",
-        headers: { Authorization: "Bearer " + token },
-        success: function(data) {
+        headers: {Authorization: "Bearer " + token},
+        success: function (data) {
             window.jsonData = JSON.parse(JSON.parse(JSON.stringify(data)));
-            $("#model_name strong").html(
-                jsonData.GoalModelProject.ProjectName +
+            let modelName = jsonData.GoalModelProject.ProjectName +
                 " - " +
-                jsonData.GoalModelProject.ModelName
-            );
+                jsonData.GoalModelProject.ModelName;
+            $("#model_name strong").html(modelName);
             loadData();
             loadImages();
             //activate drag function
-            drag();
+            getDraggingElement();
+
+            addNoChildrenClass();
 
             $(".dd").nestable({
-                callback: function(l, e) {
+
+                onDragStart: function (l, e) {
+                    // get type of dragged element
+                    var type = $(e).children(".dd-handle").attr("class").split(" ")[0];
+                    console.log(type);
+                    addNoChildrenClass();
+                },
+
+                callback: function (l, e) {
                     // l is the main container
                     // e is the element that was moved
                     appendCluster();
+                    removeCluster();
                 },
                 scroll: true
             });
             getXML();
+            setTitle(modelName);
         }
-    }).fail(function(jqXHR) {
+    }).fail(function (jqXHR) {
         $("#warning-alert").html(
             jqXHR.responseJSON.message + " <br>Please try again."
         );
@@ -84,6 +95,7 @@ function loadData() {
     loadCluster();
     appendCluster();
 }
+
 /*Load data end*/
 
 /*Add new cluster start*/
@@ -101,7 +113,7 @@ function loadCluster() {
 
     // add goals to clusters
     for (let i = 0; i < clusterNum; i++) {
-        let clusterID = jsonData.GoalModelProject.Clusters[i].ClusterID;
+        let clusterID = "cluster_" + (i + 1);
         if (
             jsonData.GoalModelProject.Clusters[i].ClusterGoals !== undefined &&
             jsonData.GoalModelProject.Clusters[i].ClusterGoals.length > 0
@@ -152,6 +164,7 @@ function parseClusterNodes(nodes) {
     }
     return ol;
 }
+
 /*parse Cluster nodes end*/
 
 /**
@@ -162,13 +175,15 @@ function parseClusterNodes(nodes) {
 function parseNode(node) {
     // takes a node object and turns it into a <li>
     let li = document.createElement("LI");
-    li.setAttribute("class", node.GoalType);
-    li.setAttribute("class", "dragger");
+    li.setAttribute("class", "dragger" + " drag-style");
     li.setAttribute("draggable", "true");
     let fontWeight = "bold";
     if (node.Used) {
         fontWeight = "normal";
     }
+    let placeholderText = getPlaceholder(node.GoalType);
+
+
     // li.setAttribute('id', node.GoalID);
     li.innerHTML =
         '<input id= "' +
@@ -178,7 +193,8 @@ function parseNode(node) {
         " " +
         '" value = "' +
         node.GoalContent +
-        '" placeholder="New goal" style="font-weight: ' +
+        '" placeholder="' + placeholderText + '" ' +
+        'style="font-weight: ' +
         fontWeight +
         '" ' +
         'note="' +
@@ -194,6 +210,7 @@ function parseNode(node) {
         li.appendChild(parseNodes(node.SubGoals));
     return li;
 }
+
 /*Show JSON data on edit page end*/
 
 /*parse Cluster node start*/
@@ -213,22 +230,33 @@ function parseClusterNode(node) {
         node.GoalID +
         '" class="' +
         node.GoalType +
-        " dd-handle dd-handle-style" + '"' +
+        " dd-handle dd-handle-style" + '" ' +
         'note="' +
         node.GoalNote +
         '"' +
         ">" +
-        '<img src="' + iconPath +'" class="mr-1 typeIcon">' +
-        '<div class="goal-content">' + node.GoalContent + '</div>' +
+        '<img src="' + iconPath + '" class="mr-1 typeIcon">' +
+        '<div class="goal-content"  tabindex="-1" ' +
+        'onblur="finishEditGoalInCluster(this);">' + node.GoalContent + '</div>' +
+        '<img class="editButton" src="/img/edit-solid.svg"' +
+        ' onclick="event.stopImmediatePropagation(); editGoalInCluster(this)"' +
+        'onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
+        'onmousedown="event.stopImmediatePropagation()">' +
         "</div>";
 
     // recursion to add sub goal
     if (node.SubGoals !== undefined && node.SubGoals.length > 0) {
+        // make sure NOT showing two or more sets data-action buttons
+        $(li).children("[data-action]").remove();
+        $(li).prepend($('<button class="dd-expand" data-action="expand">Expand</button>'));
+        $(li).prepend($('<button class="dd-collapse" data-action="collapse">Collapse</button>'));
+
         li.appendChild(parseClusterNodes(node.SubGoals));
     }
 
     return li;
 }
+
 /*parse Cluster node end*/
 
 /**
@@ -242,6 +270,8 @@ function saveJSON() {
     let modelId = Cookies.get("MID");
     let url = "/goal_model/" + userId + "/" + modelId;
     $("#saveJSONLoading").show();
+    $("#savedLabel").show();
+
     getData();
     // ajax starts
     $.ajax(url, {
@@ -249,11 +279,14 @@ function saveJSON() {
         data: JSON.stringify(model),
         dataType: "json",
         contentType: "application/json",
-        headers: { Authorization: "Bearer " + token },
-        success: function(data) {
-            $("#saveJSONLoading").hide();
+        headers: {Authorization: "Bearer " + token},
+        success: function (data) {
+            setTimeout(function () {
+                $("#saveJSONLoading").hide();
+                $("#savedLabel").hide();
+            }, 1000);
         }
-    }).fail(function(jqXHR) {
+    }).fail(function (jqXHR) {
         $("#saveJSONLoading").hide();
         $("#warning-alert").html("Save Failed.<br>Please try again.");
         $("#warning-alert")
@@ -262,6 +295,7 @@ function saveJSON() {
             .slideUp();
     }); // end ajax
 }
+
 /*Send data to backend end*/
 
 /*Get data from HTML to JSON start */
@@ -270,15 +304,15 @@ function saveJSON() {
  */
 function getData() {
     // get all data from HTML (in goal list)
-    const functionalData = $($("#functionaldata").children("ul")[0]).children(
+    let functionalData = $($("#functionaldata").children("ul")[0]).children(
         "li"
     );
-    const qualityData = $($("#qualitydata").children("ul")[0]).children("li");
-    const emotionalData = $($("#emotionaldata").children("ul")[0]).children(
+    let qualityData = $($("#qualitydata").children("ul")[0]).children("li");
+    let emotionalData = $($("#emotionaldata").children("ul")[0]).children(
         "li"
     );
-    const negetiveData = $($("#negativedata").children("ul")[0]).children("li");
-    const stakeholderData = $($("#stakeholderdata").children("ul")[0]).children(
+    let negativeData = $($("#negativedata").children("ul")[0]).children("li");
+    let stakeholderData = $($("#stakeholderdata").children("ul")[0]).children(
         "li"
     );
 
@@ -291,7 +325,7 @@ function getData() {
     listParseGoalsToJSON(functionalData, functionalList, "Functional");
     listParseGoalsToJSON(qualityData, qualityList, "Quality");
     listParseGoalsToJSON(emotionalData, emotionalList, "Emotional");
-    listParseGoalsToJSON(negetiveData, negativeList, "Negative");
+    listParseGoalsToJSON(negativeData, negativeList, "Negative");
     listParseGoalsToJSON(stakeholderData, stakeholderList, "Stakeholder");
 
     // change the json data for storing
@@ -352,6 +386,7 @@ function getData() {
     // change the cluster JSON data
     window.jsonData.GoalModelProject.Clusters = clusterList;
 }
+
 /* Get data from HTML to JSON end */
 
 /* Parse all goals for a certain type in goal list start */
@@ -379,6 +414,7 @@ function listParseGoalsToJSON(data, list, type) {
         );
     }
 }
+
 /* Parse all goals for a certain type in goal list end */
 
 /* Parse a single goal to JSON in goal list start */
@@ -400,6 +436,7 @@ function listParseGoalToJSON(id, type, content, note, used) {
     };
     return resultJSON;
 }
+
 /* Parse a single goal in goal list to JSON end */
 
 /* Parse a single goal in clusters to JSON start */
@@ -422,6 +459,7 @@ function clusterParseGoalToJSON(id, type, content, note, subGoals) {
     };
     return resultJSON;
 }
+
 /* Parse a single goal in clusters to JSON end */
 
 /* Find type of the goal start*/
@@ -443,7 +481,30 @@ function getType($goal) {
         return "Stakeholder";
     }
 }
+
 /* Find type of the goal end*/
+
+/**
+ * based on the goal type, set different placeholder
+ * @param {string} type of the goal
+ * @returns {string} corresponding placeholder
+ */
+function getPlaceholder(type) {
+    switch (type) {
+        case "Functional":
+            return "New Functional Goal";
+        case "Quality":
+            return "New Quality Goal";
+        case "Negative":
+            return "New Negative Goal";
+        case "Emotional":
+            return "New Emotional Goal";
+        case "Stakeholder":
+            return "New Role";
+        default:
+            return "";
+    }
+}
 
 /* Get all sub goals of a goal in the cluster start*/
 /**
@@ -462,7 +523,8 @@ function getAllSubgoals($goalList, goals) {
         $goal.attr("note"),
         newSubGoals
     );
-    if ($($goalList.children("ol")).length !== 0) {
+    if ($($goalList.children("ol")).length !== 0
+        && !($goalList.attr("class").includes("collapsed"))) {
         let listItems = $($goalList.children("ol")).children("li");
         let $listItems = $(listItems);
         for (let i = 0; i < $listItems.length; i++) {
@@ -473,6 +535,7 @@ function getAllSubgoals($goalList, goals) {
         goals.push(innerClusterGoalJSON);
     }
 }
+
 /* Get all sub goals of a goal in the cluster end*/
 
 /**
@@ -489,7 +552,7 @@ function changeFontWeight(e) {
  * @return {String} icon path of the corresponding type
  */
 function getTypeIconPath(type) {
-    switch(type){
+    switch (type) {
         case "Functional":
             return PATH_FUNCTIONAL;
         case "Quality":
@@ -503,4 +566,70 @@ function getTypeIconPath(type) {
         default:
             return "";
     }
+}
+
+/**
+ * Helper function to set the title of the page
+ *
+ * @param {String} title
+ */
+function setTitle(title) {
+    $("title").eq(0).html(title);
+}
+
+/**
+ * Set non-functional goals cannot have children
+ *
+ */
+function addNoChildrenClass() {
+    $(".Quality").parent().addClass('dd-nochildren');
+    $(".Negative").parent().addClass('dd-nochildren');
+    $(".Emotional").parent().addClass('dd-nochildren');
+    $(".Stakeholder").parent().addClass('dd-nochildren');
+}
+
+/**
+ * Make goals in cluster editable by double click
+ *
+ */
+function editGoalInCluster(element) {
+    $(".dd-handle-style").removeClass("dd-handle");
+    $(".dd-handle-style").css("cursor", "auto");
+    let target = $(element.parentNode).children(".goal-content");
+    target.attr("contenteditable", "true");
+    // when editing, cannot press "Enter"
+    target.keypress(function (e) {
+        return e.which !== 13;
+    });
+    $(element.parentNode).css("background-color", "rgba(0,0,0,0.1)");
+    setCaret(target[0]);
+
+    target.css("font-weight", "normal");
+}
+
+/**
+ * If do something else, make div not editable again
+ *
+ */
+function finishEditGoalInCluster(element) {
+    //console.log("in finish");
+    $(".dd-handle-style").addClass("dd-handle");
+    $(".dd-handle-style").css("cursor", "move");
+    $(element).attr("contenteditable", "false");
+    $(element).css("font-weight", "bold");
+    $(element.parentNode).css("background-color", "#fafafa");
+    saveJSON();
+}
+
+/**
+ * SetCaret to the end of the div
+ */
+function setCaret(div) {
+    let length = $(div).html().length;
+    let range = document.createRange();
+    let sel = window.getSelection();
+    range.setStart(div.childNodes[0], length);
+    range.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(range);
 }

@@ -39,7 +39,7 @@
 
 .dd-handle {
     display: block;
-    height: 30px;
+    min-height: 20px;
     margin: 5px 0;
     padding: 5px 10px;
     color: #333;
@@ -120,6 +120,8 @@
     background-color: #e5e5e5;
     background-size: 60px 60px;
     background-position: 0 0, 30px 30px;
+    font-size: 20px;
+    text-align: center;
 }
 
 .dd-dragel {

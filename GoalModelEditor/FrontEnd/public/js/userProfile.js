@@ -1,8 +1,12 @@
-//set these fields as "read only"
-$("#usernametext").attr("readonly", "readonly");
-$("#fnametxt").attr("readonly", "readonly");
-$("#lnametxt").attr("readonly", "readonly");
-$("#emailtxt").attr("readonly", "readonly");
+/***
+ * JavaScript For get and edit user profile functions
+ */
+
+"use strict";
+
+/**
+ * Define all variables and constants used across functions
+ */
 
 //define actions when click "edit"
 $("#edit").click(function() {
@@ -10,6 +14,7 @@ $("#edit").click(function() {
 
     $("#title").html("<strong>Edit personal info</strong>");
 
+    //when clicking "edit", can edit these fields
     $("#fnametxt").removeAttr("readonly");
     $("#lnametxt").removeAttr("readonly");
     $("#emailtxt").removeAttr("readonly");
@@ -94,10 +99,19 @@ $("#cancel2").click(function() {
 
 //at first, load data from server using ajax
 $(document).ready(function() {
-    var secret = JSON.parse(Cookies.get("LOKIDIED"));
-    var token = secret.token;
-    var id = secret.uid;
-    var url = "/user/profile/" + id;
+
+    //when page is first loaded, set these fields as "read only"
+    $("#usernametext").attr("readonly", "readonly");
+    $("#fnametxt").attr("readonly", "readonly");
+    $("#lnametxt").attr("readonly", "readonly");
+    $("#emailtxt").attr("readonly", "readonly");
+
+    //get token and user id from the cookie
+    let secret = JSON.parse(Cookies.get("LOKIDIED"));
+    let token = secret.token;
+    let id = secret.uid;
+    let url = "/user/profile/" + id;
+    //get method to request data from the backend
     $.ajax(url, {
         headers: { Authorization: "Bearer " + token },
         type: "GET",
@@ -112,9 +126,8 @@ $(document).ready(function() {
     }); // end ajax
 }); // end ready
 
-$("#profile")
-    .validator()
-    .on("submit", function(evt) {
+//when clicking "submit" of editing profile, after validation success, put data to the backend
+$("#profile").validator().on("submit", function (evt) {
         //by default, when the form is invalid, .preventDefault() is called
         //so when the form is valid
         if (!evt.isDefaultPrevented()) {
@@ -136,11 +149,11 @@ $("#profile")
             $("#cancel1").hide();
 
             //send the updated data to server using ajax
-            var formData = $(this).serialize();
-            var secret = JSON.parse(Cookies.get("LOKIDIED"));
-            var token = secret.token;
-            var id = secret.uid;
-            var url = "/user/profile/" + id;
+            let formData = $(this).serialize();
+            let secret = JSON.parse(Cookies.get("LOKIDIED"));
+            let token = secret.token;
+            let id = secret.uid;
+            let url = "/user/profile/" + id;
             $.ajax(url, {
                 data: formData,
                 type: "PUT",
@@ -156,9 +169,8 @@ $("#profile")
         }
     });
 
-$("#pwdform")
-    .validator()
-    .on("submit", function(evt) {
+//when clicking "submit" of changing password, after validation success, put data to the backend
+$("#pwdform").validator().on("submit", function (evt) {
         //by default, when the form is invalid, .preventDefault() is called
         //so when the form is valid
         if (!evt.isDefaultPrevented()) {
@@ -183,11 +195,11 @@ $("#pwdform")
             $("#changepwd").show();
 
             //send the updated data to server using ajax
-            var formData = $(this).serialize();
-            var secret = JSON.parse(Cookies.get("LOKIDIED"));
-            var token = secret.token;
-            var id = secret.uid;
-            var url = "/user/cred/" + id;
+            let formData = $(this).serialize();
+            let secret = JSON.parse(Cookies.get("LOKIDIED"));
+            let token = secret.token;
+            let id = secret.uid;
+            let url = "/user/cred/" + id;
             $.ajax(url, {
                 data: formData,
                 type: "PUT",

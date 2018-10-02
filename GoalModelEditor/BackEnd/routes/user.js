@@ -1,5 +1,11 @@
 /* End point for user-related HTTPS requests to the back-end REST API.
  *
+ * Routes including:
+ *   POST '/user/login'               user login
+ *   POST '/user/register'            register new user
+ *   GET  '/user/profile/:userId'     get user profile
+ *   PUT  '/user/profile/:userId'     update user profile
+ *   PUT  '/user/cred/:userId'        user change password
  */
 "use strict";
 
@@ -18,19 +24,14 @@ const db = require(path.resolve(
 const auth = require("../authen");
 const crypto = require("crypto");
 
-const response_codes = require("./response_codes");
-
 /* POST User Login */
-router.post("/login", function(req, res, next) {
+router.post("/login", function (req, res) {
     const hash = crypto.createHash("sha256");
-    console.log("in login func");
     hash.update(req.body.password);
     let promise = db.login(req.body.username, hash.digest("hex"));
-    promise
-        .then(function(user_id) {
+    promise.then(function (user_id) {
             console.log("result is " + user_id);
             let token = auth.genToken(user_id);
-            //let token = auth.genToken(1);
             res.statusCode = 200;
             res.contentType("application/json");
             res.json({ user_id: user_id, token: token });
@@ -51,7 +52,8 @@ router.post("/login", function(req, res, next) {
         });
 });
 
-router.post("/register", (req, res, next) => {
+/* POST register a new user */
+router.post("/register", (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
     let email = req.body.email;
@@ -62,8 +64,7 @@ router.post("/register", (req, res, next) => {
         .update(password)
         .digest("hex");
 
-    db
-        .insertUser(username, hashPassword, email, firstname, lastname)
+    db.insertUser(username, hashPassword, email, firstname, lastname)
         .then(result => {
             console.log(result);
             res.statusCode = 200;
@@ -77,6 +78,7 @@ router.post("/register", (req, res, next) => {
         })
         .catch(err => {
             if (err.code === db.ALREADY_EXIST) {
+                // user is already in the database
                 res.statusCode = 409;
                 res.json({
                     message: "User registration failed: " + err.message
@@ -90,7 +92,7 @@ router.post("/register", (req, res, next) => {
 });
 
 /* GET User Profile */
-router.get("/profile/:userId", function(req, res, next) {
+router.get("/profile/:userId", function (req, res) {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
@@ -99,8 +101,7 @@ router.get("/profile/:userId", function(req, res, next) {
     }
 
     // get user profile from db
-    db
-        .getUserProfile(req.params.userId)
+    db.getUserProfile(req.params.userId)
         .then(result => {
             res.statusCode = 200;
             res.json({
@@ -126,7 +127,7 @@ router.get("/profile/:userId", function(req, res, next) {
 });
 
 /* PUT Change User Profile */
-router.put("/profile/:userId", function(req, res, next) {
+router.put("/profile/:userId", function (req, res) {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
@@ -134,9 +135,8 @@ router.put("/profile/:userId", function(req, res, next) {
         return res.end();
     }
 
-    // get user profile from db
-    db
-        .updateUserProfile(
+    // update user profile in db
+    db.updateUserProfile(
             req.params.userId,
             req.body.firstname,
             req.body.lastname,
@@ -169,7 +169,7 @@ router.put("/profile/:userId", function(req, res, next) {
 });
 
 /* PUT Change User Password */
-router.put("/cred/:userId", function(req, res, next) {
+router.put("/cred/:userId", function (req, res) {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
@@ -177,25 +177,27 @@ router.put("/cred/:userId", function(req, res, next) {
         return res.end();
     }
 
-    // update password to db
+    // hash the old password
     const oldhash = crypto.createHash("sha256");
     console.log("in login func");
     oldhash.update(req.body.old_password);
     let oldpw = oldhash.digest("hex");
 
+    // hash the new password
     const newhash = crypto.createHash("sha256");
     console.log("in login func");
     newhash.update(req.body.new_password);
     let newpw = newhash.digest("hex");
 
-    db
-        .changePassword(req.params.userId, oldpw, newpw)
+    // update the password in the database
+    db.changePassword(req.params.userId, oldpw, newpw)
         .then(result => {
             res.statusCode = 200;
             return res.end();
         })
         .catch(err => {
             if (err.code === db.INVALID) {
+                // old password is invalid
                 res.statusCode = 404;
                 res.json({
                     message:

@@ -192,7 +192,7 @@ const SQL_UPDATE_TEMPLATE =
 const SQL_UPDATE_TEMPLATE_TIME =
     "UPDATE Template " +
     "SET LastModified = NOW() " +
-    "WHERE BINARY TemplateId = ? AND User = ?";
+    "WHERE BINARY TemplateId = ? AND BINARY User = ?";
 /**
  * return a template
  * @type {string}
@@ -1263,7 +1263,6 @@ const DBModule = function () {
                     SQL_UPDATE_TEMPLATE_TIME,
                     [templateId, userId],
                     (err, result) => {
-                        console.log(result);
                         if (err) {
                             // network connection or other errors
                             connection.release();
@@ -1272,7 +1271,7 @@ const DBModule = function () {
                                 message: err.sqlMessage
                             });
                         }
-                        if (result.changedRows === 1) {// success
+                        if (result.length === 1) {// success
                             return resolve(result);
                         } else { //
                             return resolve({

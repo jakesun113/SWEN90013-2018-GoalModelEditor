@@ -18,6 +18,13 @@ const db = require(path.resolve(
     "../../Database/DBModule/DBModule.js"
 ));
 
+/* GET template editing page */
+router.get("/edit", function (req, res) {
+    if (req.cookies.LOKIDIED) {
+        res.render("user/project/templateEdit");
+    }
+    res.redirect("/login");
+});
 
 /* POST Create template */
 router.post("/:userId", (req, res, next) => {
@@ -39,7 +46,7 @@ router.post("/:userId", (req, res, next) => {
         req.body.template_name,
         req.body.description,
         dirpath,
-        req.params.userId,
+        req.params.userId
     ).then(result => {
         createDirectoryPath(dirpath);
         console.log(result);
@@ -143,11 +150,11 @@ router.delete("/:userId/:templateId", (req, res) => {
 /* PUT Edit template Info */
 router.put("/info/:userId/:templateId", (req, res) => {
     // check token for authentication
-    // if (!auth.authenticate(req.headers)) {
-    //     res.statusCode = 401;
-    //     res.json({created: false, message: "Authentication failed"});
-    //     return res.end();
-    // }
+    if (!auth.authenticate(req.headers)) {
+        res.statusCode = 401;
+        res.json({created: false, message: "Authentication failed"});
+        return res.end();
+    }
 
     // update goal model
     let dirpath = "./UserFiles/" + req.params.userId + "/";
@@ -158,8 +165,6 @@ router.put("/info/:userId/:templateId", (req, res) => {
         req.body.description,
         dirpath)
         .then(result => {
-
-
             res.statusCode = 200;
             res.json({
                 template_id: req.params.templateId,
@@ -204,8 +209,10 @@ router.put("/:userId/:templateId", (req, res) => {
         req.params.userId,
         req.params.templateId)
         .then(result => {
+            console.log(result)
             fs.writeFile(
-                dirpath + result.TemplateId + ".xml",
+                //TODO: change the template id to be the one from db
+                dirpath + req.params.templateId + ".xml",//result.TemplateId + ".xml",
                 xml,
                 function (err) {
                     if (err) {
@@ -222,6 +229,7 @@ router.put("/:userId/:templateId", (req, res) => {
 
             res.statusCode = 200;
             res.json({
+                // TODO: change the id to the one from db
                 template_id: req.params.templateId
             });
             return res.end();
