@@ -17,6 +17,13 @@ Install the npm packages:
 * cd into `/GoalModelEditor/BackEnd/`
 * Install node packages by executing `npm install`
 
+(If you are running the service on the linux system, you need to add a launch flag(running without sandbox) for puppeteer.
+
+Just go to the GoalModelEditor/BackEnd/node_modules/convert-svg-core/src/Converter.js, and modify the
+puppeteer.launch caller in line 273 to something like
+
+"this[_browser] = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});")
+
 ## 2. Import Database
 
 ## 3. Configure Database Connection
