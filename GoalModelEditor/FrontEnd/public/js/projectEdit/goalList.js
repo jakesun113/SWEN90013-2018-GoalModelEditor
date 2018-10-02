@@ -245,7 +245,7 @@ function parseClusterNode(node) {
         ">" +
         '<img src="' + iconPath + '" class="mr-1 typeIcon">' +
         '<div class="goal-content"  tabindex="-1" ' +
-        'onblur="finishEditGoalInCluster(this);">' + node.GoalContent + '</div>' +
+        'onblur="finishEditGoalInCluster($(this));">' + node.GoalContent + '</div>' +
         '<img class="editButton" style="display: none" src="/img/edit-solid.svg"' +
         ' onclick="event.stopImmediatePropagation(); editGoalInCluster(this)"' +
         'onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
@@ -609,9 +609,12 @@ function editGoalInCluster(element) {
     $(".dd-handle-style").css("cursor", "auto");
     let target = $(element.parentNode).children(".goal-content");
     target.attr("contenteditable", "true");
-    // when editing, cannot press "Enter"
+    // when editing, if press "Enter", finish editing
     target.keypress(function (e) {
-        return e.which !== 13;
+        if (e.which === 13) {
+            e.preventDefault();
+            finishEditGoalInCluster(target);
+        }
     });
     $(element.parentNode).css("background-color", "rgba(0,0,0,0.1)");
     setCaret(target[0]);
@@ -623,13 +626,13 @@ function editGoalInCluster(element) {
  * If do something else, make div not editable again
  *
  */
-function finishEditGoalInCluster(element) {
+function finishEditGoalInCluster($element) {
     //console.log("in finish");
     $(".dd-handle-style").addClass("dd-handle");
     $(".dd-handle-style").css("cursor", "move");
-    $(element).attr("contenteditable", "false");
-    $(element).css("font-weight", "bold");
-    $(element.parentNode).css("background-color", "#fafafa");
+    $element.attr("contenteditable", "false");
+    $element.css("font-weight", "bold");
+    $element.parent().css("background-color", "#fafafa");
     saveJSON();
 }
 

@@ -332,7 +332,7 @@ function drop_zone(clusterNumber) {
 
             $(newNode).html('<img src=' + imagePath + ' class="mr-1 typeIcon" > ' +
                 '<div class="goal-content" tabindex="-1" ' +
-                'onblur="finishEditGoalInCluster(this);"' + '>' +
+                'onblur="finishEditGoalInCluster($(this));"' + '>' +
                 $(nowCopying).children("input")[0].value + '</div><img class="editButton" style="display: none" src="/img/edit-solid.svg"' +
                 'onclick="event.stopImmediatePropagation(); editGoalInCluster(this)" ' +
                 'onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
