@@ -211,8 +211,7 @@ router.put("/:userId/:templateId", (req, res) => {
         .then(result => {
             console.log(result)
             fs.writeFile(
-                //TODO: change the template id to be the one from db
-                dirpath + req.params.templateId + ".xml",//result.TemplateId + ".xml",
+                dirpath + result.TemplateId + ".xml",
                 xml,
                 function (err) {
                     if (err) {
@@ -229,8 +228,7 @@ router.put("/:userId/:templateId", (req, res) => {
 
             res.statusCode = 200;
             res.json({
-                // TODO: change the id to the one from db
-                template_id: req.params.templateId
+                template_id: result.TemplateId
             });
             return res.end();
         })
