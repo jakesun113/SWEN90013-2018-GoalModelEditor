@@ -26,15 +26,17 @@ $(document).on("mouseover", "#ul li input", function () {
 });
 
 //when mouse enter the specific goal in the cluster, show corresponding button
-function showButton(event){
+function showButton(event) {
     $(event).children(".editButton").show();
     $(event).children(".deleteButton").show();
 }
+
 //when mouse enter the specific goal in the cluster, hide corresponding button
-function hideButton(event){
+function hideButton(event) {
     $(event).children(".editButton").hide();
     $(event).children(".deleteButton").hide();
 }
+
 /*Add new cluster start*/
 /**
  * add new cluster
