@@ -37,6 +37,16 @@ function hideButton(event) {
     $(event).children(".deleteButton").hide();
 }
 
+//when mouse enter the specific goal in the list, show corresponding button
+function showBtnInList(event) {
+    $(event).children(".deleteBtnInList").show();
+}
+
+//when mouse enter the specific goal in the list, hide corresponding button
+function hideBtnInList(event) {
+    $(event).children(".deleteBtnInList").hide();
+}
+
 /*Add new cluster start*/
 /**
  * add new cluster
@@ -102,13 +112,17 @@ document.onkeydown = function (event) {
 
         // new goal html
         let newList =
-            '<li draggable="true" class="dragger drag-style"><input id="' +
+            '<li draggable="true" class="dragger drag-style" ' +
+            'onmouseenter="showBtnInList(this)" onmouseleave="hideBtnInList(this)">' +
+            '<input id="' +
             goalID +
             '" class="' +
             goalType +
             " " +
             '" placeholder="' + placeholderText + '" ' +
-            'note="notes" oninput="changeFontWeight(this)" value="" style="font-weight: bold"/></li>';
+            'note="notes" oninput="changeFontWeight(this)" value="" style="font-weight: bold"/>' +
+            '<img class="deleteBtnInList" style="display: none" src="/img/trash-alt-solid.svg"' +
+            'onclick="deleteGoalInList(this)" /></li>';
 
         // add new goal node to its parent node
         $(event.target).parent().after(newList);
@@ -147,32 +161,29 @@ function getID(type) {
 
 /*Add new goal by pressing 'Enter' end*/
 
-/*Delete goal by pressing 'Escape' when empty start*/
 /**
- * delete goal by pressing 'Escape' when empty
+ * delete goal by pressing "delete" image
  * @param event
  */
-//TODO: modify delete goals in list function by adding a "delete" button
-
-document.onkeyup = function (event) {
-    //when the user press the 'ESC' button in the goal list
-    if (document.activeElement.tagName === "INPUT" && event.key === "Escape") {
-        //make the default enter invalid
-        let parent = document.activeElement.parentNode;
-        let grandparent = parent.parentNode;
-        // if parent not null, delete child
-        if (grandparent.childNodes.length > 1) {
-            grandparent.removeChild(parent);
-            event.preventDefault();
-        }
-        //if this is the only goal left, clear the goal content
-        if (grandparent.childNodes.length === 1) {
-            //console.log(event.target);
-            $(event.target).val("");
-            changeFontWeight(event.target);
-        }
+function deleteGoalInList(element) {
+    //make the default enter invalid
+    let parent = element.parentNode;
+    let grandparent = parent.parentNode;
+    // if parent not null, delete child
+    if (grandparent.childNodes.length > 1) {
+        grandparent.removeChild(parent);
+        event.preventDefault();
     }
+    //if this is the only goal left, clear the goal content
+    if (grandparent.childNodes.length === 1) {
+        //console.log(event.target);
+        $(element.parentNode).children("input").val("");
+        $(element.parentNode).children("input").css("font-weight", "bold");
+    }
+}
 
+/*detect event when pressing "Backspace" start*/
+document.onkeyup = function (event) {
     //if press "backspace" make the goal empty, delete that goal
     if (document.activeElement.tagName === "INPUT" && event.key === "Backspace") {
         if (event.target.value === "") {
@@ -194,8 +205,7 @@ document.onkeyup = function (event) {
         }
     }
 };
-
-/*Delete goal by pressing 'Escape' when empty end*/
+/*detect event when pressing "Backspace" end*/
 /**
  * function when click "delete goal" button
  */

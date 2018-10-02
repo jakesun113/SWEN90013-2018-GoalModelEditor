@@ -179,6 +179,8 @@ function parseNode(node) {
     let li = document.createElement("LI");
     li.setAttribute("class", "dragger" + " drag-style");
     li.setAttribute("draggable", "true");
+    li.setAttribute("onmouseenter", "showBtnInList(this)");
+    li.setAttribute("onmouseleave", "hideBtnInList(this)");
     let fontWeight = "bold";
     if (node.Used) {
         fontWeight = "normal";
@@ -203,7 +205,10 @@ function parseNode(node) {
         node.GoalNote +
         '" ' +
         'oninput="changeFontWeight(this)"' +
-        "/>";
+        "/>" +
+        '<img class="deleteBtnInList" style="display: none" src="/img/trash-alt-solid.svg"' +
+        'onclick="deleteGoalInList(this)"' +
+        '/>';
 
     //countID(node.GoalType);
 
