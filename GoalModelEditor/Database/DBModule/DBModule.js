@@ -860,7 +860,7 @@ const DBModule = function() {
                                             message: err.sqlMessage
                                         });
                                     }
-                                    if (result.affectedRows === 1) {
+                                    if (result.changedRows === 1) {
                                         resolve(DBModule.SUCCESS);
                                     } else {
                                         if (err) {
