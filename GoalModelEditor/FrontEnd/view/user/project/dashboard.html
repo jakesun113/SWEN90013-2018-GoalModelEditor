@@ -42,15 +42,14 @@
                     <!-- User div -->
                     <div class="col-2 col-sm-2">
                         <div class="row text-center pt-2">
-                            <div class="dropdown">
+                            <div class="btn-group">
                                 <button class="btn" type="button" id="user-dropdown"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-user"></i>&nbsp;&nbsp;<a id="username"> username</a>
                                 </button>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user-dropdown">
-                                    <a class="dropdown-item" href="/profile" method="get">Profile</a>
-                                    <a class="dropdown-item" method="post" href="/"
-                                       id="signout">Sign out</a>
+                                <div class="dropdown-menu" aria-labelledby="user-dropdown">
+                                    <a class="dropdown-item" href="/profile">Profile</a>
+                                    <a class="dropdown-item" id="signout">Sign out</a>
                                 </div>
                             </div>
                         </div>
