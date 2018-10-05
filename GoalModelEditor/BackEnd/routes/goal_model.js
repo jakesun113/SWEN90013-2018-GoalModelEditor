@@ -392,7 +392,7 @@ router.put("/info/:userId/:goalmodelId", (req, res) => {
     }
 
     // update goal model
-    let dirpath = "./UserFiles/" + req.params.userId + "/" + req.params.goalmodelId + "/";
+    let dirpath = "./UserFiles/" + req.params.userId + "/";
     db.updateGoalModel(
             req.params.userId,
             req.params.goalmodelId,
