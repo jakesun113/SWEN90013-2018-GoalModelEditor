@@ -233,15 +233,15 @@ a {
     left: 0;
     bottom: 0;
     right: 0;
-    z-index: 1200;
+    z-index: 800;
 }
 
 .new-model {
-    z-index: 1200;
+    z-index: 800;
 }
 
 .popover {
     position: absolute;
     cursor: default;
-    z-index: 1200;
+    z-index: 800;
 }
