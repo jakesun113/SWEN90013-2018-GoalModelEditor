@@ -76,6 +76,31 @@ style['fontColor'] = 'black';
 style['endArrow'] = 'none';
 style['strokeWidth'] = '2';
 
+
+/**
+ * Undo Manager
+ */
+var undoManager = new mxUndoManager();
+var listener = function(sender, evt) {
+  undoManager.undoableEditHappened(evt.getProperty('edit'));
+};
+graph.getModel().addListener(mxEvent.UNDO, listener);
+graph.getView().addListener(mxEvent.UNDO, listener);
+
+var undoKeyHandler = new mxKeyHandler(graph);
+undoKeyHandler.getFunction = function(evt) {
+  // if mac command key pressed
+  if (mxClient.IS_MAC && evt.metaKey) {
+    // if z pressed
+    if (evt.code == "KeyZ") {
+      if (undoManager.indexOfNextAdd > 1) {
+        undoManager.undo();
+      }
+    }
+  }
+}
+
+
 /**
  * Sidebar
  */
