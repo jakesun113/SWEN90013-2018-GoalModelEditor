@@ -510,10 +510,16 @@ $("#renderbtn").click(function () {
  * progress bar
  */
 function goalClick() {
-    $("#imageTab").removeClass().addClass("current_prev");
-    $("#goalTab").removeClass().addClass("current");
-    $("#clusterTab").removeClass();
-    $("#graphTab").removeClass().addClass("last");
+    if(!$("#goalTab").hasClass("current")){
+        $("#goalTab").addClass("current");
+    }
+    if($("#goalTab").hasClass("done")){
+        $("#goalTab").removeClass("done").addClass("current");
+        $("#clusterTab").removeClass("current");
+        $("#clusterTab").removeClass("done");
+        $("#graphTab").removeClass("current");
+        $("#graphTab").removeClass("done");
+    }
     saveJSON();
     $("#photo").css("display", "block");
     $("#todolist").css("display", "block");
@@ -524,10 +530,15 @@ function goalClick() {
 }
 
 function clusterClick() {
-    $("#imageTab").removeClass().addClass("done");
-    $("#goalTab").removeClass().addClass("current_prev");
-    $("#clusterTab").removeClass().addClass("current");
-    $("#graphTab").removeClass().addClass("last");
+    if(!$("#clusterTab").hasClass("current")){
+        $("#clusterTab").addClass("current");
+        $("#goalTab").removeClass("current");
+        $("#goalTab").removeClass("done").addClass("done");
+    }
+    if($("#clusterTab").hasClass("done")){
+        $("#clusterTab").removeClass("done").addClass("current");
+        $("#graphTab").removeClass("current");
+    }
     saveJSON();
     $("#photo").css("display", "none");
     $("#todolist").css("display", "block");
@@ -540,10 +551,13 @@ function clusterClick() {
 }
 
 function graphClick() {
-    $("#imageTab").removeClass().addClass("done");
-    $("#goalTab").removeClass().addClass("done");
-    $("#clusterTab").removeClass().addClass("current_prev");
-    $("#graphTab").removeClass().addClass("current");
+    if(!$("#graphTab").hasClass("current")){
+        $("#graphTab").addClass("current");
+        $("#goalTab").removeClass("current");
+        $("#goalTab").removeClass("done").addClass("done");
+        $("#clusterTab").removeClass("current");
+        $("#clusterTab").removeClass("done").addClass("done");
+    }
     saveJSON();
     $("#photo").css("display", "none");
     $("#photo").css("display", "none");

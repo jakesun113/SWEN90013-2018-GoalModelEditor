@@ -246,90 +246,90 @@ footer {
 }
 
 /*progress bar*/
-.steps_bar ul {
-    border-left: solid 1px #ccc;
-    overflow: hidden;
-    margin: 0;
-    padding: 10px 2px;
-}
+/*.steps_bar ul {*/
+    /*border-left: solid 1px #ccc;*/
+    /*overflow: hidden;*/
+    /*margin: 0;*/
+    /*padding: 10px 2px;*/
+/*}*/
 
-.steps_bar ul li {
-    float: left;
-    height: 60px;
-    padding-right: 18px;
-    line-height: 56px;
-    text-align: center;
-    overflow: hidden;
-    background: url("/img/stepbar.png") no-repeat 100% 0 #f1f1f1;
-    font-weight: bold;
-}
+/*.steps_bar ul li {*/
+    /*float: left;*/
+    /*height: 60px;*/
+    /*padding-right: 18px;*/
+    /*line-height: 56px;*/
+    /*text-align: center;*/
+    /*overflow: hidden;*/
+    /*background: url("/img/stepbar.png") no-repeat 100% 0 #f1f1f1;*/
+    /*font-weight: bold;*/
+/*}*/
 
-.steps_bar ul li span {
-    display: block;
-    height: 100%;
-    padding: 0;
-    background: #f1f1f1;
-    border-top: solid 1px #ccc;
-    border-bottom: solid 1px #ccc;
-}
+/*.steps_bar ul li span {*/
+    /*display: block;*/
+    /*height: 100%;*/
+    /*padding: 0;*/
+    /*background: #f1f1f1;*/
+    /*border-top: solid 1px #ccc;*/
+    /*border-bottom: solid 1px #ccc;*/
+/*}*/
 
-.steps_bar ul li.done {
-    color: #fff;
-    background-position: 100% -120px;
-    background-color: rgb(186, 213, 185);
-}
+/*.steps_bar ul li.done {*/
+    /*color: #fff;*/
+    /*background-position: 100% -120px;*/
+    /*background-color: rgb(186, 213, 185);*/
+/*}*/
 
-.steps_bar ul li.current_prev {
-    color: #fff;
-    background-position: 100% -60px;
-    background-color: rgb(186, 213, 185);
-}
+/*.steps_bar ul li.current_prev {*/
+    /*color: #fff;*/
+    /*background-position: 100% -60px;*/
+    /*background-color: rgb(186, 213, 185);*/
+/*}*/
 
-.steps_bar ul li.done span, .steps_bar ul li.current_prev span {
-    background: rgb(186, 213, 185);
-}
+/*.steps_bar ul li.done span, .steps_bar ul li.current_prev span {*/
+    /*background: rgb(186, 213, 185);*/
+/*}*/
 
-.steps_bar ul li.current {
-    color: #fff;
-    background-color: rgb(126, 176, 125);
-}
+/*.steps_bar ul li.current {*/
+    /*color: #fff;*/
+    /*background-color: rgb(126, 176, 125);*/
+/*}*/
 
-.steps_bar ul li.current span {
-    background: rgb(126, 176, 125);
-}
+/*.steps_bar ul li.current span {*/
+    /*background: rgb(126, 176, 125);*/
+/*}*/
 
-.steps_bar ul li.last {
-    background-position: 100% -180px;
-    background-color: transparent;
-}
+/*.steps_bar ul li.last {*/
+    /*background-position: 100% -180px;*/
+    /*background-color: transparent;*/
+/*}*/
 
-.steps_bar ul li.last span {
-    background: #f1f1f1;
-}
+/*.steps_bar ul li.last span {*/
+    /*background: #f1f1f1;*/
+/*}*/
 
-.steps_bar ul li.last.current {
-    background-position: 100% -240px;
-}
+/*.steps_bar ul li.last.current {*/
+    /*background-position: 100% -240px;*/
+/*}*/
 
-.steps_bar ul li.last.current span {
-    background: rgb(126, 176, 125);
-}
+/*.steps_bar ul li.last.current span {*/
+    /*background: rgb(126, 176, 125);*/
+/*}*/
 
-.steps_bar ul #goalTab {
-    width: 30%;
-}
+/*.steps_bar ul #goalTab {*/
+    /*width: 30%;*/
+/*}*/
 
-.steps_bar ul #clusterTab {
-    width: 40%;
-}
+/*.steps_bar ul #clusterTab {*/
+    /*width: 40%;*/
+/*}*/
 
-.steps_bar ul #graphTab {
-    width: 30%;
-}
+/*.steps_bar ul #graphTab {*/
+    /*width: 30%;*/
+/*}*/
 
-.steps_bar {
-    cursor: pointer;
-}
+/*.steps_bar {*/
+    /*cursor: pointer;*/
+/*}*/
 
 .drag-style {
     cursor: move;
@@ -348,4 +348,83 @@ footer {
 
 .switch {
     cursor: pointer;
+}
+
+/*new progress bar*/
+.arrow-steps .step {
+    font-size: 14px;
+    text-align: center;
+    color: #666;
+    cursor: pointer;
+    margin: 0 3px;
+    padding: 10px 10px 10px 30px;
+    min-width: 32.6vw;
+    float: left;
+    position: relative;
+    background-color: #d9e3f7;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    transition: background-color 0.2s ease;
+}
+
+.arrow-steps .step:after,
+.arrow-steps .step:before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    right: -17px;
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-left: 17px solid #d9e3f7;
+    z-index: 2;
+    transition: border-color 0.2s ease;
+}
+
+.arrow-steps .step:before {
+    right: auto;
+    left: 0;
+    border-left: 17px solid #fff;
+    z-index: 0;
+}
+
+.arrow-steps .step:first-child:before {
+    border: none;
+}
+
+.arrow-steps .step:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.arrow-steps .step span {
+    position: relative;
+}
+
+.arrow-steps .step span:before {
+    opacity: 0;
+    content: "✔";
+    position: absolute;
+    top: -2px;
+    left: -20px;
+}
+
+.arrow-steps .step.done span:before {
+    opacity: 1;
+    -webkit-transition: opacity 0.3s ease 0.5s;
+    -moz-transition: opacity 0.3s ease 0.5s;
+    -ms-transition: opacity 0.3s ease 0.5s;
+    transition: opacity 0.3s ease 0.5s;
+}
+
+.arrow-steps .step.current {
+    color: #fff;
+    background-color: #23468c;
+}
+
+.arrow-steps .step.current:after {
+    border-left: 17px solid #23468c;
 }
