@@ -138,8 +138,11 @@ var addSidebarItem = function (graph, sidebar, image, width, height) {
 
     // create the prototype cell which will be cloned when a sidebar item
     // is dragged on to the graph
-    var prototype = new mxCell(null, new mxGeometry(0, 0, width, height),
-        "fontSize=16;fontColor=black;shape=rounded;shape=image;image=" + image);
+    let style = "fontSize=16;fontColor=black;shape=rounded;shape=image;image=" + image;
+    if (image === PATH_STAKEHOLDER) {
+        style = style + ";verticalAlign=top;verticalLabelPosition=bottom";
+    }
+    var prototype = new mxCell(null, new mxGeometry(0, 0, width, height), style);
     prototype.setVertex(true);
 
     // function attached to each dragable sidebar item - this is used
