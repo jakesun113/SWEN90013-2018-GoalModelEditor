@@ -55,6 +55,7 @@ const PATH_STAKEHOLDER = "/src/images/Stakeholder.png";
 
 // path to the image used for the edge-creation icon
 const PATH_EDGE_HANDLER_ICON = "/img/link.png";
+const PATH_LINE = "/img/line.svg";
 
 // size of the edge-creation icon
 const ICON_WIDTH = 14;
@@ -134,16 +135,23 @@ zoomOut.style.width = '20px';
 sidebar.addLine();
 
 // add the sidebar elements for each of the goals
-var addSidebarItem = function (graph, sidebar, image, width, height) {
+var addSidebarItem = function (graph, sidebar, image, width, height, isEdge) {
 
     // create the prototype cell which will be cloned when a sidebar item
     // is dragged on to the graph
-    let style = "fontSize=16;fontColor=black;shape=rounded;shape=image;image=" + image;
-    if (image === PATH_STAKEHOLDER) {
-        style = style + ";verticalAlign=top;verticalLabelPosition=bottom";
+    if (!isEdge) {
+        let style = "fontSize=16;fontColor=black;shape=rounded;shape=image;image=" + image;
+        if (image === PATH_STAKEHOLDER) {
+            style = style + ";verticalAlign=top;verticalLabelPosition=bottom";
+        }
+        var prototype = new mxCell(null, new mxGeometry(0, 0, width, height), style);
+        prototype.setVertex(true);
+    } else {
+        console.log("Testing this branch fired.");
+        var prototype = new mxCell(null, new mxGeometry(0, 0, width, height));
+        prototype.geometry.relative = true;
+        prototype.edge = true;
     }
-    var prototype = new mxCell(null, new mxGeometry(0, 0, width, height), style);
-    prototype.setVertex(true);
 
     // function attached to each dragable sidebar item - this is used
     // to drag an item from the toolbar, then instantiate it in the graph
@@ -156,13 +164,28 @@ var addSidebarItem = function (graph, sidebar, image, width, height) {
         graph.getSelectionCells(graph.importCells([goal], 0, 0, cell));
     }
 
+    var dragAndDropEdge = function(graph, evnt, cell) {
+        graph.stopEditing(false);
+        var point = graph.getPointForEvent(evnt);
+        var goal = graph.getModel().cloneCell(prototype);
+        goal.geometry.setTerminalPoint(new mxPoint(point.x, point.y), true);
+        goal.geometry.setTerminalPoint(new mxPoint(point.x+50, point.y+50), false);
+        goal.geometry.relative = true;
+        graph.getSelectionCells(graph.importCells([goal], 0, 0, cell));       
+    }
+
     // add a symbol to the sidebar
     var sidebarItem = sidebar.addMode(null, image, dragAndDrop);
     sidebarItem.style.width = "60px";
     if (image == PATH_STAKEHOLDER) {
         sidebarItem.style.width = "30px";
     }
-    mxUtils.makeDraggable(sidebarItem, graph, dragAndDrop);
+    if (!isEdge) {
+        mxUtils.makeDraggable(sidebarItem, graph, dragAndDrop);
+    } else {
+        mxUtils.makeDraggable(sidebarItem, graph, dragAndDropEdge);
+        sidebarItem.style.width = "50px";
+    }
 };
 
 // add sidebar items for each of the goal types
@@ -181,6 +204,7 @@ addSidebarItem(graph, sidebar, PATH_QUALITY,
 addSidebarItem(graph, sidebar, PATH_STAKEHOLDER,
     SYMBOL_WIDTH * SW_STAKEHOLDER * 1.5, SYMBOL_HEIGHT * SW_STAKEHOLDER * 1.5
 );
+addSidebarItem(graph, sidebar, PATH_LINE, 50, 50, true);
 sidebar.addLine();
 
 
