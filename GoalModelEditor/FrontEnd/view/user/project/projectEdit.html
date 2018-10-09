@@ -14,6 +14,7 @@
 
     <!--add nestable library-->
     <link rel="stylesheet" href="/stylesheet/jquery.nestable.css">
+
     <!--<noscript>-->
     <!--<div style="display:inline;">-->
     <!--<img class="mb-4" src="/img/icon.ico" alt="icon" width="1" height="1">-->
@@ -49,22 +50,37 @@
          id="warning-alert" role="alert">
     </div>
 
+<div class="modal" id="loadingModal">
+    <div style="width: 200px;height:20px; z-index: 20000; position: absolute; text-align: center; left: 50%; top: 50%;margin-left:-100px;margin-top:-10px">
+        <img src="/img/loading1.gif" height="150" width="150"/>
+        <h6>Loading...</h6>
+    </div>
+</div>
+
     <!-- End alert div -->
 <!--the top navigation bar-->
+
+<!--<div class="lds-roller" style="text-align: center;"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>-->
+
+
+
 <div class="container-heading1" style="background-color: white">
     <!--<div class="header-filter" style="background-image: url('/img/home-background.jpg')"></div>-->
     <!--<nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" role="navigation" -->
     <!--style="background-color: rgb(236, 244, 244); "-->
     <!--&gt;-->
     <nav class="navbar navbar-expand-sm navbar-light navbar-fixed-top header" role="navigation"
-         style="background-image: url('/img/profile-background.jpg'); "
-    >
-        <a class="navbar-brand" href="#" id="model_name" style="font-size: 35px"><strong>Goal Model</strong></a>
+         style="background-image: url('/img/profile-background.jpg'); ">
+        <a class="navbar-brand" href="#" id="model_name" style="font-size: 35px">
+            <strong>Goal Model</strong>
+            <img id="saveJSONLoading" src="/img/loading1.gif" style="display: none" height="45" width="45"/>
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="form-inline ml-auto" style="float: right; margin-right: 20px">
+
             <div class="row text-center">
 
                 <div class="dropdown">
@@ -78,47 +94,12 @@
                            id="signout">Sign out</a>
                     </div>
                 </div>
-                <button type="button" class="btn btn-success ml-2" id="save">Save</button>
+                <!--<button type="button" class="btn btn-success ml-2" id="save">Save</button>-->
                 <a class="btn btn-secondary ml-2" href="/dashboard">Return</a>
             </div>
         </div>
     </nav>
 </div>
-
-<!--<div class="container-heading2" style="background-color: white">-->
-<!--<nav class="navbar navbar-expand-lg navbar-light showborder"-->
-<!--style="border-color: lightgrey; border-left: 0px; border-right:0px">-->
-<!--<div class="collapse navbar-collapse" id="navbarSupportedContent">-->
-<!--<ul class="navbar-nav mr-auto">-->
-<!--<li class="nav-item dropdown">-->
-<!--<a class="nav-link" href="/">Home</a>-->
-<!--</li>-->
-<!--<span class="border"></span>-->
-<!--&lt;!&ndash;<li class="nav-item dropdown">&ndash;&gt;-->
-<!--&lt;!&ndash;<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&ndash;&gt;-->
-<!--&lt;!&ndash;Files&ndash;&gt;-->
-<!--&lt;!&ndash;</a>&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="dropdown-menu" aria-labelledby="navbarDropdown">&ndash;&gt;-->
-<!--&lt;!&ndash;<a class="dropdown-item" href="#">New</a>&ndash;&gt;-->
-<!--&lt;!&ndash;<a class="dropdown-item" href="#">Open</a>&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="dropdown-divider"></div>&ndash;&gt;-->
-<!--&lt;!&ndash;<a class="dropdown-item" href="#">Something else here</a>&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--&lt;!&ndash;</li>&ndash;&gt;-->
-<!--<li class="nav-item dropdown">-->
-<!--<a class="nav-link" href="/dashboard">Dashboard</a>-->
-<!--</li>-->
-<!--<span class="border"></span>-->
-<!--&lt;!&ndash;<li class="nav-item dropdown">&ndash;&gt;-->
-<!--&lt;!&ndash;<a class="nav-link" href="#">Version 1</a>&ndash;&gt;-->
-<!--&lt;!&ndash;</li>&ndash;&gt;-->
-
-<!--</ul>-->
-
-<!--</div>-->
-<!--</nav>-->
-<!--</div>-->
-
 
 
 <!--the main section-->
@@ -147,24 +128,24 @@
                     </div>
                     <ul class="nav nav-tabs nav-justified indigo" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#panel1" role="tab"><i class="fa fa-square"></i> Functional</a>
+                            <a class="nav-link active" data-toggle="tab" href="#panel1" role="tab"><img class="icon" src="/img/Function.png"/><br>Function</a>
                             <!--<span class="badge badge-primary">Functional</span>-->
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#panel2" role="tab"><i class="fa fa-cloud"></i> Quality</a>
+                            <a class="nav-link" data-toggle="tab" href="#panel2" role="tab"><img class="icon" src="/img/Cloud.png"/><br>Quality</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#panel3" role="tab"><img class="icon1" src="/img/greenheart.ico"/> Feeling</a>
+                            <a class="nav-link" data-toggle="tab" href="#panel3" role="tab"><img class="icon" src="/img/Heart.png"/><br>Feeling</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#panel4" role="tab"><img class="icon" src="/img/blackheart_trans_bg.ico"/> Concern</a>
+                            <a class="nav-link" data-toggle="tab" href="#panel4" role="tab"><img class="icon" src="/img/Risk.png"/><br>Concern</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#panel5" role="tab"><i class="fa fa-user-circle-o"></i> Actor</a>
+                            <a class="nav-link" data-toggle="tab" href="#panel5" role="tab"><img class="icon" src="/img/Stakeholder.png"/><br>Actor</a>
                         </li>
 
 
@@ -236,14 +217,14 @@
             <div id="cluster" class="col-7 showborder scrollbar" style="display: none; background-color:rgba(35, 144, 231, 0.1);">
                 <div>
                     <h4>Cluster</h4>
-                    <button class="btn-sm btn-outline-primary" onclick="addCluster()">Add</button>
                     <button class="btn-sm btn-outline-primary" id="clusternextbtn" onclick="clusternext()">Next</button>
                     <button style="display: none" class="btn-sm btn-outline-primary" id="renderbtn" onclick="renderGraph(document.getElementById('graphContainer'))">Render</button>
                     <button type="button" class="btn-sm btn-outline-primary" id="edit">Edit All</button>
                     <button type="button" class="btn-sm btn-outline-primary" id="drag">Drag All</button>
+                    <a id="Export" href="#">ExportSVG</a>
                 </div>
                 <!--show cluster data from JSON-->
-                <div class="dd" id="cluster_1">
+                <div class="dd py-3" id="cluster_1">
                      <!--style="background-color: white"-->
                 </div>
             </div>
@@ -262,8 +243,13 @@
 
             <!--generate section start-->
             <div id="generator" class="col-sm showborder scrollbar" style="display: none; background-color: rgb(236, 244, 244)">
-                <div>
-                    <h3>Generate Your Goal Model</h3>
+                <div class="row">
+                    <div class="col-10 text-left my-1">
+                        <h3>Generate Your Goal Model</h3>
+                    </div>
+                    <div class="col-2 text-right my-1">
+                        <button type="button" class="btn-sm btn-outline-primary" id="saveXML">Save Graph</button>
+                    </div>
                 </div>
                 <div id="graphContainer"
                     style="position:relative;overflow:hidden;width:821px;height:641px;background:url('/src/images/grid.gif');cursor:default;">
@@ -275,16 +261,9 @@
     </div>
 </div>
 
-<!-- mxgraph basepath -->
-<script type="text/javascript">
-    mxBasePath ='/src';
-</script>
 
-<!-- load and initialise mxgraph library -->
-<script type="text/javascript" src="/src/js/mxClient.js"></script>
 
-<!-- script for rendering graph #currently a stub -->
-<script type="text/javascript" src="/js/graph.js"></script>
+
 
 <!-- Loads and initializes the Bootstrap javascript -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -294,9 +273,27 @@
         crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script>
+    //show loading
+    $("#loadingModal").modal("show");
+</script>
+<!-- mxgraph basepath -->
+<script type="text/javascript">
+    mxBasePath ='/src';
+</script>
+<!-- load and initialise mxgraph library -->
+<script type="text/javascript" src="/src/js/mxClient.js"></script>
+
+<!-- script for rendering graph #currently a stub -->
+<script type="text/javascript" src="/js/projectEdit/graph.js"></script>
+
 <!--add nestable library-->
-<script src="/js/jquery.nestable.js"></script>
-<script type="text/javascript" src="/js/projectedit.js"></script>
+<script src="/js/projectEdit/jquery.nestable.js"></script>
+<script src="/js/projectEdit/image.js"></script>
+<script src="/js/projectEdit/goalList.js"></script>
+<script src="/js/projectEdit/projectEdit.js"></script>
+<script src="/js/projectEdit/graphXML.js"></script>
+
 <footer>
     <p class="text-center">&copy;<em>&nbsp;2018 The University of Melbourne</em></p>
 </footer>

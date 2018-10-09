@@ -1,10 +1,10 @@
 "use strict";
 
 // default width/height of MM symbols
-const SYMBOL_WIDTH = 120;
-const SYMBOL_HEIGHT = 80;
+const SYMBOL_WIDTH = 110;
+const SYMBOL_HEIGHT = 60;
 
-// default x and y coord of the MM symbols 
+// default x and y coord of the MM symbols
 const SYMBOL_X_COORD = 0;
 const SYMBOL_Y_COORD = 0;
 
@@ -29,17 +29,33 @@ const HORIZONTAL_SPACING = 100;
 // it is necessary to store the variable pointing to the graph object
 // in the global scope - this is so that consecutive calls to render()
 // are able to access (and hence destroy) any existing graph
-var graph = new mxGraph(document.getElementById('graphContainer'));
+var graph = new mxGraph(document.getElementById("graphContainer"));
+graph.setPanning(true);
+graph.panningHandler.useLeftButtonForPanning = true;
+
+var emotionsGlob = {};
+var negativesGlob = {};
+var qualitiesGlob = {};
+var stakeholdersGlob = {};
 
 /**
  * Renders window.jsonData into a motivational model into graphContainer.
  */
 function renderGraph(container) {
+    saveJSON();
     console.log("Logging: renderGraph() called.");
 
     // reset - remove any existing graph if render is called
     graph.destroy();
     graph = new mxGraph(container);
+    graph.setPanning(true);
+    graph.panningHandler.useLeftButtonForPanning = true;
+
+    // reset the accumulators for non-functional goals
+    emotionsGlob = {};
+    negativesGlob = {};
+    qualitiesGlob = {};
+    stakeholdersGlob = {};
 
     // check that browser is supported
     if (!mxClient.isBrowserSupported()) {
@@ -62,7 +78,8 @@ function renderGraph(container) {
         // ... then call render
         renderGoals(goals, graph, null);
     }
-    autolayout(graph);
+    layoutFunctions(graph);
+    associateNonFunctions(graph);
     graph.getModel().endUpdate(); // end transaction
 }
 
@@ -73,21 +90,20 @@ function renderGraph(container) {
  * : source, the parent goal of the given array, defaults to null
  */
 
-function renderGoals(goals, graph, source=null) {
-
+function renderGoals(goals, graph, source = null) {
     console.log("Logging: renderGoals() called on list: " + goals);
 
     // accumulate non-functional goals to be rendered into a single symbol
-    var emotions = [];
-    var qualities = [];
-    var concerns = [];
-    var stakeholders = [];
+    let emotions = [];
+    let qualities = [];
+    let concerns = [];
+    let stakeholders = [];
 
     // run through each goal in the given array
-    for (var i = 0; i < goals.length; i++) {
-        var goal = goals[i];
-        var type = goal.GoalType;
-        var content = goal.GoalContent;
+    for (let i = 0; i < goals.length; i++) {
+        let goal = goals[i];
+        let type = goal.GoalType;
+        let content = goal.GoalContent;
 
         // recurse over functional goals
         if (type === TYPE_FUNCTIONAL) {
@@ -109,16 +125,20 @@ function renderGoals(goals, graph, source=null) {
 
     // render each of the non-functional goals
     if (emotions.length) {
-        renderNonFunction(emotions, graph, source, TYPE_EMOTIONAL);
+        emotionsGlob[source.value] = emotions;
+        //renderNonFunction(emotions, graph, source, TYPE_EMOTIONAL);
     }
     if (qualities.length) {
-        renderNonFunction(qualities, graph, source, TYPE_QUALITY);
+        qualitiesGlob[source.value] = qualities;
+        //renderNonFunction(qualities, graph, source, TYPE_QUALITY);
     }
     if (concerns.length) {
-        renderNonFunction(concerns, graph, source, TYPE_NEGATIVE);
+        negativesGlob[source.value] = concerns;
+        //renderNonFunction(concerns, graph, source, TYPE_NEGATIVE);
     }
     if (stakeholders.length) {
-        renderNonFunction(stakeholders, graph, source, TYPE_STAKEHOLDER);
+        stakeholdersGlob[source.value] = stakeholders;
+        //renderNonFunction(stakeholders, graph, source, TYPE_STAKEHOLDER);
     }
 }
 
@@ -129,24 +149,25 @@ function renderGoals(goals, graph, source=null) {
  * : graph, the graph to render the goal into
  * : source, the parent of the goal
  */
-function renderFunction(goal, graph, source=null) {
+function renderFunction(goal, graph, source = null) {
     let image = PATH_FUNCTIONAL;
 
     // insert new vertex and edge into graph
-    var node = graph.insertVertex(
-        null, null, 
+    let node = graph.insertVertex(
+        null,
+        null,
         goal.GoalContent,
-        SYMBOL_X_COORD, SYMBOL_Y_COORD,
-        SYMBOL_WIDTH, SYMBOL_HEIGHT,
-        "shape=image;image="+image
+        SYMBOL_X_COORD,
+        SYMBOL_Y_COORD,
+        SYMBOL_WIDTH,
+        SYMBOL_HEIGHT,
+        "shape=image;image=" + image
     );
-    var edge = graph.insertEdge(
-        null, null, null,
-        source, node
-    );
+    let edge = graph.insertEdge(null, null, null, source, node,
+        "strokeColor=black");
 
     // then recurse over the goal's children
-    renderGoals(goal.SubGoals, graph, node)
+    renderGoals(goal.SubGoals, graph, node);
 }
 
 /**
@@ -161,32 +182,56 @@ function renderFunction(goal, graph, source=null) {
  *      goal into
  */
 function renderNonFunction(descriptions, graph, source=null, type="None") {
-    let image = '';
+    
+    // fetch parent coordinates
+    if (source != null) {
+        var geo = graph.getCellGeometry(source);
+        var sourceX = geo.x;
+        var sourceY = geo.y;
+        var dX = 0;
+        var dY = 0;
+    } else {
+        var sourceX = 0;
+        var sourceY = 0;
+    }
+
+
+    let image = "";
     switch (type) {
         case TYPE_EMOTIONAL:
+            dX = -50;
+            dY = -20;
             image = PATH_EMOTIONAL;
             break;
         case TYPE_NEGATIVE:
+            dX = 50;
+            dY = -20;
             image = PATH_NEGATIVE;
             break;
         case TYPE_QUALITY:
+            dX = -50;
+            dY = 20;
             image = PATH_QUALITY;
             break;
         case TYPE_STAKEHOLDER:
+            dX = 50;
+            dY = 10;
             image = PATH_STAKEHOLDER;
+            break;
     }
     // insert new vertex and edge into graph
-    var node = graph.insertVertex(
-        null, null, 
+    let node = graph.insertVertex(
+        null,
+        null,
         descriptions.join(";\n"),
-        SYMBOL_X_COORD, SYMBOL_Y_COORD,
-        SYMBOL_WIDTH, SYMBOL_HEIGHT,
-        "shape=image;image="+image
+        sourceX + dX,
+        sourceY + dY,
+        SYMBOL_WIDTH,
+        SYMBOL_HEIGHT,
+        "shape=image;image=" + image
     );
-    var edge = graph.insertEdge(
-        null, null, null,
-        source, node
-    );
+    let edge = graph.insertEdge(null, null, null, source, node);
+    // console.log(edge);
 
     // make the edge invisible - we still want to create the edge
     // the edge is needed when running the autolayout logic
@@ -194,41 +239,44 @@ function renderNonFunction(descriptions, graph, source=null, type="None") {
 }
 
 /**
- * Automatically lays out the graph.
+ * Automatically lays-out the functional hierarchy of the graph.
  */
-function autolayout(graph) {
-    var layout = new mxHierarchicalLayout(graph, mxConstants.DIRECTION_NORTH);
+function layoutFunctions(graph) {
+    let layout = new mxGoalModelLayout(graph);
     layout.execute(graph.getDefaultParent());
 }
 
 /**
- * Parses the graph to XML, to be saved/loaded in a differenct session.
+ * Adds non-functional goals into the hierarchy next to their associated
+ * functional goals.
  */
-function parseToXML(graph) {
-    let encoder = new mxCodec();
-    let node = encoder.encode(graph.getModel());
-    let xml = mxUtils.getPrettyXml(node);
-    return xml;
-}
+function associateNonFunctions(graph) {
 
-/**
- * Renders the graph from a (saved) XML file.
- */
-function renderFromXML(xml) {
-    console.log(xml);
-    var doc = mxUtils.parseXml(xml);
-    console.log(doc);
-    var codec = new mxCodec(doc);
-    var elt = doc.documentElement.firstChild;
-    var cells = [];
+    // fetch all the functional goals
+    var goals = graph.getChildVertices();
 
-    console.log(codec);
-    while (elt != null)
-    {
-        console.log(elt);
-        cells.push(codec.decode(elt));
-        elt = elt.nextSibling;
+    for (var i = 0; i < goals.length; i++) {
+        let goal = goals[i];
+        let value = goal.value;
+
+        // render all emotions
+        if (emotionsGlob[value]) {
+            renderNonFunction(emotionsGlob[goal.value], graph, goal, TYPE_EMOTIONAL);
+        }
+    
+        // render all qualities
+        if (qualitiesGlob[value]) {
+            renderNonFunction(qualitiesGlob[goal.value], graph, goal, TYPE_QUALITY);
+        }
+
+        // render all concerns
+        if (negativesGlob[value]) {
+            renderNonFunction(negativesGlob[goal.value], graph, goal, TYPE_NEGATIVE);
+        }
+
+        // render all stakeholders
+        if (stakeholdersGlob[value]) {
+            renderNonFunction(stakeholdersGlob[goal.value], graph, goal, TYPE_STAKEHOLDER);
+        }
     }
-
-    graph.addCells(cells);
 }

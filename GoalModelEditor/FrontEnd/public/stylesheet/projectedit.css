@@ -117,23 +117,22 @@
 /*cluster div start*/
 .dd {
     width: 90%;
-    min-height: 30vh;
     margin: 10px auto;
     height: auto;
     position: relative;
 }
+
 input {
     border: 0px;
-    width: 100%;
+    width:100%;
 }
-.icon1 {
-    height: 20px;
-    width: 20px;
-}
+
 .icon {
-    height: 16px;
-    width: 16px;
+    height: 20px;
+    width: auto;
+    margin-bottom: 6px;
 }
+
 
 .notopborder {
     border-width: 1px;
@@ -152,4 +151,24 @@ input {
     -webkit-box-shadow: 0 0 5px black;
     -moz-box-shadow: 0 0 5px black;
     box-shadow: 0 0 5px black;
+}
+
+.dd-handle-style {
+
+    display: block;
+    height: 30px;
+    margin: 5px 0;
+    padding: 5px 10px;
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    background: #fafafa;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+.typeIcon {
+    height:100%;
+    float:left;
 }
