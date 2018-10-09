@@ -37,6 +37,16 @@ function hideButton(event) {
     $(event).children(".deleteButton").hide();
 }
 
+//when mouse enter the specific goal in the list, show corresponding button
+function showBtnInList(event) {
+    $(event).children(".deleteBtnInList").show();
+}
+
+//when mouse enter the specific goal in the list, hide corresponding button
+function hideBtnInList(event) {
+    $(event).children(".deleteBtnInList").hide();
+}
+
 /*Add new cluster start*/
 /**
  * add new cluster
@@ -102,13 +112,17 @@ document.onkeydown = function (event) {
 
         // new goal html
         let newList =
-            '<li draggable="true" class="dragger drag-style"><input id="' +
+            '<li draggable="true" class="dragger drag-style" ' +
+            'onmouseenter="showBtnInList(this)" onmouseleave="hideBtnInList(this)">' +
+            '<input id="' +
             goalID +
             '" class="' +
             goalType +
             " " +
             '" placeholder="' + placeholderText + '" ' +
-            'note="notes" oninput="changeFontWeight(this)" value="" style="font-weight: bold"/></li>';
+            'note="notes" oninput="changeFontWeight(this)" value="" style="font-weight: bold"/>' +
+            '<img class="deleteBtnInList" style="display: none" src="/img/trash-alt-solid.svg"' +
+            'onclick="deleteGoalInList(this)" /></li>';
 
         // add new goal node to its parent node
         $(event.target).parent().after(newList);
@@ -147,32 +161,29 @@ function getID(type) {
 
 /*Add new goal by pressing 'Enter' end*/
 
-/*Delete goal by pressing 'Escape' when empty start*/
 /**
- * delete goal by pressing 'Escape' when empty
+ * delete goal by pressing "delete" image
  * @param event
  */
-    //TODO: modify delete goals in list function by adding a "delete" button
-let activeElement;
-document.onkeyup = function (event) {
-    //when the user press the 'ESC' button in the goal list
-    if (document.activeElement.tagName === "INPUT" && event.key === "Escape") {
-        //make the default enter invalid
-        let parent = document.activeElement.parentNode;
-        let grandparent = parent.parentNode;
-        // if parent not null, delete child
-        if (grandparent.childNodes.length > 1) {
-            grandparent.removeChild(parent);
-            event.preventDefault();
-        }
-        //if this is the only goal left, clear the goal content
-        if (grandparent.childNodes.length === 1) {
-            //console.log(event.target);
-            $(event.target).val("");
-            changeFontWeight(event.target);
-        }
+function deleteGoalInList(element) {
+    //make the default enter invalid
+    let parent = element.parentNode;
+    let grandparent = parent.parentNode;
+    // if parent not null, delete child
+    if (grandparent.childNodes.length > 1) {
+        grandparent.removeChild(parent);
+        event.preventDefault();
     }
+    //if this is the only goal left, clear the goal content
+    if (grandparent.childNodes.length === 1) {
+        //console.log(event.target);
+        $(element.parentNode).children("input").val("");
+        $(element.parentNode).children("input").css("font-weight", "bold");
+    }
+}
 
+/*detect event when pressing "Backspace" start*/
+document.onkeyup = function (event) {
     //if press "backspace" make the goal empty, delete that goal
     if (document.activeElement.tagName === "INPUT" && event.key === "Backspace") {
         if (event.target.value === "") {
@@ -194,8 +205,7 @@ document.onkeyup = function (event) {
         }
     }
 };
-
-/*Delete goal by pressing 'Escape' when empty end*/
+/*detect event when pressing "Backspace" end*/
 /**
  * function when click "delete goal" button
  */
@@ -225,8 +235,12 @@ $("#deleteGoalBtn").click(function () {
         }
     }
 });
-
-
+/**
+ * function when click "confirm delete" button
+ */
+$("#confirmDelete").click(function () {
+    deleteGoalInCluster(activeElement);
+});
 /*drag and drop start*/
 let nowCopying;
 
@@ -318,12 +332,12 @@ function drop_zone(clusterNumber) {
 
             $(newNode).html('<img src=' + imagePath + ' class="mr-1 typeIcon" > ' +
                 '<div class="goal-content" tabindex="-1" ' +
-                'onblur="finishEditGoalInCluster(this);"' + '>' +
+                'onblur="finishEditGoalInCluster($(this));"' + '>' +
                 $(nowCopying).children("input")[0].value + '</div><img class="editButton" style="display: none" src="/img/edit-solid.svg"' +
                 'onclick="event.stopImmediatePropagation(); editGoalInCluster(this)" ' +
                 'onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
                 'onmousedown="event.stopImmediatePropagation()"/><img class="deleteButton" style="display: none"' +
-                'src="/img/trash-alt-solid.svg" onclick="event.stopImmediatePropagation(); deleteGoalInCluster(this)"' +
+                'src="/img/trash-alt-solid.svg" onclick="event.stopImmediatePropagation(); handleDeleteGoalInCluster(this)"' +
                 'onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
                 'onmousedown="event.stopImmediatePropagation()"/>');
 
@@ -332,7 +346,7 @@ function drop_zone(clusterNumber) {
             draggableWrapper += "</li></ol>";
             let node = createElementFromHTML(draggableWrapper);
 
-            console.log(node);
+            //console.log(node);
             //if the drag element comes from the goal list
             if (fromGoalList) {
                 //if there is dd-empty (first time drag to here)
@@ -496,10 +510,16 @@ $("#renderbtn").click(function () {
  * progress bar
  */
 function goalClick() {
-    $("#imageTab").removeClass().addClass("current_prev");
-    $("#goalTab").removeClass().addClass("current");
-    $("#clusterTab").removeClass();
-    $("#graphTab").removeClass().addClass("last");
+    if(!$("#goalTab").hasClass("current")){
+        $("#goalTab").addClass("current");
+    }
+    if($("#goalTab").hasClass("done")){
+        $("#goalTab").removeClass("done").addClass("current");
+        $("#clusterTab").removeClass("current");
+        $("#clusterTab").removeClass("done");
+        $("#graphTab").removeClass("current");
+        $("#graphTab").removeClass("done");
+    }
     saveJSON();
     $("#photo").css("display", "block");
     $("#todolist").css("display", "block");
@@ -510,10 +530,15 @@ function goalClick() {
 }
 
 function clusterClick() {
-    $("#imageTab").removeClass().addClass("done");
-    $("#goalTab").removeClass().addClass("current_prev");
-    $("#clusterTab").removeClass().addClass("current");
-    $("#graphTab").removeClass().addClass("last");
+    if(!$("#clusterTab").hasClass("current")){
+        $("#clusterTab").addClass("current");
+        $("#goalTab").removeClass("current");
+        $("#goalTab").removeClass("done").addClass("done");
+    }
+    if($("#clusterTab").hasClass("done")){
+        $("#clusterTab").removeClass("done").addClass("current");
+        $("#graphTab").removeClass("current");
+    }
     saveJSON();
     $("#photo").css("display", "none");
     $("#todolist").css("display", "block");
@@ -526,10 +551,13 @@ function clusterClick() {
 }
 
 function graphClick() {
-    $("#imageTab").removeClass().addClass("done");
-    $("#goalTab").removeClass().addClass("done");
-    $("#clusterTab").removeClass().addClass("current_prev");
-    $("#graphTab").removeClass().addClass("current");
+    if(!$("#graphTab").hasClass("current")){
+        $("#graphTab").addClass("current");
+        $("#goalTab").removeClass("current");
+        $("#goalTab").removeClass("done").addClass("done");
+        $("#clusterTab").removeClass("current");
+        $("#clusterTab").removeClass("done").addClass("done");
+    }
     saveJSON();
     $("#photo").css("display", "none");
     $("#photo").css("display", "none");

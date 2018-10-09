@@ -62,6 +62,8 @@ let NegativeNum = 0;
 let QualityNum = 0;
 let StakeholderNum = 0;
 
+/*current active element to delete*/
+let activeElement;
 /*Three clusters at start*/
 let clusterNumber = 1;
 
@@ -177,6 +179,8 @@ function parseNode(node) {
     let li = document.createElement("LI");
     li.setAttribute("class", "dragger" + " drag-style");
     li.setAttribute("draggable", "true");
+    li.setAttribute("onmouseenter", "showBtnInList(this)");
+    li.setAttribute("onmouseleave", "hideBtnInList(this)");
     let fontWeight = "bold";
     if (node.Used) {
         fontWeight = "normal";
@@ -201,7 +205,10 @@ function parseNode(node) {
         node.GoalNote +
         '" ' +
         'oninput="changeFontWeight(this)"' +
-        "/>";
+        "/>" +
+        '<img class="deleteBtnInList" style="display: none" src="/img/trash-alt-solid.svg"' +
+        'onclick="deleteGoalInList(this)"' +
+        '/>';
 
     //countID(node.GoalType);
 
@@ -238,13 +245,13 @@ function parseClusterNode(node) {
         ">" +
         '<img src="' + iconPath + '" class="mr-1 typeIcon">' +
         '<div class="goal-content"  tabindex="-1" ' +
-        'onblur="finishEditGoalInCluster(this);">' + node.GoalContent + '</div>' +
+        'onblur="finishEditGoalInCluster($(this));">' + node.GoalContent + '</div>' +
         '<img class="editButton" style="display: none" src="/img/edit-solid.svg"' +
         ' onclick="event.stopImmediatePropagation(); editGoalInCluster(this)"' +
         'onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
         'onmousedown="event.stopImmediatePropagation()"/>' +
         '<img class="deleteButton" style="display: none" src="/img/trash-alt-solid.svg"' +
-        'onclick="event.stopImmediatePropagation(); deleteGoalInCluster(this)"' +
+        'onclick="event.stopImmediatePropagation(); handleDeleteGoalInCluster(this)"' +
         'onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
         'onmousedown="event.stopImmediatePropagation()"/>' +
         "</div>";
@@ -529,7 +536,8 @@ function getAllSubgoals($goalList, goals) {
         newSubGoals
     );
     if ($($goalList.children("ol")).length !== 0
-        && !($goalList.attr("class").includes("collapsed"))) {
+        // && !($goalList.attr("class").includes("collapsed"))
+       ) {
         let listItems = $($goalList.children("ol")).children("li");
         let $listItems = $(listItems);
         for (let i = 0; i < $listItems.length; i++) {
@@ -602,9 +610,12 @@ function editGoalInCluster(element) {
     $(".dd-handle-style").css("cursor", "auto");
     let target = $(element.parentNode).children(".goal-content");
     target.attr("contenteditable", "true");
-    // when editing, cannot press "Enter"
+    // when editing, if press "Enter", finish editing
     target.keypress(function (e) {
-        return e.which !== 13;
+        if (e.which === 13) {
+            e.preventDefault();
+            finishEditGoalInCluster(target);
+        }
     });
     $(element.parentNode).css("background-color", "rgba(0,0,0,0.1)");
     setCaret(target[0]);
@@ -616,34 +627,51 @@ function editGoalInCluster(element) {
  * If do something else, make div not editable again
  *
  */
-function finishEditGoalInCluster(element) {
+function finishEditGoalInCluster($element) {
     //console.log("in finish");
     $(".dd-handle-style").addClass("dd-handle");
     $(".dd-handle-style").css("cursor", "move");
-    $(element).attr("contenteditable", "false");
-    $(element).css("font-weight", "bold");
-    $(element.parentNode).css("background-color", "#fafafa");
+    $element.attr("contenteditable", "false");
+    $element.css("font-weight", "bold");
+    $element.parent().css("background-color", "#fafafa");
     saveJSON();
 }
 
 /**
- * Delete goals in cluster by clicking button
+ * handle function when clicking "delete goal" button
  *
  */
-function deleteGoalInCluster(element) {
+function handleDeleteGoalInCluster(element) {
     //console.log(element);
     $(".dd-handle-style").removeClass("dd-handle");
     $(".dd-handle-style").css("cursor", "auto");
     //make the default enter invalid
     let ddHandleDiv = element.parentNode;
     let ddItemLi = ddHandleDiv.parentNode;
-    let ddListOl = ddItemLi.parentNode;
-    // if parent not null, delete child
+    //set current active element
+    activeElement = ddItemLi;
+
+    //if this target goal has child
+    if ($(ddItemLi).children("ol").length) {
+        $("#deleteGoalWithChildWarning").modal();
+    }
+    else {
+        deleteGoalInCluster(activeElement);
+    }
+}
+
+/**
+ * delete goals in the cluster
+ *
+ */
+function deleteGoalInCluster(element) {
+
+    let ddListOl = element.parentNode;
+    //if parent not null, delete child
     if (ddListOl.childNodes.length > 0) {
-        ddListOl.removeChild(ddItemLi);
+        ddListOl.removeChild(element);
         event.preventDefault();
     }
-    //TODO: add alert when deleting goals that have children
     //if ol is empty, remove this ol
     if (ddListOl.childNodes.length === 0) {
         let clusterNumDiv = ddListOl.parentNode;

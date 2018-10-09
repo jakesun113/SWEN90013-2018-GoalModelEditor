@@ -111,7 +111,7 @@ $("#delete_project").submit(evt => {
         return;
     }
     const DELETE_PROJECT_URL = "/project/" + UID + "/" + PID;
-    let formData = $("#delete_project").serialize();
+    let formData = JSON.parse($("#delete_project").serializeJSON());
     deleteProject(DELETE_PROJECT_URL, PID, formData);
 
     // Close the modal
@@ -131,7 +131,7 @@ $("#rename_model").submit(evt => {
         return;
     }
     const RENAME_MODEL_URL = "/goal_model/info/" + UID + "/" + MID;
-    let formData = $("#rename_model").serialize();
+    let formData = JSON.parse($("#rename_model").serializeJSON());
     renameModel(RENAME_MODEL_URL, MID, formData);
 
     // Close the modal
@@ -151,7 +151,7 @@ $("#delete_model").submit(evt => {
         return;
     }
     const DELETE_MODEL_URL = "/goal_model/" + UID + "/" + MID;
-    let formData = $("#delete_model").serialize();
+    let formData = JSON.parse($("#delete_model").serializeJSON());
     deleteModel(DELETE_MODEL_URL, MID, formData);
 
     // Close the modal
@@ -171,7 +171,7 @@ $("#rename_template").submit(evt => {
         return;
     }
     const RENAME_TEMPLATE_URL = "/template/info/" + UID + "/" + TID;
-    let formData = $("#rename_template").serialize();
+    let formData = JSON.parse($("#rename_template").serializeJSON());
     renameTemplate(RENAME_TEMPLATE_URL, TID, formData);
 
     // Close the modal
@@ -191,7 +191,7 @@ $("#delete_template").submit(evt => {
         return;
     }
     const DELETE_TEMPLATE_URL = "/template/" + UID + "/" + TID;
-    let formData = $("#delete_template").serialize();
+    let formData = JSON.parse($("#delete_template").serializeJSON());
     deleteTemplate(DELETE_TEMPLATE_URL, TID, formData);
 
     // Close the modal
@@ -572,10 +572,9 @@ function createGoalModel(url, pid, model) {
  */
 function renameProject(url, pid, project) {
     $.ajax(url, {
-        data: JSON.stringify(project),
+        data: project,
         type: "PUT",
         headers: {
-            "Content-Type": "application/json",
             Authorization: "Bearer " + TOKEN
         },
         success: () => {
@@ -631,7 +630,7 @@ function deleteProject(url, pid, project) {
  */
 function renameModel(url, mid, model) {
     $.ajax(url, {
-        data: JSON.stringify(model),
+        data: model,
         type: "PUT",
         headers: {Authorization: "Bearer " + TOKEN},
         success: () => {

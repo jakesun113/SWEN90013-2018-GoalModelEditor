@@ -44,8 +44,9 @@
             display: none;
         }
 
-        li:hover dt {
+        a:hover dt {
             display: block;
+            cursor: text;
         }
     </style>
 </head>
@@ -109,50 +110,108 @@
     </div>
 </header>
 
-<div class="steps_bar" style="width:auto; min-width:1280px;
-        overflow-y:hidden; max-width: 100%;">
-    <ul>
+<!--<div class="steps_bar" style="width:auto; min-width:1280px;-->
+        <!--overflow-y:hidden; max-width: 100%;">-->
+    <!--<ul>-->
         <!--<li id="imageTab" class="current" onclick="imageClick()"><span>Upload Image</span></li>-->
-        <li id="goalTab" class="current non-draggable dragger" onclick="goalClick()"><span
-                class="non-draggable dragger">Write Goal List
-                <i class="fas fa-info-circle"></i>
+        <!--<li id="goalTab" class="current non-draggable dragger" onclick="goalClick()"><span-->
+                <!--class="non-draggable dragger">Write Goal List-->
+            <!--<a onclick="event.stopImmediatePropagation();">-->
+                <!--<i class="fas fa-info-circle"></i>-->
                 <!--<div style="position: absolute; z-index: 10" align="left">-->
-                    <!--<dt style="position:relative; top:-20px; left:60px;width:310px; height:150px; font-size:14px; line-height:30px; background-color:rgba(228,229,234,0.8); color:darkgrey">-->
-                        <!--• Click <strong><code>Upload Image</code></strong> to upload <br/>-->
-                        <!--• Click the goal and use <strong><code>[delete]</code></strong> to delete goals <br/>-->
-                        <!--• Click the last goal on the goal list and use <strong><code>[return]</code></strong> to add a new goal <br/>-->
-                    <!--</dt>-->
+                    <!--&lt;!&ndash;<dt style="position:relative; top:-20px; left:60px;width:310px; height:150px; font-size:14px; line-height:30px; background-color:rgba(228,229,234,0.8); color:darkgrey">&ndash;&gt;-->
+                        <!--&lt;!&ndash;• Click <strong><code>Upload Image</code></strong> to upload <br/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;• Click the goal and use <strong><code>[delete]</code></strong> to delete goals <br/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;• Click the last goal on the goal list and use <strong><code>[return]</code></strong> to add a new goal <br/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</dt>&ndash;&gt;-->
                 <!--</div>-->
-        </span>
-        </li>
+            <!--</a>-->
+        <!--</span>-->
+        <!--</li>-->
 
-        <li id="clusterTab" class="non-draggable dragger" onclick="clusterClick()"><span class="non-draggable dragger">Cluster Goals / Arrange into Hierarchy
-            <i class="fas fa-info-circle"></i>
-            <!--<div style="position: absolute; z-index: 10" align="left">-->
+        <!--<li id="clusterTab" class="non-draggable dragger" onclick="clusterClick()"><span class="non-draggable dragger">Cluster Goals / Arrange into Hierarchy-->
+           <!--<a onclick="event.stopImmediatePropagation();">-->
+                <!--<i class="fas fa-info-circle"></i>-->
+                <!--<div style="position: absolute; z-index: 10" align="left">-->
+                    <!--&lt;!&ndash;<dt style="position:relative; top:-20px; left:30px;width:380px; height:210px; font-size:14px; line-height:30px; background-color:rgba(228,229,234,0.8); color:darkgrey">&ndash;&gt;-->
+                        <!--&lt;!&ndash;• Click the goal and use <strong><code>[delete]</code></strong> to delete a goal <br/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;• Click the last goal on the goal list and use <strong><code>[return]</code></strong> to generate a new goal <br/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;• Drag the goal from the goal list on the left section and drop it into the cluster on the right section<br/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;• Drag the goal in the cluster to the right or left sides to achieve the hierarchical structure <br/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</dt>&ndash;&gt;-->
+                <!--</div>-->
+           <!--</a>-->
+        <!--</span>-->
+        <!--</li>-->
+
+        <!--<li id="graphTab" class="last non-draggable dragger" onclick="graphClick()"><span class="non-draggable dragger">Render Model-->
+            <!--<a onclick="event.stopImmediatePropagation();">-->
+            <!--<i class="fas fa-info-circle"></i>-->
+            <!--&lt;!&ndash;<div style="position: absolute; z-index: 10" align="left">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<dt style="position:relative; top:-20px; left:30px;width:380px; height:180px; font-size:14px; line-height:30px; background-color:rgba(228,229,234,0.8); color:darkgrey">&ndash;&gt;-->
+                        <!--&lt;!&ndash;• Click <strong><code>Edit All</code></strong> on the left section to edit the names of goals <br/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;• Click <strong><code>Drag All</code></strong> on the left section to drag the cluster into the graph on the right section<br/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;• Click <strong><code>Render</code></strong> on the left section to generate the goal modal<br/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</dt>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--</a>-->
+        <!--</span>-->
+        <!--</li>-->
+    <!--</ul>-->
+<!--</div>-->
+
+<!--progress bar start-->
+<div class="wrapper" style="width:auto; min-width:1280px;
+        overflow-y:hidden; max-width: 100%;">
+    <div class="arrow-steps clearfix mb-1">
+        <div class="step current non-draggable dragger" id="goalTab" onclick="goalClick()">
+            <span
+                class="non-draggable dragger">Write Goal List
+                <a onclick="event.stopImmediatePropagation();">
+                <i class="fas fa-info-circle"></i>
+                <div style="position: absolute; z-index: 10" align="left">
+                    <!--<dt style="position:relative; top:-20px; left:60px;width:310px; height:150px; font-size:14px; line-height:30px; background-color:rgba(228,229,234,0.8); color:darkgrey">-->
+                    <!--• Click <strong><code>Upload Image</code></strong> to upload <br/>-->
+                    <!--• Click the goal and use <strong><code>[delete]</code></strong> to delete goals <br/>-->
+                    <!--• Click the last goal on the goal list and use <strong><code>[return]</code></strong> to add a new goal <br/>-->
+                    <!--</dt>-->
+                </div>
+                 </a>
+            </span>
+        </div>
+
+
+        <div class="step non-draggable dragger" id="clusterTab" onclick="clusterClick()"><span class="non-draggable dragger">Cluster Goals / Arrange into Hierarchy
+           <a onclick="event.stopImmediatePropagation();">
+                <i class="fas fa-info-circle"></i>
+                <div style="position: absolute; z-index: 10" align="left">
                     <!--<dt style="position:relative; top:-20px; left:30px;width:380px; height:210px; font-size:14px; line-height:30px; background-color:rgba(228,229,234,0.8); color:darkgrey">-->
-                        <!--• Click the goal and use <strong><code>[delete]</code></strong> to delete a goal <br/>-->
-                        <!--• Click the last goal on the goal list and use <strong><code>[return]</code></strong> to generate a new goal <br/>-->
-                        <!--• Drag the goal from the goal list on the left section and drop it into the cluster on the right section<br/>-->
-                        <!--• Drag the goal in the cluster to the right or left sides to achieve the hierarchical structure <br/>-->
+                    <!--• Click the goal and use <strong><code>[delete]</code></strong> to delete a goal <br/>-->
+                    <!--• Click the last goal on the goal list and use <strong><code>[return]</code></strong> to generate a new goal <br/>-->
+                    <!--• Drag the goal from the goal list on the left section and drop it into the cluster on the right section<br/>-->
+                    <!--• Drag the goal in the cluster to the right or left sides to achieve the hierarchical structure <br/>-->
                     <!--</dt>-->
-            <!--</div>-->
+                </div>
+           </a>
         </span>
-        </li>
-
-        <li id="graphTab" class="last non-draggable dragger" onclick="graphClick()"><span class="non-draggable dragger">Render Model
+        </div>
+        <div class="step non-draggable dragger" id="graphTab" onclick="graphClick()"> <span class="non-draggable dragger">Render Model
+            <a onclick="event.stopImmediatePropagation();">
             <i class="fas fa-info-circle"></i>
-            <!--<div style="position: absolute; z-index: 10" align="left">-->
-                    <!--<dt style="position:relative; top:-20px; left:30px;width:380px; height:180px; font-size:14px; line-height:30px; background-color:rgba(228,229,234,0.8); color:darkgrey">-->
-                        <!--• Click <strong><code>Edit All</code></strong> on the left section to edit the names of goals <br/>-->
-                        <!--• Click <strong><code>Drag All</code></strong> on the left section to drag the cluster into the graph on the right section<br/>-->
-                        <!--• Click <strong><code>Render</code></strong> on the left section to generate the goal modal<br/>-->
-                    <!--</dt>-->
-            <!--</div>-->
+                <!--<div style="position: absolute; z-index: 10" align="left">-->
+                <!--<dt style="position:relative; top:-20px; left:30px;width:380px; height:180px; font-size:14px; line-height:30px; background-color:rgba(228,229,234,0.8); color:darkgrey">-->
+                <!--• Click <strong><code>Edit All</code></strong> on the left section to edit the names of goals <br/>-->
+                <!--• Click <strong><code>Drag All</code></strong> on the left section to drag the cluster into the graph on the right section<br/>-->
+                <!--• Click <strong><code>Render</code></strong> on the left section to generate the goal modal<br/>-->
+                <!--</dt>-->
+                <!--</div>-->
+            </a>
         </span>
-        </li>
-    </ul>
-</div>
+        </div>
+    </div>
 
+</div>
+<!--progress bar end-->
 
 <!--the main section-->
 <div class="container-body" style="width:auto; min-width:1280px;
@@ -344,7 +403,7 @@
     </footer>
 </div>
 
-<!-- Render warning deleting goal modal start -->
+<!-- Render warning empty goal modal start -->
 <div class="modal fade" id="deleteGoalWarning" tabindex="-1" role="dialog"
      aria-labelledby="new-model" aria-hidden="true">
     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
@@ -367,6 +426,36 @@
                     </button>
                     <button type="button" id="editGoalBtn" class="btn btn-primary non-draggable dragger"
                             data-dismiss="modal">Edit it.
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Render warning empty goal modal end -->
+
+<!-- Render warning deleting goal modal start -->
+<div class="modal fade" id="deleteGoalWithChildWarning" tabindex="-1" role="dialog"
+     aria-labelledby="new-model" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title non-draggable dragger">Warning</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" id="delete_goal_with_child">
+                <div class="modal-body">
+                    <lable type="text">You are going to delete a goal with children goals, are you sure?
+                    </lable>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="cancelDelete" class="btn non-draggable dragger" style="background-color: transparent"
+                            data-dismiss="modal">Cancel
+                    </button>
+                    <button type="button" id="confirmDelete" class="btn btn-primary non-draggable dragger"
+                            data-dismiss="modal">Confirm
                     </button>
                 </div>
             </form>
