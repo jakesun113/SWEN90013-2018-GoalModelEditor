@@ -251,6 +251,48 @@ undoKeyHandler.getFunction = function(evt) {
 
 
 /**
+ * Re-centre/Re-scale
+ * Function for resetting zoom and recentring the graph
+ *  This is necessary when "Export" is pressed to help export the graph to the
+ *    right resolution. to properly locate the canvas view for the export
+ *    function, we actually need to centre the view such that:
+ *      x = x coord of leftmost symbol; and
+ *      y = y coord of topmost symbol
+ */
+function recentreView() {
+
+    // get the list of all cells in the graph
+    var vertices = graph.getChildVertices();
+ 
+    // if no vertices, then just centre to (0,0)
+    if (vertices.length == 0) {
+        graph.view.setTranslate(0, 0);
+        graph.view.setScale(1);
+        return;
+    }
+
+    // if there are vertices, then find the leftmost x coord and upmost y coord
+    var leftmost = vertices[0].geometry.x;
+    var upmost = vertices[0].geometry.y;
+    for (var i = 0; i < vertices.length; i++) {
+        var curr = vertices[i].geometry;
+        if (curr.x < leftmost) {
+            leftmost = curr.x;
+        }
+        if (curr.y < upmost) {
+            upmost = curr.y;
+        }
+    }
+
+    // recentres the view to its starting position (x=0, y=0)
+    graph.view.setTranslate(-leftmost, -upmost);
+
+    // resets the zoom to the original level
+    graph.view.setScale(1);
+}
+
+
+/**
  * Autolayout
  *
  * The following functions are used to run generate and autolayout the graph
