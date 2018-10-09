@@ -277,6 +277,9 @@ function parseClusterNode(node) {
 function saveJSON() {
     let secret = JSON.parse(Cookies.get("LOKIDIED"));
     let model = window.jsonData;
+    // save note
+    let notedata = $("#notetext").val();
+    model.GoalModelProject.Note = notedata;
     let token = secret.token;
     let userId = secret.uid;
     let modelId = Cookies.get("MID");

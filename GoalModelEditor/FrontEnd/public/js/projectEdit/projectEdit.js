@@ -573,3 +573,16 @@ $(document).on("drop", evt => {
     $("#graphTab").click();
     $("#clusterTab").click();
 });
+
+// read note
+$("#notebtn").click(function () {
+    $("#noteModal").modal();
+    let notedata = window.jsonData.GoalModelProject.Note;
+    $("#notetext").val(notedata);
+});
+
+// save modal when dismiss
+$('#noteModal').on('hide.bs.modal', function () {
+    let notedata = $("#notetext").val();
+    window.jsonData.GoalModelProject.Note = notedata;
+});

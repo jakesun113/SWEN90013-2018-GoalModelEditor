@@ -83,6 +83,8 @@
                 Model</strong>
             </div>
             <!-- Loading div -->
+
+
             <div class="col-2 text-right">
                 <img id="saveJSONLoading" src="/img/loading1.gif" style="display: none" height="45" width="45"/>
                 <h8 id="savedLabel" style="display: none">Saving</h8>
@@ -90,6 +92,7 @@
             <!-- User div -->
             <div class="col-2 text-right">
                 <div class="row text-center pt-2">
+                    <button class="mr-3 btn btn-primary non-draggable dragger" id="notebtn">Notes</button>
                     <div class="dropdown mr-1">
                         <button class="btn non-draggable dragger" type="button" id="user-dropdown"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -499,6 +502,31 @@
     </div>
 </div>
 <!-- Render warning modal end -->
+
+<!-- Add notes modal start -->
+<div class="modal fade" id="noteModal" tabindex="-1" role="dialog"
+     aria-labelledby="new-model" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title non-draggable dragger">Notes</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" id="">
+                <div class="modal-body">
+                    <textarea id="notetext" class="form-control" rows="15"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"  class="btn btn-primary non-draggable dragger" data-dismiss="modal">Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Add notes modal end -->
 
 <!-- Loads and initializes the Bootstrap javascript -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
