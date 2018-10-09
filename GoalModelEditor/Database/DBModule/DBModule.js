@@ -118,6 +118,14 @@ const SQL_UPDATE_GOAL_MODEL_TIME =
     "SET LastModified = NOW() " +
     "WHERE BINARY ModelId = ?";
 /**
+ * Update a model's Name
+ * @type {string}
+ */
+const SQL_UPDATE_GOAL_MODEL_NAME =
+    "UPDATE GoalModel " +
+    "SET ModelName = ?, LastModified = NOW() " +
+    "WHERE BINARY ModelId = ?";
+/**
  * Get the information of a project
  * @type {string}
  */
@@ -218,6 +226,22 @@ const SQL_GET_TEMPLATE_BY_ID =
  */
 const DUP_ENTRY = 1062;
 
+const errCallback = function (err, reject) {
+    console.log(JSON.stringify(err));
+    if (err.errno === DUP_ENTRY) {
+        // MYSQL error number for duplicate entry
+        // Username already exists.
+        reject({
+            code: DBModule.ALREADY_EXIST,
+            message: err.sqlMessage
+        });
+    } else {
+        reject({
+            code: DBModule.UNKNOWN_ERROR,
+            message: err.sqlMessage
+        }); // unknown error
+    }
+}
 
 /**
  * DBModule
@@ -252,20 +276,7 @@ const DBModule = function () {
                 [ProjectName, ProjectDescription, Size, UserId],
                 function (err, result) {
                     if (err) {
-                        console.log(JSON.stringify(err));
-                        if (err.errno === DUP_ENTRY) {
-                            // MYSQL error number for duplicate entry
-                            // Username already exists.
-                            reject({
-                                code: DBModule.ALREADY_EXIST,
-                                message: err.sqlMessage
-                            });
-                        } else {
-                            reject({
-                                code: DBModule.UNKNOWN_ERROR,
-                                message: err.sqlMessage
-                            }); // unknown error
-                        }
+                        errCallback(err, reject);
                     } else {
                         console.log(result);
                         // success
@@ -274,14 +285,9 @@ const DBModule = function () {
                             [ProjectName, UserId],
                             function (err, result) {
                                 if (err) {
-                                    console.log(err);
-                                    reject({
-                                        code: DBModule.UNKNOWN_ERROR,
-                                        message: err.sqlMessage
-                                    }); // unknown error
+                                    errCallback(err, reject);
                                 } else {
                                     // success
-
                                     resolve(result[0]);
                                 }
                             }
@@ -311,20 +317,7 @@ const DBModule = function () {
                 [username, password, Email, FirstName, LastName],
                 function (err, result) {
                     if (err) {
-                        console.log(JSON.stringify(err));
-                        // MYSQL error number for duplicate entry
-                        if (err.errno === DUP_ENTRY) {
-                            // Username already exists.
-                            reject({
-                                code: DBModule.ALREADY_EXIST,
-                                message: err.sqlMessage
-                            });
-                        } else {
-                            reject({
-                                code: DBModule.UNKNOWN_ERROR,
-                                message: err.sqlMessage
-                            }); // unknown error
-                        }
+                        errCallback(err, reject);
                     } else {
                         // success
                         resolve(DBModule.SUCCESS);
@@ -343,10 +336,7 @@ const DBModule = function () {
             pool.query(SQL_USER_LOGIN, [username, password], function (err,
                                                                        result) {
                 if (err) {
-                    return reject({
-                        code: DBModule.UNKNOWN_ERROR,
-                        message: err.sqlMessage
-                    });
+                    errCallback(err, reject);
                 }
                 if (result.affectedRows === 1) {
                     // success
@@ -401,20 +391,7 @@ const DBModule = function () {
                 [modelName, modelDescription, filePath, ProjectId, Type],
                 function (err, result) {
                     if (err) {
-                        console.log(JSON.stringify(err));
-                        // MYSQL error number for duplicate entry
-                        if (err.errno === DUP_ENTRY) {
-                            // Username already exists.
-                            reject({
-                                code: DBModule.ALREADY_EXIST,
-                                message: err.sqlMessage
-                            });
-                        } else {
-                            reject({
-                                code: DBModule.UNKNOWN_ERROR,
-                                message: err.sqlMessage
-                            }); // unknown error
-                        }
+                        errCallback(err, reject);
                     } else {
                         pool.query(
                             SQL_RET_GOALMODEL,
@@ -586,19 +563,7 @@ const DBModule = function () {
                                 (err, result) => {
                                     connection.release();
                                     if (err) {
-                                        console.log(err);
-                                        if ((err.errno = DUP_ENTRY)) {
-                                            console.log("dup");
-                                            return reject({
-                                                code: DBModule.ALREADY_EXIST,
-                                                message: err.sqlMessage
-                                            });
-                                        } else {
-                                            return reject({
-                                                code: DBModule.UNKNOWN_ERROR,
-                                                message: err.sqlMessage
-                                            });
-                                        }
+                                        errCallback(err, reject);
                                     }
                                     if (result.affectedRows === 1) {
                                         return resolve({
@@ -662,19 +627,7 @@ const DBModule = function () {
                                 (err, result) => {
                                     if (err) {
                                         connection.release();
-                                        console.log(err);
-                                        if ((err.errno = DUP_ENTRY)) {
-                                            console.log("dup");
-                                            return reject({
-                                                code: DBModule.ALREADY_EXIST,
-                                                message: err.sqlMessage
-                                            });
-                                        } else {
-                                            return reject({
-                                                code: DBModule.UNKNOWN_ERROR,
-                                                message: err.sqlMessage
-                                            });
-                                        }
+                                        errCallback(err, reject);
                                     }
 
                                     if (result.affectedRows === 1) {
@@ -685,23 +638,7 @@ const DBModule = function () {
                                             [modelId],
                                             function (err, result) {
                                                 connection.release();
-                                                if (err) {
-                                                    console.log(err);
-                                                    return reject({
-                                                        code:
-                                                        DBModule.UNKNOWN_ERROR,
-                                                        message: err.sqlMessage
-                                                    }); // unknown error
-                                                } else {
-                                                    // success
-                                                    return resolve({
-                                                        model_name:
-                                                        result[0].ModelName,
-                                                        last_modified:
-                                                        result[0]
-                                                            .LastModified
-                                                    });
-                                                }
+                                                errCallback(err, reject);
                                             }
                                         );
                                     } else {
@@ -755,19 +692,7 @@ const DBModule = function () {
                                 (err, result) => {
                                     if (err) {
                                         connection.release();
-                                        console.log(err);
-                                        if ((err.errno = DUP_ENTRY)) {
-                                            console.log("dup");
-                                            return reject({
-                                                code: DBModule.ALREADY_EXIST,
-                                                message: err.sqlMessage
-                                            });
-                                        } else {
-                                            return reject({
-                                                code: DBModule.UNKNOWN_ERROR,
-                                                message: err.sqlMessage
-                                            });
-                                        }
+                                        errCallback(err, reject);
                                     }
                                     if (result.affectedRows === 1) {
                                         connection.query(
@@ -775,23 +700,7 @@ const DBModule = function () {
                                             [modelId],
                                             function (err, result) {
                                                 connection.release();
-                                                if (err) {
-                                                    console.log(err);
-                                                    return reject({
-                                                        code:
-                                                        DBModule.UNKNOWN_ERROR,
-                                                        message: err.sqlMessage
-                                                    }); // unknown error
-                                                } else {
-                                                    // success
-                                                    return resolve({
-                                                        model_name:
-                                                        result[0].ModelName,
-                                                        last_modified:
-                                                        result[0]
-                                                            .LastModified
-                                                    });
-                                                }
+                                                errCallback(err, reject);
                                             }
                                         );
                                     } else {
@@ -1092,20 +1001,7 @@ const DBModule = function () {
                 [templateName, templateDescription, dirPath, User],
                 function (err, result) {
                     if (err) {
-                        console.log(JSON.stringify(err));
-                        // MYSQL error number for duplicate entry
-                        if (err.errno === DUP_ENTRY) {
-                            // Username already exists.
-                            reject({
-                                code: DBModule.ALREADY_EXIST,
-                                message: err.sqlMessage
-                            });
-                        } else {
-                            reject({
-                                code: DBModule.UNKNOWN_ERROR,
-                                message: err.sqlMessage
-                            }); // unknown error
-                        }
+                        errCallback(err, reject);
                     } else {
                         pool.query(
                             SQL_RET_TEMPLATE,
@@ -1285,6 +1181,82 @@ const DBModule = function () {
             });
         });
     };
+
+    /**
+     * update a single goal model's name.
+     * @return format(if success) : {model_name:<>, last_modified:<>}
+     * @return format(if error) : {code:<Error Code>, message:<Error Message>}
+     * @param userId
+     * @param modelId
+     */
+    DBModule.updateGoalModelName = function (userId, modelId, modelName) {
+        return new Promise((resolve, reject) => {
+            pool.getConnection(function (err, connection) {
+                connection.query(
+                    SQL_CHECK_PRIORITY_ON_GOALMODEL,
+                    [userId, modelId],
+                    (err, result) => {
+                        if (err) {
+                            // network connection or other errors
+                            connection.release();
+                            return reject({
+                                code: DBModule.UNKNOWN_ERROR,
+                                message: err.sqlMessage
+                            });
+                        }
+                        if (result.length === 0) {
+                            // No priority on the project
+                            connection.release();
+                            return reject({
+                                code: DBModule.ACCESS_DENIED,
+                                message: DBModule.MESSAGE_ACCESS_DENIED
+                            });
+                        } else if (result.length === 1) {
+                            connection.query(
+                                SQL_UPDATE_GOAL_MODEL_NAME,
+                                [modelName, modelId],
+                                (err, result) => {
+                                    if (err) {
+                                        connection.release();
+                                        errCallback(err, reject);
+                                    }
+                                    if (result.affectedRows === 1) {
+                                        connection.query(
+                                            SQL_RET_MODEL,
+                                            [modelId],
+                                            function (err, result) {
+                                                connection.release();
+                                                if (err) {
+                                                    console.log(err);
+                                                    errCallback(err, reject);
+                                                } else {
+                                                    // success
+                                                    return resolve({
+                                                        model_name:
+                                                        result[0].ModelName,
+                                                        last_modified:
+                                                        result[0]
+                                                            .LastModified
+                                                    });
+                                                }
+                                            }
+                                        );
+                                    } else {
+                                        connection.release();
+                                        return reject({
+                                            code: DBModule.INVALID,
+                                            message: result.message
+                                        });
+                                    }
+                                }
+                            );
+                        }
+                    }
+                );
+            });
+        });
+    };
+
     /**************************************************
      * Do not change code under this line
      *************************************************/

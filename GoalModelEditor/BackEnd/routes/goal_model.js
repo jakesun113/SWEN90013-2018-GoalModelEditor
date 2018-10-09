@@ -65,20 +65,18 @@ router.post("/:userId/:projectId", (req, res, next) => {
 
     // create new goal model
     db.createGoalModel(
-            req.body.model_name,
-            req.body.description,
-            dirpath,
-            req.params.projectId,
-            req.body.model_type
-        )
+        req.body.model_name,
+        req.body.description,
+        dirpath,
+        req.params.projectId,
+        req.body.model_type
+    )
         .then(result => {
             createDirectoryPath(dirpath);
 
             let init = {
                 GoalModelProject: {
-                    ModelName: result.ModelName,
-                    ProjectName: result.ProjectName,
-
+                    notes: "",
                     //Goal list: [five goal types][used goal][deleted goal]
                     GoalList: {
                         FunctionalNum: 1,
@@ -237,8 +235,8 @@ router.post("/xml/:userId/:goalmodelId", (req, res) => {
 
     let xml = req.body.xml;
 
-    xml = xml.replace("<mxGraphModel>","");
-    xml = xml.replace("</mxGraphModel>","");
+    xml = xml.replace("<mxGraphModel>", "");
+    xml = xml.replace("</mxGraphModel>", "");
 
     fs.writeFile(
         dirpath + "/" + req.params.goalmodelId + "/" + req.params.goalmodelId + ".xml",
@@ -387,12 +385,12 @@ router.put("/info/:userId/:goalmodelId", (req, res) => {
     // update goal model
     let dirpath = "./UserFiles/" + req.params.userId + "/" + req.params.goalmodelId + "/";
     db.updateGoalModel(
-            req.params.userId,
-            req.params.goalmodelId,
-            req.body.model_name,
-            req.body.description,
-            dirpath
-        )
+        req.params.userId,
+        req.params.goalmodelId,
+        req.body.model_name,
+        req.body.description,
+        dirpath
+    )
         .then(result => {
             res.statusCode = 200;
             res.json({
@@ -416,6 +414,55 @@ router.put("/info/:userId/:goalmodelId", (req, res) => {
                 res.json({
                     message:
                     "Failed to update the goal model information: " +
+                    err.message
+                });
+                return res.end();
+            }
+        });
+});
+/* =====================================================================
+ * PUT rename goal model
+ * @input(req)
+ *  content-type: application/xml
+ *  body: {model_name: <new modelName>}
+ *
+ * =====================================================================*/
+router.put("/rename/:userId/:goalmodelId", (req, res) => {
+    // check token for authentication
+    // if (!auth.authenticate(req.headers)) {
+    //     res.statusCode = 401;
+    //     res.json({created: false, message: "Authentication failed"});
+    //     return res.end();
+    // }
+
+    // update goal model
+    db.updateGoalModelName(
+        req.params.userId,
+        req.params.goalmodelId,
+        req.body.model_name
+    )
+        .then(result => {
+            res.statusCode = 200;
+            res.json({
+                model_id: req.params.goalmodelId,
+                model_name: req.body.model_name
+            });
+            return res.end();
+        })
+        .catch(err => {
+            if (err.code === db.ALREADY_EXIST) {
+                res.statusCode = 409;
+                res.json({
+                    message:
+                    "Failed to rename the goal model: " +
+                    err.message
+                });
+                return res.end();
+            } else if (err.code === db.INVALID) {
+                res.statusCode = 404;
+                res.json({
+                    message:
+                    "Failed to rename the goal model: " +
                     err.message
                 });
                 return res.end();
@@ -550,14 +597,14 @@ router.get("/images/:userId/:goalmodelId", (req, res) => {
                 imagepath = result.DirPath + result.ModelId + "/images/";
                 let formData = new FormData();
                 fs.readdir(imagepath, function (err, items) {
-                    console.log("item length" +items.length+ "\n")
+                    console.log("item length" + items.length + "\n")
                     for (let i = 0; i < items.length; i++) {
                         let image = fs.readFileSync(
                             imagepath + items[i],
                             "base64"
                         );
                         formData.append("image", image);
-                        console.log("appended item " + i );
+                        console.log("appended item " + i);
                     }
                     res.statusCode = 200;
                     res.format({
@@ -598,7 +645,7 @@ router.post("/exportToPdf/:userId/:goalmodelId", (req, res, next) => {
     // check token for authentication
     if (!auth.authenticate(req.headers)) {
         res.statusCode = 401;
-        res.json({ created: false, message: "Authentication failed" });
+        res.json({created: false, message: "Authentication failed"});
         return res.end();
     }
 
@@ -618,17 +665,17 @@ router.post("/exportToPdf/:userId/:goalmodelId", (req, res, next) => {
     //console.log(svg);
 
     SVGtoPDF(doc, svg, 0, 0);
-    stream.on('finish', function() {
+    stream.on('finish', function () {
         console.log(fs.readFileSync(
             dirpath + "/" + req.params.goalmodelId +
             "/" + req.params.goalmodelId +
             ".pdf"));
         let downloadStream = fs.readFileSync(dirpath + "/" + req.params.goalmodelId +
             "/" + req.params.goalmodelId +
-            ".pdf","base64");
+            ".pdf", "base64");
         // Be careful of special characters
         console.log(downloadStream);
-        res.statusCode=200;
+        res.statusCode = 200;
         //res.writeHead(200, headers);
         res.json({pdf: downloadStream});
         return res.end();
@@ -637,7 +684,6 @@ router.post("/exportToPdf/:userId/:goalmodelId", (req, res, next) => {
     doc.pipe(stream);
     doc.end();
 });
-
 
 
 /** Recursively creates the whole path to a directory
