@@ -82,10 +82,10 @@ var dbModule = require("./DBModule");
 //         console.log(err);
 //     });
 
-// dbModule.updateGoalModelName('uid','mid2','newname')
-//     .then(res => {
-//         console.log(JSON.stringify(res));
-//     })
-//     .catch(err => {
-//         console.log(err);
-//     });
+dbModule.getGoalModelProjectName('uid', 'mid2')
+    .then(res => {
+        console.log(JSON.stringify(res));
+    })
+    .catch(err => {
+        console.log(err);
+    });

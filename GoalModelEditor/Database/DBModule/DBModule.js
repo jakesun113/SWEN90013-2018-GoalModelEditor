@@ -52,6 +52,17 @@ const SQL_RET_GOALMODEL_OF_PROJ =
     "FROM Project LEFT JOIN GoalModel " +
     "ON Project.ProjectId = GoalModel.Project " +
     "WHERE BINARY Project.ProjectId = ?";
+
+/**
+ * The sql query to retrieve a goalmodel and its project name
+ * @type {string}
+ */
+const SQL_RET_GOALMODEL_PROJECT_NAME =
+    "SELECT ModelName, ProjectName " +
+    "FROM Project LEFT JOIN GoalModel " +
+    "ON Project.ProjectId = GoalModel.Project " +
+    "WHERE BINARY GoalModel.ModelId = ?";
+
 /**
  * The SQL sentence to create a goalmodel
  * @type {string}
@@ -228,14 +239,14 @@ const DUP_ENTRY = 1062;
 
 const errCallback = function (err, reject) {
     console.log(JSON.stringify(err));
-    if (err.errno === DUP_ENTRY) {
+    if (err && err.errno && err.errno === DUP_ENTRY) {
         // MYSQL error number for duplicate entry
         // Username already exists.
         reject({
             code: DBModule.ALREADY_EXIST,
             message: err.sqlMessage
         });
-    } else {
+    } else if (err) {
         reject({
             code: DBModule.UNKNOWN_ERROR,
             message: err.sqlMessage
@@ -1248,6 +1259,54 @@ const DBModule = function () {
                                             message: result.message
                                         });
                                     }
+                                }
+                            );
+                        }
+                    }
+                );
+            });
+        });
+    };
+    /**
+     * return a single goal model and its project's names.
+     * @return format(if success) : {model_name:<>, project_name:<>}
+     * @return format(if error) : {code:<Error Code>, message:<Error Message>}
+     * @param userId
+     * @param modelId
+     */
+    DBModule.getGoalModelProjectName = function (userId, modelId) {
+        return new Promise((resolve, reject) => {
+            pool.getConnection(function (err, connection) {
+                connection.query(
+                    SQL_CHECK_PRIORITY_ON_GOALMODEL,
+                    [userId, modelId],
+                    (err, result) => {
+                        if (err) {
+                            // network connection or other errors
+                            connection.release();
+                            return reject({
+                                code: DBModule.UNKNOWN_ERROR,
+                                message: err.sqlMessage
+                            });
+                        }
+                        if (result.length === 0) {
+                            // No priority on the project
+                            connection.release();
+                            return reject({
+                                code: DBModule.ACCESS_DENIED,
+                                message: DBModule.MESSAGE_ACCESS_DENIED
+                            });
+                        } else if (result.length === 1) {
+                            connection.query(
+                                SQL_RET_GOALMODEL_PROJECT_NAME,
+                                [modelId],
+                                (err, result) => {
+                                    connection.release();
+                                    if (err) {
+                                        errCallback(err, reject);
+                                    }
+                                    console.log(result);
+                                    return resolve(result[0]);
                                 }
                             );
                         }

@@ -574,7 +574,7 @@ router.get("/:userId/:goalmodelId", (req, res) => {
 });
 
 /* =====================================================================
- * GET goal model info
+ * GET goal model name and project name
  * @input(req)
  *  content-type: application/json
  *  body: {}
@@ -582,14 +582,14 @@ router.get("/:userId/:goalmodelId", (req, res) => {
  * =====================================================================*/
 router.get("/info/:userId/:goalmodelId", (req, res) => {
     // check token for authentication
-    // if (!auth.authenticate(req.headers)) {
-    //     //auth is not successful
-    //     res.statusCode = 401;
-    //     res.json({ created: false, message: "Authentication failed" });
-    //     return res.end();
-    // }
+    if (!auth.authenticate(req.headers)) {
+        //auth is not successful
+        res.statusCode = 401;
+        res.json({created: false, message: "Authentication failed"});
+        return res.end();
+    }
 
-    db.getGoalModel(req.params.goalmodelId)
+    db.getGoalModelProjectName(req.params.userId, req.params.goalmodelId)
         .then(result => {
             //set response: successfully retrieve the goal model file and response
             // with a json file
