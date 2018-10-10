@@ -83,16 +83,23 @@
                 Model</strong>
             </div>
             <!-- Loading div -->
-
-
-            <div class="col-2 text-right">
-                <img id="saveJSONLoading" src="/img/loading1.gif" style="display: none" height="45" width="45"/>
-                <h8 id="savedLabel" style="display: none">Saving</h8>
+            <div class="col-1 text-right">
+                <div class="row pt-2 text-right">
+                    <img id="saveJSONLoading" src="/img/loading1.gif" style="display: none" height="40" width="40"/>
+                    <div class="pt-2">
+                        <h8 id="savedLabel" style="display: none">Saving</h8>
+                    </div>
+                </div>
+            </div>
+            <!-- Notes div -->
+            <div class="col-1 text-right">
+                <div class="row pt-2 text-right">
+                    <button class="mr-3 btn btn-primary non-draggable dragger" id="notebtn">Notes</button>
+                </div>
             </div>
             <!-- User div -->
             <div class="col-2 text-right">
                 <div class="row text-center pt-2">
-                    <button class="mr-3 btn btn-primary non-draggable dragger" id="notebtn">Notes</button>
                     <div class="dropdown mr-1">
                         <button class="btn non-draggable dragger" type="button" id="user-dropdown"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
