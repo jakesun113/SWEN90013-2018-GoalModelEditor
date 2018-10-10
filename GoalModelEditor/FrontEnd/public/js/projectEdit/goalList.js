@@ -13,10 +13,7 @@ function getJSONFile() {
         headers: {Authorization: "Bearer " + token},
         success: function (data) {
             window.jsonData = JSON.parse(JSON.parse(JSON.stringify(data)));
-            let modelName = jsonData.GoalModelProject.ProjectName +
-                " - " +
-                jsonData.GoalModelProject.ModelName;
-            $("#model_name strong").html(modelName);
+            getModelInfo();
             loadData();
             loadImages();
             //activate drag function
@@ -42,6 +39,36 @@ function getJSONFile() {
                 scroll: true
             });
             getXML();
+        }
+    }).fail(function (jqXHR) {
+        $("#warning-alert").html(
+            jqXHR.responseJSON.message + " <br>Please try again."
+        );
+        $("#warning-alert")
+            .slideDown()
+            .delay(3000)
+            .slideUp();
+    }); // end ajax
+}
+
+/**
+ * get model info from backend according to userId and modelId
+ */
+function getModelInfo() {
+    let secret = JSON.parse(Cookies.get("LOKIDIED"));
+    let token = secret.token;
+    let userId = secret.uid;
+    let modelId = Cookies.get("MID");
+    let url = "/goal_model/info/" + userId + "/" + modelId;
+    $.ajax(url, {
+        // the API of upload pictures
+        type: "GET",
+        headers: {Authorization: "Bearer " + token},
+        success: function (data) {
+            let modelName = data.ProjectName +
+                " - " +
+                data.ModelName;
+            $("#model_name strong").html(modelName);
             setTitle(modelName);
         }
     }).fail(function (jqXHR) {
@@ -54,6 +81,7 @@ function getJSONFile() {
             .slideUp();
     }); // end ajax
 }
+
 
 /*Count goals numbers*/
 let FunctionalNum = 0;
@@ -72,6 +100,8 @@ let clusterNumber = 1;
  * load goals from JSON
  */
 function loadData() {
+    $("#notetext").val(jsonData.GoalModelProject.notes);
+
     $("#functionaldata").append(
         parseNodes(jsonData.GoalModelProject.GoalList.Functional)
     );
@@ -277,6 +307,9 @@ function parseClusterNode(node) {
 function saveJSON() {
     let secret = JSON.parse(Cookies.get("LOKIDIED"));
     let model = window.jsonData;
+    // save note
+    let notedata = $("#notetext").val();
+    model.GoalModelProject.Notes = notedata;
     let token = secret.token;
     let userId = secret.uid;
     let modelId = Cookies.get("MID");

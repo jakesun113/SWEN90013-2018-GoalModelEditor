@@ -87,20 +87,18 @@ router.post("/:userId/:projectId", (req, res, next) => {
 
     // create new goal model
     db.createGoalModel(
-            req.body.model_name,
-            req.body.description,
-            dirpath,
+        req.body.model_name,
+        req.body.description,
+        dirpath,
         req.params.projectId,
         req.body.model_type
-        )
+    )
         .then(result => {
             createDirectoryPath(dirpath);
 
             let init = {
                 GoalModelProject: {
-                    ModelName: result.ModelName,
-                    ProjectName: result.ProjectName,
-
+                    notes: "",
                     //Goal list: [five goal types][used goal][deleted goal]
                     GoalList: {
                         FunctionalNum: 1,
@@ -417,11 +415,11 @@ router.put("/info/:userId/:goalmodelId", (req, res) => {
     let dirpath = "./UserFiles/" + req.params.userId + "/";
     db.updateGoalModel(
         req.params.userId,
-            req.params.goalmodelId,
-            req.body.model_name,
-            req.body.description,
-            dirpath
-        )
+        req.params.goalmodelId,
+        req.body.model_name,
+        req.body.description,
+        dirpath
+    )
         .then(result => {
             res.statusCode = 200;
             res.json({
@@ -446,6 +444,55 @@ router.put("/info/:userId/:goalmodelId", (req, res) => {
                     message:
                         "Failed to update the goal model information: " +
                         err.message
+                });
+                return res.end();
+            }
+        });
+});
+/* =====================================================================
+ * PUT rename goal model
+ * @input(req)
+ *  content-type: application/json
+ *  body: {model_name: <new modelName>}
+ *
+ * =====================================================================*/
+router.put("/rename/:userId/:goalmodelId", (req, res) => {
+    // check token for authentication
+    if (!auth.authenticate(req.headers)) {
+        res.statusCode = 401;
+        res.json({created: false, message: "Authentication failed"});
+        return res.end();
+    }
+
+    // update goal model
+    db.updateGoalModelName(
+        req.params.userId,
+        req.params.goalmodelId,
+        req.body.model_name
+    )
+        .then(result => {
+            res.statusCode = 200;
+            res.json({
+                model_id: req.params.goalmodelId,
+                model_name: req.body.model_name
+            });
+            return res.end();
+        })
+        .catch(err => {
+            if (err.code === db.ALREADY_EXIST) {
+                res.statusCode = 409;
+                res.json({
+                    message:
+                    "Failed to rename the goal model: " +
+                    err.message
+                });
+                return res.end();
+            } else if (err.code === db.INVALID) {
+                res.statusCode = 404;
+                res.json({
+                    message:
+                    "Failed to rename the goal model: " +
+                    err.message
                 });
                 return res.end();
             }
@@ -548,6 +595,49 @@ router.get("/:userId/:goalmodelId", (req, res) => {
         });
 });
 
+/* =====================================================================
+ * GET goal model name and project name
+ * @input(req)
+ *  content-type: application/json
+ *  body: {}
+ *
+ * =====================================================================*/
+router.get("/info/:userId/:goalmodelId", (req, res) => {
+    // check token for authentication
+    if (!auth.authenticate(req.headers)) {
+        //auth is not successful
+        res.statusCode = 401;
+        res.json({created: false, message: "Authentication failed"});
+        return res.end();
+    }
+
+    db.getGoalModelProjectName(req.params.userId, req.params.goalmodelId)
+        .then(result => {
+            //set response: successfully retrieve the goal model file and response
+            // with a json file
+            res.statusCode = 200;
+            if (result) {
+                res.json(JSON.parse(JSON.stringify(result)));
+                console.log("get goal model" + result);
+                return res.end();
+            } else {
+                res.statusCode = 404;
+                res.json({
+                    message:
+                        "Failed to get the goal model info: the goal model does not exist"
+                });
+                return res.end();
+            }
+        })
+        .catch(err => {
+            //set response: failed to get goal model
+            res.statusCode = 500;
+            res.json({
+                message: "Failed to get the goal model info: " + err.message
+            });
+            return res.end();
+        });
+});
 /* Get Goal Model images */
 router.get("/images/:userId/:goalmodelId", (req, res) => {
     // check token for authentication
