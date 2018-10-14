@@ -18,24 +18,27 @@ function getJSONFile() {
             loadImages();
             //activate drag function
             getDraggingElement();
-
+            //at first, trigger addNoChildrenClass method
             addNoChildrenClass();
-
+            //activate nestable2 function
             $(".dd").nestable({
 
                 onDragStart: function (l, e) {
                     // get type of dragged element
-                    var type = $(e).children(".dd-handle").attr("class").split(" ")[0];
-                    console.log(type);
+                    // let type = $(e).children(".dd-handle").attr("class").split(" ")[0];
+                    // console.log(type);
+                    //at first, trigger addNoChildrenClass method
                     addNoChildrenClass();
                 },
 
                 callback: function (l, e) {
                     // l is the main container
                     // e is the element that was moved
+                    //when finish dropping, trigger these methods to make "dd-empty" is always one
                     appendCluster();
                     removeCluster();
                 },
+                //enable auto scrolling method while dragging
                 scroll: true
             });
             getXML();
@@ -92,7 +95,7 @@ let StakeholderNum = 0;
 
 /*current active element to delete*/
 let activeElement;
-/*Three clusters at start*/
+/*set cluster number*/
 let clusterNumber = 1;
 
 /*Load data start*/
@@ -236,8 +239,8 @@ function parseNode(node) {
         '" ' +
         'oninput="changeFontWeight(this)"' +
         "/>" +
-        '<img class="deleteBtnInList" style="display: none" src="/img/trash-alt-solid.svg"' +
-        'onclick="deleteGoalInList(this)"' +
+        '<img class="deleteBtnInList non-draggable dragger" style="display: none" src="/img/trash-alt-solid.svg"' +
+        ' onclick="deleteGoalInList(this)"' +
         '/>';
 
     //countID(node.GoalType);
@@ -276,14 +279,14 @@ function parseClusterNode(node) {
         '<img src="' + iconPath + '" class="mr-1 typeIcon">' +
         '<div class="goal-content"  tabindex="-1" ' +
         'onblur="finishEditGoalInCluster($(this));">' + node.GoalContent + '</div>' +
-        '<img class="editButton" style="display: none" src="/img/edit-solid.svg"' +
+        '<img class="editButton non-draggable dragger" style="display: none" src="/img/edit-solid.svg"' +
         ' onclick="event.stopImmediatePropagation(); editGoalInCluster(this)"' +
-        'onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
-        'onmousedown="event.stopImmediatePropagation()"/>' +
-        '<img class="deleteButton" style="display: none" src="/img/trash-alt-solid.svg"' +
-        'onclick="event.stopImmediatePropagation(); handleDeleteGoalInCluster(this)"' +
-        'onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
-        'onmousedown="event.stopImmediatePropagation()"/>' +
+        ' onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
+        ' onmousedown="event.stopImmediatePropagation()"/>' +
+        '<img class="deleteButton non-draggable dragger" style="display: none" src="/img/trash-alt-solid.svg"' +
+        ' onclick="event.stopImmediatePropagation(); handleDeleteGoalInCluster(this)"' +
+        ' onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
+        ' onmousedown="event.stopImmediatePropagation()"/>' +
         "</div>";
 
     // recursion to add sub goal
@@ -315,7 +318,8 @@ function saveJSON() {
     let modelId = Cookies.get("MID");
     let url = "/goal_model/" + userId + "/" + modelId;
     $("#saveJSONLoading").show();
-    $("#savedLabel").show();
+    $("#savingLabel").show();
+    $("#savedLabel").hide();
 
     getData();
     // ajax starts
@@ -328,7 +332,8 @@ function saveJSON() {
         success: function (data) {
             setTimeout(function () {
                 $("#saveJSONLoading").hide();
-                $("#savedLabel").hide();
+                $("#savingLabel").hide();
+                $("#savedLabel").show();
             }, 1000);
         }
     }).fail(function (jqXHR) {
@@ -635,7 +640,7 @@ function addNoChildrenClass() {
 }
 
 /**
- * Make goals in cluster editable by double click
+ * Make goals in cluster editable by clicking the edit icon
  *
  */
 function editGoalInCluster(element) {
@@ -667,6 +672,7 @@ function finishEditGoalInCluster($element) {
     $element.attr("contenteditable", "false");
     $element.css("font-weight", "bold");
     $element.parent().css("background-color", "#fafafa");
+    //save the contents when finishing editing
     saveJSON();
 }
 
@@ -684,10 +690,11 @@ function handleDeleteGoalInCluster(element) {
     //set current active element
     activeElement = ddItemLi;
 
-    //if this target goal has child
+    //if this target goal has child, trigger the warning
     if ($(ddItemLi).children("ol").length) {
         $("#deleteGoalWithChildWarning").modal();
     }
+    //otherwise, delete that goal
     else {
         deleteGoalInCluster(activeElement);
     }
