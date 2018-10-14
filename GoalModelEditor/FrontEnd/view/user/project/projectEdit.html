@@ -21,12 +21,6 @@
     <!--add nestable library-->
     <link rel="stylesheet" href="/stylesheet/jquery.nestable.css">
 
-    <!--<noscript>-->
-    <!--<div style="display:inline;">-->
-    <!--<img class="mb-4" src="/img/icon.ico" alt="icon" width="1" height="1">-->
-    <!--</div>-->
-    <!--</noscript>-->
-
 
     <!--&lt;!&ndash; mxgraph basepath &ndash;&gt;-->
     <!--<script type="text/javascript">-->
@@ -78,16 +72,17 @@
         overflow-y:hidden; max-width: 100%;">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-8 non-draggable dragger" id="model_name">
+            <div class="col-7 non-draggable dragger" id="model_name">
                 &nbsp;&nbsp;&nbsp;<strong class="non-draggable dragger" style="font-size: 35px">Motivational
                 Model</strong>
             </div>
             <!-- Loading div -->
-            <div class="col-1 text-right">
+            <div class="col-2 text-right">
                 <div class="row pt-2 text-right">
                     <img id="saveJSONLoading" src="/img/loading1.gif" style="display: none" height="40" width="40"/>
                     <div class="pt-2">
-                        <h8 id="savedLabel" style="display: none">Saving</h8>
+                        <h8 id="savingLabel" class="non-draggable dragger" style="display: none">Saving</h8>
+                        <h8 id="savedLabel" class="non-draggable dragger" style="display: none">All changes saved</h8>
                     </div>
                 </div>
             </div>
