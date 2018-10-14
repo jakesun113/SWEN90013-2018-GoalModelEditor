@@ -135,8 +135,8 @@ header {
 
 /*cluster div start*/
 .dd {
-    width: 90%;
-    margin: 10px auto;
+    /*width: 90%;*/
+    /*margin: 10px auto;*/
     height: auto;
     position: relative;
 }

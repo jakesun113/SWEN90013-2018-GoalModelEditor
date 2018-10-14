@@ -137,7 +137,7 @@ document.onkeydown = function (event) {
             " " +
             '" placeholder="' + placeholderText + '" ' +
             'note="notes" oninput="changeFontWeight(this)" value="" style="font-weight: bold"/>' +
-            '<img class="deleteBtnInList" style="display: none" src="/img/trash-alt-solid.svg"' +
+            '<img class="deleteBtnInList non-draggable dragger" style="display: none" src="/img/trash-alt-solid.svg"' +
             'onclick="deleteGoalInList(this)" /></li>';
 
         // add new goal node to its parent node
@@ -353,10 +353,10 @@ function drop_zone(clusterNumber) {
             $(newNode).html('<img src=' + imagePath + ' class="mr-1 typeIcon" > ' +
                 '<div class="goal-content" tabindex="-1" ' +
                 'onblur="finishEditGoalInCluster($(this));"' + '>' +
-                $(nowCopying).children("input")[0].value + '</div><img class="editButton" style="display: none" src="/img/edit-solid.svg"' +
+                $(nowCopying).children("input")[0].value + '</div><img class="editButton non-draggable dragger" style="display: none" src="/img/edit-solid.svg"' +
                 'onclick="event.stopImmediatePropagation(); editGoalInCluster(this)" ' +
                 'onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
-                'onmousedown="event.stopImmediatePropagation()"/><img class="deleteButton" style="display: none"' +
+                'onmousedown="event.stopImmediatePropagation()"/><img class="deleteButton non-draggable dragger" style="display: none"' +
                 'src="/img/trash-alt-solid.svg" onclick="event.stopImmediatePropagation(); handleDeleteGoalInCluster(this)"' +
                 'onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
                 'onmousedown="event.stopImmediatePropagation()"/>');

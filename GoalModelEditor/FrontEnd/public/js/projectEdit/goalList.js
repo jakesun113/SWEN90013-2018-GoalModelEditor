@@ -239,7 +239,7 @@ function parseNode(node) {
         '" ' +
         'oninput="changeFontWeight(this)"' +
         "/>" +
-        '<img class="deleteBtnInList" style="display: none" src="/img/trash-alt-solid.svg"' +
+        '<img class="deleteBtnInList non-draggable dragger" style="display: none" src="/img/trash-alt-solid.svg"' +
         ' onclick="deleteGoalInList(this)"' +
         '/>';
 
@@ -279,11 +279,11 @@ function parseClusterNode(node) {
         '<img src="' + iconPath + '" class="mr-1 typeIcon">' +
         '<div class="goal-content"  tabindex="-1" ' +
         'onblur="finishEditGoalInCluster($(this));">' + node.GoalContent + '</div>' +
-        '<img class="editButton" style="display: none" src="/img/edit-solid.svg"' +
+        '<img class="editButton non-draggable dragger" style="display: none" src="/img/edit-solid.svg"' +
         ' onclick="event.stopImmediatePropagation(); editGoalInCluster(this)"' +
         ' onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
         ' onmousedown="event.stopImmediatePropagation()"/>' +
-        '<img class="deleteButton" style="display: none" src="/img/trash-alt-solid.svg"' +
+        '<img class="deleteButton non-draggable dragger" style="display: none" src="/img/trash-alt-solid.svg"' +
         ' onclick="event.stopImmediatePropagation(); handleDeleteGoalInCluster(this)"' +
         ' onmousemove="event.stopImmediatePropagation()" onmouseup="event.stopImmediatePropagation()"' +
         ' onmousedown="event.stopImmediatePropagation()"/>' +
