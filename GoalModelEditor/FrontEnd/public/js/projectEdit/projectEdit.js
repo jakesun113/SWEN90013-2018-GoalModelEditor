@@ -8,7 +8,6 @@
 
 /**
  * Page onReady EventListener
- *
  */
 /*import photos start*/
 $(document).ready(function () {
@@ -197,8 +196,12 @@ function deleteGoalInList(element) {
 }
 
 /*detect event when pressing "Backspace" start*/
+/**
+ * in the goal list, if press "backspace" make the goal empty, delete that goal
+ * @param event
+ */
 document.onkeyup = function (event) {
-    //in the goal list, if press "backspace" make the goal empty, delete that goal
+    // if the active element is INPUT and key is Backspace
     if (document.activeElement.tagName === "INPUT" && event.key === "Backspace") {
         if (event.target.value === "") {
             let parent = document.activeElement.parentNode;
@@ -248,16 +251,19 @@ $("#deleteGoalBtn").click(function () {
         }
     }
 });
+
 /**
  * function when click "confirm delete" button
  */
 $("#confirmDelete").click(function () {
     deleteGoalInCluster(activeElement);
 });
+
 /*drag and drop start*/
 let nowCopying;
-
-//get the dragging element
+/**
+ * get the dragging element
+ */
 function getDraggingElement() {
     $(".dragger").on("dragstart", function (e) {
 
@@ -405,7 +411,6 @@ drop_zone(clusterNumber);
 
 //activate nestable2 function
 $(".dd").nestable({
-
     onDragStart: function (l, e) {
         // get type of dragged element
         //let type = $(e).children(".dd-handle").attr("class").split(" ")[0];
@@ -424,6 +429,11 @@ $(".dd").nestable({
     scroll: true
 });
 
+/**
+ * create element from html
+ * @param htmlString
+ * @returns {Node}
+ */
 function createElementFromHTML(htmlString) {
     let div = document.createElement("div");
     div.innerHTML = htmlString.trim();
@@ -432,8 +442,10 @@ function createElementFromHTML(htmlString) {
     return div.firstChild;
 }
 
-//if no "dd-empty" is existed, append new cluster
-// to make sure there is always at least one "new" cluster
+/**
+ * if no "dd-empty" is existed, append new cluster
+ * to make sure there is always at least one "new" cluster
+ */
 function appendCluster() {
     if (!$(".dd-empty").length) {
         let cluster = $("#cluster");
@@ -468,8 +480,10 @@ function appendCluster() {
     }
 }
 
-//if "dd-empty" is more than one in the cluster, remove one
-//to make sure there is at most one "dd-empty" cluster
+/**
+ * if "dd-empty" is more than one in the cluster, remove one
+ * to make sure there is at most one "dd-empty" cluster
+ */
 function removeCluster() {
     if ($(".dd-empty").length > 1) {
         $(".dd-empty").parent()[1].remove();
@@ -498,7 +512,9 @@ function removeCluster() {
 
 /*drag and drop end*/
 
-// handle sign off button
+/**
+ * handle sign off button
+ */
 $("#signout").click(function (evt) {
     evt.preventDefault();
     Cookies.remove("LOKIDIED");
@@ -536,7 +552,7 @@ $("#renderbtn").click(function () {
 });
 
 /**
- * progress bar
+ * progress bar first goal tab
  */
 function goalClick() {
     if(!$("#goalTab").hasClass("current")){
@@ -558,6 +574,9 @@ function goalClick() {
     $("#renderbtn").css("display", "none");
 }
 
+/**
+ * progress bar second cluster tab
+ */
 function clusterClick() {
     if(!$("#clusterTab").hasClass("current")){
         $("#clusterTab").addClass("current");
@@ -579,6 +598,9 @@ function clusterClick() {
 
 }
 
+/**
+ * progress bar third render tab
+ */
 function graphClick() {
     if(!$("#graphTab").hasClass("current")){
         $("#graphTab").addClass("current");
