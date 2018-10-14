@@ -333,7 +333,7 @@ footer {
 
 .drag-style {
     cursor: move;
-    /*list-style: none;*/
+    list-style-image: url("/img/arrows-alt-solid.svg");
 }
 
 /*.drag-style:before {*/
