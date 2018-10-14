@@ -315,7 +315,8 @@ function saveJSON() {
     let modelId = Cookies.get("MID");
     let url = "/goal_model/" + userId + "/" + modelId;
     $("#saveJSONLoading").show();
-    $("#savedLabel").show();
+    $("#savingLabel").show();
+    $("#savedLabel").hide();
 
     getData();
     // ajax starts
@@ -328,7 +329,8 @@ function saveJSON() {
         success: function (data) {
             setTimeout(function () {
                 $("#saveJSONLoading").hide();
-                $("#savedLabel").hide();
+                $("#savingLabel").hide();
+                $("#savedLabel").show();
             }, 1000);
         }
     }).fail(function (jqXHR) {
